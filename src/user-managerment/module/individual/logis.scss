@@ -1,0 +1,70 @@
+.container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+
+    .login-text{
+      .head{
+         width: 327.74px;
+         height: 31px;
+         font-weight: bold;
+         font-size: 26px;
+         line-height: 31px;
+         margin-bottom: 10px;
+      }
+      .sub{
+        width: 327.74px;
+        height: 26px;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+    .login-form{
+       margin-top: 10px;
+       label{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+       }
+       input{
+          background: white;
+          border-radius: 4px;
+          height: 46px;
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 500;
+       }
+       
+    }
+  }
+
+  //registration indivi
+  .register{
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+
+    .register-form{
+        margin-top: 10px;
+       label{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+       }
+       input{
+          background: white;
+          border-radius: 4px;
+          height: 46px;
+          font-size: 16px;
+          line-height: 24px;
+          font-weight: 500;
+       }
+       
+    }
+  }

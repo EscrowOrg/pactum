@@ -1,83 +1,79 @@
-import { AppleOutlined, EyeInvisibleOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, Typography } from "antd";
-import React,  { Component } from "react";
+import { AppleOutlined,  GoogleOutlined } from "@ant-design/icons";
+import { Button, Col, Form, Input, Row} from "antd";
+import React,  {  useState } from "react";
 import { Link } from "react-router-dom";
-import "../index.scss"
+import "./logis.scss"
 
 
-const {Title} = Typography
+//const {Title} = Typography
 
-class LoginUser extends Component{
-    state = {
-        formData: {
-            companyEmail: "",
-            password: "",
-            action: ""
-        },
-        open: false
-    }
 
-    handleChange = (e)=>{
+const LoginUser  = () =>{
+  const [users, setUsers] = useState({
+    companyEmail: "",
+    password: "",
+    action: ""
+  })
+
+    const  handleChange = (e)=>{
         const {name, value} = e.target;
-        this.setState({
-            formData:{
-                ...this.state.formData,
-                [name]: value
-            }
-        })
+          setUsers({
+             ...users,
+             [name]: value
+          })
     }
-    // changRadio = (e)=>{
-    //     this.setState({
-    //         formData: {
-    //              ...this.state.formData,
-    //             action: e.target.value
-    //         }
-    //     })
-    // }
-    render(){
-        const {formData} = this.state;
-        return(
-            <div>
-                <Title>Welcome Back</Title>
-                <p>Login into your account</p>
-                <Form>
-                      <Col span={8}>
-                        <Form.Item>
-                         <label>Company Email</label>
-                         <Input
-                          name="companyEmail"
-                           placeholder="Company Email"
-                           className="inputclassname" 
-                           type="email"
-                           value={formData.companyEmail}
-                           onChange={this.handleChange}
-                           />
-                        </Form.Item>
-                      </Col>
-                      <Col span={8}>
-                        <Form.Item>
-                            <label>Password</label>
+    return(
+        <div className="container">
+                <div className="login-text">
+                    <div className="head">Welcome Back</div>
+                    <div className="sub">Login into your account</div>
+                </div>
+                <Form className="login-form">
+                    <Row gutter={32}>
+                        <Col span={8}>
+                            <Form.Item>
+                            <label>Company Email</label>
                             <Input
-                            name="password"
-                            placeholder="Password"
-                            className="inputclassname"
-                            type="password"
-                            value={formData.password}
-                            onChange={this.handleChange}
+                            name="companyEmail"
+                            placeholder="Company Email"
+                            className="inputclassname" 
+                            type="email"
+                            value={users.companyEmail}
+                            onChange={handleChange}
                             />
-                            <EyeInvisibleOutlined />
-                         </Form.Item>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item>
+                                <label>Password</label>
+                                <Input.Password
+                                name="password"
+                                placeholder="Password"
+                                className="inputclassname"
+                                type="password"
+                                value={users.password}
+                                onChange={handleChange}
+                                />
+                            </Form.Item>
                       </Col>
-                      <Link to="">Forgot Password</Link>
-                    <Button>Sign UP</Button>
-                    <p>Or Sign Up With</p>
-                    <GoogleOutlined />
-                    <AppleOutlined />
+                    </Row>
+                      <div className="forgot-password">
+                        <Link to="">Forgot Password</Link>
+                      </div>
+                      <div className="sign-button">
+                       <Button>Sign UP</Button>
+                      </div>
+                      <div className="sign-social">
+                        <p>Or Sign Up With</p>
+                        <GoogleOutlined className="google" />
+                        <AppleOutlined className="apple" />
+                      </div>
                 </Form>
-                Don't have an account? <Link to="">Create Account</Link>
-            </div>
-        )
-    }
+                <div className="create-accout">
+                  Don't have an account? <Link to="/individual-register">Create Account</Link>
+                </div>
+        </div>
+    )
 
 }
-export default LoginUser
+export default LoginUser;
