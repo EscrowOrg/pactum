@@ -1,10 +1,11 @@
-import { AppleOutlined, EyeInvisibleOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Col, Form, Input, Radio, Row, Typography } from "antd";
+//import { AppleOutlined, EyeInvisibleOutlined, GoogleOutlined } from "@ant-design/icons";
+import { Button,  Col, Form, Input,  Row,  } from "antd";
 import React,  { Component } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import "./index.scss"
 
 
-const {Title} = Typography
+//const {Title} = Typography
 
 class ForgotPassword extends Component{
     state = {
@@ -25,23 +26,16 @@ class ForgotPassword extends Component{
             }
         })
     }
-    // changRadio = (e)=>{
-    //     this.setState({
-    //         formData: {
-    //              ...this.state.formData,
-    //             action: e.target.value
-    //         }
-    //     })
-    // }
     render(){
         const {formData} = this.state;
         return(
-            <div>
-                <Title>Enter your email address to receive a link via mail to setup a new passwords</Title>
-                <Form>
-                    <Row gutter={32}>
+            <div className="forget-password">
+                <div className="password-forgeting">Forgot Password</div>
+                 <div className="password-sub"> Enter your email address to receive a link via mail to setup a new passwords</div>
+                <Form className="form-class">
+                    <Row gutter={32} className="gutter-row">
                       <Col span={8}>
-                         <label>Email Address</label>
+                         <label className="lable-class">Email Address</label>
                          <Input
                           name="email"
                            placeholder="Email Address"
@@ -52,8 +46,8 @@ class ForgotPassword extends Component{
                            />
                       </Col>
                     </Row>
-                    <Button>Send Code</Button>
                 </Form>
+                <Button className="send-code">Send Code</Button>
             </div>
         )
     }

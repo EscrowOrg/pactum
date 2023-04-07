@@ -7,6 +7,8 @@ import Onborading from "./onborading";
 import ProfileVendon from "./vendon/profile";
 //import LoginVendon from "./vendon/vendon";
 import RegistrationVendon from "./vendon/vendonReg";
+import ResetPassword from "./reset-password";
+import ForgotPassword from "./forgot-password";
 
 class OnboradingRouter extends Component{
      render(){
@@ -18,8 +20,10 @@ class OnboradingRouter extends Component{
                 {/* <Route path="/loginVendon" element={<LoginVendon/>} />  */}
                 <Route path="/individual-register" element={<RegistrationIndividual/>}/>
                 <Route path="/loginIndividual" element={<LoginUser/>}/>   
-                <Route path="/profile" element={<Profile/>} />
-                <Route path="/vendon-profile" element={<ProfileVendon/>} />    
+                <Route path="/individual-profile" element={<Profile/>} />
+                <Route path="/vendon-profile" element={<ProfileVendon/>} />
+                <Route path="/reset-password" element={<ResetPassword/>}/>  
+                <Route path="/forgot-password" element={<ForgotPassword/>} />
              </Routes>
             </>
         )

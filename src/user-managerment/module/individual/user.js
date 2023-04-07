@@ -29,44 +29,50 @@ const LoginUser  = () =>{
                     <div className="sub">Login into your account</div>
                 </div>
                 <Form className="login-form">
-                    <Row gutter={32}>
-                        <Col span={8}>
-                            <Form.Item>
-                            <label>Company Email</label>
-                            <Input
-                            name="companyEmail"
-                            placeholder="Company Email"
-                            className="inputclassname" 
-                            type="email"
-                            value={users.companyEmail}
-                            onChange={handleChange}
-                            />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item>
-                                <label>Password</label>
-                                <Input.Password
-                                name="password"
-                                placeholder="Password"
-                                className="inputclassname"
-                                type="password"
-                                value={users.password}
+                      <Row gutter={32} className="form-row1">
+                         <Col span={8}>
+                                <Form.Item>
+                                <label>Company Email</label>
+                                <Input
+                                name="companyEmail"
+                                placeholder="Company Email"
+                                className="inputclassname" 
+                                type="email"
+                                value={users.companyEmail}
                                 onChange={handleChange}
                                 />
-                            </Form.Item>
-                      </Col>
-                    </Row>
+                                </Form.Item>
+                         </Col>
+                      </Row>
+                         <Row gutter={32} className="form-row2">
+                            <Col span={8}>
+                                 <label>Password</label>
+                                 <Input.Password
+                                    name="password"
+                                    placeholder="Password"
+                                    className="passwordclass"
+                                    type="password"
+                                    value={users.password}
+                                    onChange={handleChange}
+                                  />
+                            </Col>
+                         </Row>
+                        
                       <div className="forgot-password">
-                        <Link to="">Forgot Password</Link>
+                        <Link to="/forgot-password">Forgot Password</Link>
                       </div>
                       <div className="sign-button">
-                       <Button>Sign UP</Button>
+                       <Button className="button-sign">Login</Button>
                       </div>
                       <div className="sign-social">
-                        <p>Or Sign Up With</p>
-                        <GoogleOutlined className="google" />
-                        <AppleOutlined className="apple" />
+                        <p >Or Sign Up With</p>
+                        <Button className="google-button">
+                           <GoogleOutlined className="google" />
+                        </Button>
+                        <Button className="google-apple">
+                           <AppleOutlined className="apple" /> 
+                        </Button>
+                        
                       </div>
                 </Form>
                 <div className="create-accout">

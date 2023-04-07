@@ -8,63 +8,447 @@
 
     .login-text{
       .head{
-         width: 327.74px;
-         height: 31px;
-         font-weight: bold;
-         font-size: 26px;
-         line-height: 31px;
-         margin-bottom: 10px;
-      }
+            width: 174px;
+            height: 38px;
+            font-family: 'Public Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 160%;
+            color: #000000;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
       .sub{
-        width: 327.74px;
-        height: 26px;
+        width: 198px;
+        height: 22px;
+        font-family: 'Public Sans';
+        font-style: normal;
+        font-weight: 400;
         font-size: 14px;
-        line-height: 17px;
+        line-height: 160%;
+        letter-spacing: 0.1px;
+        color: #645B75;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
       }
     }
     .login-form{
        margin-top: 10px;
-       label{
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 16px;
+       .form-row1{
+        .inputclassname{
+            box-sizing: border-box;
+
+            /* Auto layout */
+            
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 20px 16px;
+            gap: 4px;
+            
+            width: 380px;
+            height: 56px;
+            
+            /* Shades/White */
+            
+            background: #FFFFFF;
+            /* Neutral/200 */
+            
+            border: 1px solid #DAD7E0;
+            border-radius: 12px;
+            
+            /* Inside auto layout */
+            
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+        }
        }
-       input{
-          background: white;
-          border-radius: 4px;
-          height: 46px;
-          font-size: 16px;
-          line-height: 24px;
-          font-weight: 500;
+       .form-row2{
+        .passwordclass{
+            box-sizing: border-box;
+
+            /* Auto layout */
+            
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 18px 16px;
+            gap: 4px;
+            
+            width: 380px;
+            height: 56px;
+            
+            /* Shades/White */
+            
+            background: #FFFFFF;
+            /* Neutral/200 */
+            
+            border: 1px solid #DAD7E0;
+            border-radius: 12px;
+            
+            /* Inside auto layout */
+            
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+        }
        }
        
     }
+    .sign-social{
+         margin: 20px;
+          .google-button{
+             margin: 10px;
+            .google{
+                margin: 10px;
+                background: #EA4335; 
+             }
+          }
+          .google-apple{
+               margin: 10px;
+            .apple{
+                 margin: 10px;
+                background: #11142D;
+                color: #FFFFFF;
+              }
+          }
+    }
+    .forgot-password{
+        width: 118px;
+        height: 22px;
+        font-family: 'Public Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 160%;
+        text-align: right;
+        letter-spacing: 0.1px;    
+        color: #3A0CA3;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    }
+     .sign-button{
+            // display: flex;
+            // flex-direction: row;
+            // justify-content: center;
+            // align-items: center;
+            // padding: 21px 75px;
+            // gap: 8px;
+            // width: 380px;
+            // height: 64px;
+            // background: #3A0CA3;
+            // opacity: 0.3;
+            // border-radius: 32px;
+            // flex: none;
+            // order: 0;
+            // align-self: stretch;
+            // flex-grow: 0;
+          .button-sign{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 21px 75px;
+            gap: 8px;
+            width: 380px;
+            height: 64px;
+            background: #3A0CA3;
+            border-radius: 32px;
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            color: #FFFFFF;
+            margin: 30px;
+          }
+       }
   }
 
   //registration indivi
   .register{
-    width: 100%;
-    display: flex;
-    overflow: auto;
-    min-height: 100vh;
-    align-items: center;
-    flex-direction: column;
+     .register-head{
+        width: 240px;
+        height: 28px;
+        
+        /* Heading/Heading 3 */
+        
+        font-family: 'Public Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 125%;
+        /* identical to box height, or 28px */
+        
+        letter-spacing: 0.2px;
+        
+        /* Shades/Black */
+        
+        color: #000000;
+        
+        
+        /* Inside auto layout */
+        
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+     }
 
     .register-form{
-        margin-top: 10px;
-       label{
+        .register-row1{
+
+            .inputclassname{
+                box-sizing: border-box;
+
+                /* Auto layout */
+                
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 20px 16px;
+                gap: 4px;
+                
+                width: 380px;
+                height: 56px;
+                
+                /* Shades/White */
+                
+                background: #FFFFFF;
+                /* Neutral/200 */
+                
+                border: 1px solid #DAD7E0;
+                border-radius: 12px;
+                
+                /* Inside auto layout */
+                
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+
+                ::placeholder{
+                    position: absolute;
+                    left: 0%;
+                    right: 67.82%;
+                    top: -6.25%;
+                    bottom: -12.5%;
+                    
+                    /* Paragraph/01/regular */
+                    
+                    font-family: 'Public Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 160%;
+                    /* or 19px */
+                    
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 0.1px;
+                    
+                    /* Shades/Black */
+                    
+                    color: #000000;
+                }
+            }
+        }
+        .register-row2{
+             .inputclass{
+                box-sizing: border-box;
+
+                /* Auto layout */
+                
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 18px 16px;
+                gap: 4px;
+                
+                width: 380px;
+                height: 56px;
+                
+                /* Shades/White */
+                
+                background: #FFFFFF;
+                /* Neutral/200 */
+                
+                border: 1px solid #DAD7E0;
+                border-radius: 12px;
+                
+                /* Inside auto layout */
+                
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+
+                ::placeholder{
+                    position: absolute;
+                    left: 0%;
+                    right: 60.8%;
+                    top: 31.25%;
+                    bottom: 31.25%;
+                    
+                    font-family: 'Public Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 4px;
+                    line-height: 160%;
+                    /* or 6px */
+                    
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 4.1px;
+                    
+                    /* Shades/Black */
+                    
+                    color: #000000;
+                    
+                    border: 2px solid #000000;
+                }
+             }
+             .radio-form1{
+                 p{
+                    width: 179px;
+                    height: 19px;
+                    
+                    /* Paragraph/01/regular */
+                    
+                    font-family: 'Public Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 160%;
+                    /* or 19px */
+                    
+                    letter-spacing: 0.1px;
+                    
+                    /* Neutral/700 */
+                    
+                    color: #645B75;
+                    
+                    
+                    /* Inside auto layout */
+                    
+                    flex: none;
+                    order: 1;
+                    flex-grow: 0;
+                 }
+             }
+        } 
+        .radio-form2{
+             p{
+                width: 352px;
+                height: 22px;
+                
+                /* Paragraph/02/regular */
+                
+                font-family: 'Public Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 160%;
+                /* or 22px */
+                
+                letter-spacing: 0.1px;
+                
+                /* Neutral/700 */
+                
+                color: #645B75;
+                
+                
+                /* Inside auto layout */
+                
+                flex: none;
+                order: 1;
+                flex-grow: 1;
+             }
+        }
+
+        .sign-up{
+            .sign-button{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 21px 75px;
+                gap: 8px;
+                
+                width: 380px;
+                height: 64px;
+                
+                /* Primary/500 */
+                
+                background: #3A0CA3;
+                border-radius: 32px;
+                
+                /* Inside auto layout */
+                color: #FFFFFF;
+                flex: none;
+                order: 1;
+                flex-grow: 0;
+            } 
+        }
+
+        .sign-sola{
+            .google-button{
+                margin: 10px;
+               .google{
+                 position: absolute;
+                 left: 6.32%;
+                 right: 15.54%;
+                 top: 0%;
+                 bottom: 59.56%;
+                 background: #EA4335; 
+                }
+             }
+             .google-apple{
+                  margin: 10px;
+               .apple{
+                 position: absolute;
+                 left: 8.33%;
+                 right: 7.43%;
+                 top: 0%;
+                 bottom: 0%;
+                 
+                 /* Greyscale/900 */
+                 color: #FFFFFF;
+                 background: #11142D;
+                 }
+             }
+        }
+    }
+    .login{
+        width: 170px;
+        height: 22px;
+        
+        /* Paragraph/02/regular */
+        
+        font-family: 'Public Sans';
+        font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        line-height: 16px;
-       }
-       input{
-          background: white;
-          border-radius: 4px;
-          height: 46px;
-          font-size: 16px;
-          line-height: 24px;
-          font-weight: 500;
-       }
-       
+        line-height: 160%;
+        /* or 22px */
+        
+        text-align: center;
+        letter-spacing: 0.1px;
+        
+        /* Shades/Black */
+        
+        color: #000000;
+        
+        
+        /* Inside auto layout */
+        
+        flex: none;
+        order: 2;
+        flex-grow: 0;   
     }
   }

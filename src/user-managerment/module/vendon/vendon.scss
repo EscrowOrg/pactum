@@ -1,0 +1,241 @@
+.registration-vendon{
+    .register-head{
+        width: 211px;
+        height: 28px;
+        
+        /* Heading/Heading 3 */
+        
+        font-family: 'Public Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 125%;
+        /* identical to box height, or 28px */
+        
+        letter-spacing: 0.2px;
+        
+        /* Shades/Black */
+        
+        color: #000000;
+        
+        
+        /* Inside auto layout */
+        
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+    }
+    .inpup-form{
+        .form-rows2{
+            .inputclassname{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 20px 16px;
+                gap: 4px;
+                margin-right: 40px;
+                width: 380px;
+                height: 56px;
+                background: #FFFFFF;
+                border: 1px solid #DAD7E0;
+                border-radius: 12px;
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+
+                ::placeholder{
+                    position: absolute;
+                    left: 0%;
+                    right: 67.82%;
+                    top: -6.25%;
+                    bottom: -12.5%;
+                    
+                    /* Paragraph/01/regular */
+                    
+                    font-family: 'Public Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 160%;
+                    /* or 19px */
+                    
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 0.1px;
+                    
+                    /* Shades/Black */
+                    
+                    color: #000000;
+                }
+            }
+
+        }
+        .form-row3{
+            .inputclass{
+                box-sizing: border-box;
+
+                /* Auto layout */
+                
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 18px 16px;
+                gap: 4px;
+                
+                width: 380px;
+                height: 56px;
+                
+                /* Shades/White */
+                
+                background: #FFFFFF;
+                /* Neutral/200 */
+                
+                border: 1px solid #DAD7E0;
+                border-radius: 12px;
+                
+                /* Inside auto layout */
+                
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+
+                ::placeholder{
+                    position: absolute;
+                    left: 0%;
+                    right: 60.8%;
+                    top: 31.25%;
+                    bottom: 31.25%;
+                    
+                    font-family: 'Public Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 4px;
+                    line-height: 160%;
+                    /* or 6px */
+                    
+                    display: flex;
+                    align-items: center;
+                    letter-spacing: 4.1px;
+                    
+                    /* Shades/Black */
+                    
+                    color: #000000;
+                    
+                    border: 2px solid #000000;
+                }
+            }
+          .radio-form1{
+             p{
+                width: 179px;
+                height: 19px;
+                
+                /* Paragraph/01/regular */
+                
+                font-family: 'Public Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 160%;
+                /* or 19px */
+                
+                letter-spacing: 0.1px;
+                
+                /* Neutral/700 */
+                
+                color: #645B75;
+                
+                
+                /* Inside auto layout */
+                
+                flex: none;
+                order: 1;
+                flex-grow: 0;
+             }
+          }
+        }
+       .sign-up{
+         .register-sign{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 21px 75px;
+            gap: 8px;
+            
+            width: 380px;
+            height: 64px;
+            
+            /* Primary/500 */
+            
+            background: #3A0CA3;
+            border-radius: 32px;
+            
+            /* Inside auto layout */
+            color: #FFFFFF;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+         }
+       }
+       .radio-form2{
+         p{
+            width: 352px;
+            height: 22px;
+            
+            /* Paragraph/02/regular */
+            
+            font-family: 'Public Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 160%;
+            /* or 22px */
+            
+            letter-spacing: 0.1px;
+            
+            /* Neutral/700 */
+            
+            color: #645B75;
+            
+            
+            /* Inside auto layout */
+            
+            flex: none;
+            order: 1;
+            flex-grow: 1;
+         }
+       } 
+       .socals{
+        margin: 20px;
+        .google-button{
+           margin: 10px;
+          .google{
+            position: absolute;
+            left: 6.32%;
+            right: 15.54%;
+            top: 0%;
+            bottom: 59.56%;
+            background: #EA4335; 
+           }
+        }
+        .google-apple{
+             margin: 10px;
+          .apple{
+            position: absolute;
+            left: 8.33%;
+            right: 7.43%;
+            top: 0%;
+            bottom: 0%;
+            
+            /* Greyscale/900 */
+            color: #FFFFFF;
+            background: #11142D;
+            }
+        }
+       }
+    }
+    
+}
