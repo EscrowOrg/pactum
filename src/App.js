@@ -4,9 +4,9 @@ import OnboradingRouter from './user-managerment/module/router';
 
 function App() {
   return (
-    <div>
+    <>
         <OnboradingRouter/>
-    </div>
+    </>
   );
 }
 
