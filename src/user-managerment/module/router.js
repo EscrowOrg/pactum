@@ -1,33 +1,87 @@
-import React,  { Component } from "react";
-import {Routes, Route} from "react-router-dom"
+import React from "react";
+import {Routes, Route, useLocation} from "react-router-dom"
 import Profile from "./individual/user-profile";
 import RegistrationIndividual from "./individual/individual";
 import LoginUser from "./individual/user";
 import Onborading from "./onborading";
 import ProfileVendon from "./vendon/profile";
-//import LoginVendon from "./vendon/vendon";
 import RegistrationVendon from "./vendon/vendonReg";
 import ResetPassword from "./reset-password";
 import ForgotPassword from "./forgot-password";
+import SplashScreen from "./pages/SplashScreen";
+import { AnimatePresence } from "framer-motion";
+import Info from "./pages/Info";
 
-class OnboradingRouter extends Component{
-     render(){
-        return(
-            <>
-             <Routes>
-                <Route path="/onboradings" element={<Onborading/>} excel/>
-                <Route path="/vendon-register" element={<RegistrationVendon/>}/>
-                {/* <Route path="/loginVendon" element={<LoginVendon/>} />  */}
-                <Route path="/individual-register" element={<RegistrationIndividual/>}/>
-                <Route path="/loginIndividual" element={<LoginUser/>}/>   
-                <Route path="/individual-profile" element={<Profile/>} />
-                <Route path="/vendon-profile" element={<ProfileVendon/>} />
-                <Route path="/reset-password" element={<ResetPassword/>}/>  
-                <Route path="/forgot-password" element={<ForgotPassword/>} />
-             </Routes>
-            </>
-        )
-     }
+const MainRouter = () => {
+
+   // DATA INITIALIZATION
+   const location = useLocation()
+
+   return(
+      <AnimatePresence
+      mode="wait">
+
+         {/* Parent Routes */}
+         <Routes
+         key={location.pathname}
+         location={location}>
+
+            {/* SPLASH SCREEN */}
+            <Route
+            path="/"
+            element={<SplashScreen />} />
+
+            {/* INFO SCREEN */}
+            <Route
+            path="/info"
+            element={<Info />} />
+
+            {/* ONBOARDING */}
+            <Route 
+            path="/onboradings" 
+            element={<Onborading />} 
+            excel/>
+
+            {/* REGISTRATION VENDOR */}
+            <Route 
+            path="/vendon-register" 
+            element={<RegistrationVendon/>}/>
+
+
+            {/* <Route path="/loginVendon" element={<LoginVendon/>} />  */}
+
+            {/* INDIVIDUAL REGISTER */}
+            <Route 
+            path="/individual-register" 
+            element={<RegistrationIndividual/>}/>
+
+            {/* LOGIN USER */}
+            <Route 
+            path="/loginIndividual" 
+            element={<LoginUser  />}/>   
+
+            {/* PROFILE */}
+            <Route 
+            path="/individual-profile" 
+            element={<Profile/>} />
+
+            {/* VENDOR'S PROFILE */}
+            <Route 
+            path="/vendon-profile" 
+            element={<ProfileVendon/>} />
+
+            {/* RESET PASSWORD */}
+            <Route 
+            path="/reset-password" 
+            element={<ResetPassword/>}/>  
+
+            {/* FORGOT PASSWORD */}
+            <Route 
+            path="/forgot-password" 
+            element={<ForgotPassword/>} />
+         </Routes>
+      </AnimatePresence>
+   )
 }
 
-export default OnboradingRouter;
+export default MainRouter;

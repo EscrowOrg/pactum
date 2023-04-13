@@ -1,11 +1,9 @@
-//import logo from './logo.svg';
-import OnboradingRouter from './user-managerment/module/router';
-//import Onborading from './user-managerment/module/onborading';
+import MainRouter from './user-managerment/module/router';
 
 function App() {
   return (
     <>
-        <OnboradingRouter/>
+        <MainRouter />
     </>
   );
 }
