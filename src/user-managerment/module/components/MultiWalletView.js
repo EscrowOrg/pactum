@@ -21,7 +21,7 @@ const MultiWalletView = ({
             <div className='flex items-center justify-center w-full h-full relative'>
                 <img
                 alt=""
-                src="/images/onboarding-info/iphone13.png"
+                src="/images/onboarding/iphone13.png"
                 className='w-[282px] absolute top-[58px]' />
             </div>
 
