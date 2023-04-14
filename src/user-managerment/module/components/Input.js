@@ -13,11 +13,12 @@ export const TextInput = ({
     onFocus,
     name,
     placeholderText,
+    type="text"
 }) => {
 
     return(
         <input
-        type="text"
+        type={type}
         name={name}
         onBlur={onBlur}
         onFocus={onFocus}

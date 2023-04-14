@@ -1,4 +1,3 @@
-import { AppleOutlined,  GoogleOutlined } from "@ant-design/icons";
 import { FcGoogle } from "react-icons/fc"
 import { BsApple } from "react-icons/bs"
 import { useState } from "react";
@@ -32,7 +31,7 @@ const LoginUser  = () =>{
 
     return(
       <PageWrapper>
-         <div className="w-full h-full flex flex-col gap-8 px-4 pb-8 pt-24">
+         <div className="w-full h-full flex flex-col gap-8 px-4 py-10">
 
             {/* caption */}
             <div className="w-full flex flex-col gap-2">
@@ -130,7 +129,9 @@ const LoginUser  = () =>{
                      {/* Create new account */}
                      <h4 className="text-black font-normal text-sm">
                         Don’t have account?
-                        <span className="font-normal text-sm text-[#3A0CA3]">
+                        <span 
+                        onClick={()=>navigate("/onboradings")}
+                        className="font-semibold text-sm text-[#3A0CA3]">
                            {" Create one."}
                         </span>
                      </h4>
