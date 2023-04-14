@@ -41,9 +41,15 @@ const MoreInfo = () => {
                 <BackButton />
 
                 {/* caption */}
-                <p className="text-black font-bold text-2xl">
-                    Sign Up as a Vendor
-                </p>
+                <div className="w-full flex flex-col gap-2">
+                    <p className="text-black font-bold text-2xl">
+                        More info.
+                    </p>
+
+                    <p className="text-sm font-normal text-[#645B75]">
+                        These information are necessary to get your account running effectively.
+                    </p>
+                </div>
 
                 {/* form */}
                 <form
