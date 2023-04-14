@@ -1,33 +1,32 @@
 import React, { useState } from "react";
-import PageWrapper from "../layouts/PageWrapper";
-import { TextInput } from "../components/Input";
+import PageWrapper from "../../layouts/PageWrapper";
+import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "../components/Button";
-import { MuiTelInput } from 'mui-tel-input'
+import { PrimaryButton } from "../../components/Button";
 
-const ProfileVendon = ()=>{
+const Profile = ()=>{
 
-  // STATES
-  const [formData, setFormData] = useState({
-    companyName: "",
-    companySize: "",
-    phoneNumber: "",
-    address: "",
-  })
-
-
-  // DATA INITIALIZATION
-  const navigate = useNavigate()
-
-
-  // HANDLERS
-  const  handleChange = (e)=>{
-    const {name, value} = e.target;
-      setFormData({
-        ...formData,
-        [name]: value
+    // STATES
+    const [formData, setFormData] = useState({
+      fullName: "",
+      userName: "",
+      phoneNumber: "",
+      address: "",
     })
-  }
+  
+  
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
+  
+  
+    // HANDLERS
+    const  handleChange = (e)=>{
+      const {name, value} = e.target;
+        setFormData({
+          ...formData,
+          [name]: value
+      })
+    }
 
   return(
     <PageWrapper>
@@ -54,15 +53,15 @@ const ProfileVendon = ()=>{
 
             {/* label text */}
             <span className="font-normal text-xs text-black">
-                Company Name
+                Full Name
             </span>
 
             {/* input field */}
             <TextInput
-            name={"companyName"}
-            value={formData.companyName}
+            name={"fullName"}
+            value={formData.fullName}
             onChange={handleChange}
-            placeholderText={"Enter company name"} />
+            placeholderText={"Enter full name"} />
           </label>
 
           {/* company's size container */}
@@ -71,16 +70,15 @@ const ProfileVendon = ()=>{
             {/* label text */}
             <span
             className="font-normal text-xs text-black">
-                Company Size
+                Username
             </span>
 
             {/* input field */}
             <TextInput
-            name={"companySize"}
-            type="number"
-            value={formData.companySize}
+            name={"userName"}
+            value={formData.userName}
             onChange={handleChange}
-            placeholderText={"Enter company size"} />
+            placeholderText={"Enter username"} />
           </label>
 
           {/* Phone number container */}
@@ -121,11 +119,11 @@ const ProfileVendon = ()=>{
           {/* container */}
           <div className="flex w-full flex-col mt-auto items-center">
 
-            {/* Login button */}
+            {/* continue button */}
             <div className='w-full flex flex-col items-stretch'>
                 <PrimaryButton
-                onClick={()=>navigate("/vendor-create-p")}
-                disabled={!(formData.companyName && formData.companySize && formData.address)}
+                onClick={()=>navigate("/individual-more-info")}
+                disabled={!(formData.fullName && formData.userName && formData.address)}
                 text={"Continue"} />
             </div>
           </div>
@@ -134,6 +132,6 @@ const ProfileVendon = ()=>{
     </PageWrapper>
   )
 }
-export default ProfileVendon;
+export default Profile;
 
 
