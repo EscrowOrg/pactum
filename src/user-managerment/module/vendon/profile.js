@@ -3,7 +3,7 @@ import PageWrapper from "../layouts/PageWrapper";
 import { TextInput } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../components/Button";
-import PhoneINumberInput from "./components/PhoneINumberInput";
+import PhoneINumberInput from "../components/PhoneINumberInput";
 
 const ProfileVendon = ()=>{
 
@@ -93,12 +93,6 @@ const ProfileVendon = ()=>{
             </span>
 
             {/* input field */}
-            {/* <TextInput
-            name={"phoneNumber"}
-            type="number"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            placeholderText={"123456789"} /> */}
             <PhoneINumberInput />
           </label>
 
