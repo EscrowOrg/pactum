@@ -10,8 +10,9 @@
 }
 
 .react-tel-input .form-control {
-    border: 1px solid #DAD7E0;
+    outline: 1px solid #DAD7E0;
     height: 56px;
+    border: none;
     padding-inline: 16px;
     width: 100%;
     color: #000;
@@ -21,7 +22,7 @@
 }
 
 .react-tel-input .form-control:focus {
-    outline:1.4px_solid_#3A0CA3
+    outline:1.4px solid #3A0CA3
 }
 
 .react-tel-input .form-control::placeholder {
