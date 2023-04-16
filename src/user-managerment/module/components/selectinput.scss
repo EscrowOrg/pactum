@@ -1,0 +1,62 @@
+.my-select-comp {
+    font-size: 14px;
+    font-weight: 400;
+
+    // drop down container
+    & #react-select-3-listbox {
+        border: none;
+        background-color: transparent;
+        top: 100%;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        border-radius: 12px;
+
+        // dropdown list container
+        & > div {
+            background-color: hsl(0, 0%, 100%);
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 11px hsla(0, 0%, 0%, 0.1);
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+    }
+
+    & > .css-13cymwt-control {
+        box-shadow: none;
+    }
+
+    & > .css-t3ipsp-control {
+        box-shadow: 0 0 0 1px #3A0CA3
+    }
+
+    // selected content container
+    & > div {
+        border: 1px solid #DAD7E0;
+        height: 56px;
+        border-radius: 12px;
+
+        // selected text container
+        & > div:first-child {
+            padding: 0;
+
+            & > div:first-child {
+                font-size: 14px;
+                color: black;
+                font-weight: 400;
+                margin: 0;
+                padding-inline: 16px;
+            }
+        }
+        
+        // arrow container
+        & > div:last-child { 
+            & > span {
+                display: none;
+            }
+            & > div:only-child {
+                color: #ACA6BA;
+            }
+        }
+    }
+}
