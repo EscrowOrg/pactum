@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { TextInput } from "../../components/Input";
+import SelectInput from "../../components/SelectInput";
 
 const MoreInfo = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+    const options = [
+        { value: 1, label: 'Hobby' },
+        { value: 2, label: 'Life plan' },
+        { value: 3, label: 'Enthusiast' },
+      ]
 
 
     // STATES
@@ -83,11 +89,13 @@ const MoreInfo = () => {
                         </span>
 
                         {/* input field */}
-                        <TextInput
+                        {/* <TextInput
                         name={"isCryptoHobby"}
                         value={formData.isCryptoHobby}
                         onChange={handleChange}
-                        placeholderText={"Select option"} />
+                        placeholderText={"Select option"} /> */}
+                        <SelectInput
+                        options={options} />
                     </label>
 
                     {/* container */}

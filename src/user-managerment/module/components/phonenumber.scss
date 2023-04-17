@@ -1,0 +1,66 @@
+.react-tel-input {
+    width: 100%;
+    font-family: inherit;
+    display: flex;
+    flex-direction: row-reverse;
+    height: fit-content;
+    font-family: inherit;
+    align-items: center;
+    gap: 12px;
+}
+
+.react-tel-input .form-control {
+    outline: 1px solid #DAD7E0;
+    height: 56px;
+    border: none;
+    padding-inline: 16px;
+    width: 100%;
+    color: #000;
+    font-weight: 400;
+    font-size: 12px;
+    border-radius: 12px;
+}
+
+.react-tel-input .form-control:focus {
+    outline:1.4px solid #3A0CA3
+}
+
+.react-tel-input .form-control::placeholder {
+    color: #ACA6BA;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+
+.react-tel-input .flag-dropdown {
+    padding-inline: 12px;
+    height: 56px;
+    border: 1px solid #DAD7E0;
+    border-radius: 12px;
+    background-color: white;
+    position: static;
+}
+
+.react-tel-input .selected-flag {
+    outline: none;
+    position: relative;
+    width: 38px;
+    height: 100%;
+    padding: 0 0 0 8px;
+    border-radius: 3px 0 0 3px;
+}
+
+.react-tel-input .selected-flag .arrow {
+    display: none;
+}
+
+.react-tel-input .selected-flag {
+    padding-inline: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.react-tel-input .country-list {
+    margin-inline: auto;
+}

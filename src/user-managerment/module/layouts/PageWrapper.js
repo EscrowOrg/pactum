@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 
 const PageWrapper = ({children, xInitial = 100, xExit = -100}) => {
 
+    // DATA INITIALIZATION
     const animations = {
         initial: {
             opacity: 0,
