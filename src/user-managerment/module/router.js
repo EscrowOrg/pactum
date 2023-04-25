@@ -23,6 +23,17 @@ import IndividualVerified from "./individual/pages/IndividualVerified";
 import MoreInfo from "./individual/pages/MoreInfo";
 import IndividualPinSuccess from "./individual/pages/IndividualPinSuccess";
 import IndividualCreatePin from "./individual/pages/IndividualCreatePin";
+import Home from "./pages/Dashboard/Home";
+import Portfolio from "./pages/Dashboard/Portfolio";
+import Listing from "./pages/Dashboard/Listing";
+import SettingProfile from "./pages/Dashboard/Profile";
+import Overview from "./pages/Dashboard/Home/Overview";
+import BuySellCoin from "./pages/Dashboard/Home/BuySellCoin";
+import BuyCoin from "./pages/Dashboard/Home/BuyCoin";
+import OrderStatement from "./pages/Dashboard/Home/OrderStatement";
+import TransactionSuccess from "./pages/Dashboard/Home/TransactionSuccess";
+import SellCoin from "./pages/Dashboard/Home/SellCoin";
+import SellOrderStatements from "./pages/Dashboard/Home/SellOrderStatements";
 
 const MainRouter = () => {
 
@@ -149,6 +160,71 @@ const MainRouter = () => {
             <Route 
             path="/reset-password/success" 
             element={<PasswordChangeSuccess/>} />
+
+            {/* =========== HOME DASHBOARD ========== */}
+            {/* HOME */}
+            <Route
+            exact
+            path="/home"
+            element={<Home />} />
+
+            <Route
+            exact
+            path="/home/overview/:coinId"
+            element={<Overview />} />
+
+            <Route
+            exact
+            path="/home/overview/coin-buy-sell"
+            element={<BuySellCoin />} />
+
+            <Route
+            exact
+            path="/home/buy-coin/:coinId"
+            element={<BuyCoin />} />
+
+            <Route
+            exact
+            path="/home/sell-coin/:coinId"
+            element={<SellCoin />} />
+
+            <Route
+            exact
+            path="/home/buy-coin/:coinId/order-statement"
+            element={<OrderStatement />} />
+
+            <Route
+            exact
+            path="/home/sell-coin/:coinId/sell-order-statement"
+            element={<SellOrderStatements />} />
+
+            <Route
+            exact
+            path="/home/buy-coin/success/:transactionId"
+            element={<TransactionSuccess />} />
+
+            <Route
+            exact
+            path="/home/sell-coin/success/:transactionId"
+            element={<TransactionSuccess />} />
+
+            {/* PORTFOLIO */}
+            <Route
+            exact
+            path="/portfolio"
+            element={<Portfolio />} />
+
+            {/* LISTING */}
+            <Route
+            exact
+            path="/listing"
+            element={<Listing />} />
+
+            {/* PROFILE */}
+            <Route
+            exact
+            path="/profile"
+            element={<SettingProfile />} />
 
          </Routes>
       </AnimatePresence>
