@@ -50,7 +50,30 @@ export const PrimaryButton = ({
         disabled={disabled}
         onClick={onClick}
         type={type}
-        className={`bg-[#3A0CA3] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white font-body tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
+        className={`bg-[#3A0CA3] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
+            {loading ? (
+                <Spin indicator={antIcon} />
+            ) : (
+                text
+            )}
+        </button>
+    )
+}
+
+export const InfoButton = ({
+    type="button",
+    disabled,
+    onClick,
+    loading,
+    text,
+    height="h-16"
+}) => {
+    return (
+        <button
+        disabled={disabled}
+        onClick={onClick}
+        type={type}
+        className={`bg-[#48A9A6] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
             {loading ? (
                 <Spin indicator={antIcon} />
             ) : (
@@ -73,7 +96,32 @@ export const PrimaryButtonLight = ({
         disabled={disabled}
         onClick={onClick}
         type={type}
-        className={`bg-[#F4EFFE] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-[#3A0CA3] font-body tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
+        className={`bg-[#F4EFFE] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-[#3A0CA3] tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
+            {loading ? (
+                <Spin indicator={antIcon} />
+            ) : (
+                text
+            )}
+        </button>
+    )
+}
+
+export const CustomButton = ({
+    type="button",
+    disabled,
+    onClick,
+    loading,
+    text,
+    bg="bg-[#F4EFFE]",
+    height="h-16",
+    textColor="text-[#3A0CA3]"
+}) => {
+    return (
+        <button
+        disabled={disabled}
+        onClick={onClick}
+        type={type}
+        className={`${bg} rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] ${textColor} tracking-wider font-bold hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
             {loading ? (
                 <Spin indicator={antIcon} />
             ) : (
@@ -96,7 +144,7 @@ export const ErrorButton = ({
         disabled={disabled}
         onClick={onClick}
         type={type}
-        className={`bg-[#D1292D] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white font-body tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
+        className={`bg-[#D1292D] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-[0.15]`}>
             {loading ? (
                 <Spin indicator={antIcon} />
             ) : (

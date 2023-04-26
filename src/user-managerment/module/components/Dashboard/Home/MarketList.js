@@ -1,6 +1,6 @@
 import React from 'react'
-import { HiOutlineSearch } from "react-icons/hi"
 import MarketListCard from './MarketListCard'
+import { SearchInput } from '../../Input'
 
 const MarketList = () => {
     return (
@@ -10,15 +10,7 @@ const MarketList = () => {
             <div className='flex gap-5 w-full'>
                         
                 {/* search bar */}
-                <div className='bg-[#FAFAFB] rounded-lg border border-[#F5F3F6] flex items-center gap-2 pl-5 pr-2 h-[44px] w-full'>
-                    <HiOutlineSearch
-                    className='text-[#ACA6BA]' />
-
-                    <input 
-                    className='placeholder:font-normal placeholder:text-sm placeholder:text-[#ACA6BA] text-sm font-normal text-[#202223] rounded-lg bg-transparent outline-none w-full h-[95%]'
-                    type="search" 
-                    placeholder='Search' />
-                </div>
+                <SearchInput />
             </div>
 
             {/* list container */}

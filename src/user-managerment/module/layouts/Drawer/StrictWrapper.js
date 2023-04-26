@@ -4,13 +4,14 @@ import { IoMdClose } from 'react-icons/io'
 const StrictWrapper = ({
     title,
     closeDrawer,
-    children
+    children,
+    px="px-6"
 }) => {
     return (
-        <div className="w-full h-full flex flex-col px-6 py-5 rounded-t-2xl bg-white relative gap-6">
+        <div className="w-full h-full flex flex-col py-5 rounded-t-2xl bg-white relative gap-6">
 
             {/* Header */}
-            <div className='flex w-full items-center justify-between gap-2 z-[10]'>
+            <div className='flex w-full items-center justify-between gap-2 z-[10] px-6'>
 
                 {/* title */}
                 <h3 className='text-black font-bold text-[22px]'>
@@ -27,7 +28,7 @@ const StrictWrapper = ({
             </div>
 
             {/* Body */}
-            <div className='h-full w-full flex flex-col z-[10] bg-white'>
+            <div className={`h-full w-full flex flex-col z-[10] bg-white ${px}`}>
                 {children}
             </div>
         </div>

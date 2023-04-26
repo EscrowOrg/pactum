@@ -12,6 +12,8 @@ function createPortalRoot() {
 }
 
 const Drawer = ({
+    insertCurve=true,
+    height="",
     isOpen,
     children,
     className,
@@ -87,12 +89,15 @@ const Drawer = ({
         })}>
 
             {/* top curve */}
-            <div className={cn('top-curve', position)}>
-                {" "}
-            </div>
+            {
+                insertCurve &&
+                <div className={cn('top-curve', position)}>
+                    {" "}
+                </div>
+            }
 
             {/* drawer container */}
-            <div className={cn("drawer", position)} role="dialog">
+            <div className={cn(`drawer ${height}`, position)} role="dialog">
                 {children}
             </div>
             

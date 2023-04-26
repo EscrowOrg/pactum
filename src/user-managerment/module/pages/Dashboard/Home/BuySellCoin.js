@@ -76,7 +76,7 @@ const BuySellCoin = () => {
     ]
 
 
-    // HANDLERS
+    // SIDE EFFECTS
     useEffect(()=>{
         const id = searchParams?.get("id");
         if(id) {

@@ -34,6 +34,9 @@ import OrderStatement from "./pages/Dashboard/Home/OrderStatement";
 import TransactionSuccess from "./pages/Dashboard/Home/TransactionSuccess";
 import SellCoin from "./pages/Dashboard/Home/SellCoin";
 import SellOrderStatements from "./pages/Dashboard/Home/SellOrderStatements";
+import CreateWallet from "./pages/Dashboard/Portfolio/CreateWallet";
+import Transactions from "./pages/Dashboard/Portfolio/Transactions";
+import Checkout from "./pages/Dashboard/Portfolio/Checkout";
 
 const MainRouter = () => {
 
@@ -213,6 +216,21 @@ const MainRouter = () => {
             exact
             path="/portfolio"
             element={<Portfolio />} />
+
+            <Route
+            exact
+            path="/portfolio/create-wallet"
+            element={<CreateWallet />} />
+
+            <Route
+            exact
+            path="/portfolio/transactions"
+            element={<Transactions />} />
+
+            <Route
+            exact
+            path="/portfolio/checkout/:coinId"
+            element={<Checkout />} />
 
             {/* LISTING */}
             <Route
