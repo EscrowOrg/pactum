@@ -40,6 +40,7 @@ import Checkout from "./pages/Dashboard/Portfolio/Checkout";
 import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
 import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
 import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
+import CreateListing from "./pages/Dashboard/Listing/CreateListing";
 
 const MainRouter = () => {
 
@@ -255,6 +256,11 @@ const MainRouter = () => {
             exact
             path="/listing"
             element={<Listing />} />
+            
+            <Route
+            exact
+            path="/listing/create-listing"
+            element={<CreateListing />} />
 
             {/* PROFILE */}
             <Route

@@ -3,7 +3,7 @@ import PageWrapper from '../../../layouts/PageWrapper'
 import { RefreshCircle, TransactionMinus } from 'iconsax-react'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import SelectInput from '../../../components/SelectInput'
-import { TextInput, TextLabelInput } from '../../../components/Input'
+import { TextLabelInput } from '../../../components/Input'
 import { useNavigate } from 'react-router-dom'
 
 const BuyCoin = () => {
