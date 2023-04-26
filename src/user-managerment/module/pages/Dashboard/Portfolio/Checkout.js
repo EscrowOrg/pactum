@@ -49,7 +49,7 @@ const Checkout = () => {
                 </div>
                 
                 {/* body */}
-                <div className='w-[92%] flex flex-col mx-auto gap-8 pb-32'>
+                <div className='w-[92%] flex flex-col mx-auto gap-8'>
 
                     {/* chart info */}
                     <CheckoutChartInfo />        
@@ -164,19 +164,22 @@ const Checkout = () => {
                 <div className='w-full bg-white rounded-xl p-4 gap-6 flex flex-col'>
 
                     <Link
-                    to="/home/overview/coin-buy-sell?id=2"
+                    onClick={toggleModal}
+                    to="/portfolio/checkout/kjfkdjfkdfkdsfhjsdhjkfsd/send"
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Send BTC
                     </Link>
 
                     <Link
-                    to="/home/overview/coin-buy-sell?id=1"
+                    onClick={toggleModal}
+                    to="/portfolio/checkout/kjfkdjfkdfkdsfhjsdhjkfsd/receive"
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Receive BTC
                     </Link>
 
                     <Link
-                    to="#"
+                    onClick={toggleModal}
+                    to="/portfolio/swap-bridge"
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Swap BTC
                     </Link>

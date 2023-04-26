@@ -3,11 +3,14 @@ import React from 'react'
 const ActionBtn = ({
     Icon,
     text,
+    onClick
 }) => {
     return (
         <div className='flex flex-col gap-[6px] items-center'>
 
-            <span className='inline-flex items-center justify-center border border-[#D9EFEE] bg-[#F6FBFB] h-[52px] w-[52px] rounded-xl'>
+            <span
+            onClick={onClick} 
+            className='inline-flex items-center justify-center border border-[#D9EFEE] bg-[#F6FBFB] h-[52px] w-[52px] rounded-xl'>
                 <Icon
                 variant='Bulk'
                 size={32}

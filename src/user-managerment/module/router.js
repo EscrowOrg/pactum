@@ -37,6 +37,9 @@ import SellOrderStatements from "./pages/Dashboard/Home/SellOrderStatements";
 import CreateWallet from "./pages/Dashboard/Portfolio/CreateWallet";
 import Transactions from "./pages/Dashboard/Portfolio/Transactions";
 import Checkout from "./pages/Dashboard/Portfolio/Checkout";
+import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
+import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
+import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 
 const MainRouter = () => {
 
@@ -231,6 +234,21 @@ const MainRouter = () => {
             exact
             path="/portfolio/checkout/:coinId"
             element={<Checkout />} />
+
+            <Route
+            exact
+            path="/portfolio/checkout/:coinId/send"
+            element={<SendCoin />} />
+
+            <Route
+            exact
+            path="/portfolio/checkout/:coinId/receive"
+            element={<ReceiveCoin />} />
+
+            <Route
+            exact
+            path="/portfolio/swap-bridge"
+            element={<SwapBridgeCoin />} />
 
             {/* LISTING */}
             <Route

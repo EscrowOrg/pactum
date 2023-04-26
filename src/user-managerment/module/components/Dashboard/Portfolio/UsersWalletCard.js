@@ -67,6 +67,7 @@ const UsersWalletCard = () => {
                 text={"Receive"} />
 
                 <ActionBtn
+                onClick={()=>navigate("/portfolio/swap-bridge")}
                 Icon={ArrowSwapHorizontal}
                 text={"Swap"} />
 

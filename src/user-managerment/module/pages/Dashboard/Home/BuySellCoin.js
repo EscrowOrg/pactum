@@ -5,7 +5,7 @@ import PageWrapper from '../../../layouts/PageWrapper'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import SelectInput from '../../../components/SelectInput';
 import "./buysellcoin.scss"
-import { TextInput, TextLabelInput } from '../../../components/Input'
+import { TextLabelInput } from '../../../components/Input'
 
 const BuySellCoin = () => {
 
