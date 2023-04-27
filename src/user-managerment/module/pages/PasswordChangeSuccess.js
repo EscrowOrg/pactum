@@ -1,8 +1,13 @@
 import React from 'react'
 import PageWrapper from '../layouts/PageWrapper'
 import { PrimaryButton } from '../components/Button'
+import { useNavigate } from 'react-router-dom'
 
 const PasswordChangeSuccess = () => {
+
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
+
     return (
         <PageWrapper>
             <div className="w-full h-full flex flex-col gap-10 px-4 py-10 justify-between">
@@ -30,7 +35,9 @@ const PasswordChangeSuccess = () => {
 
                 {/* button */}
                 <div className='w-full flex flex-col items-stretch'>
+
                     <PrimaryButton
+                    onClick={()=>navigate("/home")}
                     text={"Go to Home"} />
 
                 </div>
