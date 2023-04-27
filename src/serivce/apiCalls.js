@@ -1,5 +1,5 @@
 import axios from "axios";
-import {LOGIN_USERS} from "./url.serice";
+import BASE_URL from "./url.serice";
 
 
 export const LoginCall = async (userCre, dispatch) =>{
@@ -7,7 +7,7 @@ export const LoginCall = async (userCre, dispatch) =>{
         type: "LOGIN_START"
     });
     try {
-        const res = await axios.post(LOGIN_USERS, userCre);
+        const res = await axios.post(`${BASE_URL}/api/User/Login`, userCre);
         dispatch({type: "LOGIN_SUCCESS", payload: res.data});
     } catch (err) {
         

@@ -2,11 +2,23 @@ import React from 'react'
 import PageWrapper from '../layouts/PageWrapper'
 import { PrimaryButton } from '../components/Button'
 import { useNavigate } from 'react-router-dom'
+import BASE_URL from '../../../serivce/url.serice'
+import axios from 'axios'
 
 const PasswordChangeSuccess = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const passwordChange = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/home")
+        } catch (error) {
+            
+        }
+     }
 
     return (
         <PageWrapper>
@@ -37,7 +49,7 @@ const PasswordChangeSuccess = () => {
                 <div className='w-full flex flex-col items-stretch'>
 
                     <PrimaryButton
-                    onClick={()=>navigate("/home")}
+                    onClick={passwordChange}
                     text={"Go to Home"} />
 
                 </div>

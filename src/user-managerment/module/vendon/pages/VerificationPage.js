@@ -3,6 +3,8 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BASE_URL from "../../../../serivce/url.serice";
 
 const VendorVerificationPage = () => {
 
@@ -12,6 +14,15 @@ const VendorVerificationPage = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const getPine = async() =>{
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/vendor-verification-success")
+        } catch (error) {
+            
+        }
+     }
 
     return (
         <PageWrapper>
@@ -68,7 +79,7 @@ const VendorVerificationPage = () => {
                         {/* button */}
                         <PrimaryButton
                         disabled={!isComplete || verificationCode.length<4}
-                        onClick={()=>navigate("/vendor-verification-success")}
+                        onClick={getPine}
                         text={"Sign up"} />
                     </div>
                 </div>

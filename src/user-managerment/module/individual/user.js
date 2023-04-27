@@ -1,10 +1,12 @@
 import { FcGoogle } from "react-icons/fc"
 import { BsApple } from "react-icons/bs"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../layouts/PageWrapper";
 import { PrimaryButton } from "../components/Button";
 import { PasswordInput, TextInput } from "../components/Input";
+import { AuthContext } from "../../../context/AuthContext";
+import { LoginCall } from "../../../serivce/apiCalls";
 
 const LoginUser  = () =>{
 
@@ -19,6 +21,7 @@ const LoginUser  = () =>{
       action: ""
    })
 
+   const {user, isfetching, dispatch} = useContext(AuthContext);
 
    // HANDLERS
     const  handleChange = (e)=>{
@@ -28,7 +31,13 @@ const LoginUser  = () =>{
          [name]: value
       })
    }
+  
+   const handleSubmit = (e)=>{
+      e.preventDefault();
+      LoginCall({users},dispatch);
 
+      return user;
+   }
     return(
       <PageWrapper>
          <div className="w-full h-full flex flex-col gap-8 px-4 py-10">
@@ -47,7 +56,7 @@ const LoginUser  = () =>{
             {/* form */}
             <form
             className="flex flex-col gap-5 w-full h-full"
-            onSubmit={(e) => e.preventDefault()}>
+            onSubmit={handleSubmit}>
 
                   {/* email input container */}
                   <label className="flex flex-col gap-2 w-full">
@@ -96,7 +105,7 @@ const LoginUser  = () =>{
                      {/* Login button */}
                      <div className='w-full flex flex-col items-stretch'>
                         <PrimaryButton
-                        text={"Log in"} />
+                        text={"Log in"}  disabled={isfetching}/>
                      </div>
 
                      {/* google and apple sign in */}

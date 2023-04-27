@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {Routes, Route, useLocation} from "react-router-dom"
 import Profile from "./individual/pages/user-profile";
 import RegistrationIndividual from "./individual/pages/individual";
@@ -41,12 +41,13 @@ import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
 import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
 import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 import CreateListing from "./pages/Dashboard/Listing/CreateListing";
+import { AuthContext } from "../../context/AuthContext";
 
 const MainRouter = () => {
 
    // DATA INITIALIZATION
    const location = useLocation()
-
+   const {user} = useContext(AuthContext)
    return(
       <AnimatePresence
       mode="wait">

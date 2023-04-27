@@ -2,12 +2,20 @@ import React from 'react'
 import PageWrapper from '../../layouts/PageWrapper'
 import { PrimaryButton, SecondaryButton } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import BASE_URL from '../../../../serivce/url.serice'
 
 const IndividualPinSuccess = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-
+    const getMessages = async (e)=>{
+        try {
+            await axios.get(`${BASE_URL}`)
+        } catch (error) {
+            
+        }
+    }
     return (
         <PageWrapper>
             <div className="w-full h-full flex flex-col gap-10 px-4 py-10 justify-between">
@@ -36,8 +44,9 @@ const IndividualPinSuccess = () => {
                 {/* button */}
                 <div className='w-full flex flex-col items-stretch gap-6'>
                     <PrimaryButton
-                    text={"Verify Identity"} />
-
+                    text={"Verify Identity"} 
+                    onSubmit={getMessages}
+                    />
                     <SecondaryButton
                     text={"Skip for Later"} />
                 </div>

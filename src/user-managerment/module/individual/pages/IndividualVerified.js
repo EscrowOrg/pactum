@@ -2,11 +2,23 @@ import React from 'react'
 import PageWrapper from '../../layouts/PageWrapper'
 import { PrimaryButton } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import BASE_URL from '../../../../serivce/url.serice'
 
 const IndividualVerified = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const verifyPine = async(e)=>{
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/individual-profile")
+        } catch (error) {
+            
+        }
+        
+    }
 
     return (
         <PageWrapper>
@@ -35,7 +47,8 @@ const IndividualVerified = () => {
                 {/* button */}
                 <div className='w-full flex flex-col items-stretch'>
                     <PrimaryButton
-                    onClick={()=>navigate("/individual-profile")}
+                    onClick={verifyPine}
+
                     text={"Okay, let’s go!"} />
                 </div>
             </div>

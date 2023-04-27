@@ -4,6 +4,8 @@ import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { TextInput } from "../../components/Input";
 import SelectInput from "../../components/SelectInput";
+import axios from "axios";
+import BASE_URL from "../../../../serivce/url.serice";
 
 const MoreInfo = () => {
 
@@ -39,6 +41,16 @@ const MoreInfo = () => {
             })
     }
 
+    const handleSubmit = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+
+        } catch (error) {
+            
+        }
+    }
+
     return (
         <PageWrapper>
             <div className="w-full h-full flex flex-col gap-10 px-4 py-10">
@@ -60,7 +72,7 @@ const MoreInfo = () => {
                 {/* form */}
                 <form
                 className="flex flex-col gap-5 w-full h-full"
-                onSubmit={(e) => e.preventDefault()}>
+                onSubmit={handleSubmit}>
 
                     {/* Company's email address container */}
                     <label className="flex flex-col gap-2 w-full">

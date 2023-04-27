@@ -3,6 +3,8 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../../../serivce/url.serice";
+import axios from "axios";
 
 const VendorCreatePin = () => {
 
@@ -12,6 +14,16 @@ const VendorCreatePin = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const handleSubmit = async(e)=>{
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/vendor-create-success")
+
+        } catch (error) {
+            
+        }
+    }
 
     return (
         <PageWrapper>
@@ -63,7 +75,7 @@ const VendorCreatePin = () => {
                         {/* button */}
                         <PrimaryButton
                         disabled={!isComplete || verificationCode.length<4}
-                        onClick={()=>navigate("/vendor-create-success")}
+                        onClick={handleSubmit}
                         text={"Sign up"} />
                     </div>
                 </div>

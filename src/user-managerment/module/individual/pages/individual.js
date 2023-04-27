@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
@@ -6,6 +6,9 @@ import { PasswordInput, TextInput } from "../../components/Input";
 import Checkbox from "../../components/Checkbox";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
+import axios from "axios";
+import BASE_URL from "../../../../serivce/url.serice";
+//import {REGISTRATION_USER} from "../../../../serivce/url.serice";
 
 const RegistrationIndividual = ()=>{
 
@@ -21,6 +24,9 @@ const RegistrationIndividual = ()=>{
             open: false
     })
 
+    const password = useRef();
+    const emailAddress = useRef();
+
 
     // HANDLERS
     const handleChange = (e)=>{
@@ -35,6 +41,17 @@ const RegistrationIndividual = ()=>{
             ...formData,
             action: e.target.value
          })
+    }
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+
+        try{
+          await axios.post(`${BASE_URL}/api/User/BasicRegistration`)
+           navigate("/loginIndividual");
+        }catch(error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -54,7 +71,7 @@ const RegistrationIndividual = ()=>{
                 {/* form */}
                 <form
                 className="flex flex-col gap-5 w-full h-full"
-                onSubmit={(e) => e.preventDefault()}>
+                onSubmit={handleSubmit}>
 
                     {/* Company's email address container */}
                     <label className="flex flex-col gap-2 w-full">
