@@ -12,10 +12,22 @@ const SelectInput = ({
     isRtl=false,
     isSearchable=false,
     name,
+    menuIsOpen,
+    value,
+    onChange,
+    onBlur,
+    inputValue,
+    defaultInputValue
 }) => {
 
     return (
         <Select 
+        menuIsOpen={menuIsOpen}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        inputValue={inputValue}
+        defaultInputValue={defaultInputValue}
         className={"my-select-comp"}
         classNamePrefix={classNamePrefix}
         defaultValue={defaultValue}

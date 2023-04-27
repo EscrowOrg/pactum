@@ -1,7 +1,6 @@
 import React from 'react'
 import { PrimaryButton } from './Button'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
 
 const MultiWalletView = ({
     title,

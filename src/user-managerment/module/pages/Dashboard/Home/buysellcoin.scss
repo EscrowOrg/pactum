@@ -1,0 +1,35 @@
+.active-action1 {
+    color: #3A0CA3;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        will-change: auto;
+        height: 4px;
+        width: 4px;
+        border-radius: 50%;
+        background-color: #3A0CA3;
+    }
+}
+
+.active-action2 {
+    color: #D1292D;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        will-change: auto;
+        height: 4px;
+        width: 4px;
+        border-radius: 50%;
+        background-color: #D1292D;
+    }
+}
