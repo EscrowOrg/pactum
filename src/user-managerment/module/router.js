@@ -42,6 +42,7 @@ import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
 import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 import CreateListing from "./pages/Dashboard/Listing/CreateListing";
 import { AuthContext } from "../../context/AuthContext";
+import EditProfile from "./pages/Dashboard/Profile/EditProfile";
 
 const MainRouter = () => {
 
@@ -74,6 +75,7 @@ const MainRouter = () => {
             element={<Onborading />} 
             excel/>
 
+
             {/* ============= VENDOR ================= */}
             {/* REGISTRATION VENDOR */}
             <Route 
@@ -105,7 +107,6 @@ const MainRouter = () => {
             path="/vendor-create-success" 
             element={<VendorPinSuccess />}/>
 
-            {/* <Route path="/loginVendon" element={<LoginVendon/>} />  */}
 
             {/* ============= INDIVIDUALS ================= */}
             {/* INDIVIDUAL REGISTER */}
@@ -143,6 +144,7 @@ const MainRouter = () => {
             path="/individual-create-success" 
             element={<IndividualPinSuccess />}/>
 
+
             {/* ============= LOGIN ================= */}
             {/* LOGIN USER */}
             <Route 
@@ -168,6 +170,7 @@ const MainRouter = () => {
             <Route 
             path="/reset-password/success" 
             element={<PasswordChangeSuccess/>} />
+
 
             {/* =========== HOME DASHBOARD ========== */}
             {/* HOME */}
@@ -268,6 +271,11 @@ const MainRouter = () => {
             exact
             path="/profile"
             element={<SettingProfile />} />
+
+            <Route
+            exact
+            path="/profile/edit-profile"
+            element={<EditProfile />} />
 
          </Routes>
       </AnimatePresence>
