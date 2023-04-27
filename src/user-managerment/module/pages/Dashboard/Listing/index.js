@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -38,13 +38,13 @@ const Listing = () => {
                         variant='Bulk' />
 
                         <h4 className='text-sm font-bold text-[#F4EFFE]'>
-                            New User
+                            Create
                         </h4>
                     </div>
                 </div>
 
                 {/* body */}
-                <div className='w-full h-full flex flex-col justify-center items-center mx-auto gap-8 pb-32'>
+                <div className='w-full h-full flex flex-col justify-center items-center mx-auto gap-8 pb-5'>
                     
                     
                     {/* container */}

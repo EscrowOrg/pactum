@@ -222,12 +222,12 @@ const Overview = () => {
                         <div className='w-full grid grid-cols-[35%_35%_20%] gap-3 justify-center bg-white py-4'>
 
                             <WarningButton1
-                            height='h-16'
+                            height='h-14'
                             onClick={()=>navigate("/home/overview/coin-buy-sell?id=2")}
                             text={"Sell BTC"} />
 
                             <PrimaryButton
-                            height='h-16'
+                            height='h-14'
                             onClick={()=>navigate("/home/overview/coin-buy-sell?id=1")}
                             text={"Buy BTC"} />
 

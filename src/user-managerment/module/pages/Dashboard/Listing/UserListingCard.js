@@ -36,7 +36,7 @@ const UserListingCard = () => {
             </div>
 
             {/* body content */}
-            <div className='h-full w-full px-4 bg-gray-100 flex flex-col py-3 gap-5'>
+            <div className='h-full w-full px-4 bg-gray-100 flex flex-col pt-3 pb-20 overflow-auto gap-5'>
 
                 {
                     listData.map((listD, index)=>(

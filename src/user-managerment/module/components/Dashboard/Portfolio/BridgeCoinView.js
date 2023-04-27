@@ -27,7 +27,7 @@ const BridgeCoinView = () => {
             </label>
             
             {/* Amount*/}
-            <label className="flex flex-col gap-2 w-[92%] mx-auto">
+            <label className="flex flex-col gap-2 w-full">
 
                 {/* label text */}
                 <div className='w-full flex items-center justify-between'>
