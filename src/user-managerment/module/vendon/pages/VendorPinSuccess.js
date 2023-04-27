@@ -2,11 +2,21 @@ import React from 'react'
 import PageWrapper from '../../layouts/PageWrapper'
 import { PrimaryButton, SecondaryButton } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import BASE_URL from '../../../../serivce/url.serice'
 
 const VendorPinSuccess = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const getMessages = async (e)=>{
+        try {
+            await axios.get(`${BASE_URL}`)
+        } catch (error) {
+            
+        }
+    }
 
     return (
         <PageWrapper>
@@ -36,7 +46,9 @@ const VendorPinSuccess = () => {
                 {/* button */}
                 <div className='w-full flex flex-col items-stretch gap-6'>
                     <PrimaryButton
-                    text={"Verify Identity"} />
+                    text={"Verify Identity"}
+                    onClick={getMessages}
+                     />
 
                     <SecondaryButton
                     text={"Skip for Later"} />

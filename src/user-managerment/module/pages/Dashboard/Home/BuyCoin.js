@@ -5,6 +5,8 @@ import { BackButton, PrimaryButton } from '../../../components/Button'
 import SelectInput from '../../../components/SelectInput'
 import { TextLabelInput } from '../../../components/Input'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import BASE_URL from '../../../../../serivce/url.serice'
 
 const BuyCoin = () => {
 
@@ -31,6 +33,16 @@ const BuyCoin = () => {
         })
     }
 
+    const verified = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/reset-password")       
+         } catch (error) {
+            
+        }
+     }
+    
     return (
         <PageWrapper>
             <div className="w-full h-full flex flex-col py-5 gap-8">

@@ -4,6 +4,8 @@ import PageWrapper from "../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../components/Button";
 import { PasswordInput } from "../components/Input";
 import Checkbox from "../components/Checkbox";
+import axios from "axios";
+import BASE_URL from "../../../serivce/url.serice";
 
 const ResetPassword = () => {
 
@@ -21,6 +23,15 @@ const ResetPassword = () => {
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
+    const passwordReset = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/reset-password/success")
+        } catch (error) {
+            
+        }
+     }
 
     // HANDLERS
     const handleChange = (e)=>{
@@ -62,7 +73,7 @@ const ResetPassword = () => {
                 {/* form */}
                 <form
                 className="flex flex-col gap-5 w-full h-full"
-                onSubmit={(e) => e.preventDefault()}>
+                onSubmit={passwordReset}>
 
                         {/* password container */}
                         <label className="flex flex-col gap-2 w-full">
@@ -138,7 +149,6 @@ const ResetPassword = () => {
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
                                 disabled={!(data.formData.password && data.formData.retypePassword)}
-                                onClick={()=>navigate("/reset-password/success")}
                                 text={"Confirm Password"} />
                             </div>
                         </div>

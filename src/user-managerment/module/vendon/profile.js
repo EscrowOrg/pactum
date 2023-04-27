@@ -4,6 +4,8 @@ import { TextInput } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../components/Button";
 import PhoneINumberInput from "../components/PhoneINumberInput";
+import axios from "axios";
+import BASE_URL from "../../../serivce/url.serice";
 
 const ProfileVendon = ()=>{
 
@@ -29,6 +31,15 @@ const ProfileVendon = ()=>{
     })
   }
 
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    try {
+      await axios.post(`${BASE_URL}`)
+    } catch (error) {
+      
+    }
+  }
+
   return(
     <PageWrapper>
       <div className="w-full h-full flex flex-col gap-8 px-4 py-10">
@@ -47,7 +58,7 @@ const ProfileVendon = ()=>{
         {/* form */}
         <form
         className="flex flex-col gap-5 w-full h-full"
-        onSubmit={(e) => e.preventDefault()}>
+        onSubmit={handleSubmit}>
 
           {/* email input container */}
           <label className="flex flex-col gap-2 w-full">

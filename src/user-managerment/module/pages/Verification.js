@@ -3,6 +3,8 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BASE_URL from "../../../serivce/url.serice";
 
 const Verification = () => {
 
@@ -12,6 +14,16 @@ const Verification = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+    const verified = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/reset-password")       
+         } catch (error) {
+            
+        }
+     }
 
     return (
         <PageWrapper>
@@ -68,7 +80,7 @@ const Verification = () => {
                         {/* button */}
                         <PrimaryButton
                         disabled={!isComplete || verificationCode.length<4}
-                        onClick={()=>navigate("/reset-password")}
+                        onClick={verified}
                         text={"Sign up"} />
                     </div>
 

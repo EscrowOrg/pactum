@@ -3,6 +3,8 @@ import PageWrapper from "../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../components/Button";
 import { TextInput } from "../components/Input";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../../serivce/url.serice";
+import axios from "axios";
 
 const ForgotPassword = () => {
 
@@ -18,7 +20,15 @@ const ForgotPassword = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-
+    const getPine = async(e) =>{
+        e.preventDefault()
+        try {
+            await axios.post(`${BASE_URL}`)
+            navigate("/verification")
+        } catch (error) {
+            
+        }
+     }
 
     // HANDLERS
     const handleChange = (e)=>{
@@ -54,7 +64,7 @@ const ForgotPassword = () => {
                 {/* form */}
                 <form
                 className="flex flex-col justify-between gap-5 w-full h-full"
-                onSubmit={(e) => e.preventDefault()}>
+                onSubmit={getPine}>
 
                     {/* email input container */}
                     <label className="flex flex-col gap-2 w-full">
@@ -77,7 +87,7 @@ const ForgotPassword = () => {
 
                         {/* button */}
                         <PrimaryButton
-                        onClick={()=>navigate("/verification")}
+                        //onClick={()=>navigate("/verification")}
                         disabled={!formData.formData.email}
                         text={"Sign up"} />
                     </div>
