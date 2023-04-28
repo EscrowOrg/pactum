@@ -1,12 +1,13 @@
 import { FcGoogle } from "react-icons/fc"
 import { BsApple } from "react-icons/bs"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../layouts/PageWrapper";
 import { PrimaryButton } from "../components/Button";
 import { PasswordInput, TextInput } from "../components/Input";
 import { AuthContext } from "../../../context/AuthContext";
 import { LoginCall } from "../../../serivce/apiCalls";
+import { toast } from "react-toastify";
 
 const LoginUser  = () =>{
 
@@ -16,12 +17,11 @@ const LoginUser  = () =>{
 
    // STATES
    const [users, setUsers] = useState({
-      companyEmail: "",
+      emailAddress: "",
       password: "",
-      action: ""
    })
 
-   const {user, isfetching, dispatch} = useContext(AuthContext);
+   const {user, isfetching, dispatch, error: loginError} = useContext(AuthContext);
 
    // HANDLERS
     const  handleChange = (e)=>{
@@ -34,10 +34,24 @@ const LoginUser  = () =>{
   
    const handleSubmit = (e)=>{
       e.preventDefault();
-      LoginCall({users},dispatch);
+      LoginCall({
+         loginRequest: {
+            email: users.emailAddress,
+            password: users.password
+         }
+      },dispatch);
 
       return user;
    }
+
+   useEffect(()=>{
+      console.log(user, isfetching)
+   }, [user, isfetching])
+
+   useEffect(()=>{
+      if(loginError)
+      toast.error("Login was unSuccessfull")
+   }, [loginError])
     return(
       <PageWrapper>
          <div className="w-full h-full flex flex-col gap-8 px-4 py-10">
@@ -68,8 +82,8 @@ const LoginUser  = () =>{
 
                      {/* input field */}
                      <TextInput
-                     name={"companyEmail"}
-                     value={users.companyEmail}
+                     name={"emailAddress"}
+                     value={users.emailAddress}
                      onChange={handleChange}
                      placeholderText={"Enter email address"} />
                   </label>
@@ -105,7 +119,10 @@ const LoginUser  = () =>{
                      {/* Login button */}
                      <div className='w-full flex flex-col items-stretch'>
                         <PrimaryButton
-                        text={"Log in"}  disabled={isfetching}/>
+                        type="submit"
+                        loading={isfetching}
+                        text={"Log in"}  
+                        disabled={isfetching}/>
                      </div>
 
                      {/* google and apple sign in */}

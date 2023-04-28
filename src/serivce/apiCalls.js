@@ -7,10 +7,15 @@ export const LoginCall = async (userCre, dispatch) =>{
         type: "LOGIN_START"
     });
     try {
-        const res = await axios.post(`${BASE_URL}/api/User/Login`, userCre);
+        const res = await axios.post(`${BASE_URL}/api/User/Login`, userCre, {
+            headers: {
+                'accept': 'text/plain',
+                'Content-Type': 'application/json'
+            }
+        });
         dispatch({type: "LOGIN_SUCCESS", payload: res.data});
     } catch (err) {
-        
+        console.log(err)
         dispatch({type: "LOGIN_FAILURE", payload: err});
     }
 }
