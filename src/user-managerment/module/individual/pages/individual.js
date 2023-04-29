@@ -9,7 +9,7 @@ import { BsApple } from "react-icons/bs";
 import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
 import useMakeReq from "../../hooks/useMakeReq";
-//import {REGISTRATION_USER} from "../../../../serivce/url.serice";
+import { toast } from "react-toastify";
 
 const RegistrationIndividual = ()=>{
 
@@ -25,8 +25,9 @@ const RegistrationIndividual = ()=>{
     const {
         loading,
         data,
-        makePostRequest
-    } = useMakeReq("/api/User/BasicRegistration", formData)
+        makePostRequest,
+        isSuccessful
+    } = useMakeReq()
     const password = useRef();
     const emailAddress = useRef();
 
@@ -47,16 +48,22 @@ const RegistrationIndividual = ()=>{
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
-        makePostRequest();
-        console.log(makePostRequest())
+        makePostRequest(
+            `${BASE_URL}/api/User/BasicRegistration`, 
+            formData
+        );
     }
 
 
     // SIDE EFFECTS
     useEffect(()=>{
-        console.log(data)
-        console.log("loading: ", loading)
-    }, [data, loading])
+        if(isSuccessful!==true && data) {
+            toast.error(data.message)
+        } else if(isSuccessful===true && data) {
+            toast.success(data.message)
+            navigate("/individual-verification-page")
+        }
+    }, [data, isSuccessful])
 
     return(
         <PageWrapper>
@@ -157,7 +164,6 @@ const RegistrationIndividual = ()=>{
                                 disabled={!(formData.emailAddress || formData.password) || loading}
                                 loading={loading}
                                 type="submit"
-                                // onClick={()=>navigate("/individual-verification-page")}
                                 text={"Sign up"} />
                             </div>
 
