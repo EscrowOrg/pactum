@@ -14,14 +14,11 @@ const IndividualVerificationPage = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-     const getPine = async() =>{
-        try {
-            await axios.post(`${BASE_URL}`)
+     const getPine = () =>{
+        if(verificationCode==="4554") {
             navigate("/individual-verification-success")
-        } catch (error) {
-            
         }
-     }
+    }
     return (
         <PageWrapper>
             

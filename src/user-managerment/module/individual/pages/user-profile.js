@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../layouts/PageWrapper";
 import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,16 @@ import { PrimaryButton } from "../../components/Button";
 import PhoneINumberInput from "../../components/PhoneINumberInput";
 import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
+import { getFromLocalStorage } from "../../helpers/localStorageMethods";
+import useMakeReq from "../../hooks/useMakeReq";
+import { toast } from "react-toastify";
+import { isEmpty } from "../../helpers/isEmpty";
 
 const Profile = ()=>{
 
     // STATES
     const [formData, setFormData] = useState({
+      userId: "",
       fullName: "",
       userName: "",
       phoneNumber: "",
@@ -20,6 +25,12 @@ const Profile = ()=>{
   
     // DATA INITIALIZATION
     const navigate = useNavigate()
+    const {
+        loading,
+        data,
+        makePostRequest,
+        isSuccessful
+    } = useMakeReq()
   
   
     // HANDLERS
@@ -30,14 +41,45 @@ const Profile = ()=>{
           [name]: value
       })
     }
-    const handleSubmit = async (e)=>{
+    const handleSubmit = (e)=>{
       e.preventDefault()
-      try {
-        await axios.post(`${BASE_URL}`)
-      } catch (error) {
-        
-      }
+      makePostRequest(
+        `${BASE_URL}/api/User/CompleteRegistration`, 
+        {
+          completeRegistration: {
+            userId: formData.userId,
+            fullName: formData.fullName,
+            userName: formData.userName,
+            phoneNumber: formData.phoneNumber,
+            address: formData.address
+          }
+        }, 
+      );
     }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+      const uId = getFromLocalStorage("userId")
+      if(!(isEmpty(uId))) {
+        setFormData(prevState=>({
+          ...prevState,
+          userId: uId
+        }))
+      } else {
+        toast.error("You have to sign up first!")
+        navigate("/individual-register")
+      }
+    }, [])
+
+    useEffect(()=>{
+      if(isSuccessful!==true && !(isEmpty(data))) {
+          toast.error(data.message)
+      } else if(isSuccessful===true && !(isEmpty(data))) {
+          toast.success(data.message)
+          navigate("/individual-create-p")
+      }
+  }, [data, isSuccessful])
 
   return(
     <PageWrapper>
@@ -102,7 +144,9 @@ const Profile = ()=>{
             </span>
 
             {/* input field */}
-            <PhoneINumberInput />
+            <PhoneINumberInput
+            value={formData.phoneNumber}
+            onChange={(e)=>setFormData(prevState=>({...prevState, phoneNumber: e}))} />
           </label>
 
           {/* company's physical address (optional) container */}
@@ -111,7 +155,7 @@ const Profile = ()=>{
             {/* label text */}
             <span
             className="font-normal text-xs text-black">
-                Company Physical Address (Optional)
+                Address (Optional)
             </span>
 
             {/* input field */}
@@ -128,7 +172,8 @@ const Profile = ()=>{
             {/* continue button */}
             <div className='w-full flex flex-col items-stretch'>
                 <PrimaryButton
-                onClick={()=>navigate("/individual-more-info")}
+                loading={loading}
+                type="submit"
                 disabled={!(formData.fullName && formData.userName && formData.address)}
                 text={"Continue"} />
             </div>

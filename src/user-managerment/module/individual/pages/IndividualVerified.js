@@ -10,14 +10,8 @@ const IndividualVerified = () => {
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
-    const verifyPine = async(e)=>{
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/individual-profile")
-        } catch (error) {
-            
-        }
-        
+    const verifyPine = ()=>{
+        navigate("/individual-profile")
     }
 
     return (

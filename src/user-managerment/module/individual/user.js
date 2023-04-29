@@ -21,7 +21,12 @@ const LoginUser  = () =>{
       password: "",
    })
 
-   const {user, isfetching, dispatch, error: loginError} = useContext(AuthContext);
+   const {
+      user, 
+      isfetching, 
+      dispatch, 
+      error: loginError
+   } = useContext(AuthContext);
 
    // HANDLERS
     const  handleChange = (e)=>{
@@ -34,12 +39,7 @@ const LoginUser  = () =>{
   
    const handleSubmit = (e)=>{
       e.preventDefault();
-      LoginCall({
-         loginRequest: {
-            email: users.emailAddress,
-            password: users.password
-         }
-      },dispatch);
+      LoginCall(users,dispatch);
 
       return user;
    }

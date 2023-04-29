@@ -8,7 +8,13 @@ export const LoginCall = async (userCre, dispatch) =>{
         type: "LOGIN_START"
     });
     try {
-        const res = await axios.post(`${BASE_URL}/api/User/Login`, userCre, {
+        const res = await axios.post(`${BASE_URL}/api/User/Login`, 
+        {
+            loginRequest: {
+                email: userCre.emailAddress,
+                password: userCre.password
+            }
+        }, {
             headers: {
                 'accept': 'text/plain',
                 'Content-Type': 'application/json'

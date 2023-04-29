@@ -13,13 +13,7 @@ const useMakeReq = () => {
         setLoading(true)
 
         try {
-            const {data} = await axios.post(url, 
-            {
-                basicRegistration: {
-                    email: formData.emailAddress,
-                    password: formData.password
-                }
-            }, 
+            const {data} = await axios.post(url, formData,
             {
                 headers: {
                     'Content-Type': 'application/json',
