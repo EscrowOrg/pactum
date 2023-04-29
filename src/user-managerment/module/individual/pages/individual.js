@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
@@ -8,22 +8,25 @@ import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
+import useMakeReq from "../../hooks/useMakeReq";
 //import {REGISTRATION_USER} from "../../../../serivce/url.serice";
 
 const RegistrationIndividual = ()=>{
 
-    // DATA INITIALIZATION
-    const navigate = useNavigate()
-
-
     // STATES
     const [formData, setFormData] = useState({
-            emailAddress: "",
-            password: "",
-            action: "",
-            open: false
+        emailAddress: "",
+        password: "",
     })
 
+
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
+    const {
+        loading,
+        data,
+        makePostRequest
+    } = useMakeReq("/api/User/BasicRegistration", formData)
     const password = useRef();
     const emailAddress = useRef();
 
@@ -42,17 +45,18 @@ const RegistrationIndividual = ()=>{
             action: e.target.value
          })
     }
-
-    const handleSubmit = async (e) =>{
+    const handleSubmit = (e) =>{
         e.preventDefault();
-
-        try{
-          await axios.post(`${BASE_URL}/api/User/BasicRegistration`)
-           navigate("/loginIndividual");
-        }catch(error) {
-            console.log(error);
-        }
+        makePostRequest();
+        console.log(makePostRequest())
     }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        console.log(data)
+        console.log("loading: ", loading)
+    }, [data, loading])
 
     return(
         <PageWrapper>
@@ -150,8 +154,10 @@ const RegistrationIndividual = ()=>{
                             {/* signup button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                disabled={!(formData.emailAddress || formData.password)}
-                                onClick={()=>navigate("/individual-verification-page")}
+                                disabled={!(formData.emailAddress || formData.password) || loading}
+                                loading={loading}
+                                type="submit"
+                                // onClick={()=>navigate("/individual-verification-page")}
                                 text={"Sign up"} />
                             </div>
 
