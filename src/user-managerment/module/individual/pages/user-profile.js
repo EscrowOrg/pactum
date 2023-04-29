@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../components/Button";
 import PhoneINumberInput from "../../components/PhoneINumberInput";
 import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
-import { getFromLocalStorage } from "../../helpers/localStorageMethods";
+import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
 import useMakeReq from "../../hooks/useMakeReq";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
@@ -77,7 +77,8 @@ const Profile = ()=>{
           toast.error(data.message)
       } else if(isSuccessful===true && !(isEmpty(data))) {
           toast.success(data.message)
-          navigate("/individual-create-p")
+          deleteItemFromLocalStorage("userId")
+          navigate("/individual-create-p", { replace: true })
       }
   }, [data, isSuccessful])
 
