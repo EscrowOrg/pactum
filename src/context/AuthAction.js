@@ -13,6 +13,11 @@ export const LoginFailure = (error) =>({
     payload: error
 })
 
+// LOGOUT
+export const Logout = () => ({
+    type: "LOGOUT"
+})
+
 // USER BASIC REGISTRATION
 export const UserBasicRegStart = (userCre) =>({
     type: "USER_BASIC_REG_START",
