@@ -27,6 +27,13 @@ export const LoginCall = async (userCre, dispatch) =>{
     }
 }
 
+// Logout
+export const Logout = (dispatch) => {
+    dispatch({
+        type: "LOGOUT"
+    })
+}
+
 // User Basic Registration
 // export const UserBasicRegCall = async (userData, dispatch) =>{
 //     dispatch({

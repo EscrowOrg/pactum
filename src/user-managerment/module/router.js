@@ -43,12 +43,13 @@ import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 import CreateListing from "./pages/Dashboard/Listing/CreateListing";
 import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "./pages/Dashboard/Profile/EditProfile";
+import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 
 const MainRouter = () => {
 
    // DATA INITIALIZATION
    const location = useLocation()
-   const {user} = useContext(AuthContext)
+   
    return(
       <AnimatePresence
       mode="wait">
@@ -173,109 +174,112 @@ const MainRouter = () => {
 
 
             {/* =========== HOME DASHBOARD ========== */}
-            {/* HOME */}
-            <Route
-            exact
-            path="/home"
-            element={<Home />} />
+            <Route element={<PrivateRoutes />}>
 
-            <Route
-            exact
-            path="/home/overview/:coinId"
-            element={<Overview />} />
+               {/* HOME */}
+               <Route
+               exact
+               path="/home"
+               element={<Home />} />
 
-            <Route
-            exact
-            path="/home/overview/coin-buy-sell"
-            element={<BuySellCoin />} />
+               <Route
+               exact
+               path="/home/overview/:coinId"
+               element={<Overview />} />
 
-            <Route
-            exact
-            path="/home/buy-coin/:coinId"
-            element={<BuyCoin />} />
+               <Route
+               exact
+               path="/home/overview/coin-buy-sell"
+               element={<BuySellCoin />} />
 
-            <Route
-            exact
-            path="/home/sell-coin/:coinId"
-            element={<SellCoin />} />
+               <Route
+               exact
+               path="/home/buy-coin/:coinId"
+               element={<BuyCoin />} />
 
-            <Route
-            exact
-            path="/home/buy-coin/:coinId/order-statement"
-            element={<OrderStatement />} />
+               <Route
+               exact
+               path="/home/sell-coin/:coinId"
+               element={<SellCoin />} />
 
-            <Route
-            exact
-            path="/home/sell-coin/:coinId/sell-order-statement"
-            element={<SellOrderStatements />} />
+               <Route
+               exact
+               path="/home/buy-coin/:coinId/order-statement"
+               element={<OrderStatement />} />
 
-            <Route
-            exact
-            path="/home/buy-coin/success/:transactionId"
-            element={<TransactionSuccess />} />
+               <Route
+               exact
+               path="/home/sell-coin/:coinId/sell-order-statement"
+               element={<SellOrderStatements />} />
 
-            <Route
-            exact
-            path="/home/sell-coin/success/:transactionId"
-            element={<TransactionSuccess />} />
+               <Route
+               exact
+               path="/home/buy-coin/success/:transactionId"
+               element={<TransactionSuccess />} />
 
-            {/* PORTFOLIO */}
-            <Route
-            exact
-            path="/portfolio"
-            element={<Portfolio />} />
+               <Route
+               exact
+               path="/home/sell-coin/success/:transactionId"
+               element={<TransactionSuccess />} />
 
-            <Route
-            exact
-            path="/portfolio/create-wallet"
-            element={<CreateWallet />} />
+               {/* PORTFOLIO */}
+               <Route
+               exact
+               path="/portfolio"
+               element={<Portfolio />} />
 
-            <Route
-            exact
-            path="/portfolio/transactions"
-            element={<Transactions />} />
+               <Route
+               exact
+               path="/portfolio/create-wallet"
+               element={<CreateWallet />} />
 
-            <Route
-            exact
-            path="/portfolio/checkout/:coinId"
-            element={<Checkout />} />
+               <Route
+               exact
+               path="/portfolio/transactions"
+               element={<Transactions />} />
 
-            <Route
-            exact
-            path="/portfolio/checkout/:coinId/send"
-            element={<SendCoin />} />
+               <Route
+               exact
+               path="/portfolio/checkout/:coinId"
+               element={<Checkout />} />
 
-            <Route
-            exact
-            path="/portfolio/checkout/:coinId/receive"
-            element={<ReceiveCoin />} />
+               <Route
+               exact
+               path="/portfolio/checkout/:coinId/send"
+               element={<SendCoin />} />
 
-            <Route
-            exact
-            path="/portfolio/swap-bridge"
-            element={<SwapBridgeCoin />} />
+               <Route
+               exact
+               path="/portfolio/checkout/:coinId/receive"
+               element={<ReceiveCoin />} />
 
-            {/* LISTING */}
-            <Route
-            exact
-            path="/listing"
-            element={<Listing />} />
-            
-            <Route
-            exact
-            path="/listing/create-listing"
-            element={<CreateListing />} />
+               <Route
+               exact
+               path="/portfolio/swap-bridge"
+               element={<SwapBridgeCoin />} />
 
-            {/* PROFILE */}
-            <Route
-            exact
-            path="/profile"
-            element={<SettingProfile />} />
+               {/* LISTING */}
+               <Route
+               exact
+               path="/listing"
+               element={<Listing />} />
+               
+               <Route
+               exact
+               path="/listing/create-listing"
+               element={<CreateListing />} />
 
-            <Route
-            exact
-            path="/profile/edit-profile"
-            element={<EditProfile />} />
+               {/* PROFILE */}
+               <Route
+               exact
+               path="/profile"
+               element={<SettingProfile />} />
+
+               <Route
+               exact
+               path="/profile/edit-profile"
+               element={<EditProfile />} />
+            </Route>
 
          </Routes>
       </AnimatePresence>

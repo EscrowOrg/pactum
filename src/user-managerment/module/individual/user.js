@@ -8,6 +8,7 @@ import { PasswordInput, TextInput } from "../components/Input";
 import { AuthContext } from "../../../context/AuthContext";
 import { LoginCall } from "../../../serivce/apiCalls";
 import { toast } from "react-toastify";
+import { isEmpty } from "../helpers/isEmpty";
 
 const LoginUser  = () =>{
 
@@ -45,8 +46,12 @@ const LoginUser  = () =>{
    }
 
    useEffect(()=>{
-      console.log(user, isfetching)
-   }, [user, isfetching])
+      if(!isEmpty(user)) {
+         navigate("/home", { replace: true })
+      } else {
+         console.log("User is empty, gotta try signing in")
+      }
+   }, [user])
 
    useEffect(()=>{
       if(loginError)
@@ -157,7 +162,7 @@ const LoginUser  = () =>{
                         Don’t have account?
                         <span 
                         onClick={()=>navigate("/onboradings")}
-                        className="font-semibold text-sm text-[#3A0CA3]">
+                        className="font-semibold text-sm text-[#3A0CA3] cursor-pointer">
                            {" Create one."}
                         </span>
                      </h4>

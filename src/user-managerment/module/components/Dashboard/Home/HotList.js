@@ -10,6 +10,7 @@ const HotList = () => {
     // STATES
     const [isOpen, setIsOpen] = useState(false);
 
+
     // HANDLERS
     const toggleDrawer = (value) => {
         // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
@@ -94,6 +95,15 @@ const HotList = () => {
                 hasAppreciated={true}
                 changePercentage={+2.56} />
             </div>
+            {/* <div className='w-full flex items-center justify-center'>
+                <div 
+                id="coinmarketcap-widget-coin-price-block" 
+                coins="1,1027,825" 
+                currency="USD" 
+                theme="light" 
+                transparent="false" 
+                show-symbol-logo="true"></div>
+            </div> */}
 
             {/* Drawer */}
             <Drawer

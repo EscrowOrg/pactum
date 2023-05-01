@@ -20,14 +20,14 @@ const ForgotPassword = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const getPine = async(e) =>{
+    const getPine = (e) =>{
         e.preventDefault()
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/verification")
-        } catch (error) {
-            
-        }
+        // try {
+        //     await axios.post(`${BASE_URL}`)
+        //     navigate("/verification")
+        // } catch (error) {
+        //     console.log(error)
+        // }
      }
 
     // HANDLERS
