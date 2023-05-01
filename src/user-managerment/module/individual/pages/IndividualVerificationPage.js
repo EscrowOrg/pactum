@@ -3,8 +3,6 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import BASE_URL from "../../../../serivce/url.serice";
 
 const IndividualVerificationPage = () => {
 
@@ -12,8 +10,12 @@ const IndividualVerificationPage = () => {
     const [verificationCode, setVerificationCode] = useState("")
     const [isComplete, setIsComplete] = useState(false)
 
+
     // DATA INITIALIZATION
     const navigate = useNavigate()
+
+
+    // HANDLERS
      const getPine = () =>{
         if(verificationCode==="4554") {
             navigate("/individual-verification-success")

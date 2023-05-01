@@ -102,7 +102,7 @@ const Profile = ()=>{
         className="flex flex-col gap-5 w-full h-full"
         onSubmit={handleSubmit}>
 
-          {/* email input container */}
+          {/* fullname input container */}
           <label className="flex flex-col gap-2 w-full">
 
             {/* label text */}
@@ -118,7 +118,7 @@ const Profile = ()=>{
             placeholderText={"Enter full name"} />
           </label>
 
-          {/* company's size container */}
+          {/* username container */}
           <label className="flex flex-col gap-2 w-full">
 
             {/* label text */}
@@ -175,7 +175,7 @@ const Profile = ()=>{
                 <PrimaryButton
                 loading={loading}
                 type="submit"
-                disabled={!(formData.fullName && formData.userName && formData.address)}
+                disabled={loading || !(formData.fullName && formData.userName && formData.phoneNumber)}
                 text={"Continue"} />
             </div>
           </div>

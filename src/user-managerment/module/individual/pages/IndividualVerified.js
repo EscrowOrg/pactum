@@ -2,14 +2,14 @@ import React from 'react'
 import PageWrapper from '../../layouts/PageWrapper'
 import { PrimaryButton } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import BASE_URL from '../../../../serivce/url.serice'
 
 const IndividualVerified = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
+
+    // HANDLERS
     const verifyPine = ()=>{
         navigate("/individual-profile")
     }
