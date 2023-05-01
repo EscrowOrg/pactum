@@ -9,19 +9,17 @@ import BASE_URL from "../../../../serivce/url.serice";
 const IndividualCreatePin = () => {
 
     // STATES
-    const [verificationCode, setVerificationCode] = useState("")
+    const [pin, setPin] = useState("")
     const [isComplete, setIsComplete] = useState(false)
+
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const handleSubmit = async(e)=>{
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/individual-create-success")
-
-        } catch (error) {
-            
-        }
+    const handleSubmit = ()=>{
+        // if(pin===8567) {  
+        //     navigate("/individual-create-success")
+        // }
+        navigate("/individual-create-success")
     }
     return (
          <PageWrapper>
@@ -52,9 +50,9 @@ const IndividualCreatePin = () => {
 
                         {/* verification input component */}
                         <VerificationInput
-                        value={verificationCode}
+                        value={pin}
                         onComplete={()=>setIsComplete(true)}
-                        onChange={(inputCode)=>setVerificationCode(inputCode)}
+                        onChange={(inputCode)=>setPin(inputCode)}
                         length={4}
                         validChars="0-9"
                         autoFocus={true}
@@ -72,7 +70,7 @@ const IndividualCreatePin = () => {
 
                         {/* button */}
                         <PrimaryButton
-                        disabled={!isComplete || verificationCode.length<4}
+                        disabled={!isComplete || pin.length<4}
                         onClick={handleSubmit}
                         text={"Sign up"} />
                     </div>

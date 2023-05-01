@@ -12,17 +12,11 @@ const VendorCreatePin = () => {
     const [verificationCode, setVerificationCode] = useState("")
     const [isComplete, setIsComplete] = useState(false)
 
+
     // DATA INITIALIZATION
     const navigate = useNavigate()
-
-    const handleSubmit = async(e)=>{
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/vendor-create-success")
-
-        } catch (error) {
-            
-        }
+    const handleSubmit = () =>{
+        navigate("/vendor-create-success")
     }
 
     return (

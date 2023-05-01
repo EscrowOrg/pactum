@@ -1,51 +1,41 @@
 import axios from "axios"
 import { useState } from "react"
-import BASE_URL from "../../../serivce/url.serice"
 
-const useMakeReq = (url, postData) => {
+const useMakeReq = () => {
     
     // STATES
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [data, setData] = useState(null)
-    const makePostRequest = async () => {
+    const [isSuccessful, setIsSuccessful] = useState(false)
+    const makePostRequest = async (url, formData) => {
+
         setLoading(true)
-        console.log(postData)
+
         try {
-            const response = await axios.post(`${BASE_URL}/api/User/BasicRegistration`, postData, {
+            const {data} = await axios.post(url, formData,
+            {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
                 }
             })
             setLoading(false)
-            setData(response.data)
+            setData(data)
+            setIsSuccessful(data.success)
+            console.log(data.message)
         } catch(error) {
             setLoading(false)
             console.log(error)
+            console.log(data.message)
         }
     }
-
-    // MAKING HTTP REQUEST
-    // setLoading(true) 
-    // axios.post(`${BASE_URL}${url}`, postData, {
-    //     headers: {
-    //         'accept': 'text/plain',
-    //         'Content-Type': 'application/json'
-    //     }
-    // }).then((response)=>{
-    //     setLoading(false)
-    //     setData(response.data)
-    // }, (error) => {
-    //     setLoading(false)
-    //     console.log(error)
-    // })
 
     return {
         loading,
         data,
         error,
-        makePostRequest
+        makePostRequest,
+        isSuccessful
     }
 }
 

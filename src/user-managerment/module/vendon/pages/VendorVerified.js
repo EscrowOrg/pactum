@@ -2,22 +2,16 @@ import React from 'react'
 import PageWrapper from '../../layouts/PageWrapper'
 import { PrimaryButton } from '../../components/Button'
 import { useNavigate } from 'react-router-dom'
-import BASE_URL from '../../../../serivce/url.serice'
-import axios from 'axios'
 
 const VendorVerified = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
-    const verifyPine = async(e)=>{
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/vendon-profile")
-        } catch (error) {
-            
-        }
-        
+
+    // HANDLERS
+    const verifyPine = ()=>{
+        navigate("/vendon-profile")
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
@@ -7,23 +7,35 @@ import Checkbox from "../../components/Checkbox";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import BASE_URL from "../../../../serivce/url.serice";
-import axios from "axios";
+import useMakeReq from "../../hooks/useMakeReq";
+import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
+import { isEmpty } from "../../helpers/isEmpty";
+import { getFromLocalStorage, saveToLocalStorage } from "../../helpers/localStorageMethods";
+import { toast } from "react-toastify";
 
 const RegistrationVendon = ()=>{
-
-    // DATA INITIALIZATION
-    const navigate = useNavigate()
-
 
     // STATES
     const [formData, setFormData] = useState({
         companyEmail: "",
         password: "",
-        action: ""
     })
 
 
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
+    const {
+        loading,
+        data,
+        makePostRequest,
+        isSuccessful
+    } = useMakeReq()
+
+
     // HANDLERS
+    const handleDisabledSubmitBtn = () => {
+        return  isEmpty(formData.companyEmail) || isEmpty(formData.password) || !(hasDigit(formData.password)) || !(hasLowerCase(formData.password)) || !(hasUpperCase(formData.password)) || formData.password.length<8 || loading
+    }
    const  handleChange = (e)=>{
         const {name, value} = e.target;
         setFormData({
@@ -31,23 +43,40 @@ const RegistrationVendon = ()=>{
             [name]: value
         })
     }
-    const changRadio = (e)=>{
-         setFormData({
-            ...formData,
-            action: e.target.value
-         })
-    }
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = (e) =>{
         e.preventDefault();
-
-        try{
-          await axios.post(`${BASE_URL}`)
-           navigate("/loginIndividual");
-        }catch(error) {
-            console.log(error);
-        }
+        makePostRequest(
+            `${BASE_URL}/api/Vendor/BasicVendorRegistration`, 
+            {
+                basicVendorRegistration: {
+                    companyEmail: formData.companyEmail,
+                    password: formData.password
+                }
+            }, 
+        );
     }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        if(isSuccessful!==true && !(isEmpty(data))) {
+            toast.error(data.message)
+        } else if(isSuccessful===true && !(isEmpty(data))) {
+            toast.success(data.message)
+            saveToLocalStorage("vendorUserId", data.data)
+            navigate("/vendor-verification-page")
+        }
+    }, [data, isSuccessful])
+
+    useEffect(()=>{
+        const userId = getFromLocalStorage("vendorUserId")
+        if(!(isEmpty(userId))) {
+            toast.info("Complete your registration!")
+            navigate("/vendon-profile")
+        }
+    }, [])
+
     return(
         <PageWrapper>
             <div className="w-full h-full flex flex-col gap-10 px-4 py-10">
@@ -105,7 +134,7 @@ const RegistrationVendon = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={formData.password.length>=8} />
                                 Contains at least 8+ Characters
                             </label>
 
@@ -113,7 +142,7 @@ const RegistrationVendon = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={hasDigit(formData.password)} />
                                 Contains at least 1 number
                             </label>
 
@@ -121,7 +150,7 @@ const RegistrationVendon = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={hasLowerCase(formData.password) && hasUpperCase(formData.password)} />
                                 Contains both lower (a-z) and upper case letters (A - Z)
                             </label>
                         </div>
@@ -142,8 +171,9 @@ const RegistrationVendon = ()=>{
                             {/* signup button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                disabled={!(formData.companyEmail || formData.password)}
-                                onClick={()=>navigate("/vendor-verification-page")}
+                                disabled={handleDisabledSubmitBtn()}
+                                loading={loading}
+                                type="submit"
                                 text={"Sign up"} />
                             </div>
 

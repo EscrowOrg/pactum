@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../layouts/PageWrapper";
 import { TextInput } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../components/Button";
 import PhoneINumberInput from "../components/PhoneINumberInput";
-import axios from "axios";
 import BASE_URL from "../../../serivce/url.serice";
+import useMakeReq from "../hooks/useMakeReq";
+import { isEmpty } from "../helpers/isEmpty";
+import { deleteItemFromLocalStorage, getFromLocalStorage } from "../helpers/localStorageMethods";
+import { toast } from "react-toastify";
 
 const ProfileVendon = ()=>{
 
   // STATES
   const [formData, setFormData] = useState({
+    userId: "",
+    userName: "",
     companyName: "",
     companySize: "",
     phoneNumber: "",
@@ -20,6 +25,12 @@ const ProfileVendon = ()=>{
 
   // DATA INITIALIZATION
   const navigate = useNavigate()
+  const {
+    loading,
+    data,
+    makePostRequest,
+    isSuccessful
+} = useMakeReq()
 
 
   // HANDLERS
@@ -30,15 +41,46 @@ const ProfileVendon = ()=>{
         [name]: value
     })
   }
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e)=>{
     e.preventDefault()
-    try {
-      await axios.post(`${BASE_URL}`)
-    } catch (error) {
-      
-    }
+    makePostRequest(
+      `${BASE_URL}/api/Vendor/CompleteVendorRegistration`, 
+      {
+        completeVendorRegistration: {
+          userId: formData.userId,
+          userName: formData.userName,
+          companyName: formData.companyName,
+          companySize: formData.companySize,
+          phoneNumber: formData.phoneNumber,
+          address: formData.address
+        }
+      }, 
+    );
   }
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+      const uId = getFromLocalStorage("vendorUserId")
+      if(!(isEmpty(uId))) {
+        setFormData(prevState=>({
+          ...prevState,
+          userId: uId
+        }))
+      } else {
+        toast.error("You have to sign up first!")
+        navigate("/vendon-register")
+      }
+    }, [])
+
+    useEffect(()=>{
+      if(isSuccessful!==true && !(isEmpty(data))) {
+          toast.error(data.message)
+      } else if(isSuccessful===true && !(isEmpty(data))) {
+          toast.success(data.message)
+          deleteItemFromLocalStorage("vendorUserId")
+          navigate("/vendor-create-p", { replace: true })
+      }
+  }, [data, isSuccessful])
 
   return(
     <PageWrapper>
@@ -59,6 +101,23 @@ const ProfileVendon = ()=>{
         <form
         className="flex flex-col gap-5 w-full h-full"
         onSubmit={handleSubmit}>
+
+          {/* username container */}
+          <label className="flex flex-col gap-2 w-full">
+
+            {/* label text */}
+            <span
+            className="font-normal text-xs text-black">
+                Username
+            </span>
+
+            {/* input field */}
+            <TextInput
+            name={"userName"}
+            value={formData.userName}
+            onChange={handleChange}
+            placeholderText={"Enter username"} />
+          </label>
 
           {/* email input container */}
           <label className="flex flex-col gap-2 w-full">
@@ -104,7 +163,9 @@ const ProfileVendon = ()=>{
             </span>
 
             {/* input field */}
-            <PhoneINumberInput />
+            <PhoneINumberInput
+            value={formData.phoneNumber}
+            onChange={(e)=>setFormData(prevState=>({...prevState, phoneNumber: e}))} />
           </label>
 
           {/* company's physical address (optional) container */}
@@ -127,11 +188,12 @@ const ProfileVendon = ()=>{
           {/* container */}
           <div className="flex w-full flex-col mt-auto items-center">
 
-            {/* Login button */}
+            {/* signup button */}
             <div className='w-full flex flex-col items-stretch'>
                 <PrimaryButton
-                onClick={()=>navigate("/vendor-create-p")}
-                disabled={!(formData.companyName && formData.companySize && formData.address)}
+                loading={loading}
+                type="submit"
+                disabled={loading || !(formData.userName && formData.companyName && formData.companySize && formData.phoneNumber)}
                 text={"Continue"} />
             </div>
           </div>

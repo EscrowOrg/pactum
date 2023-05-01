@@ -3,8 +3,6 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import BASE_URL from "../../../../serivce/url.serice";
 
 const VendorVerificationPage = () => {
 
@@ -12,15 +10,15 @@ const VendorVerificationPage = () => {
     const [verificationCode, setVerificationCode] = useState("")
     const [isComplete, setIsComplete] = useState(false)
 
+
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
-    const getPine = async() =>{
-        try {
-            await axios.post(`${BASE_URL}`)
+
+    // HANDLERS 
+    const getPine = () =>{
+        if(verificationCode==="4554") {
             navigate("/vendor-verification-success")
-        } catch (error) {
-            
         }
      }
 

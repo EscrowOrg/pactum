@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
@@ -6,10 +6,12 @@ import { PasswordInput, TextInput } from "../../components/Input";
 import Checkbox from "../../components/Checkbox";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
-import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
 import useMakeReq from "../../hooks/useMakeReq";
-//import {REGISTRATION_USER} from "../../../../serivce/url.serice";
+import { toast } from "react-toastify";
+import { getFromLocalStorage, saveToLocalStorage } from "../../helpers/localStorageMethods";
+import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
+import { isEmpty } from "../../helpers/isEmpty";
 
 const RegistrationIndividual = ()=>{
 
@@ -25,13 +27,17 @@ const RegistrationIndividual = ()=>{
     const {
         loading,
         data,
-        makePostRequest
-    } = useMakeReq("/api/User/BasicRegistration", formData)
-    const password = useRef();
-    const emailAddress = useRef();
+        makePostRequest,
+        isSuccessful
+    } = useMakeReq()
 
 
     // HANDLERS
+    const handleDisabledSubmitBtn = () => {
+        const disable =  isEmpty(formData.emailAddress) || isEmpty(formData.password) || !(hasDigit(formData.password)) || !(hasLowerCase(formData.password)) || !(hasUpperCase(formData.password)) || formData.password.length<8 || loading
+        
+        return disable
+    }
     const handleChange = (e)=>{
         const {name, value} = e.target;
         setFormData({
@@ -39,24 +45,38 @@ const RegistrationIndividual = ()=>{
             [name]: value
         })
     }
-    const changRadio = (e)=>{
-         setFormData({
-            ...formData,
-            action: e.target.value
-         })
-    }
     const handleSubmit = (e) =>{
         e.preventDefault();
-        makePostRequest();
-        console.log(makePostRequest())
+        makePostRequest(
+            `${BASE_URL}/api/User/BasicRegistration`, 
+            {
+                basicRegistration: {
+                    email: formData.emailAddress,
+                    password: formData.password
+                }
+            }, 
+        );
     }
 
 
     // SIDE EFFECTS
     useEffect(()=>{
-        console.log(data)
-        console.log("loading: ", loading)
-    }, [data, loading])
+        if(isSuccessful!==true && data) {
+            toast.error(data.message)
+        } else if(isSuccessful===true && data) {
+            toast.success(data.message)
+            saveToLocalStorage("userId", data.data)
+            navigate("/individual-verification-page")
+        }
+    }, [data, isSuccessful])
+
+    useEffect(()=>{
+        const userId = getFromLocalStorage("userId")
+        if(!(isEmpty(userId))) {
+            toast.info("Complete your registration!")
+            navigate("/individual-profile")
+        }
+    }, [])
 
     return(
         <PageWrapper>
@@ -117,7 +137,7 @@ const RegistrationIndividual = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={formData.password.length>=8} />
                                 Contains at least 8+ Characters
                             </label>
 
@@ -125,7 +145,7 @@ const RegistrationIndividual = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={hasDigit(formData.password)} />
                                 Contains at least 1 number
                             </label>
 
@@ -133,7 +153,7 @@ const RegistrationIndividual = ()=>{
                             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
                                 <Checkbox
                                 disabled={true}
-                                value={true} />
+                                value={hasLowerCase(formData.password) && hasUpperCase(formData.password)} />
                                 Contains both lower (a-z) and upper case letters (A - Z)
                             </label>
                         </div>
@@ -154,10 +174,9 @@ const RegistrationIndividual = ()=>{
                             {/* signup button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                disabled={!(formData.emailAddress || formData.password) || loading}
+                                disabled={handleDisabledSubmitBtn()}
                                 loading={loading}
                                 type="submit"
-                                // onClick={()=>navigate("/individual-verification-page")}
                                 text={"Sign up"} />
                             </div>
 
