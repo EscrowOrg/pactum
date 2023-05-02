@@ -41,15 +41,12 @@ const LoginUser  = () =>{
    const handleSubmit = (e)=>{
       e.preventDefault();
       LoginCall(users,dispatch);
-
       return user;
    }
 
    useEffect(()=>{
-      if(!isEmpty(user)) {
+      if(!isEmpty(user) && user?.success===true) {
          navigate("/home", { replace: true })
-      } else {
-         console.log("User is empty, gotta try signing in")
       }
    }, [user])
 
