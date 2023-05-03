@@ -14,7 +14,7 @@ export const LoginFailure = (error) =>({
 })
 
 // LOGOUT
-export const Logout = () => ({
+export const Logout = (dispatch) => ({
     type: "LOGOUT"
 })
 

@@ -214,3 +214,31 @@ export const BackButton = () => {
         </button>
     )
 }
+
+export const SkipButtonVendor = () => {
+
+    // DATA INITIALZIATION
+    const navigate = useNavigate()
+
+    return (
+        <button 
+        onClick={()=>navigate('/vendon-profile')}
+        className='text-[#3A0CA3] font-semibold text-sm hover:no-underline focus:no-underline hover:text-[text-[#3A0CA3] flex justify-end bg-transparent h-fit'>
+            Skip
+        </button>
+    )
+}
+
+export const SkipButtonIndividual = () => {
+
+    // DATA INITIALZIATION
+    const navigate = useNavigate()
+
+    return (
+        <button 
+        onClick={()=>navigate('/individual-profile')}
+        className='text-[#3A0CA3] font-semibold text-sm hover:no-underline focus:no-underline hover:text-[text-[#3A0CA3] flex justify-end bg-transparent h-fit'>
+            Skip
+        </button>
+    )
+}
