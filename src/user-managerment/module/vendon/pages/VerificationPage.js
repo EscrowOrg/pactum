@@ -1,7 +1,7 @@
 import { useState } from "react";
 import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
+import { BackButton, PrimaryButton, SkipButton, SkipButtonVendor } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 
 const VendorVerificationPage = () => {
@@ -29,7 +29,12 @@ const VendorVerificationPage = () => {
             <div className="w-full h-full flex flex-col py-10 px-4 gap-10">
 
                 {/* Back Button */}
-                <BackButton />
+                 {/* <BackButton /> */}
+
+                 {/* Skip Button */}
+                <SkipButtonVendor />
+               
+               
 
                 {/* caption */}
                 <div className="w-full flex flex-col gap-2 text-center">

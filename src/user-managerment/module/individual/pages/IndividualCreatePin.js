@@ -5,6 +5,8 @@ import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
+import useMakeReq from "../../hooks/useMakeReq";
+
 
 const IndividualCreatePin = () => {
 
@@ -15,7 +17,27 @@ const IndividualCreatePin = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const handleSubmit = ()=>{
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        // axios.post(`${BASE_URL}/api/User/AddPin`, pin)
+        // .then((response) => {
+        //     setIsComplete(response.data.message)
+        //     console.log(response.data.message)
+        // })
+        .catch((error) => {
+            alert(error)
+        })
+
+        // useEffect(()=>{
+        //     if(isSuccessful!==true && !(isEmpty(data))) {
+        //         toast.error(data.message)
+        //     } else if(isSuccessful===true && !(isEmpty(data))) {
+        //         toast.success(data.message)
+        //         deleteItemFromLocalStorage("userId")
+        //         navigate("/individual-create-p", { replace: true })
+        //     }
+        // }, [data, isSuccessful])
+      
         // if(pin===8567) {  
         //     navigate("/individual-create-success")
         // }
@@ -72,7 +94,7 @@ const IndividualCreatePin = () => {
                         <PrimaryButton
                         disabled={!isComplete || pin.length<4}
                         onClick={handleSubmit}
-                        text={"Sign up"} />
+                        text={"Add Pin"} />
                     </div>
                 </div>
             </div>

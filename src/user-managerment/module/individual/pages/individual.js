@@ -103,7 +103,7 @@ const RegistrationIndividual = ()=>{
                         {/* label text */}
                         <span
                         className="font-normal text-xs text-black">
-                            Company Email Address
+                            Email
                         </span>
 
                         {/* input field */}

@@ -6,16 +6,32 @@ import { Bank, Document, Like1, Lock1, Logout, Messages, ProfileCircle, Receipt1
 import SettingOptionCards from '../../../components/Dashboard/Profile/SettingOptionCards'
 import UnverifiedLabel from '../../../components/Dashboard/Profile/UnverifiedLabel'
 import { Link } from 'react-router-dom'
+import { Logout as logUserOut } from '../../../../../serivce/apiCalls'
+import { useContext } from 'react'
+import { AuthContext } from '../../../../../context/AuthContext'
+
+
+
 
 const Profile = () => {
+
+    const {dispatch} = useContext(AuthContext)
+
     
     // STATES
+    // const [logout, setLogout] = useState(null)
 
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
 
-    return (
+       // HANDLERS
+    const handleLogout = () => {
+        logUserOut(dispatch)
+    }
+
+
+    return (  
         <NoTransitionWrapper>
             <div className="w-full h-full flex flex-col gap-8 py-5 overflow-auto">
                                 
@@ -28,16 +44,17 @@ const Profile = () => {
                     </h4>
 
                     {/* user button */}
-                    <div className='flex items-center bg-[#F4EFFE] gap-1 px-3 rounded-[32px] h-10'>
+                    <div className='flex items-center bg-[#F4EFFE] gap-1 px-3 rounded-[32px] h-10' onClick={handleLogout}>
 
-                        <Logout
+                    <Logout
                         color='#3A0CA3'
                         size={18}
-                        variant='TwoTone' />
+                        variant='TwoTone'  />
 
-                        <h4 className='text-sm font-bold text-[#3A0CA3]'>
+                            <a href='/loginIndividual' >
+                        <h4 className='text-sm font-bold text-[#3A0CA3]' >
                             Logout
-                        </h4>
+                        </h4> </a>
                     </div>
                 </div>
                 
