@@ -11,21 +11,13 @@ import { useContext } from 'react'
 import { AuthContext } from '../../../../../context/AuthContext'
 
 
-
-
 const Profile = () => {
 
+    // DATA INITIALIZATION
     const {dispatch} = useContext(AuthContext)
 
-    
-    // STATES
 
-
-    // DATA INITIALIZATION
-    const navigate = useNavigate()
-    
-
-       // HANDLERS
+    // HANDLERS
     const handleLogout = () => {
         logUserOut(dispatch)
     }

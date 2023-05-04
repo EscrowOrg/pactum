@@ -53,7 +53,7 @@ const Onborading = ()=>{
                     I have an account?
                     <span
                     onClick={()=>navigate("/loginIndividual")} 
-                    className="font-semibold text-sm text-[#3A0CA3]">
+                    className="font-semibold text-sm text-[#3A0CA3] cursor-pointer">
                         {" Log In."}
                     </span>
                 </h4>

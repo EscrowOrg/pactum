@@ -3,51 +3,76 @@ import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
 import useMakeReq from "../../hooks/useMakeReq";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
+import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
 
 const IndividualCreatePin = () => {
+
   // STATES
-  const [pin, setPin] = useState("");
   const [isComplete, setIsComplete] = useState(false);
+  const [formData, setFormData] = useState({
+      pin: "",
+      userId: "",
+  })
 
-const [formData, setFormData] = useState({
-    pin: "",
-    userId: "",
-})
-
-  const { loading, data, makePostRequest, isSuccessful } = useMakeReq();
 
   // DATA INITIALIZATION
+  const { 
+    loading, 
+    data, 
+    makePostRequest, 
+    error,
+    isSuccessful 
+  } = useMakeReq();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    makePostRequest(`${BASE_URL}/api/User/AddPin`, {
-      userId: formData.pin,
-      pin: formData.userId
-    });
-
-    // if(pin===8567) {
-    //     navigate("/individual-create-success")
-    // }
-    // navigate("/individual-create-success");
+    makePostRequest(`${BASE_URL}/api/User/AddPin`, formData);
   };
 
-  useEffect(() => {
-    if(isSuccessful!==true && !(isEmpty(data))) {
-        toast.error(data.message)
-    }  else if(isSuccessful===true && !(isEmpty(data))) {
-        toast.success(data.message)
-        navigate("/individual-create-success");
+
+  // SIDE EFFECT
+  // check if userId exists in the webStorageAPI
+  useEffect(()=>{
+    const uId = getFromLocalStorage("userId")
+    if(!(isEmpty(uId))) {
+      setFormData(prevState=>({
+        ...prevState,
+        userId: uId
+      }))
+    } else {
+      toast.error("You have to sign up first!")
+      navigate("/individual-register")
     }
-  })
+  }, [])
+
+  // check if request for successful
+  useEffect(() => {
+      if(isSuccessful!==true && !(isEmpty(data))) {
+          toast.error(data.message)
+      }  else if(isSuccessful===true && !(isEmpty(data))) {
+          toast.success(data.message)
+          deleteItemFromLocalStorage("userId")
+          navigate("/individual-create-success", { replace: true });
+      }
+  }, [data, isSuccessful])
+
+  // check for error message
+  useEffect(()=>{
+    if(error) {
+      toast.error(error)
+    }
+  }, [error])
+
   return (
     <PageWrapper>
+
       {/* container */}
-      <div className="w-full h-full flex flex-col py-10 px-4 gap-10">
+      <div className="w-full h-full flex flex-col py-5 px-4 gap-10">
+
         {/* Back Button */}
         <BackButton />
 
@@ -63,13 +88,20 @@ const [formData, setFormData] = useState({
 
         {/* input */}
         <div className="w-full h-full flex flex-col gap-5 justify-between">
+
           {/* input container */}
           <div className="w-full flex justify-center">
+
             {/* verification input component */}
             <VerificationInput
-              value={pin}
+              value={formData.pin}
               onComplete={() => setIsComplete(true)}
-              onChange={(inputCode) => setPin(inputCode)}
+              onChange={(inputCode) =>{ 
+                setFormData((prevState)=>({
+                  ...prevState, 
+                  pin: inputCode
+                }))
+              }}
               length={4}
               validChars="0-9"
               autoFocus={true}
@@ -86,12 +118,13 @@ const [formData, setFormData] = useState({
 
           {/* Sign up button */}
           <div className="w-full flex flex-col items-stretch">
+
             {/* button */}
             <PrimaryButton
-              disabled={!isComplete || pin.length < 4}
-              onClick={handleSubmit}
-              text={"Add Pin"}
-            />
+            loading={loading}
+            disabled={!isComplete || formData.pin.length < 4 || loading}
+            onClick={handleSubmit}
+            text={"Add Pin"} />
           </div>
         </div>
       </div>
