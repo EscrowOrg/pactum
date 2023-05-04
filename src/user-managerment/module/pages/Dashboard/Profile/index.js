@@ -19,11 +19,11 @@ const Profile = () => {
 
     
     // STATES
-    // const [logout, setLogout] = useState(null)
 
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+    
 
        // HANDLERS
     const handleLogout = () => {
