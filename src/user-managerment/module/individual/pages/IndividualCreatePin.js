@@ -25,10 +25,7 @@ const [formData, setFormData] = useState({
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    makePostRequest(`${BASE_URL}/api/User/AddPin`, {
-      userId: formData.pin,
-      pin: formData.userId
-    });
+    makePostRequest(`${BASE_URL}/api/User/AddPin`, formData);
 
     // if(pin===8567) {
     //     navigate("/individual-create-success")
