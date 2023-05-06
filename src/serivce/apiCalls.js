@@ -21,6 +21,9 @@ export const LoginCall = async (userCre, dispatch) =>{
             }
         });
         dispatch({type: "LOGIN_SUCCESS", payload: res.data});
+        setTimeout(()=>{
+            dispatch({type: "LOGIN_SUCCESS_CLEAR", payload: res.data})
+        }, 3000)
     } catch (err) {
         console.log(err)
         dispatch({type: "LOGIN_FAILURE", payload: err});
