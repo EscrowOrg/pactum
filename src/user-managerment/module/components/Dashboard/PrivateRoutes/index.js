@@ -19,13 +19,9 @@ const PrivateRoutes = () => {
 
     // HANDLERS
     const clearBiscuits = () => {
-        if(isActive) {
-            // refresh the token
-        } else {
-            setIsCleared(true)
-            deleteCookie("userData")
-            deleteCookie("tLine")
-        }
+        setIsCleared(true)
+        deleteCookie("userData")
+        deleteCookie("tLine")
     }
 
 
