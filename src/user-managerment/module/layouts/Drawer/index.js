@@ -18,6 +18,7 @@ const Drawer = ({
     children,
     className,
     onClose,
+    type,
     position = "bottom",
     removeWhenClosed = true
 }) => {
@@ -58,23 +59,6 @@ const Drawer = ({
         updatePageScroll();
     }, [isOpen]);
 
-    // Allow Escape key to dismiss the drawer
-    useEffect(() => {
-        const onKeyPress = (e) => {
-        if (e.key === "Escape") {
-            onClose();
-        }
-        };
-
-        if (isOpen) {
-        window.addEventListener("keyup", onKeyPress);
-        }
-
-        return () => {
-        window.removeEventListener("keyup", onKeyPress);
-        };
-    }, [isOpen, onClose]);
-
     if (!isTransitioning && removeWhenClosed && !isOpen) {
         return null;
     }
@@ -97,7 +81,7 @@ const Drawer = ({
             }
 
             {/* drawer container */}
-            <div className={cn(`drawer ${height}`, position)} role="dialog">
+            <div className={cn(`drawer ${height}`, position, type)} role="dialog">
                 {children}
             </div>
             
