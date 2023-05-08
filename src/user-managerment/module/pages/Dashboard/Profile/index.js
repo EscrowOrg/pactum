@@ -157,11 +157,13 @@ const Profile = () => {
 
                             <SettingOptionCards
                             Icon={Document}
-                            title={"Terms & Conditions"} />
+                            title={"Terms & Conditions"} 
+                            pathTo="/profile/terms-and-conditions"/>
 
                             <SettingOptionCards
                             Icon={TableDocument}
-                            title={"Privacy Policy"} />
+                            title={"Privacy Policy"}
+                            pathTo="/profile/privacy-policy" />
                         </div>
                     </div>
                 </div>
