@@ -10,7 +10,7 @@ const CircularProgress = ({percent = 1}) => {
     // SIDE EFFECTS
     useEffect(()=>{
         setPercentage(percent)
-    }, [])
+    }, [percent])
 
     return (
         <Progress

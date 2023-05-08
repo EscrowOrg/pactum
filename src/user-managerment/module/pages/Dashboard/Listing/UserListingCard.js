@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import "./activelistingtab.scss"
-import CircularProgress from '../../../components/Dashboard/Listing/CircularProgress'
+import OngoingListingCard from '../../../components/Dashboard/Listing/OngoingListingCard'
 
 const UserListingCard = () => {
 
@@ -41,119 +41,8 @@ const UserListingCard = () => {
 
                 {
                     listData.map((listD, index)=>(
-                        <div 
-                        key={index}
-                        className='w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4'>
-
-                            {/* profile info */}
-                            <div className='w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]'>
-
-                                {/* image and name */}
-                                <div className="flex items-center gap-2">
-                                    
-                                    
-                                    <CircularProgress />
-
-                                    <div className='flex flex-col gap-1'>
-                                        <h3 className='font-semibold text-black text-sm'>
-                                            Bitcoin
-                                        </h3>
-
-                                        {/* paid label */}
-                                        <div className='inline-flex items-center justify-center gap-[2px] bg-[rgba(11,104,244,.04)] rounded-md w-fit p-[2px_4px]'>
-                                            <img
-                                            alt=""
-                                            src="/images/dashboard/checkmark-paid.png"
-                                            className='h-[6px]' />
-
-                                            <span className='text-[#0B6AF4] text-[8px] font-semibold'>
-                                                PAID
-                                            </span>
-                                        </div>
-
-                                        <h4
-                                        className='text-[#8D85A0] text-xs font-normal'>
-                                            Placed On Mar 20, 2022
-                                        </h4>
-                                    </div>
-                                </div>
-
-                                {/* price */}
-                                <div className='flex flex-col items-end gap-[2px]'>
-                                    <span className='py-[2px] px-[6px] inline-flex items-center justify-center rounded-[5px] bg-[#FFF3F2] font-normal text-[13px] text-[#F44336]'>
-                                        Cancelled
-                                    </span>
-                                    <h4 
-                                    className='text-[#8D85A0] text-xs font-normal'>
-                                        Price
-                                    </h4>
-
-                                    <h4 className='text-lg font-bold text-[#2D6A68]'>
-                                        ₦300.00
-                                    </h4>
-                                </div>
-                            </div>
-
-                            {/* available order & min-max order */}
-                            <div className='w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]'>
-                                <div className='flex flex-col gap-[2px]'>
-                                    <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                        Available Order
-                                    </h3>
-
-                                    <h4 className='text-sm font-semibold text-black'>
-                                        ₦100,000.00
-                                    </h4>
-                                </div>
-
-                                <div className='flex flex-col gap-[2px] items-end'>
-                                    <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                        Min - Max Order
-                                    </h3>
-
-                                    <h4 className='text-sm font-semibold text-black'>
-                                        ₦2,000.00 - ₦230,000.00
-                                    </h4>
-                                </div>
-                            </div>
-
-                            {/* listing amount and bank details */}
-                            <div className='w-full flex items-center justify-between pb-4'>
-                                <div className='flex flex-col gap-[2px]'>
-                                    <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                        Listing Amount
-                                    </h3>
-
-                                    <h4 className='text-sm font-semibold text-black'>
-                                        ₦100,000.00
-                                    </h4>
-                                </div>
-
-                                <div className='flex flex-col gap-[2px] items-end'>
-                                    <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                        Bank
-                                    </h3>
-
-                                    <h4 className='text-sm font-semibold text-black'>
-                                        First Bank
-                                    </h4>
-                                </div>
-                            </div>
-
-                            {/* buttons */}
-                            <div className='w-full flex items-center justify-between px-4 gap-4 pb-4'>
-                                
-                                {/* cancel butto */}
-                                <span className='border-[#F3F6F8] border rounded py-[7px] px-4 inline-flex items-center justify-center hover:bg-gray-100 cursor-pointer w-full'>
-                                    Cancel
-                                </span>
-                                
-                                {/* cancel butto */}
-                                <span className='border-[#F3F6F8] border rounded py-[7px] px-4 inline-flex items-center justify-center hover:bg-gray-100 cursor-pointer w-full'>
-                                    Track
-                                </span>
-                            </div>
-                        </div>
+                        <OngoingListingCard
+                        key={index} />
                     ))
                 }
 
