@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {Routes, Route, useLocation} from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom";
 import Profile from "./individual/pages/user-profile";
 import RegistrationIndividual from "./individual/pages/individual";
 import LoginUser from "./individual/user";
@@ -44,246 +44,214 @@ import CreateListing from "./pages/Dashboard/Listing/CreateListing";
 import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "./pages/Dashboard/Profile/EditProfile";
 import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
+import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
+import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
 
 const MainRouter = () => {
+  // DATA INITIALIZATION
+  const location = useLocation();
 
-   // DATA INITIALIZATION
-   const location = useLocation()
-   
-   return(
-      <AnimatePresence
-      mode="wait">
+  return (
+    <AnimatePresence mode="wait">
+      {/* Parent Routes */}
+      <Routes key={location.pathname} location={location}>
+        {/* ============ USER-ONBOARDING ============== */}
+        {/* SPLASH SCREEN */}
+        <Route path="/" element={<SplashScreen />} />
 
-         {/* Parent Routes */}
-         <Routes
-         key={location.pathname}
-         location={location}>
+        {/* INFO SCREEN */}
+        <Route path="/info" element={<Info />} />
 
-            {/* ============ USER-ONBOARDING ============== */}
-            {/* SPLASH SCREEN */}
-            <Route
-            path="/"
-            element={<SplashScreen />} />
+        {/* ONBOARDING */}
+        <Route path="/onboradings" element={<Onborading />} excel />
 
-            {/* INFO SCREEN */}
-            <Route
-            path="/info"
-            element={<Info />} />
+        {/* ============= VENDOR ================= */}
+        {/* REGISTRATION VENDOR */}
+        <Route path="/vendon-register" element={<RegistrationVendon />} />
 
-            {/* ONBOARDING */}
-            <Route 
-            path="/onboradings" 
-            element={<Onborading />} 
-            excel/>
+        {/* VENDOR VERIFICATION PAGE VENDOR */}
+        <Route
+          path="/vendor-verification-page"
+          element={<VendorVerificationPage />}
+        />
 
+        {/* VENDOR VERIFICATION PAGE SUCCESS */}
+        <Route
+          path="/vendor-verification-success"
+          element={<VendorVerified />}
+        />
 
-            {/* ============= VENDOR ================= */}
-            {/* REGISTRATION VENDOR */}
-            <Route 
-            path="/vendon-register" 
-            element={<RegistrationVendon/>}/>
+        {/* VENDOR'S PROFILE */}
+        <Route path="/vendon-profile" element={<ProfileVendon />} />
 
-            {/* VENDOR VERIFICATION PAGE VENDOR */}
-            <Route 
-            path="/vendor-verification-page" 
-            element={<VendorVerificationPage />}/>
+        {/* VENDOR CREATE PIN */}
+        <Route path="/vendor-create-p" element={<VendorCreatePin />} />
 
-            {/* VENDOR VERIFICATION PAGE SUCCESS */}
-            <Route 
-            path="/vendor-verification-success" 
-            element={<VendorVerified />}/>
+        {/* VENDOR CREATE PIN SUCCESS */}
+        <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
 
-            {/* VENDOR'S PROFILE */}
-            <Route 
-            path="/vendon-profile" 
-            element={<ProfileVendon/>} />
+        {/* ============= INDIVIDUALS ================= */}
+        {/* INDIVIDUAL REGISTER */}
+        <Route
+          path="/individual-register"
+          element={<RegistrationIndividual />}
+        />
 
-            {/* VENDOR CREATE PIN */}
-            <Route 
-            path="/vendor-create-p" 
-            element={<VendorCreatePin />}/>
+        {/* INDIVIDUAL VERIFICATION PAGE */}
+        <Route
+          path="/individual-verification-page"
+          element={<IndividualVerificationPage />}
+        />
 
-            {/* VENDOR CREATE PIN SUCCESS */}
-            <Route 
-            path="/vendor-create-success" 
-            element={<VendorPinSuccess />}/>
+        {/* INDIVIDUAL VERIFICATION PAGE SUCCESS */}
+        <Route
+          path="/individual-verification-success"
+          element={<IndividualVerified />}
+        />
 
+        {/* PROFILE */}
+        <Route path="/individual-profile" element={<Profile />} />
 
-            {/* ============= INDIVIDUALS ================= */}
-            {/* INDIVIDUAL REGISTER */}
-            <Route 
-            path="/individual-register" 
-            element={<RegistrationIndividual />}/>
+        {/* MORE INFO */}
+        <Route path="/individual-more-info" element={<MoreInfo />} />
 
-            {/* INDIVIDUAL VERIFICATION PAGE */}
-            <Route 
-            path="/individual-verification-page" 
-            element={<IndividualVerificationPage />}/>
+        {/* INDIVIDUAL CREATE PIN */}
+        <Route path="/individual-create-p" element={<IndividualCreatePin />} />
 
-            {/* INDIVIDUAL VERIFICATION PAGE SUCCESS */}
-            <Route 
-            path="/individual-verification-success" 
-            element={<IndividualVerified />}/>
+        {/* INDIVIDUAL CREATE PIN SUCCESS */}
+        <Route
+          path="/individual-create-success"
+          element={<IndividualPinSuccess />}
+        />
 
-            {/* PROFILE */}
-            <Route 
-            path="/individual-profile" 
-            element={<Profile/>} />
+        {/* ============= LOGIN ================= */}
+        {/* LOGIN USER */}
+        <Route path="/loginIndividual" element={<LoginUser />} />
 
-            {/* MORE INFO */}
-            <Route 
-            path="/individual-more-info" 
-            element={<MoreInfo/>} />
-            
-            {/* INDIVIDUAL CREATE PIN */}
-            <Route 
-            path="/individual-create-p" 
-            element={<IndividualCreatePin />}/>
+        {/* FORGOT PASSWORD */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
-            {/* INDIVIDUAL CREATE PIN SUCCESS */}
-            <Route 
-            path="/individual-create-success" 
-            element={<IndividualPinSuccess />}/>
+        {/* VERIFICATION */}
+        <Route path="/verification" element={<Verification />} />
 
+        {/* RESET PASSWORD */}
+        <Route path="/reset-password" element={<ResetPassword />} />
 
-            {/* ============= LOGIN ================= */}
-            {/* LOGIN USER */}
-            <Route 
-            path="/loginIndividual" 
-            element={<LoginUser  />}/>  
+        {/* PASSWORD CHANGE SUCCESS */}
+        <Route
+          path="/reset-password/success"
+          element={<PasswordChangeSuccess />}
+        />
 
-            {/* FORGOT PASSWORD */}
-            <Route 
-            path="/forgot-password" 
-            element={<ForgotPassword/>} /> 
+        {/* =========== HOME DASHBOARD ========== */}
+        <Route element={<PrivateRoutes />}>
+          {/* HOME */}
+          <Route exact path="/home" element={<Home />} />
 
-            {/* VERIFICATION */}
-            <Route 
-            path="/verification" 
-            element={<Verification/>} />
+          <Route exact path="/home/overview/:coinId" element={<Overview />} />
 
-            {/* RESET PASSWORD */}
-            <Route 
-            path="/reset-password" 
-            element={<ResetPassword/>}/>  
+          <Route
+            exact
+            path="/home/overview/coin-buy-sell"
+            element={<BuySellCoin />}
+          />
 
-            {/* PASSWORD CHANGE SUCCESS */}
-            <Route 
-            path="/reset-password/success" 
-            element={<PasswordChangeSuccess/>} />
+          <Route exact path="/home/buy-coin/:coinId" element={<BuyCoin />} />
 
+          <Route exact path="/home/sell-coin/:coinId" element={<SellCoin />} />
 
-            {/* =========== HOME DASHBOARD ========== */}
-            <Route element={<PrivateRoutes />}>
+          <Route
+            exact
+            path="/home/buy-coin/:coinId/order-statement"
+            element={<OrderStatement />}
+          />
 
-               {/* HOME */}
-               <Route
-               exact
-               path="/home"
-               element={<Home />} />
+          <Route
+            exact
+            path="/home/sell-coin/:coinId/sell-order-statement"
+            element={<SellOrderStatements />}
+          />
 
-               <Route
-               exact
-               path="/home/overview/:coinId"
-               element={<Overview />} />
+          <Route
+            exact
+            path="/home/buy-coin/success/:transactionId"
+            element={<TransactionSuccess />}
+          />
 
-               <Route
-               exact
-               path="/home/overview/coin-buy-sell"
-               element={<BuySellCoin />} />
+          <Route
+            exact
+            path="/home/sell-coin/success/:transactionId"
+            element={<TransactionSuccess />}
+          />
 
-               <Route
-               exact
-               path="/home/buy-coin/:coinId"
-               element={<BuyCoin />} />
+          {/* PORTFOLIO */}
+          <Route exact path="/portfolio" element={<Portfolio />} />
 
-               <Route
-               exact
-               path="/home/sell-coin/:coinId"
-               element={<SellCoin />} />
+          <Route
+            exact
+            path="/portfolio/create-wallet"
+            element={<CreateWallet />}
+          />
 
-               <Route
-               exact
-               path="/home/buy-coin/:coinId/order-statement"
-               element={<OrderStatement />} />
+          <Route
+            exact
+            path="/portfolio/transactions"
+            element={<Transactions />}
+          />
 
-               <Route
-               exact
-               path="/home/sell-coin/:coinId/sell-order-statement"
-               element={<SellOrderStatements />} />
+          <Route
+            exact
+            path="/portfolio/checkout/:coinId"
+            element={<Checkout />}
+          />
 
-               <Route
-               exact
-               path="/home/buy-coin/success/:transactionId"
-               element={<TransactionSuccess />} />
+          <Route
+            exact
+            path="/portfolio/checkout/:coinId/send"
+            element={<SendCoin />}
+          />
 
-               <Route
-               exact
-               path="/home/sell-coin/success/:transactionId"
-               element={<TransactionSuccess />} />
+          <Route
+            exact
+            path="/portfolio/checkout/:coinId/receive"
+            element={<ReceiveCoin />}
+          />
 
-               {/* PORTFOLIO */}
-               <Route
-               exact
-               path="/portfolio"
-               element={<Portfolio />} />
+          <Route
+            exact
+            path="/portfolio/swap-bridge"
+            element={<SwapBridgeCoin />}
+          />
 
-               <Route
-               exact
-               path="/portfolio/create-wallet"
-               element={<CreateWallet />} />
+          {/* LISTING */}
+          <Route exact path="/listing" element={<Listing />} />
 
-               <Route
-               exact
-               path="/portfolio/transactions"
-               element={<Transactions />} />
+          <Route
+            exact
+            path="/listing/create-listing"
+            element={<CreateListing />}
+          />
 
-               <Route
-               exact
-               path="/portfolio/checkout/:coinId"
-               element={<Checkout />} />
+          {/* PROFILE */}
+          <Route exact path="/profile" element={<SettingProfile />} />
 
-               <Route
-               exact
-               path="/portfolio/checkout/:coinId/send"
-               element={<SendCoin />} />
+          <Route exact path="/profile/edit-profile" element={<EditProfile />} />
+        </Route>
 
-               <Route
-               exact
-               path="/portfolio/checkout/:coinId/receive"
-               element={<ReceiveCoin />} />
+        <Route
+          exact
+          path="/profile/terms-and-conditions"
+          element={<TermsAndConditions />}
+        />
 
-               <Route
-               exact
-               path="/portfolio/swap-bridge"
-               element={<SwapBridgeCoin />} />
-
-               {/* LISTING */}
-               <Route
-               exact
-               path="/listing"
-               element={<Listing />} />
-               
-               <Route
-               exact
-               path="/listing/create-listing"
-               element={<CreateListing />} />
-
-               {/* PROFILE */}
-               <Route
-               exact
-               path="/profile"
-               element={<SettingProfile />} />
-
-               <Route
-               exact
-               path="/profile/edit-profile"
-               element={<EditProfile />} />
-            </Route>
-
-         </Routes>
-      </AnimatePresence>
-   )
-}
+        <Route
+          exact
+          path="/profile/privacy-policy"
+          element={<PrivacyPolicy />}
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 export default MainRouter;
