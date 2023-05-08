@@ -4,9 +4,8 @@ import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "../../components/Button";
 import PhoneINumberInput from "../../components/PhoneINumberInput";
-import axios from "axios";
 import BASE_URL from "../../../../serivce/url.serice";
-import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
+import { getFromLocalStorage } from "../../helpers/localStorageMethods";
 import useMakeReq from "../../hooks/useMakeReq";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
@@ -77,7 +76,6 @@ const Profile = ()=>{
           toast.error(data.message)
       } else if(isSuccessful===true && !(isEmpty(data))) {
           toast.success(data.message)
-          deleteItemFromLocalStorage("userId")
           navigate("/individual-create-p", { replace: true })
       }
   }, [data, isSuccessful])

@@ -1,3 +1,5 @@
+import { setCookie } from "../user-managerment/module/helpers/cookieMethods";
+
 const AuthReducer = (state, action) =>{
     switch(action.type){
        case "LOGOUT":
@@ -13,11 +15,18 @@ const AuthReducer = (state, action) =>{
             error: false
            };
         case "LOGIN_SUCCESS":
+            setCookie("userData", JSON.stringify(action.payload.data))
             return{
              user: action.payload,
              isfetching: false,
              error: false
             };
+        case "LOGIN_SUCCESS_CLEAR":
+            return {
+                user: {...action.payload, success: false},
+                isfetching: false,
+                error: false
+            }
         case "LOGIN_FAILURE":
                 return{
                  user: null,

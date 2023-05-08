@@ -1,20 +1,53 @@
-import { useContext, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { AuthContext } from '../../../../../context/AuthContext'
 import { isEmpty } from '../../../helpers/isEmpty'
+import { deleteCookie, getCookie } from '../../../helpers/cookieMethods'
+import useBrowserTabState from '../../../hooks/Dashboard/useBrowserTabState'
 
 const PrivateRoutes = () => {
 
-    // DATA INITIALIZATION
-    const {user} = useContext(AuthContext)
-    // let auth = {'token':true}
+    // STATES
+    const [isCleared, setIsCleared] = useState(false)
 
+
+    // DATA INITIALIZATION
+    const retrieved = getCookie("userData")
+    const tLine = getCookie("tLine")
+    const usrData = isEmpty(retrieved)?"":JSON.parse(retrieved)
+    const isActive = useBrowserTabState()
+
+
+    // HANDLERS
+    const clearBiscuits = () => {
+        setIsCleared(true)
+        deleteCookie("userData")
+        deleteCookie("tLine")
+    }
+
+
+
+    // SIDE EFFECTS
+    // interval to check cookie
     useEffect(()=>{
-        console.log(user)
-    }, [user])
+        const interval = setInterval(() => {
+            new Date().getTime() > new Date(tLine).getTime() && clearBiscuits()
+        }, (10 * 1000));
+
+        return () => {
+            clearInterval(interval)
+        }
+    }, [])
+
+    // CONDITIONAL RETURN BLOCK
+    // return user to the login page, if cookie has been cleared
+    if(isCleared) {
+        return (
+            <Navigate to='/loginIndividual'/>
+        )
+    }
 
     return (
-        user ? <Outlet/> : <Navigate to='/loginIndividual'/>
+        !(isEmpty(usrData))? <Outlet/> : <Navigate to='/loginIndividual'/>
     )
 }
 

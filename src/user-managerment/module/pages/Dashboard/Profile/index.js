@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
-import { useNavigate } from 'react-router-dom'
 import { Bank, Document, Like1, Lock1, Logout, Messages, ProfileCircle, Receipt1, Security, Star1, TableDocument } from 'iconsax-react'
 import SettingOptionCards from '../../../components/Dashboard/Profile/SettingOptionCards'
 import UnverifiedLabel from '../../../components/Dashboard/Profile/UnverifiedLabel'
@@ -9,24 +7,19 @@ import { Link } from 'react-router-dom'
 import { Logout as logUserOut } from '../../../../../serivce/apiCalls'
 import { useContext } from 'react'
 import { AuthContext } from '../../../../../context/AuthContext'
-
-
+import { deleteCookie } from '../../../helpers/cookieMethods'
 
 
 const Profile = () => {
 
+    // DATA INITIALIZATION
     const {dispatch} = useContext(AuthContext)
 
-    
-    // STATES
 
-
-    // DATA INITIALIZATION
-    const navigate = useNavigate()
-    
-
-       // HANDLERS
+    // HANDLERS
     const handleLogout = () => {
+        // Cookies.remove('userData')
+        deleteCookie("userData")
         logUserOut(dispatch)
     }
 

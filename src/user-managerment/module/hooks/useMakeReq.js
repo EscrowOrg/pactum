@@ -25,8 +25,9 @@ const useMakeReq = () => {
             console.log(data.message)
         } catch(error) {
             setLoading(false)
-            console.log(error)
-            console.log(data.message)
+            const errorMessage = error.response.data.message
+            setError(errorMessage)
+            setTimeout(()=>{setError("")}, 5000)
         }
     }
 

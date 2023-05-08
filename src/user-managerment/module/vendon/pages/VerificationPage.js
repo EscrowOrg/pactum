@@ -28,9 +28,6 @@ const VendorVerificationPage = () => {
             {/* container */}
             <div className="w-full h-full flex flex-col py-10 px-4 gap-10">
 
-                {/* Back Button */}
-                 {/* <BackButton /> */}
-
                  {/* Skip Button */}
                 <SkipButtonVendor />
                
