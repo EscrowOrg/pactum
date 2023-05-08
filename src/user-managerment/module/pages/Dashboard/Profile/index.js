@@ -18,8 +18,6 @@ const Profile = () => {
 
     // HANDLERS
     const handleLogout = () => {
-        // Cookies.remove('userData')
-        deleteCookie("userData")
         logUserOut(dispatch)
     }
 

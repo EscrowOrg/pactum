@@ -253,13 +253,13 @@ const Overview = () => {
                     <Link
                     to="/home/overview/coin-buy-sell?id=2"
                     className='hover:no-underline text-black text-sm font-semibold'>
-                        Send BTC
+                        Sell BTC
                     </Link>
 
                     <Link
                     to="/home/overview/coin-buy-sell?id=1"
                     className='hover:no-underline text-black text-sm font-semibold'>
-                        Receive BTC
+                        Buy BTC
                     </Link>
 
                     <Link

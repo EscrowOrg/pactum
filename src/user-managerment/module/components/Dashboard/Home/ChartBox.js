@@ -6,138 +6,6 @@ import Tabs, { Tab } from 'react-best-tabs';
 const ChartBox = () => {
 
     // DATA INITIALIZATION
-    const series1 = [{
-        data: [
-            {
-                x: new Date(1682778600000),
-                y: [6629.81, 6650.5, 6623.04, 6633.33]
-            },
-            {
-                x: new Date(1682780400000),
-                y: [6632.01, 6643.59, 6620, 6630.11]
-            },
-            {
-                x: new Date(1682782200000),
-                y: [6630.71, 6648.95, 6623.34, 6635.65]
-            },
-            {
-                x: new Date(1682784000000),
-                y: [6635.65, 6651, 6629.67, 6638.24]
-            },
-            {
-                x: new Date(1682785800000),
-                y: [6638.24, 6640, 6620, 6624.47]
-            },
-            {
-                x: new Date(1682787600000),
-                y: [6624.53, 6636.03, 6621.68, 6624.31]
-            },
-            {
-                x: new Date(1682789400000),
-                y: [6624.61, 6632.2, 6617, 6626.02]
-            },
-            {
-                x: new Date(1682791200000),
-                y: [6627, 6627.62, 6584.22, 6603.02]
-            },
-            {
-                x: new Date(1682793000000),
-                y: [6605, 6608.03, 6598.95, 6604.01]
-            },
-            {
-                x: new Date(1682794800000),
-                y: [6604.5, 6614.4, 6602.26, 6608.02]
-            },
-            {
-                x: new Date(1682796600000),
-                y: [6608.02, 6610.68, 6601.99, 6608.91]
-            },
-            {
-                x: new Date(1682798400000),
-                y: [6608.91, 6618.99, 6608.01, 6612]
-            },
-            {
-                x: new Date(1682800200000),
-                y: [6612, 6615.13, 6605.09, 6612]
-            },
-            {
-                x: new Date(1682802000000),
-                y: [6612, 6624.12, 6608.43, 6622.95]
-            },
-            {
-                x: new Date(1682803800000),
-                y: [6623.91, 6623.91, 6615, 6615.67]
-            },
-            {
-                x: new Date(1682805600000),
-                y: [6618.69, 6618.74, 6610, 6610.4]
-            },
-            {
-                x: new Date(1682807400000),
-                y: [6611, 6622.78, 6610.4, 6614.9]
-            },
-            {
-                x: new Date(1682809200000),
-                y: [6614.9, 6626.2, 6613.33, 6623.45]
-            },
-            {
-                x: new Date(1682811000000),
-                y: [6623.48, 6627, 6618.38, 6620.35]
-            },
-            {
-                x: new Date(1682812800000),
-                y: [6619.43, 6620.35, 6610.05, 6615.53]
-            },
-            {
-                x: new Date(1682814600000),
-                y: [6615.53, 6617.93, 6610, 6615.19]
-            },
-            {
-                x: new Date(1682816400000),
-                y: [6615.19, 6621.6, 6608.2, 6620]
-            },
-            {
-                x: new Date(1682818200000),
-                y: [6619.54, 6625.17, 6614.15, 6620]
-            },
-            {
-                x: new Date(1682820000000),
-                y: [6620.33, 6634.15, 6617.24, 6624.61]
-            },
-            {
-                x: new Date(1682821800000),
-                y: [6625.95, 6626, 6611.66, 6617.58]
-            },
-            {
-                x: new Date(1682823600000),
-                y: [6619, 6625.97, 6595.27, 6598.86]
-            },
-            {
-                x: new Date(1682825400000),
-                y: [6598.86, 6598.88, 6570, 6587.16]
-            },
-            {
-                x: new Date(1682827200000),
-                y: [6588.86, 6600, 6580, 6593.4]
-            },
-            {
-                x: new Date(1682829000000),
-                y: [6593.99, 6598.89, 6585, 6587.81]
-            },
-            {
-                x: new Date(1682830800000),
-                y: [6587.81, 6592.73, 6567.14, 6578]
-            },
-            {
-                x: new Date(1682832600000),
-                y: [6578.35, 6581.72, 6567.39, 6579]
-            },
-            {
-                x: new Date(1682834400000),
-                y: [6579.38, 6580.92, 6566.77, 6575.96]
-            },
-        ]
-    }]
     const series2 = [{
         data: [
             [1344808800000,32.27],
@@ -253,62 +121,6 @@ const ChartBox = () => {
             [1358895600000,38.25]
         ]
     }]
-    const options1 = {
-        grid: {
-            show: true,
-            borderColor: '#DAD7E0',
-            strokeDashArray: 6,
-            position: 'back',
-            xaxis: {
-                lines: {
-                    show: false
-                }
-            },   
-            yaxis: {
-                lines: {
-                    show: true
-                }
-            },
-        },
-        plotOptions: {
-            candlestick: {
-                colors: {
-                    upward: '#10B981',
-                    downward: '#D1292D'
-                },
-                wick: {
-                    useFillColor: true
-                }
-            }
-        },
-        chart: {
-            foreColor: '#645B75',
-            toolbar: {
-                show: false
-            },
-            type: 'candlestick',
-            height: 350
-        },
-        xaxis: {
-            type: 'datetime',
-            labels: {
-                style: {
-                    fontSize: "10px",
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontWeight: 400,
-                }
-            }
-        },
-        yaxis: {    
-            labels: {
-                style: {
-                    fontSize: "10px",
-                    fontFamily: "'Public Sans', sans-serif",
-                    fontWeight: 400,
-                }
-            }
-        },
-    }
     const options2 = {
         chart: {
             // animations: {
@@ -424,7 +236,6 @@ const ChartBox = () => {
 
     // STATES
     const [activeTab, setActiveTab] = useState(4)
-    const [chartType, setChartType] = useState(2)
 
     return (
         <div className='flex flex-col w-full relative'>
@@ -449,32 +260,12 @@ const ChartBox = () => {
 
             {/* chart */}
             <div className='w-full'>
-                {
-                    chartType===1?
-                    <Chart
-                    series={series1}
-                    options={options1}
-                    type='candlestick'
-                    width={"100%"} />:
-                    chartType===2?
-                    <Chart
-                    options={options2} 
-                    series={series2} 
-                    type="area" 
-                    width={"100%"} />:
-                    <></>
-                }
+                <Chart
+                options={options2} 
+                series={series2} 
+                type="area" 
+                width={"100%"} />
             </div>
-
-            {/* switch button */}
-            <span
-            onClick={()=>setChartType(chartType=>chartType>1?1:2)} 
-            className='inline-flex items-center justify-center w-[34px] h-[34px] bg-[#FAFAFB] hover:bg-gray-200 cursor-pointer rounded-[50%] absolute bottom-[58px] right-5'>
-                <Diagram
-                variant='Linear'
-                size="13"
-                color='#141217' />
-            </span>
         </div>
     )
 }

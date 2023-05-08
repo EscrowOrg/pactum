@@ -47,7 +47,6 @@ const LoginUser  = () =>{
    // SIDE EFFECTS
    useEffect(()=>{
       if(user?.success===true) {
-         // Cookies.set("userData", JSON.stringify(user.data), {secure: true, expires: cookieExpirtyTime})
          navigate("/home", { replace: true })
       }
    // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import "./activelistingtab.scss"
+import CircularProgress from '../../../components/Dashboard/Listing/CircularProgress'
 
 const UserListingCard = () => {
 
@@ -18,20 +19,20 @@ const UserListingCard = () => {
 
                 <h3
                 onClick={()=>setActiveTab(1)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===1?"active-listing-tab":""}`}>
-                    Ongoing
+                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===1?"active-listing-tab act-tb1":""}`}>
+                    Pending Payments
                 </h3>
 
                 <h3
                 onClick={()=>setActiveTab(2)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===2?"active-listing-tab":""}`}>
-                    Completed
+                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===2?"active-listing-tab act-tb2":""}`}>
+                    Ongoing Listings
                 </h3>
 
                 <h3
                 onClick={()=>setActiveTab(3)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===3?"active-listing-tab":""}`}>
-                    Closed
+                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===3?"active-listing-tab act-tb3":""}`}>
+                    Closed Listings
                 </h3>
             </div>
 
@@ -49,11 +50,9 @@ const UserListingCard = () => {
 
                                 {/* image and name */}
                                 <div className="flex items-center gap-2">
-
-                                    <img
-                                    alt=""
-                                    src={"/images/dashboard/bitcoin.png"}
-                                    className="h-[40px] w-[40px] rounded-[50%]" />
+                                    
+                                    
+                                    <CircularProgress />
 
                                     <div className='flex flex-col gap-1'>
                                         <h3 className='font-semibold text-black text-sm'>
