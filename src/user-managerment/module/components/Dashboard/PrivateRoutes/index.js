@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { deleteCookie, getCookie } from '../../../helpers/cookieMethods'
@@ -18,12 +18,11 @@ const PrivateRoutes = () => {
 
 
     // HANDLERS
-    const clearBiscuits = () => {
+    const clearBiscuits = useCallback(() => {
         setIsCleared(true)
         deleteCookie("userData")
         deleteCookie("tLine")
-    }
-
+    }, [])
 
 
     // SIDE EFFECTS
