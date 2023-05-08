@@ -1,11 +1,8 @@
 // SET COOKIE
-export const setCookie = (name, value, days) => {
-    const expires = new Date();
-    const threshold = new Date(expires.getTime() + (30 * 1000));
-    document.cookie = `${name}=${value};expires=${threshold?.toUTCString() || null};path=/;Secure`;
+export const setCookie = (name, value, time) => {
 
-    // setting expiry data
-    document.cookie = `tLine=${threshold?.toUTCString() || null};expires=${threshold?.toUTCString() || null};path=/;Secure`;
+    // setting the cookie
+    document.cookie = `${name}=${value};expires=${time?.toUTCString() || null};path=/;Secure`;
 }
 
 

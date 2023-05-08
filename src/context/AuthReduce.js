@@ -1,10 +1,13 @@
-import { deleteCookie, setCookie } from "../user-managerment/module/helpers/cookieMethods";
+import { persistUserToken, removeUserToken } from "../serivce/cookie.service";
 
 const AuthReducer = (state, action) =>{
     switch(action.type){
         case "LOGOUT":
-            deleteCookie("userData")
-            deleteCookie("tLine")
+
+            // clear persisted data upon logout
+            removeUserToken()
+
+            // return new state value
             return{
                 user: null,
                 isfetching: false,
@@ -17,7 +20,11 @@ const AuthReducer = (state, action) =>{
                 error: false
             };
         case "LOGIN_SUCCESS":
-            setCookie("userData", JSON.stringify(action.payload.data))
+
+            // persist data upon login
+            persistUserToken(action.payload.data)
+
+            // return new state value
             return{
                 user: action.payload,
                 isfetching: false,

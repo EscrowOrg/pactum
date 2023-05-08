@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 import { Logout as logUserOut } from '../../../../../serivce/apiCalls'
 import { useContext } from 'react'
 import { AuthContext } from '../../../../../context/AuthContext'
-import { deleteCookie } from '../../../helpers/cookieMethods'
 
 
 const Profile = () => {
