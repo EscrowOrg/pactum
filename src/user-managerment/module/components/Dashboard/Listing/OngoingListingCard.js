@@ -1,7 +1,14 @@
 import React from 'react'
 import CircularProgress from './CircularProgress'
+import { useNavigate } from "react-router-dom";
+
 
 const OngoingListingCard = () => {
+
+     // DATA INITIALIZATION
+     const navigate = useNavigate()
+
+
     return (
         <div 
         className='w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4'>
@@ -72,7 +79,7 @@ const OngoingListingCard = () => {
                 </span>
                 
                 {/* view more button */}
-                <span className='bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal'>
+                <span onClick={() =>navigate("/listing/overview/awdgtsqrhbdfwtyu" )} className='bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal'>
                     View More
                 </span>
             </div>
