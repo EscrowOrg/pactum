@@ -1,7 +1,7 @@
 import { Eye, EyeSlash } from 'iconsax-react'
 import { useState } from 'react'
 
-const PortfolioBalance = ({amount}) => {
+const PortfolioBalance = ({usdValue, btcValue, loading}) => {
 
     // STATES
     const [isHidden, setIsHidden] = useState(false)
@@ -16,13 +16,20 @@ const PortfolioBalance = ({amount}) => {
             <div className=' inline-flex items-center gap-2'>
                 <h3 className='text-[22px] font-bold text-[#F4EFFE]'>
                     {
+                        loading?
+                        "loading...":
                         isHidden?
                         "••••••••••":
-                        `$${amount?.toLocaleString('en-US')}`
+                        `$${usdValue?.toLocaleString('en-US')}`
                     }
                 </h3>
 
                 {
+                    loading?
+                    <EyeSlash
+                    size="24"
+                    color="#F4EFFE"
+                    variant="Bulk" />:
                     isHidden?
                     <Eye
                     onClick={toggleBalanceVisibility}
@@ -38,7 +45,7 @@ const PortfolioBalance = ({amount}) => {
             </div>
 
             <h4 className='font-semibold text-xs'>
-                BTC Equivalent: {isHidden?"_ _ _":"0.9483" }
+                BTC Equivalent: {loading?"loading...":isHidden?"_ _ _":btcValue}
             </h4>
         </div>
     )

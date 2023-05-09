@@ -33,3 +33,13 @@ export const hasUserTokenExpired = () => {
 
     return (new Date().getTime() > new Date(timeLine).getTime())
 }
+
+// return user's ID
+export const getUserId = () => {
+    const stringifyData = getCookie("userData")
+    if(isEmpty(stringifyData)) {
+        return null
+    }
+    const uData = JSON.parse(stringifyData)
+    return uData.userId     
+}

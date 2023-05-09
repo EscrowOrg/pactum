@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { hasUserTokenExpired, removeUserToken } from '../../../../../serivce/cookie.service'
+import useBrowserTabState from '../../../hooks/Dashboard/useBrowserTabState'
 
 const PrivateRoutes = () => {
+
+    // DATA INITIALIZATION
+    const isActive = useBrowserTabState()
+
 
     // STATES
     const [isCleared, setIsCleared] = useState(false)
@@ -20,7 +25,7 @@ const PrivateRoutes = () => {
     useEffect(()=>{
         const interval = setInterval(() => {
             hasUserTokenExpired() && clearBiscuits()
-        }, (10 * 1000));
+        }, (1000));
 
         // clear interval using cleanup function
         return () => {
