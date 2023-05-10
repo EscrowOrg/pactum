@@ -31,11 +31,11 @@ const PrivateRoutes = () => {
 
     // SIDE EFFECTS
     // if fetching refresh token fails, Log user out
-    useEffect(()=>{
-        if(!isEmpty(data)){
-            data.success === true? persistUserToken(data?.data):clearBiscuits()
-        }
-    }, [data])
+    // useEffect(()=>{
+    //     if(!isEmpty(data)){
+    //         data.success === true? persistUserToken(data?.data):clearBiscuits()
+    //     }
+    // }, [data])
 
     // interval to check cookie
     useEffect(()=>{
@@ -43,24 +43,25 @@ const PrivateRoutes = () => {
         // interval function
         const interval = setInterval(() => {
 
-            if(hasUserTokenExpired) {
-                if(isActive) {
+            // if(hasUserTokenExpired) {
+            //     if(isActive) {
 
-                    // get new token
-                    const data = getUserData()
+            //         // get new token
+            //         const data = getUserData()
 
-                    makePostRequest(REFRESH_USER_TOKEN, {
-                        refreshTokenRequest: {
-                            userId: data.userId,
-                            role: data.role,
-                            token: data.token,
-                            refreshToken: data.refreshToken
-                        }
-                    })
-                } else {
-                    clearBiscuits()
-                }
-            }
+            //         makePostRequest(REFRESH_USER_TOKEN, {
+            //             refreshTokenRequest: {
+            //                 userId: data.userId,
+            //                 role: data.role,
+            //                 token: data.token,
+            //                 refreshToken: data.refreshToken
+            //             }
+            //         })
+            //     } else {
+            //         clearBiscuits()
+            //     }
+            // }
+            hasUserTokenExpired() && clearBiscuits()
         }, (5 * 1000));
 
         // clear interval using cleanup function

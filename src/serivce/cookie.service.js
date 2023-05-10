@@ -10,7 +10,7 @@ export const persistUserToken = (value) => {
 
     // expiry time
     const expires = new Date();
-    const threshold = new Date(expires.getTime() + (30 * 1000));
+    const threshold = new Date(expires.getTime() + (2 * 60 * 1000));
 
     setCookie("userData", JSON.stringify(value), threshold)
     setCookie("dataTimeline", (threshold.toUTCString() || null), threshold)

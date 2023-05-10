@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const OngoingListingCard = () => {
 
-     // DATA INITIALIZATION
-     const navigate = useNavigate()
-
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
 
     return (
         <div 

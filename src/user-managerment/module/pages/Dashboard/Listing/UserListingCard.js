@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import "./activelistingtab.scss"
 import OngoingListingCard from '../../../components/Dashboard/Listing/OngoingListingCard'
+import ListingBodyContent from "../../../components/Dashboard/Listing/ListingBodyContent"
 
 const UserListingCard = () => {
 
@@ -36,17 +37,9 @@ const UserListingCard = () => {
                 </h3>
             </div>
 
-            {/* body content */}
-            <div className='h-full w-full px-4 bg-gray-100 flex flex-col pt-3 pb-20 overflow-auto gap-5'>
-
-                {
-                    listData.map((listD, index)=>(
-                        <OngoingListingCard
-                        key={index} />
-                    ))
-                }
-
-            </div>
+            <ListingBodyContent
+            activeTab={activeTab}
+            listData={listData} />
         </div>
     )
 }
