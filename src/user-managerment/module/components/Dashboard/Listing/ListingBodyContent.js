@@ -33,3 +33,6 @@ const ListingBodyContent = ({activeTab, listData}) => {
 }
 
 export default ListingBodyContent
+
+
+// bg-gray-100

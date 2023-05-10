@@ -47,6 +47,7 @@ import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
 import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
 import Overviews from "./pages/Dashboard/Listing/Overview";
+import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -232,8 +233,16 @@ const MainRouter = () => {
             path="/listing/create-listing"
             element={<CreateListing />}
           />
+          <Route
+            path="/listing/pending-payments/:orderId"
+            element={<PendingOrderStatement />}
+          />
 
-          <Route exact path="/listing/overview/:listingId" element={<Overviews />} />
+          <Route
+            exact
+            path="/listing/overview/:listingId"
+            element={<Overviews />}
+          />
 
           {/* PROFILE */}
           <Route exact path="/profile" element={<SettingProfile />} />
