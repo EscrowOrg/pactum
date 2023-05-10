@@ -46,6 +46,7 @@ import EditProfile from "./pages/Dashboard/Profile/EditProfile";
 import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
 import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
+import Overviews from "./pages/Dashboard/Listing/Overview";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -231,6 +232,8 @@ const MainRouter = () => {
             path="/listing/create-listing"
             element={<CreateListing />}
           />
+
+          <Route exact path="/listing/overview/:listingId" element={<Overviews />} />
 
           {/* PROFILE */}
           <Route exact path="/profile" element={<SettingProfile />} />
