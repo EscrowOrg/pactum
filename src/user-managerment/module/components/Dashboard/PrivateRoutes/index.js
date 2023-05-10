@@ -1,12 +1,21 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { hasUserTokenExpired, removeUserToken } from '../../../../../serivce/cookie.service'
+import { getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
 import useBrowserTabState from '../../../hooks/Dashboard/useBrowserTabState'
+import useMakeReq from '../../../hooks/useMakeReq'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
+import { toast } from 'react-toastify'
 
 const PrivateRoutes = () => {
 
     // DATA INITIALIZATION
     const isActive = useBrowserTabState()
+    const {
+        data,
+        makePostRequest,
+        isSuccessful
+    } = useMakeReq()
 
 
     // STATES
@@ -21,11 +30,38 @@ const PrivateRoutes = () => {
 
 
     // SIDE EFFECTS
+    // if fetching refresh token fails, Log user out
+    useEffect(()=>{
+        if(!isEmpty(data)){
+            data.success === true? persistUserToken(data?.data):clearBiscuits()
+        }
+    }, [data])
+
     // interval to check cookie
     useEffect(()=>{
+
+        // interval function
         const interval = setInterval(() => {
-            hasUserTokenExpired() && clearBiscuits()
-        }, (1000));
+
+            if(hasUserTokenExpired) {
+                if(isActive) {
+
+                    // get new token
+                    const data = getUserData()
+
+                    makePostRequest(REFRESH_USER_TOKEN, {
+                        refreshTokenRequest: {
+                            userId: data.userId,
+                            role: data.role,
+                            token: data.token,
+                            refreshToken: data.refreshToken
+                        }
+                    })
+                } else {
+                    clearBiscuits()
+                }
+            }
+        }, (5 * 1000));
 
         // clear interval using cleanup function
         return () => {

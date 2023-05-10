@@ -43,3 +43,23 @@ export const getUserId = () => {
     const uData = JSON.parse(stringifyData)
     return uData.userId     
 }
+
+// return user's role
+export const getUserRole = () => {
+    const stringifyData = getCookie("userData")
+    if(isEmpty(stringifyData)) {
+        return null
+    }
+    const uData = JSON.parse(stringifyData)
+    return uData.role
+}
+
+// return user's Data
+export const getUserData = () => {
+    const stringifyData = getCookie("userData")
+    if(isEmpty(stringifyData)) {
+        return null
+    }
+    
+    return JSON.parse(stringifyData)
+}

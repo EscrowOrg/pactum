@@ -14,7 +14,6 @@ const HomeHeader = () => {
         loading,
         data,
         makeGetRequest,
-        error
     } = useMakeReq()
     
 
@@ -29,8 +28,9 @@ const HomeHeader = () => {
     useEffect(()=>{
         makeGetRequest(`${GET_PORTFOLIO_BALANCE}/${getUserId()}`)
     }, [])
+
+    // populating data
     useEffect(()=>{
-        console.log(data?.data)
         if(!isEmpty(data)) {
             setAmountInfo({
                 btcValue: roundToN(data?.data?.valueInBitcoin, 4) || 0,
@@ -38,11 +38,6 @@ const HomeHeader = () => {
             })
         }
     }, [data])
-    useEffect(()=>{
-        if(error) {
-            console.log(error)
-        }
-    }, [error])
 
     return (
         <div className='w-full flex items-center justify-center bg-[#6D34F0] min-h-[190px] relative'>

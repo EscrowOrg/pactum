@@ -22,7 +22,6 @@ const useMakeReq = () => {
             setLoading(false)
             setData(data)
             setIsSuccessful(data.success)
-            console.log(data.message)
         } catch(error) {
             setLoading(false)
             const errorMessage = error.response.data.message
