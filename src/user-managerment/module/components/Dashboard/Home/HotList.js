@@ -1,14 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HotlistCard from './HotlistCard'
 import Drawer from '../../../layouts/Drawer'
 import "../../../layouts/Drawer/index.css"
 import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
 import HotlistDrawerView from './HotlistDrawerView'
+import useMakeReq from '../../../hooks/useMakeReq'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { GET_CURRENCIES } from '../../../../../serivce/apiRoutes.service'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+import { roundToN } from '../../../helpers/roundToN'
+
+// ant icon
+const antIcon = (
+    <LoadingOutlined
+    style={{
+        fontSize: 26,
+        color: '#3A0CA3'
+    }}
+    spin />
+)
 
 const HotList = () => {
 
+    // DATA INITIALIZATION
+    const {
+        data,
+        loading,
+        makeGetRequest
+    } = useMakeReq()
+    const selectedCoin = [
+        "Tether",
+        // "USDC",
+        "Ethereum",
+        "BNB",
+        "Bitcoin",
+        // "BUSD",
+    ]
+
+
     // STATES
     const [isOpen, setIsOpen] = useState(false);
+    const [cryptoAssets, setCryptoAssets] = useState([])
 
 
     // HANDLERS
@@ -16,6 +49,17 @@ const HotList = () => {
         // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
         setIsOpen(isOpen => !isOpen)
     }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        makeGetRequest(GET_CURRENCIES)
+    }, [])
+    useEffect(()=>{
+        if(!isEmpty(data)) {
+            setCryptoAssets(data)
+        }
+    }, [data])
 
     return (
         <div className='w-full flex flex-col gap-4'>
@@ -36,74 +80,34 @@ const HotList = () => {
                 </h4>
             </div>
 
-            {/* cards */}
-            <div className='w-full grid grid-flow-col grid-rows-[auto_auto] overflow-x-auto gap-4'>
+            <div className='w-full'>
 
-                <HotlistCard
-                imageUrl={"/images/dashboard/bitcoin.png"}
-                currencyName={"Bitcoin"}
-                currentValue={28604.60}
-                hasAppreciated={true}
-                changePercentage={+5.73} />
+                {
+                    loading?
+                    <div className='flex bg-gray-50 rounded-md m-auto w-full h-[25vh] justify-center items-center'>
+                        <Spin indicator={antIcon} />
+                    </div>:
+                    !isEmpty(cryptoAssets)?
+                    <div className='w-full grid grid-flow-col grid-rows-[auto_auto] overflow-x-auto gap-4'>
+                        {
+                            cryptoAssets.filter((currency)=>selectedCoin.includes(currency.name)).map((curr, index)=>(
+                                
+                                <HotlistCard
+                                key={curr?.id}
+                                imageUrl={"/images/dashboard/bitcoin.png"}
+                                currencyName={curr?.name}
+                                currentValue={roundToN(curr?.price, 2).toLocaleString('en-US')}
+                                hasAppreciated={curr.percentChange24h>0}
+                                changePercentage={roundToN(curr.percentChange24h, 2)} />
+                            ))
+                        }
+                    </div>: 
+                    <div className='flex bg-gray-50 rounded-md w-full h-[25vh] justify-center items-center font-semibold text-xs'>
+                        Nothing here!
+                    </div>
+                }
 
-                <HotlistCard
-                imageUrl={"/images/dashboard/ethereum.png"}
-                currencyName={"Ethereum"}
-                currentValue={1954.20}
-                hasAppreciated={false}
-                changePercentage={-12.42} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/binance.png"}
-                currencyName={"Binance"}
-                currentValue={0.9998}
-                hasAppreciated={false}
-                changePercentage={-4.17} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/litcoin.png"}
-                currencyName={"Litcoin"}
-                currentValue={89.92}
-                hasAppreciated={true}
-                changePercentage={+2.56} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/bitcoin.png"}
-                currencyName={"Bitcoin"}
-                currentValue={28604.60}
-                hasAppreciated={true}
-                changePercentage={+5.73} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/ethereum.png"}
-                currencyName={"Ethereum"}
-                currentValue={1954.20}
-                hasAppreciated={false}
-                changePercentage={-12.42} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/binance.png"}
-                currencyName={"Binance"}
-                currentValue={0.9998}
-                hasAppreciated={false}
-                changePercentage={-4.17} />
-
-                <HotlistCard
-                imageUrl={"/images/dashboard/litcoin.png"}
-                currencyName={"Litcoin"}
-                currentValue={89.92}
-                hasAppreciated={true}
-                changePercentage={+2.56} />
             </div>
-            {/* <div className='w-full flex items-center justify-center'>
-                <div 
-                id="coinmarketcap-widget-coin-price-block" 
-                coins="1,1027,825" 
-                currency="USD" 
-                theme="light" 
-                transparent="false" 
-                show-symbol-logo="true"></div>
-            </div> */}
 
             {/* Drawer */}
             <Drawer

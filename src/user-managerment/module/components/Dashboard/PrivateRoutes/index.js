@@ -5,7 +5,6 @@ import useBrowserTabState from '../../../hooks/Dashboard/useBrowserTabState'
 import useMakeReq from '../../../hooks/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
-import { toast } from 'react-toastify'
 
 const PrivateRoutes = () => {
 
@@ -31,44 +30,50 @@ const PrivateRoutes = () => {
 
     // SIDE EFFECTS
     // if fetching refresh token fails, Log user out
-    // useEffect(()=>{
-    //     if(!isEmpty(data)){
-    //         data.success === true? persistUserToken(data?.data):clearBiscuits()
-    //     }
-    // }, [data])
+    useEffect(()=>{
+        if(!isEmpty(data)){
+            if(data.success === true) {
+                persistUserToken(data?.data)
+            } else {
+                clearBiscuits()
+            }
+        }
+    }, [data])
 
     // interval to check cookie
     useEffect(()=>{
 
         // interval function
-        const interval = setInterval(() => {
+        const intervalId = setInterval(() => {
 
-            // if(hasUserTokenExpired) {
-            //     if(isActive) {
+            // check if token has expired
+            if(hasUserTokenExpired()===true) {
 
-            //         // get new token
-            //         const data = getUserData()
+                // check if user is actively using the platform
+                if(isActive) {
 
-            //         makePostRequest(REFRESH_USER_TOKEN, {
-            //             refreshTokenRequest: {
-            //                 userId: data.userId,
-            //                 role: data.role,
-            //                 token: data.token,
-            //                 refreshToken: data.refreshToken
-            //             }
-            //         })
-            //     } else {
-            //         clearBiscuits()
-            //     }
-            // }
-            hasUserTokenExpired() && clearBiscuits()
-        }, (5 * 1000));
+                    const uData = getUserData()
+                    console.log(uData)
+
+                    makePostRequest(REFRESH_USER_TOKEN, {
+                        refreshTokenRequest: {
+                            userId: uData.userId,
+                            role: uData.role,
+                            token: uData.token,
+                            refreshToken: uData.refreshToken
+                        }
+                    })
+                } else {
+                    clearBiscuits()
+                }
+            }
+        }, (1000));
 
         // clear interval using cleanup function
         return () => {
-            clearInterval(interval)
+            clearInterval(intervalId)
         }
-    }, [])
+    }, [isActive])
 
 
     // CONDITIONAL RETURN BLOCK

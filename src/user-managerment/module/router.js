@@ -146,6 +146,7 @@ const MainRouter = () => {
 
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
+          
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
