@@ -96,9 +96,9 @@ const HotList = () => {
                                 key={curr?.id}
                                 imageUrl={"/images/dashboard/bitcoin.png"}
                                 currencyName={curr?.name}
-                                currentValue={roundToN(curr?.price, 2).toLocaleString('en-US')}
-                                hasAppreciated={curr.percentChange24h>0}
-                                changePercentage={roundToN(curr.percentChange24h, 2)} />
+                                currentValue={new Intl.NumberFormat('en-US').format(roundToN(curr?.price, 2))}
+                                hasAppreciated={curr.percentChange1h>0}
+                                changePercentage={roundToN(curr.percentChange1h, 2)} />
                             ))
                         }
                     </div>: 

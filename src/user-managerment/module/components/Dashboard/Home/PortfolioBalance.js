@@ -20,7 +20,7 @@ const PortfolioBalance = ({usdValue, btcValue, loading}) => {
                         "loading...":
                         isHidden?
                         "••••••••••":
-                        `$${usdValue?.toLocaleString('en-US')}`
+                        `$${new Intl.NumberFormat('en-US').format(usdValue)}`
                     }
                 </h3>
 
