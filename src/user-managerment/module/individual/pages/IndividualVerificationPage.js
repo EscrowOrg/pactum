@@ -1,7 +1,7 @@
 import { useState } from "react";
 import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
+import {  PrimaryButton,  SkipButtonIndividual } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 
 const IndividualVerificationPage = () => {
@@ -27,8 +27,8 @@ const IndividualVerificationPage = () => {
             {/* container */}
             <div className="w-full h-full flex flex-col py-10 px-4 gap-10">
 
-                {/* Back Button */}
-                <BackButton />
+                {/* Skip Button */}
+                <SkipButtonIndividual />
 
                 {/* caption */}
                 <div className="w-full flex flex-col gap-2 text-center">

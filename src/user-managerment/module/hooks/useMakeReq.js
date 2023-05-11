@@ -22,11 +22,33 @@ const useMakeReq = () => {
             setLoading(false)
             setData(data)
             setIsSuccessful(data.success)
-            console.log(data.message)
         } catch(error) {
             setLoading(false)
-            console.log(error)
-            console.log(data.message)
+            const errorMessage = error.response.data.message
+            setError(errorMessage)
+            setTimeout(()=>{setError("")}, 5000)
+        }
+    }
+    const makeGetRequest = async (url) => {
+
+        // loading becomes true
+        setLoading(true)
+
+        // begin consumption
+        try {
+            const {data} = await axios.get(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            setLoading(false)
+            setData(data)
+            setIsSuccessful(data.success)
+        } catch(error) {
+            setLoading(false)
+            const errorMessage = error.response.data.message
+            setError(errorMessage)
+            setTimeout(()=>{setError("")}, 5000)
         }
     }
 
@@ -35,7 +57,8 @@ const useMakeReq = () => {
         data,
         error,
         makePostRequest,
-        isSuccessful
+        makeGetRequest,
+        isSuccessful,
     }
 }
 

@@ -8,12 +8,18 @@ import { PasswordInput, TextInput } from "../components/Input";
 import { AuthContext } from "../../../context/AuthContext";
 import { LoginCall } from "../../../serivce/apiCalls";
 import { toast } from "react-toastify";
-import { isEmpty } from "../helpers/isEmpty";
 
 const LoginUser  = () =>{
 
    // DATA INITIALIZATION
    const navigate = useNavigate()
+   // const cookieExpirtyTime = inFiveMinutes()
+   const {
+      user, 
+      isfetching, 
+      dispatch, 
+      error: loginError
+   } = useContext(AuthContext);
 
 
    // STATES
@@ -22,41 +28,36 @@ const LoginUser  = () =>{
       password: "",
    })
 
-   const {
-      user, 
-      isfetching, 
-      dispatch, 
-      error: loginError
-   } = useContext(AuthContext);
 
    // HANDLERS
-    const  handleChange = (e)=>{
+   const  handleChange = (e)=>{
       const {name, value} = e.target;
       setUsers({
          ...users,
          [name]: value
       })
    }
-  
    const handleSubmit = (e)=>{
       e.preventDefault();
       LoginCall(users,dispatch);
-
       return user;
    }
 
+
+   // SIDE EFFECTS
    useEffect(()=>{
-      if(!isEmpty(user)) {
+      if(user?.success===true) {
          navigate("/home", { replace: true })
-      } else {
-         console.log("User is empty, gotta try signing in")
       }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [user])
 
    useEffect(()=>{
-      if(loginError)
-      toast.error("Login was unSuccessfull")
+      if(loginError) {
+         toast.error("Login was unSuccessfull")
+      }
    }, [loginError])
+
     return(
       <PageWrapper>
          <div className="w-full h-full flex flex-col gap-8 px-4 py-10">

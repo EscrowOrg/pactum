@@ -1,8 +1,44 @@
 import { ArrowRight2, NotificationBing } from 'iconsax-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PortfolioBalance from './PortfolioBalance'
+import useMakeReq from '../../../hooks/useMakeReq'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { roundToN } from '../../../helpers/roundToN'
 
 const HomeHeader = () => {
+
+    // DATA INITIALIZATION
+    const {
+        loading,
+        data,
+        makeGetRequest,
+    } = useMakeReq()
+    
+
+    // STATES
+    const [amountInfo, setAmountInfo] = useState({
+        btcValue: 0,
+        usdValue: 0
+    })
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        makeGetRequest(`${GET_PORTFOLIO_BALANCE}/${getUserId()}`)
+    }, [])
+
+    // populating data
+    useEffect(()=>{
+        if(!isEmpty(data)) {
+            setAmountInfo({
+                btcValue: roundToN(data?.data?.valueInBitcoin, 4) || 0,
+                usdValue: roundToN(data?.data?.valueInDollar, 2) || 0
+            })
+        }
+    }, [data])
+
     return (
         <div className='w-full flex items-center justify-center bg-[#6D34F0] min-h-[190px] relative'>
 
@@ -46,7 +82,9 @@ const HomeHeader = () => {
 
                         {/* balance */}
                         <PortfolioBalance
-                        amount={4894.34} />
+                        loading={loading}
+                        usdValue={amountInfo?.usdValue}
+                        btcValue={amountInfo?.btcValue} />
                     </div>
 
                     {/* expand details */}

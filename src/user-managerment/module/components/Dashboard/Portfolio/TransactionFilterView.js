@@ -1,32 +1,13 @@
-import { useState } from 'react'
 import { PrimaryButton, PrimaryButtonLight } from '../../Button'
-import { useNavigate } from 'react-router-dom'
 import DrawerSelectInput from './DrawerSelectInput'
-import { DatePicker, Radio } from 'antd';
-import Drawer from '../../../layouts/Drawer';
-import SlideWrapper from '../../../layouts/Drawer/SlideWrapper';
-import StatusFilterView from './StatusFilterView';
-import AssetsListView from './AssetsListView';
-import AssetsPopup from './AssetsPopup';
+import { DatePicker } from 'antd';
 
-const TransactionFilterView = ({closeDrawer}) => {
-
-    // STATES
-    const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-    const [isDrawer2Open, setIsDrawer2Open] = useState(false)
-    const [filterData, setFilterData] = useState({
-        status: "All",
-        coins: "All"
-    })
-
-
-    // HANDLERS
-    const toggleDrawer1 = () => {
-        setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
-    }
-    const toggleDrawer2 = () => {
-        setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
-    }
+const TransactionFilterView = ({
+    closeDrawer, 
+    toggleDrawer1, 
+    toggleDrawer2, 
+    filterData
+}) => {
 
     return (
         <div className='w-full h-full flex flex-col'>
@@ -117,42 +98,6 @@ const TransactionFilterView = ({closeDrawer}) => {
                     </div>
                 </div>
             </form>
-            
-            {/* select status drawer */}
-            <Drawer
-            height='!h-auto'
-            insertCurve={false}
-            isOpen={isDrawer1Open}
-            onClose={toggleDrawer1}
-            position="bottom">
-
-                {/* drawer content container */}
-                <SlideWrapper
-                title={"Select Status:"}>
-                    <StatusFilterView
-                    filterValue={filterData.status}
-                    setFilterValue={setFilterData}
-                    closeDrawer={toggleDrawer1} />
-                </SlideWrapper>
-            </Drawer>
-            
-            {/* select coin drawer */}
-            <Drawer
-            height='!h-auto'
-            insertCurve={false}
-            isOpen={isDrawer2Open}
-            onClose={toggleDrawer2}
-            position="bottom">
-
-                {/* drawer content container */}
-                <SlideWrapper
-                title={"Select Coin:"}>
-                    <AssetsPopup
-                    selectedValue={filterData.coins}
-                    setFilterValue={setFilterData}
-                    closeDrawer={toggleDrawer2}  />
-                </SlideWrapper>
-            </Drawer>
         </div>
     )
 }

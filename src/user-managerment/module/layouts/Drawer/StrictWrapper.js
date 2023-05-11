@@ -8,7 +8,7 @@ const StrictWrapper = ({
     px="px-6"
 }) => {
     return (
-        <div className="w-full h-full flex flex-col py-5 rounded-t-2xl bg-white relative gap-6">
+        <div className="w-full h-full flex flex-col py-5 rounded-t-2xl bg-white relative gap-6 bottom-0">
 
             {/* Header */}
             <div className='flex w-full items-center justify-between gap-2 z-[10] px-6'>

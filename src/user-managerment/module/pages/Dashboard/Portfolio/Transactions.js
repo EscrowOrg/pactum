@@ -8,6 +8,9 @@ import Drawer from '../../../layouts/Drawer'
 import "../../../layouts/Drawer/index.css"
 import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
 import TransactionFilterView from '../../../components/Dashboard/Portfolio/TransactionFilterView'
+import SlideWrapper from '../../../layouts/Drawer/SlideWrapper'
+import AssetsPopup from '../../../components/Dashboard/Portfolio/AssetsPopup'
+import StatusFilterView from '../../../components/Dashboard/Portfolio/StatusFilterView'
 
 const Transactions = () => {
 
@@ -243,11 +246,25 @@ const Transactions = () => {
     
     // STATES
     const [isOpen, setIsOpen] = useState(false);
+    const [isDrawer1Open, setIsDrawer1Open] = useState(false);
+    const [isDrawer2Open, setIsDrawer2Open] = useState(false);
+    const [filterData, setFilterData] = useState({
+        status: "All",
+        coins: "All"
+    });
+
 
 
     // HANDLERS
-    const toggleDrawer = () => {
+    const toggleDrawer = (value) => {
+        // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
         setIsOpen(isOpen => !isOpen)
+    }
+    const toggleDrawer1 = () => {
+        setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
+    }
+    const toggleDrawer2 = () => {
+        setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
     }
 
     return (
@@ -307,18 +324,59 @@ const Transactions = () => {
             {/* Drawer */}
             <Drawer
             isOpen={isOpen}
-            onClose={()=>setIsOpen(false)}
+            onClose={() => setIsOpen(false)}
             position="bottom">
 
                 {/* drawer content container */}
                 <StrictWrapper
                 title={"Filter by:"}
-                closeDrawer={toggleDrawer}>
+                closeDrawer={() => setIsOpen(false)}>
 
                     {/* Body content */}
                     <TransactionFilterView
-                    closeDrawer={()=>setIsOpen(false)} />                    
+                    toggleDrawer1={toggleDrawer1}
+                    toggleDrawer2={toggleDrawer2}
+                    closeDrawer={toggleDrawer} />                    
                 </StrictWrapper>
+            </Drawer>
+
+                        
+            {/* select status drawer */}
+            <Drawer
+            height='!h-auto'
+            insertCurve={false}
+            type="slider"
+            isOpen={isDrawer1Open}
+            onClose={toggleDrawer1}
+            position="bottom">
+
+                {/* drawer content container */}
+                <SlideWrapper
+                title={"Select Status:"}>
+                    <StatusFilterView
+                    filterValue={filterData.status}
+                    setFilterValue={setFilterData}
+                    closeDrawer={toggleDrawer1} />
+                </SlideWrapper>
+            </Drawer>
+            
+            {/* select coin drawer */}
+            <Drawer
+            height='!h-auto'
+            insertCurve={false}
+            type="slider"
+            isOpen={isDrawer2Open}
+            onClose={toggleDrawer2}
+            position="bottom">
+
+                {/* drawer content container */}
+                <SlideWrapper
+                title={"Select Coin:"}>
+                    <AssetsPopup
+                    selectedValue={filterData.coins}
+                    setFilterValue={setFilterData}
+                    closeDrawer={toggleDrawer2}  />
+                </SlideWrapper>
             </Drawer>
         </PageWrapper>
     )
