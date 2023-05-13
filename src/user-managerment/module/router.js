@@ -246,9 +246,17 @@ const MainRouter = () => {
             element={<Overviews />}
           />
 
-          <Route exact path="/listing/closed-listing/:closedListingId" element={<ClosedListingOverview />}/>
+          <Route
+            exact
+            path="/listing/closed-listing/:closedListingId"
+            element={<ClosedListingOverview />}
+          />
 
-          <Route exact path="/listing/closed-listing-order/:closedOrderId" element={<ClosedOrderStatement/>}/>
+          <Route
+            exact
+            path="/listing/closed-listing-order/:closedOrderId"
+            element={<ClosedOrderStatement />}
+          />
 
           {/* PROFILE */}
           <Route exact path="/profile" element={<SettingProfile />} />

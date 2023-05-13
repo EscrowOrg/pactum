@@ -1,15 +1,6 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PendingPaymentsCard = () => {
-  const isBackgroundRed = true;
-
-  const [active, setActive] = useState(false);
-
-  const handleClick = () => {
-    setActive(!active);
-  };
-
   // DATA INITIALIZATION
   const navigate = useNavigate();
 
