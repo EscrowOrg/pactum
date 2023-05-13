@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 import { BackButton } from "../../../components/Button";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
 
 const TermsAndConditions = () => {
   return (
-          <NoTransitionWrapper>
+    <NoTransitionWrapper>
       <div className="w-full h-full flex flex-col gap-8 px-4 py-5 overflow-auto">
-
         {/* Back Button */}
         <BackButton />
 
@@ -55,22 +54,22 @@ const TermsAndConditions = () => {
             purposes:
           </p>
           <ul>
-            <li className='pt-1.5'>
+            <li className="pt-1.5">
               To personalize user experience: We may use information in the
               aggregate to understand how our Users as a group use the services
               and resources provided on the App.
             </li>
-            <li className='pt-1.5'>
+            <li className="pt-1.5">
               To improve the App: We may use feedback provided by the User to
               improve our products and services.
             </li>
-            <li className='pt-1.5'>
+            <li className="pt-1.5">
               To process payments: We may use the information Users provide
               about themselves when placing an order only to provide service to
               that order. We do not share this information with outside parties
               except to the extent necessary to provide the service.
             </li>
-            <li className='pt-1.5'>
+            <li className="pt-1.5">
               To send periodic emails: We may use the email address to send User
               information and updates pertaining to their order. It may also be
               used to respond to their inquiries, questions, and/or other
@@ -151,7 +150,7 @@ const TermsAndConditions = () => {
         </div>
       </div>
     </NoTransitionWrapper>
-  )
-}
+  );
+};
 
-export default TermsAndConditions
+export default TermsAndConditions;

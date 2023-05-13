@@ -1,22 +1,20 @@
-import {useState} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PendingPaymentsCard = () => {
+  const isBackgroundRed = true;
 
-    const isBackgroundRed = true;
-
-    const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false);
 
   const handleClick = () => {
     setActive(!active);
   };
 
-
   // DATA INITIALIZATION
   const navigate = useNavigate();
 
   return (
-    <div className=" bg-white" >
+    <div className=" bg-white">
       <div className="flex justify-between py-3 border-b border-solid">
         <div>
           <p className="font-normal text-xs text-[#8D85A0] pb-1">

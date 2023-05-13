@@ -3,8 +3,7 @@ import CircularProgress from "./CircularProgress";
 import { useNavigate } from "react-router-dom";
 
 const ClosedListingCard = () => {
-
-     // DATA INITIALIZATION
+  // DATA INITIALIZATION
   const navigate = useNavigate();
 
   return (
@@ -49,13 +48,14 @@ const ClosedListingCard = () => {
             ₦2,000.00 - ₦230,000.00
           </h4>
         </div>
-
-       
       </div>
-       {/* view more button */}
-       <span onClick={()=>navigate('/listing/closed-listing/hjdye27jsb7hy6axbxg')} className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal">
-          View More
-        </span>
+      {/* view more button */}
+      <span
+        onClick={() => navigate("/listing/closed-listing/hjdye27jsb7hy6axbxg")}
+        className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal"
+      >
+        View More
+      </span>
     </div>
   );
 };

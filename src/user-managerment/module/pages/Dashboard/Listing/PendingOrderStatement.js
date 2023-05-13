@@ -1,5 +1,9 @@
 import React from "react";
-import { BackButton, ErrorButton, PrimaryButton } from "../../../components/Button";
+import {
+  BackButton,
+  ErrorButton,
+  PrimaryButton,
+} from "../../../components/Button";
 import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
