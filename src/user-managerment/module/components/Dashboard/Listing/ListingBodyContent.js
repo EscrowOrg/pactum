@@ -4,8 +4,10 @@ import ClosedListingCard from './ClosedListingCard'
 import PendingPaymentsCard from './PendingPaymentsCard'
 
 const ListingBodyContent = ({activeTab, listData}) => {
+    
+    
     return (
-        <div className='h-full w-full px-4 bg-gray-100 flex flex-col pt-3 pb-20 overflow-auto gap-5'>
+        <div className={`h-full w-full px-4 ${activeTab!==1?"bg-gray-100":"bg-white border-t-[4px]  border-gray-100"} flex flex-col pt-3 pb-20 overflow-auto gap-5`}>
             
             {
                 

@@ -5,7 +5,7 @@ import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransition
 const TermsAndConditions = () => {
   return (
           <NoTransitionWrapper>
-      <div className="w-full h-full flex flex-col gap-8 py-5 overflow-auto">
+      <div className="w-full h-full flex flex-col gap-8 px-4 py-5 overflow-auto">
 
         {/* Back Button */}
         <BackButton />

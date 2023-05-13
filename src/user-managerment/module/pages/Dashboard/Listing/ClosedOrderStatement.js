@@ -1,10 +1,10 @@
 import React from "react";
-import { BackButton, ErrorButton, PrimaryButton } from "../../../components/Button";
-import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
+import { BackButton } from "../../../components/Button";
+import { ArrowRight2, Copy, TransactionMinus } from "iconsax-react";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 
-const PendingOrderStatement = () => {
+const ClosedOrderStatement = () => {
   return (
     <PageWrapper>
       <div className="w-full h-full py-5 flex flex-col gap-8 overflow-x-hidden">
@@ -30,18 +30,7 @@ const PendingOrderStatement = () => {
           </button>
         </div>
 
-        {/* info message */}
-        <div className="flex items-start bg-[#F6FBFB] gap-2 py-2 px-6 w-full">
-          {/* icon */}
-          <InfoCircle variant="Bulk" size={16} color="#48A9A6" />
-
-          <p className="w-[100%] font-normal text-sm text-[#1B3F3E]">
-            Ensure you have receive payment for this money in your bank account
-            before marking as paid.
-          </p>
-        </div>
-
-        {/* body */}
+        {/* Body */}
         <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
           {/* Amount to be Received */}
           <div className="flex flex-col gap-3 items-center w-full">
@@ -50,7 +39,7 @@ const PendingOrderStatement = () => {
             </h4>
             <p className="text-[#3F9491] text-[32px] font-bold">₦100 000.00</p>
             <h4 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-              You will be deducted 0.844BTC
+              0.844BTC deducted
             </h4>
           </div>
 
@@ -129,22 +118,10 @@ const PendingOrderStatement = () => {
               </div>
             </div>
           </div>
-
-          <div className="mt-auto flex items-center gap-6 w-full'">
-            {/* Report Button */}
-            <div className="flex flex-col items-stretch w-[40%]">
-              <ErrorButton text={"Report"} height="h-14" />
-            </div>
-
-            {/* Mark as Received Button */}
-            <div className="flex flex-col items-stretch w-[60%]">
-              <PrimaryButton text={"Mark as Received"} height="h-14" />
-            </div>
-          </div>
         </div>
       </div>
     </PageWrapper>
   );
 };
 
-export default PendingOrderStatement;
+export default ClosedOrderStatement;

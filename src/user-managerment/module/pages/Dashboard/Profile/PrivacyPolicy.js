@@ -5,14 +5,14 @@ import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransition
 const PrivacyPolicy = () => {
   return (
     <NoTransitionWrapper>
-      <div className="w-full h-full flex flex-col gap-8 py-5 overflow-auto">
+      <div className="w-full h-full flex flex-col gap-8 px-4 py-5 overflow-auto">
 
         {/* Back Button */}
         <BackButton />
 
         {/* title */}
         <div className="mt-5">
-          <h4 className="font-bold text-xl text-black"> Privacy Policy</h4>
+          <h4 className="font-bold text-xl text-black">Privacy Policy</h4>
 
           <p className="text-base font-sm pt-2.5 text-gray-400">
             Last updated: January 2024
@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
         </div>
 
         {/* BODY */}
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Introduction:</h4>
           <p className="pt-3">
             This Privacy Policy governs the manner in which our Crypto App
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Information collection:</h4>
           <p className="pt-3">
             We may collect personal identification information from Users in
@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Information usage:</h4>
           <p className="pt-3">
             We may collect and use Users' personal information for the following
@@ -79,7 +79,7 @@ const PrivacyPolicy = () => {
           </ul>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Information protection:</h4>
           <p className="pt-3">
             We adopt appropriate data collection, storage, and processing
@@ -90,7 +90,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Sharing personal information:</h4>
           <p className="pt-3">
             We do not sell, trade, or rent Users' personal identification
@@ -101,7 +101,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Third-party websites:</h4>
           <p className="pt-3">
             Users may find advertising or other content on our App that link to
@@ -118,7 +118,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Changes to this privacy policy:</h4>
           <p className="pt-3">
             We have the discretion to update this Privacy Policy at any time.
@@ -131,7 +131,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Your acceptance of these terms:</h4>
           <p className="pt-3">
             By using this App, you signify your acceptance of this policy. If
@@ -141,9 +141,9 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <div className="mt-5">
+        <div>
           <h4 className=" font-bold">Contacting us:</h4>
-          <p className="pt-3 ">
+          <p className="pt-3">
             If you have any questions about this Privacy Policy, the practices
             of this App, or your dealings with this App, please contact us at
             insert
