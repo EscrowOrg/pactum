@@ -37,7 +37,7 @@ export const hasUserTokenExpired = () => {
         return true
     }
 
-    return ((new Date().getTime() + 2000) > new Date(timeLine).getTime())
+    return ((new Date().getTime()) >= new Date(timeLine).getTime())
 }
 
 
