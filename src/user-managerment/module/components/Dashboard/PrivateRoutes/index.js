@@ -33,7 +33,7 @@ const PrivateRoutes = () => {
     useEffect(()=>{
         if(!isEmpty(data)){
             if(data.success === true) {
-                persistUserToken(data?.data)
+                persistUserToken(data?.data, 10 * 1000)
             } else {
                 clearBiscuits()
             }
@@ -49,23 +49,16 @@ const PrivateRoutes = () => {
             // check if token has expired
             if(hasUserTokenExpired()===true) {
 
-                // check if user is actively using the platform
-                if(isActive) {
+                const uData = getUserData()
 
-                    const uData = getUserData()
-                    console.log(uData)
-
-                    makePostRequest(REFRESH_USER_TOKEN, {
-                        refreshTokenRequest: {
-                            userId: uData.userId,
-                            role: uData.role,
-                            token: uData.token,
-                            refreshToken: uData.refreshToken
-                        }
-                    })
-                } else {
-                    clearBiscuits()
-                }
+                makePostRequest(REFRESH_USER_TOKEN, {
+                    refreshTokenRequest: {
+                        userId: uData.userId,
+                        role: uData.role,
+                        token: uData.token,
+                        refreshToken: uData.refreshToken
+                    }
+                })
             }
         }, (1000));
 
@@ -73,7 +66,7 @@ const PrivateRoutes = () => {
         return () => {
             clearInterval(intervalId)
         }
-    }, [isActive])
+    }, [])
 
 
     // CONDITIONAL RETURN BLOCK

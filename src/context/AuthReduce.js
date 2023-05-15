@@ -22,7 +22,7 @@ const AuthReducer = (state, action) =>{
         case "LOGIN_SUCCESS":
 
             // persist data upon login
-            persistUserToken(action.payload.data)
+            persistUserToken(action.payload.data, 10 * 1000)
 
             // return new state value
             return{

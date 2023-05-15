@@ -8,11 +8,11 @@ import { isEmpty } from "../user-managerment/module/helpers/isEmpty";
 
 
 // service to store/persist the userdata token
-export const persistUserToken = (value) => {
+export const persistUserToken = (value, time = 10 * 1000) => {
 
     // expiry time
-    const expires = new Date();
-    const threshold = new Date(expires.getTime() + (60 * 1000));
+    const expires = new Date().getTime() + time;
+    const threshold = new Date(expires);
 
     setCookie("userData", JSON.stringify(value), threshold)
     setCookie("dataTimeline", (threshold.toUTCString() || null), threshold)
@@ -37,7 +37,7 @@ export const hasUserTokenExpired = () => {
         return true
     }
 
-    return ((new Date().getTime() + 3000) > new Date(timeLine).getTime())
+    return ((new Date().getTime() + 2000) > new Date(timeLine).getTime())
 }
 
 
