@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
-import useBrowserTabState from '../../../hooks/Dashboard/useBrowserTabState'
 import useMakeReq from '../../../hooks/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
@@ -9,11 +8,10 @@ import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
 const PrivateRoutes = () => {
 
     // DATA INITIALIZATION
-    const isActive = useBrowserTabState()
     const {
         data,
+        error,
         makePostRequest,
-        isSuccessful
     } = useMakeReq()
 
 
@@ -29,51 +27,50 @@ const PrivateRoutes = () => {
 
 
     // SIDE EFFECTS
-    // if fetching refresh token fails, Log user out
     useEffect(()=>{
         if(!isEmpty(data)){
             if(data.success === true) {
-                persistUserToken(data?.data)
+                persistUserToken(data?.data, 15 * 1000)
             } else {
                 clearBiscuits()
             }
-        }
-    }, [data])
+        } 
 
-    // interval to check cookie
+        if(error) {
+            console.log(error)
+            clearBiscuits()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, error])
+
     useEffect(()=>{
 
-        // interval function
         const intervalId = setInterval(() => {
 
-            // check if token has expired
-            if(hasUserTokenExpired()===true) {
+            // user's cred
+            const uData = getUserData() 
 
-                // check if user is actively using the platform
-                if(isActive) {
-
-                    const uData = getUserData()
-                    console.log(uData)
-
-                    makePostRequest(REFRESH_USER_TOKEN, {
-                        refreshTokenRequest: {
-                            userId: uData.userId,
-                            role: uData.role,
-                            token: uData.token,
-                            refreshToken: uData.refreshToken
-                        }
-                    })
-                } else {
-                    clearBiscuits()
-                }
+            if(isEmpty(uData)) {
+                clearBiscuits()
+            } else if(hasUserTokenExpired()) {
+                clearBiscuits()
+            } else {
+                makePostRequest(REFRESH_USER_TOKEN, {
+                    refreshTokenRequest: {
+                        userId: uData?.userId,
+                        role: uData?.role,
+                        token: uData?.token,
+                        refreshToken: uData?.refreshToken
+                    }
+                })
             }
-        }, (1000));
+        }, (10000));
 
         // clear interval using cleanup function
         return () => {
             clearInterval(intervalId)
         }
-    }, [isActive])
+    }, [])
 
 
     // CONDITIONAL RETURN BLOCK
