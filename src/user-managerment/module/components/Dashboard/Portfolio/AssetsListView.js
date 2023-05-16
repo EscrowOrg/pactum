@@ -1,89 +1,45 @@
 import React from 'react'
 import { SearchInput } from '../../Input'
 
-const AssetsListView = ({setWalletData, closeDrawer}) => {
+const AssetsListView = ({setAsset, closeDrawer}) => {
 
     // DATA INITIALIZATION
     const listData = [
         {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
+            name: "Tether",
+            alphabetCode: "USDT",
+            imageUrl: "/images/dashboard/Tether.webp",
+            assetId: 0,
         },
         {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
-        },
-        {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
+            name: "USD Coin",
+            alphabetCode: "USDC",
+            imageUrl: "/images/dashboard/USD_Coin_icon.webp",
+            assetId: 1,
         },
         {
             name: "Etheruem",
             alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
+            imageUrl: "/images/dashboard/ethereum.png",
+            assetId: 2,
         },
         {
             name: "Binance",
             alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
+            imageUrl: "/images/dashboard/binance.png",
+            assetId: 3,
         },
         {
             name: "Bitcoin",
             alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
+            imageUrl: "/images/dashboard/bitcoin.png",
+            assetId: 4,
         },
         {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
+            name: "Binance USD",
+            alphabetCode: "BUSD",
+            imageUrl: "/images/dashboard/binance.png",
+            assetId: 5,
         },
     ]
 
@@ -103,20 +59,19 @@ const AssetsListView = ({setWalletData, closeDrawer}) => {
                     listData.map((list, index)=>(
                         <div
                         key={index}
-                        onClick={()=>setWalletData(walletData=>{
-                            const obj = {
-                                ...walletData,
-                                asset: list.alphabetCode
-                            }
+                        onClick={()=>{
+                            setAsset({
+                                title: list.name,
+                                value: list.assetId
+                            })
                             closeDrawer()
-                            return obj
-                        })} 
+                        }} 
                         className='flex items-center gap-3 py-4 border-b border-[#F5F3F6] first:pt-0'>
 
                             <img
                             alt=""
                             src={list.imageUrl}
-                            className='h-[40px] w-[40px]' />
+                            className='h-[40px] w-[40px] rounded-[50%]' />
 
                             <div className='flex items-center gap-1'>
                                 <h4 className='font-semibold text-sm text-black'>

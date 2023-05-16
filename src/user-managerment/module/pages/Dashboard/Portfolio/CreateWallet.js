@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PageWrapper from '../../../layouts/PageWrapper'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import { useNavigate } from 'react-router-dom'
@@ -10,19 +10,33 @@ import AssetsListView from '../../../components/Dashboard/Portfolio/AssetsListVi
 import DrawerSelectInput from '../../../components/Dashboard/Portfolio/DrawerSelectInput'
 import NetworkListView from '../../../components/Dashboard/Portfolio/NetworkListView'
 import { toast } from 'react-toastify'
+import useMakeReq from '../../../hooks/useMakeReq'
+import { CREATE_NEW_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { isEmpty } from '../../../helpers/isEmpty'
 
 const CreateWallet = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+    const {
+        data,
+        isSuccessful,
+        loading,
+        makePostRequest
+    } = useMakeReq()
 
 
     // STATES
     const [isOpen, setIsOpen] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false)
-    const [walletData, setWalletData] = useState({
-        asset: "",
-        network: ""
+    const [asset, setAsset] = useState({
+        title: "",
+        value: ""
+    })
+    const [network, setNetwork] = useState({
+        title: "",
+        value: ""
     })
 
 
@@ -33,6 +47,28 @@ const CreateWallet = () => {
     const toggleDrawer2 = (value) => {
         setIsOpen2(isOpen2 => !isOpen2)
     }
+    const handleSubmit = () => {
+
+        const uId = getUserId()
+
+        makePostRequest(CREATE_NEW_ASSETS_ACCOUNTS,
+            {
+                "chain": +network.value,
+                "asset": +asset.value,
+                "userId": uId
+            }
+        )
+    }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        if(!isEmpty(data)) {
+            if(isSuccessful===true) {
+                navigate("/portfolio")
+            }
+        }
+    }, [data, isSuccessful])
 
     return (
         <PageWrapper>
@@ -75,7 +111,7 @@ const CreateWallet = () => {
 
                             {/* input field */}
                             <DrawerSelectInput
-                            value={walletData?.asset || "Select asset"}
+                            value={asset?.title || "Select asset"}
                             onClick={toggleDrawer} />
                         </label>
 
@@ -90,7 +126,7 @@ const CreateWallet = () => {
 
                             {/* input field */}
                             <DrawerSelectInput
-                            value={walletData?.network || "Select network protocol"}
+                            value={network?.title || "Select network protocol"}
                             onClick={toggleDrawer2} />
                         </label>
 
@@ -100,10 +136,9 @@ const CreateWallet = () => {
                             {/* continue button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                onClick={()=>{
-                                    toast.success("Wallet created successfully")
-                                    navigate("/portfolio?isNewUser=false")
-                                }}
+                                loading={loading}
+                                disabled={!asset.value || !network.value || loading}
+                                onClick={handleSubmit}
                                 text={"Create"} />
                             </div>
                         </div>
@@ -125,7 +160,7 @@ const CreateWallet = () => {
                     {/* Body content */}
                     <AssetsListView
                     closeDrawer={toggleDrawer}
-                    setWalletData={setWalletData} />
+                    setAsset={setAsset} />
                 </StrictWrapper>
             </Drawer>
 
@@ -144,7 +179,7 @@ const CreateWallet = () => {
                     {/* Body content */}
                     <NetworkListView
                     closeDrawer={toggleDrawer2}
-                    setWalletData={setWalletData} />
+                    setNetwork={setNetwork} />
                 </StrictWrapper>
             </Drawer>
         </PageWrapper>

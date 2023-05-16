@@ -3,9 +3,12 @@ import { BackButton } from "../../../components/Button";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
 import OverviewPayment from "../../../components/Dashboard/Listing/OverviewPayment";
+import { useNavigate } from "react-router-dom";
 
 const Overviews = () => {
   // DATA INITIALIZATION
+  const navigate = useNavigate();
+
   const listPayments = [1, 2, 3, 4];
 
   return (
@@ -39,7 +42,7 @@ const Overviews = () => {
             </div>
 
             <div>
-              <CircularProgress percent={10} size={30} />
+              <CircularProgress percent={10} size={16} />
             </div>
           </div>
 
@@ -63,7 +66,10 @@ const Overviews = () => {
             </div>
 
             {/* cancel button */}
-            <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal">
+            <span
+              onClick={() => navigate(-1)}
+              className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal"
+            >
               Cancel
             </span>
           </div>

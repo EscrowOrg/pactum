@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
+import { CRED_EXPIRATION_TIME, getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
 import useMakeReq from '../../../hooks/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
@@ -30,7 +30,7 @@ const PrivateRoutes = () => {
     useEffect(()=>{
         if(!isEmpty(data)){
             if(data.success === true) {
-                persistUserToken(data?.data, 15 * 1000)
+                persistUserToken(data?.data, CRED_EXPIRATION_TIME)
             } else {
                 clearBiscuits()
             }
@@ -50,9 +50,7 @@ const PrivateRoutes = () => {
             // user's cred
             const uData = getUserData() 
 
-            if(isEmpty(uData)) {
-                clearBiscuits()
-            } else if(hasUserTokenExpired()) {
+            if(hasUserTokenExpired()) {
                 clearBiscuits()
             } else {
                 makePostRequest(REFRESH_USER_TOKEN, {

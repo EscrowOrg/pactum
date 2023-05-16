@@ -2,31 +2,57 @@ import { useState, useEffect } from 'react'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
 import { ProfileAdd, TransactionMinus } from 'iconsax-react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 import EmptyWalletCard from '../../../components/Dashboard/Portfolio/EmptyWalletCard'
 import UsersWalletCard from '../../../components/Dashboard/Portfolio/UsersWalletCard'
+import useMakeReq from '../../../hooks/useMakeReq'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+
+// ant icon
+const antIcon = (
+    <LoadingOutlined
+    style={{
+        fontSize: 26,
+        color: '#3A0CA3'
+    }}
+    spin />
+)
 
 const Portfolio = () => {
 
     // STATES
-    const [isNewUser, setIsNewUser] = useState(true)
+    const [assetAccounts, setAssetAccounts] = useState([])
 
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const [searchParams] = useSearchParams()
+    const {
+        data,
+        isSuccessful,
+        loading,
+        makeGetRequest
+    } = useMakeReq()
 
     
-    // HANDLERS
+    // USE EFFECTS
     useEffect(()=>{
-        const userStatus = searchParams?.get("isNewUser");
-        if(userStatus) {
-            setIsNewUser(userStatus)
-        } else {
-            console.log("userStatus isn't present")
-        }
+        const uId = getUserId()
+        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}`)
     }, [])
+
+    // getting data
+    useEffect(()=>{
+        console.log(data)
+        // if(!isEmpty(data)) {
+        //     if(isSuccessful) {
+        //         setAssetAccounts(data?.data)
+        //     }
+        // }
+    }, [data])
 
     return (
         <NoTransitionWrapper>
@@ -68,7 +94,11 @@ const Portfolio = () => {
 
                     {/* container */}
                     {
-                        isNewUser===true?
+                        loading===true?
+                        <div className='flex bg-gray-50 rounded-md m-auto w-full h-[60vh] justify-center items-center'>
+                            <Spin indicator={antIcon} />
+                        </div>:
+                        isEmpty(assetAccounts)?
                         <EmptyWalletCard />:
                         <UsersWalletCard />
                     }

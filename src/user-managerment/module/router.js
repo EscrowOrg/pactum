@@ -47,6 +47,9 @@ import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
 import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
 import Overviews from "./pages/Dashboard/Listing/Overview";
+import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
+import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
+import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -233,8 +236,28 @@ const MainRouter = () => {
             path="/listing/create-listing"
             element={<CreateListing />}
           />
+          <Route
+            path="/listing/pending-payments/:orderId"
+            element={<PendingOrderStatement />}
+          />
 
-          <Route exact path="/listing/overview/:listingId" element={<Overviews />} />
+          <Route
+            exact
+            path="/listing/overview/:listingId"
+            element={<Overviews />}
+          />
+
+          <Route
+            exact
+            path="/listing/closed-listing/:closedListingId"
+            element={<ClosedListingOverview />}
+          />
+
+          <Route
+            exact
+            path="/listing/closed-listing-order/:closedOrderId"
+            element={<ClosedOrderStatement />}
+          />
 
           {/* PROFILE */}
           <Route exact path="/profile" element={<SettingProfile />} />

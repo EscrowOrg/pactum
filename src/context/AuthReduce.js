@@ -1,4 +1,4 @@
-import { persistUserToken, removeUserToken } from "../serivce/cookie.service";
+import { CRED_EXPIRATION_TIME, persistUserToken, removeUserToken } from "../serivce/cookie.service";
 
 const AuthReducer = (state, action) =>{
     switch(action.type){
@@ -22,7 +22,7 @@ const AuthReducer = (state, action) =>{
         case "LOGIN_SUCCESS":
 
             // persist data upon login
-            persistUserToken(action.payload.data, 15 * 1000)
+            persistUserToken(action.payload.data, CRED_EXPIRATION_TIME)
 
             // return new state value
             return{
