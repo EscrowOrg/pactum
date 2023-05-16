@@ -6,9 +6,13 @@ import {
 import { isEmpty } from "../user-managerment/module/helpers/isEmpty";
 
 
+// Credentials expiration time
+export const CRED_EXPIRATION_TIME = (5 * 60 * 60 * 1000)
+
+
 
 // service to store/persist the userdata token
-export const persistUserToken = (value, time = 10 * 1000) => {
+export const persistUserToken = (value, time = 5 * 1000) => {
 
     // expiry time
     const expires = new Date().getTime() + time;

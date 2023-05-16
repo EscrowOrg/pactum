@@ -2,48 +2,27 @@ import { InfoCircle } from 'iconsax-react'
 import React from 'react'
 
 const NetworkListView = ({
-    setWalletData,
+    setNetwork,
     closeDrawer
 }) => {
 
     // DATA INITIALIZATION
     const listData = [
         {
-            name: "BNB Smart Chain (BEP20)",
-            isAvailable: true,
-        },
-        {
-            name: "EOS",
-            isAvailable: true,
-        },
-        {
-            name: "Avax C-Chain",
-            isAvailable: false,
-        },
-        {
-            name: "BNB Beacon Chain (BEP2)",
-            isAvailable: true,
-        },
-        {
             name: "Ethereum (ERC20)",
             isAvailable: true,
+            chainId: 0
         },
         {
-            name: "Polygon (BEP20)",
-            isAvailable: false,
-        },
-        {
-            name: "Solana",
+            name: "BNB Smart Chain (BEP20)",
             isAvailable: true,
+            chainId: 1
         },
         {
-            name: "Tezos",
-            isAvailable: false,
-        },
-        {
-            name: "Tron (TRC20)",
+            name: "Bitcoin",
             isAvailable: true,
-        },
+            chainId: 2
+        }
     ]
 
     return (
@@ -70,14 +49,13 @@ const NetworkListView = ({
                     listData.map((list, index)=>(
                         <div
                         key={index}
-                        onClick={()=>list.isAvailable && setWalletData(walletData=>{
-                            const obj = {
-                                ...walletData,
-                                network: list.name
-                            }
+                        onClick={()=>{
+                            setNetwork({
+                                title: list.name,
+                                value: list.chainId
+                            })
                             closeDrawer()
-                            return obj
-                        })} 
+                        }} 
                         className='flex items-center gap-3 py-4 border-b border-[#F5F3F6] first:pt-0'>
 
                             <h4 className={`font-semibold text-sm ${list.isAvailable?"text-black":"text-[#C3BFCD]"}`}>
