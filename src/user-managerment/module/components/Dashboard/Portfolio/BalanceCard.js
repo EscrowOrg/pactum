@@ -9,7 +9,10 @@ const BalanceCard = ({
     buttonText,
     title,
     padding="p-6",
-    onClick
+    onClick,
+    fiatValue,
+    btcValue,
+    loading
 }) => {
     return (
         <div className={`flex flex-col w-full ${padding} gap-4 rounded-lg ${bgColor}`}>
@@ -20,10 +23,14 @@ const BalanceCard = ({
                     {title}
                 </h3>
                 <h3 className='text-[22px] font-bold'>
-                    $0.00
+                    {
+                        loading?
+                        "loading...":
+                        `$${new Intl.NumberFormat('en-US').format(fiatValue)}`
+                    }
                 </h3>
                 <h3 className='text-xs font-semibold'>
-                    BTC Equivalent: 0.0000
+                    BTC Equivalent: {loading?"....":btcValue}
                 </h3>
             </div>
 

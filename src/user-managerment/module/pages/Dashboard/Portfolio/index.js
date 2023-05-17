@@ -5,7 +5,7 @@ import { ProfileAdd, TransactionMinus } from 'iconsax-react'
 import { useNavigate } from 'react-router-dom'
 import EmptyWalletCard from '../../../components/Dashboard/Portfolio/EmptyWalletCard'
 import UsersWalletCard from '../../../components/Dashboard/Portfolio/UsersWalletCard'
-import useMakeReq from '../../../hooks/useMakeReq'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
@@ -32,6 +32,7 @@ const Portfolio = () => {
     const navigate = useNavigate()
     const {
         data,
+        getLoading,
         isSuccessful,
         loading,
         makeGetRequest
@@ -41,18 +42,17 @@ const Portfolio = () => {
     // USE EFFECTS
     useEffect(()=>{
         const uId = getUserId()
-        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}`)
+        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`)
     }, [])
 
     // getting data
     useEffect(()=>{
-        console.log(data)
-        // if(!isEmpty(data)) {
-        //     if(isSuccessful) {
-        //         setAssetAccounts(data?.data)
-        //     }
-        // }
-    }, [data])
+        if(!isEmpty(data)) {
+            if(isSuccessful) {
+                setAssetAccounts(data?.data)
+            }
+        }
+    }, [data, isSuccessful])
 
     return (
         <NoTransitionWrapper>
@@ -94,13 +94,14 @@ const Portfolio = () => {
 
                     {/* container */}
                     {
-                        loading===true?
-                        <div className='flex bg-gray-50 rounded-md m-auto w-full h-[60vh] justify-center items-center'>
+                        getLoading===true?
+                        <div className='flex bg-white rounded-md m-auto w-full h-[60vh] justify-center items-center'>
                             <Spin indicator={antIcon} />
                         </div>:
                         isEmpty(assetAccounts)?
                         <EmptyWalletCard />:
-                        <UsersWalletCard />
+                        <UsersWalletCard
+                        assetAccount={assetAccounts} />
                     }
                     
                 </div>

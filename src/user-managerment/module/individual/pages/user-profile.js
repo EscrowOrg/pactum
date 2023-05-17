@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../components/Button";
 import PhoneINumberInput from "../../components/PhoneINumberInput";
 import BASE_URL from "../../../../serivce/url.serice";
 import { getFromLocalStorage } from "../../helpers/localStorageMethods";
-import useMakeReq from "../../hooks/useMakeReq";
+import useMakeReq from "../../hooks/Global/useMakeReq";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
 

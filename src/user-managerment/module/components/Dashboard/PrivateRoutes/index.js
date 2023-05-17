@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { CRED_EXPIRATION_TIME, getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
-import useMakeReq from '../../../hooks/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 
 const PrivateRoutes = () => {
 

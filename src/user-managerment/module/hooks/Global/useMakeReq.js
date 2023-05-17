@@ -5,9 +5,12 @@ const useMakeReq = () => {
     
     // STATES
     const [loading, setLoading] = useState(false)
+    const [getLoading, setGetLoading] = useState(true)
     const [error, setError] = useState("")
     const [data, setData] = useState(null)
     const [isSuccessful, setIsSuccessful] = useState(false)
+
+    // MAKING POST REQUEST
     const makePostRequest = async (url, formData) => {
 
         setLoading(true)
@@ -29,10 +32,12 @@ const useMakeReq = () => {
             setTimeout(()=>{setError("")}, 5000)
         }
     }
+
+    // MAKING GET REQUEST
     const makeGetRequest = async (url) => {
 
         // loading becomes true
-        setLoading(true)
+        setGetLoading(true)
 
         // begin consumption
         try {
@@ -41,11 +46,11 @@ const useMakeReq = () => {
                     'Content-Type': 'application/json',
                 }
             })
-            setLoading(false)
+            setGetLoading(false)
             setData(data)
             setIsSuccessful(data.success)
         } catch(error) {
-            setLoading(false)
+            setGetLoading(false)
             const errorMessage = error.response.data.message
             setError(errorMessage)
             setTimeout(()=>{setError("")}, 5000)
@@ -54,6 +59,7 @@ const useMakeReq = () => {
 
     return {
         loading,
+        getLoading,
         data,
         error,
         makePostRequest,

@@ -1,7 +1,7 @@
 import { ArrowRight2, NotificationBing } from 'iconsax-react'
 import React, { useEffect, useState } from 'react'
 import PortfolioBalance from './PortfolioBalance'
-import useMakeReq from '../../../hooks/useMakeReq'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
@@ -11,7 +11,7 @@ const HomeHeader = () => {
 
     // DATA INITIALIZATION
     const {
-        loading,
+        getLoading,
         data,
         makeGetRequest,
     } = useMakeReq()
@@ -82,7 +82,7 @@ const HomeHeader = () => {
 
                         {/* balance */}
                         <PortfolioBalance
-                        loading={loading}
+                        loading={getLoading}
                         usdValue={amountInfo?.usdValue}
                         btcValue={amountInfo?.btcValue} />
                     </div>

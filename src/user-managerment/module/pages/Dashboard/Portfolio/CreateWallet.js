@@ -10,7 +10,7 @@ import AssetsListView from '../../../components/Dashboard/Portfolio/AssetsListVi
 import DrawerSelectInput from '../../../components/Dashboard/Portfolio/DrawerSelectInput'
 import NetworkListView from '../../../components/Dashboard/Portfolio/NetworkListView'
 import { toast } from 'react-toastify'
-import useMakeReq from '../../../hooks/useMakeReq'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { CREATE_NEW_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
@@ -22,6 +22,7 @@ const CreateWallet = () => {
     const {
         data,
         isSuccessful,
+        error,
         loading,
         makePostRequest
     } = useMakeReq()
@@ -66,9 +67,17 @@ const CreateWallet = () => {
         if(!isEmpty(data)) {
             if(isSuccessful===true) {
                 navigate("/portfolio")
+            } else if(isSuccessful===false) {
+                toast.error(data.message)
             }
         }
     }, [data, isSuccessful])
+
+    useEffect(()=>{
+        if(error) {
+            console.log(error)
+        }
+    }, [error])
 
     return (
         <PageWrapper>
