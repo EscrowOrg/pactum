@@ -67,8 +67,9 @@ const AssetAccountList = ({
             <div className='flex flex-col w-full gap-4'>
 
                 {
-                    assetList.filter(asset=>asset?.currency?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((asset=>(
+                    assetList.filter(asset=>asset?.currency?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map(((asset, index)=>(
                         <div
+                        key={index}
                         onClick={()=>navigate("/portfolio/checkout/kjkjkjfkdjkfjkdfd")} 
                         className='flex items-center justify-between w-full'>
 

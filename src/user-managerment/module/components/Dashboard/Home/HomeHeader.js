@@ -1,41 +1,39 @@
-import { ArrowRight2, NotificationBing } from 'iconsax-react'
-import React, { useEffect, useState } from 'react'
+import { 
+    ArrowRight2, 
+    NotificationBing 
+} from 'iconsax-react'
+import { 
+    useEffect, 
+    useState 
+} from 'react'
 import PortfolioBalance from './PortfolioBalance'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { getUserId } from '../../../../../serivce/cookie.service'
-import { GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
+import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
-import { roundToN } from '../../../helpers/roundToN'
 
 const HomeHeader = () => {
 
     // DATA INITIALIZATION
     const {
-        getLoading,
         data,
         makeGetRequest,
     } = useMakeReq()
     
 
     // STATES
-    const [amountInfo, setAmountInfo] = useState({
-        btcValue: 0,
-        usdValue: 0
-    })
+    const [name, setName] = useState("")
 
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_PORTFOLIO_BALANCE}/${getUserId()}`)
+        makeGetRequest(`${GET_USER_DETS}/${getUserId()}`)
     }, [])
 
     // populating data
     useEffect(()=>{
         if(!isEmpty(data)) {
-            setAmountInfo({
-                btcValue: roundToN(data?.data?.valueInBitcoin, 4) || 0,
-                usdValue: roundToN(data?.data?.valueInDollar, 2) || 0
-            })
+            setName(data?.data?.userName)
         }
     }, [data])
 
@@ -57,7 +55,11 @@ const HomeHeader = () => {
 
                     {/* text */}
                     <p className='text-lg text-[#F4EFFE] font-bold'>
-                        Hey Joel! 😎
+                        {
+                            name?
+                            `Hey ${name}! 😎`:
+                            "Hey! 😎"
+                        }
                     </p>
 
                     {/* notification icon */}
@@ -81,10 +83,7 @@ const HomeHeader = () => {
                         </h4>
 
                         {/* balance */}
-                        <PortfolioBalance
-                        loading={getLoading}
-                        usdValue={amountInfo?.usdValue}
-                        btcValue={amountInfo?.btcValue} />
+                        <PortfolioBalance />
                     </div>
 
                     {/* expand details */}
