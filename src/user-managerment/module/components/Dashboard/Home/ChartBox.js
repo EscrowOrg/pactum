@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Chart from "react-apexcharts";
 import Tabs, { Tab } from 'react-best-tabs';
 
-const ChartBox = () => {
+const ChartBox = ({dataSeries}) => {
 
     // DATA INITIALIZATION
     const series2 = [{

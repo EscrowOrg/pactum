@@ -24,6 +24,14 @@ const antIcon = (
 const HotList = () => {
 
     // DATA INITIALIZATION
+    const selectedCoin = [
+        "tether",
+        "usd-coin",
+        "ethereum",
+        "binancecoin",
+        "bitcoin",
+        "binance-usd",
+    ]
     const {
         data,
         getLoading,
@@ -83,10 +91,11 @@ const HotList = () => {
                     !isEmpty(cryptoAssets)?
                     <div className='w-full grid grid-flow-col grid-rows-[auto_auto] overflow-x-auto gap-4'>
                         {
-                            cryptoAssets.map((curr)=>(
+                            cryptoAssets?.filter((currency)=>selectedCoin.includes(currency.id))?.map((curr)=>(
                                 
                                 <HotlistCard
                                 key={curr?.id}
+                                pathId={curr?.id}
                                 imageUrl={curr?.image}
                                 currencyName={curr?.name}
                                 currentValue={new Intl.NumberFormat('en-US').format(roundToN(curr?.current_price, 2))}
@@ -95,7 +104,7 @@ const HotList = () => {
                             ))
                         }
                     </div>: 
-                    <div className='flex bg-gray-50 rounded-md w-full h-[25vh] justify-center items-center font-semibold text-xs'>
+                    <div className='flex bg-white rounded-md w-full h-[25vh] justify-center items-center font-semibold text-xs'>
                         Nothing here!
                     </div>
                 }

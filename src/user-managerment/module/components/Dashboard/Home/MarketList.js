@@ -66,6 +66,7 @@ const MarketList = ({loading, data}) => {
                                 
                                 <MarketListCard
                                 key={curr?.id}
+                                pathId={curr?.id}
                                 imageUrl={curr?.image}
                                 coinName={curr?.name}
                                 coinPairText={`${curr?.symbol?.toUpperCase()}/USD`}

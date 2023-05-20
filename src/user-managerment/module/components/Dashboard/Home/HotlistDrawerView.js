@@ -48,7 +48,7 @@ const HotlistDrawerView = () => {
                 {/* Tab 2 */}
                 <Tab 
                 title={"Gainers"}>
-                    <MarketList                    
+                    <MarketList
                     data={cryptoAssets.filter((asset=>asset.price_change_percentage_1h_in_currency > 0))}
                     loading={getLoading} />
                 </Tab>
