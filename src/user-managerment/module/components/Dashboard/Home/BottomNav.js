@@ -25,13 +25,13 @@ const BottomNav = () => {
                     {/* listing */}
                     <ActiveLink
                     to={"/listing"}
-                    text={"Settings"}
+                    text={"Listing"}
                     Icon={TableDocument} />
 
                     {/* settings */}
                     <ActiveLink
                     to={"/profile"}
-                    text={"Profile"}
+                    text={"Account"}
                     Icon={Profile} />
                 </div>   
             </div>      

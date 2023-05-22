@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import "./activelistingtab.scss"
-import OngoingListingCard from '../../../components/Dashboard/Listing/OngoingListingCard'
 import ListingBodyContent from "../../../components/Dashboard/Listing/ListingBodyContent"
 
 const UserListingCard = () => {
@@ -20,19 +19,19 @@ const UserListingCard = () => {
 
                 <h3
                 onClick={()=>setActiveTab(1)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===1?"active-listing-tab act-tb1":""}`}>
-                    Pending Payments
+                className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${activeTab===1?"active-listing-tab act-tb1":""}`}>
+                    Pending Orders
                 </h3>
 
                 <h3
                 onClick={()=>setActiveTab(2)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===2?"active-listing-tab act-tb2":""}`}>
+                className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${activeTab===2?"active-listing-tab act-tb2":""}`}>
                     Ongoing Listings
                 </h3>
 
                 <h3
                 onClick={()=>setActiveTab(3)} 
-                className={`pb-4 text-xs text-[#929292] font-normal [transition:all_.4s_linear] ${activeTab===3?"active-listing-tab act-tb3":""}`}>
+                className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${activeTab===3?"active-listing-tab act-tb3":""}`}>
                     Closed Listings
                 </h3>
             </div>

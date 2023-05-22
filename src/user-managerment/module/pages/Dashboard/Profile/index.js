@@ -118,7 +118,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* legal group */}
+                    {/*support group */}
                     <div className='flex flex-col gap-3 w-full'>
 
                         {/* title */}
@@ -143,7 +143,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* support group */}
+                    {/* legal group */}
                     <div className='flex flex-col gap-3 w-full'>
 
                         {/* title */}
