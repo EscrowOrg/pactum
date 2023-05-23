@@ -41,7 +41,9 @@ const CreateWallet = () => {
     const [asset, setAsset] = useState({
         name: "",
         symbol: "",
-        network: "",
+        assetId: null,
+        networkName: "",
+        networkId: null,
         image: ""
     })
 
@@ -56,8 +58,8 @@ const CreateWallet = () => {
 
         makePostRequest(CREATE_NEW_ASSETS_ACCOUNTS,
             {
-                "chain": +asset.network,
-                "asset": +asset.symbol,
+                "chain": +asset.networkId,
+                "asset": +asset.assetId,
                 "userId": uId
             }
         )
@@ -80,6 +82,7 @@ const CreateWallet = () => {
     useEffect(()=>{
         if(!isEmpty(createWalletData)) {
             if(isCreateSuccess===true) {
+                toast.success(createWalletData.message)
                 navigate("/portfolio")
             } else if(isCreateSuccess===false) {
                 toast.error(createWalletData.message)
@@ -156,7 +159,7 @@ const CreateWallet = () => {
                                 {/* input field */}
                                 <DrawerSelectInput
                                 disabled={true}
-                                value={asset.network || "Select"} />
+                                value={asset.networkName || "Select"} />
                             </label>
 
                             {/* container */}

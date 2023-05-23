@@ -73,7 +73,7 @@ const UsersWalletCard = ({assetAccount}) => {
             {/* card */}
             {
                 getLoading?
-                <div className='flex bg-gray-50 rounded-md m-auto w-full h-[23vh] justify-center items-center'>
+                <div className='flex bg-gray-50 rounded-md m-auto w-full min-h-[23vh] justify-center items-center'>
                     <Spin indicator={antIcon} />
                 </div>:
                 <AccountBalanceCard

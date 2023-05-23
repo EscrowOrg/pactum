@@ -7,6 +7,7 @@ const useMakeReq = () => {
     const [loading, setLoading] = useState(false)
     const [getLoading, setGetLoading] = useState(true)
     const [error, setError] = useState("")
+    const [hasError, setHasError] = useState(false)
     const [data, setData] = useState(null)
     const [isSuccessful, setIsSuccessful] = useState(false)
 
@@ -29,7 +30,10 @@ const useMakeReq = () => {
             setLoading(false)
             const errorMessage = error.response.data.message
             setError(errorMessage)
-            setTimeout(()=>{setError("")}, 5000)
+            setHasError(true)
+            setTimeout(()=>{
+                setError("")
+            }, 5000)
         }
     }
 
@@ -65,6 +69,7 @@ const useMakeReq = () => {
         makePostRequest,
         makeGetRequest,
         isSuccessful,
+        hasError
     }
 }
 

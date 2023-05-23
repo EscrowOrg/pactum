@@ -10,18 +10,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import useMakeReq from '../../../hooks/Global/useMakeReq';
 import { GET_SINGLE_COIN } from '../../../../../serivce/apiRoutes.service';
 import { isEmpty } from '../../../helpers/isEmpty';
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons';
-
-// ant icon
-const antIcon = (
-    <LoadingOutlined
-    style={{
-        fontSize: 26,
-        color: '#3A0CA3'
-    }}
-    spin />
-)
+import EmptyDataComp from '../../../components/Global/EmptyDataComp';
+import LoadingSpinner from '../../../components/Global/LoadingSpinner';
+import { roundToN } from '../../../helpers/roundToN';
 
 const Overview = () => {
 
@@ -87,9 +78,8 @@ const Overview = () => {
 
                 {
                     getLoading?
-                    <div className='flex bg-white rounded-md m-auto w-full h-[80vh] justify-center items-center'>
-                        <Spin indicator={antIcon} />
-                    </div>:
+                    <LoadingSpinner
+                    viewPortHeight='h-[80vh]' />:
                     !isEmpty(coinChartInfo)?
                     <>
                         {/* Body */}
@@ -122,13 +112,13 @@ const Overview = () => {
 
                                     {/* price */}
                                     <h3 className='text-black text-base font-bold'>
-                                        $29, 850.15 
+                                        ${new Intl.NumberFormat('en-US').format(roundToN(coinChartInfo.market_data.current_price.usd, 2))}
                                     </h3>
 
                                     {/* percentage change */}
                                     <PercentageChange
-                                    hasAppreciated={true}
-                                    changePercentage={+2.56} />
+                                    hasAppreciated={coinChartInfo?.market_data.price_change_percentage_1h_in_currency.usd>0}
+                                    changePercentage={roundToN(coinChartInfo?.market_data.price_change_percentage_1h_in_currency.usd, 2)} />
                                 </div>
 
                                 {/* volume, low and high */}
@@ -139,12 +129,12 @@ const Overview = () => {
 
                                         {/* title */}
                                         <h3 className='text-[#ACA6BA] text-[10px] font-normal'>
-                                            24h Volume
+                                            Volume
                                         </h3>
 
                                         {/* value */}
                                         <h5 className='text-[#141217] font-normal text-xs'>
-                                            $65B
+                                            {`$${new Intl.NumberFormat('en-US').format(roundToN(coinChartInfo.market_data.total_volume.usd, 0))}`}
                                         </h5>
                                     </div>
 
@@ -158,7 +148,7 @@ const Overview = () => {
 
                                         {/* value */}
                                         <h5 className='text-[#141217] font-normal text-xs'>
-                                            $37,023
+                                            {`$${new Intl.NumberFormat('en-US').format(roundToN(coinChartInfo.market_data.low_24h.usd, 0))}`}
                                         </h5>
                                     </div>
 
@@ -172,7 +162,7 @@ const Overview = () => {
 
                                         {/* value */}
                                         <h5 className='text-[#141217] font-normal text-xs'>
-                                            $38,023
+                                            {`$${new Intl.NumberFormat('en-US').format(roundToN(coinChartInfo.market_data.high_24h.usd, 0))}`}
                                         </h5>
                                     </div>
                                 </div>
@@ -191,8 +181,8 @@ const Overview = () => {
                                 {/* info */}
                                 <div className='flex flex-col w-full gap-5 pb-7 [border-bottom:1px_dashed_#DAD7E0]'>
 
-                                    {/* info */}
-                                    <div className='flex items-center justify-between'>
+                                    {/* open */}
+                                    {/* <div className='flex items-center justify-between'>
                                         <h3 className='font-normal text-xs text-[#8D85A0]'>
                                             Open
                                         </h3>
@@ -200,10 +190,10 @@ const Overview = () => {
                                         <h3 className='text-black text-sm font-semibold'>
                                             $240
                                         </h3>
-                                    </div>
+                                    </div> */}
 
                                     {/* close */}
-                                    <div className='flex items-center justify-between'>
+                                    {/* <div className='flex items-center justify-between'>
                                         <h3 className='font-normal text-xs text-[#8D85A0]'>
                                             Close
                                         </h3>
@@ -211,7 +201,7 @@ const Overview = () => {
                                         <h3 className='text-black text-sm font-semibold'>
                                             $240
                                         </h3>
-                                    </div>
+                                    </div> */}
 
                                     {/* market cap */}
                                     <div className='flex items-center justify-between'>
@@ -220,7 +210,7 @@ const Overview = () => {
                                         </h3>
 
                                         <h3 className='text-black text-sm font-semibold'>
-                                            $400,000
+                                            ${new Intl.NumberFormat('en-US').format(roundToN(coinChartInfo.market_data.market_cap.usd, 0))}
                                         </h3>
                                     </div>
                                 </div>
@@ -272,9 +262,8 @@ const Overview = () => {
                             </div>      
                         </div>
                     </>:
-                    <div className='flex bg-gray-50 rounded-md w-full h-[80vh] justify-center items-center font-semibold text-xs'>
-                        Nothing here!
-                    </div>
+                    <EmptyDataComp
+                    viewPortHeight='h-[80vh]' />
                 }
             </div>
 

@@ -25,7 +25,7 @@ const AssetAccountList = ({
     }, [assetAccounts])
 
     return (
-        <div className='w-full flex flex-col gap-5'>
+        <div className='w-full flex flex-col gap-5 pb-24'>
 
             {/* title */}
             <div className='flex items-center justify-between'>

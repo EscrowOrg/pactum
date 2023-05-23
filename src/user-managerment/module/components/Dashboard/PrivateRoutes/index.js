@@ -10,8 +10,8 @@ const PrivateRoutes = () => {
     // DATA INITIALIZATION
     const {
         data,
-        error,
         makePostRequest,
+        hasError
     } = useMakeReq()
 
 
@@ -36,19 +36,18 @@ const PrivateRoutes = () => {
             }
         } 
 
-        if(error) {
-            console.log(error)
+        if(hasError) {
             clearBiscuits()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, error])
+    }, [data, hasError])
 
     useEffect(()=>{
 
         const intervalId = setInterval(() => {
 
             // user's cred
-            const uData = getUserData() 
+            const uData = getUserData()
 
             if(hasUserTokenExpired()) {
                 clearBiscuits()

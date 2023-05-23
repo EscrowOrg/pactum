@@ -27,8 +27,10 @@ const AssetsListView = ({assetList, setAsset, closeDrawer}) => {
                         onClick={()=>{
                             setAsset({
                                 name: asset.currencyName,
-                                symbol: asset.currency,
-                                network: asset.network,
+                                symbol: asset.symbol,
+                                assetId: asset.currency,
+                                networkName: asset.networkName,
+                                networkId: asset.network,
                                 image: asset.imageUrl
                             })
                             closeDrawer()
@@ -45,8 +47,8 @@ const AssetsListView = ({assetList, setAsset, closeDrawer}) => {
                                     {asset.currencyName}
                                 </h4>
                                 
-                                <h4 className='font-normal text-xs text-[#8D85A0]'>
-                                    {asset.currency}
+                                <h4 className='font-normal text-xs text-[#8D85A0] mt-auto'>
+                                    {asset.symbol}
                                 </h4>
                             </div>
                         </div>
