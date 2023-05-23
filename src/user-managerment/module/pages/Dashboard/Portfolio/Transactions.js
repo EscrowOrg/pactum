@@ -22,7 +22,7 @@ const Transactions = () => {
     const {
         data,
         isSuccessful,
-        loading,
+        getLoading,
         makeGetRequest
     } = useMakeReq()
 
@@ -93,25 +93,25 @@ const Transactions = () => {
                         <Tab
                         title={"All"} >
                             <TransactionList
-                            loading={loading}
+                            loading={getLoading}
                             transactionData={transactionList} />
                         </Tab>
                         <Tab
                         title={"Send"} >
                             <TransactionList
-                            loading={loading}
+                            loading={getLoading}
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionType===1)} />
                         </Tab>
                         <Tab
                         title={"Receive"} >
                             <TransactionList
-                            loading={loading}
+                            loading={getLoading}
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionType===2)} />
                         </Tab>
                         <Tab
                         title={"Swap"} >
                             <TransactionList
-                            loading={loading}
+                            loading={getLoading}
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionType===3)} />
                         </Tab>
                     </Tabs>
