@@ -83,11 +83,11 @@ const Overview = () => {
                     !isEmpty(coinChartInfo)?
                     <>
                         {/* Body */}
-                        <div className='w-[92%] flex flex-col mx-auto gap-8 pb-32'>
+                        <div className='w-full flex flex-col gap-8 pb-32'>
 
                             {/* coin */}
                             <div
-                            className='w-full flex items-center justify-between'>
+                            className='w-[92%] mx-auto flex items-center justify-between'>
 
                                 {/* select input */}
                                 <div className='w-[60%] flex flex-col items-stretch'>
@@ -105,7 +105,7 @@ const Overview = () => {
                             </div>
 
                             {/* price and other information */}
-                            <div className='flex items-center justify-between w-full gap-2'>
+                            <div className='flex items-center justify-between w-[92%] mx-auto gap-2'>
 
                                 {/* price and percentage change */}
                                 <div className='flex flex-col gap-1'>
@@ -169,10 +169,11 @@ const Overview = () => {
                             </div>
 
                             {/* Chart */}
-                            <ChartBox />
+                            <ChartBox
+                            assetId={coinId} />
 
                             {/* about: info */}
-                            <div className='flex flex-col bg-gray-100 py-3 px-4 gap-6 rounded-lg w-full relative'>
+                            <div className='flex flex-col bg-gray-100 py-3 px-4 gap-6 rounded-lg relative w-[92%] mx-auto'>
 
                                 {/* circles */}
                                 <span className='absolute bottom-[50%] translate-y-[50%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]' />
@@ -224,9 +225,10 @@ const Overview = () => {
                                     </h2>
 
                                     {/* description */}
-                                    <h3 className='font-normal text-xs text-[#141217]'>
-                                        {coinChartInfo.description.en}
-                                    </h3>
+                                    <h3 
+                                    onClick={(e)=>e.preventDefault()}
+                                    dangerouslySetInnerHTML={{__html: coinChartInfo?.description?.en.replace(/<\/a>/ig, "")}}
+                                    className='font-normal text-xs text-[#141217]' />
                                 </div>
                             </div>
                         </div>

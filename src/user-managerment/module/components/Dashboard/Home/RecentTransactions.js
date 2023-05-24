@@ -108,6 +108,7 @@ const RecentTransactions = () => {
                     transactionList.slice(0,7).map((transactData, index)=>(
 
                         <TransactionCard
+                        key={index}
                         Icon={iconLists[transactData.transactionType]}
                         amount={transactData.amount}
                         asset={transactData.asset}

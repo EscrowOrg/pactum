@@ -100,19 +100,19 @@ const Transactions = () => {
                         title={"Send"} >
                             <TransactionList
                             loading={getLoading}
-                            transactionData={transactionList?.filter(transaction=>transaction?.transactionType===1)} />
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===1)} />
                         </Tab>
                         <Tab
                         title={"Receive"} >
                             <TransactionList
                             loading={getLoading}
-                            transactionData={transactionList?.filter(transaction=>transaction?.transactionType===2)} />
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===2)} />
                         </Tab>
                         <Tab
                         title={"Swap"} >
                             <TransactionList
                             loading={getLoading}
-                            transactionData={transactionList?.filter(transaction=>transaction?.transactionType===3)} />
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===3)} />
                         </Tab>
                     </Tabs>
                 </div>
