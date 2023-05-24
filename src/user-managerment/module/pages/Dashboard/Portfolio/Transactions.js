@@ -114,6 +114,12 @@ const Transactions = () => {
                             loading={getLoading}
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===3)} />
                         </Tab>
+                        <Tab
+                        title={"Buy"} >
+                            <TransactionList
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===4)} />
+                        </Tab>
                     </Tabs>
                 </div>
             </div>

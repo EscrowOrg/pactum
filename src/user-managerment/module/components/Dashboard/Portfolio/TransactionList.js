@@ -70,14 +70,14 @@ const TransactionList = ({transactionData, loading}) => {
                                 <span className='h-[40px] w-[40px] inline-flex items-center justify-center rounded-[50%] bg-[#FAFAFB]'>
 
                                     {/* icon */}
-                                    {iconLists[transactData.transactionType]}
+                                    {iconLists[transactData.transactionGroup-1]}
                                 </span>
 
                                 {/* amount and status */}
                                 <div className='inline-flex flex-col gap-[2px]'>
 
                                     <h3 className='text-sm font-semibold text-black'>
-                                        {`${transactionTypeList[transactData.transactionType]}: ${transactData.amount} ${transactData.asset}`}
+                                        {`${transactionTypeList[transactData.transactionGroup-1]}: ${transactData.amount} ${transactData.asset}`}
                                     </h3>
                                     
                                     {
