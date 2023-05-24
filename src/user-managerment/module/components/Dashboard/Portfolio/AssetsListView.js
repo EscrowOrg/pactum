@@ -1,47 +1,10 @@
-import React from 'react'
+import { useState } from 'react'
 import { SearchInput } from '../../Input'
 
-const AssetsListView = ({setAsset, closeDrawer}) => {
+const AssetsListView = ({assetList, setAsset, closeDrawer}) => {
 
-    // DATA INITIALIZATION
-    const listData = [
-        {
-            name: "Tether",
-            alphabetCode: "USDT",
-            imageUrl: "/images/dashboard/Tether.webp",
-            assetId: 0,
-        },
-        {
-            name: "USD Coin",
-            alphabetCode: "USDC",
-            imageUrl: "/images/dashboard/USD_Coin_icon.webp",
-            assetId: 1,
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png",
-            assetId: 2,
-        },
-        {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png",
-            assetId: 3,
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png",
-            assetId: 4,
-        },
-        {
-            name: "Binance USD",
-            alphabetCode: "BUSD",
-            imageUrl: "/images/dashboard/binance.png",
-            assetId: 5,
-        },
-    ]
+    // STATES
+    const [searchInput, setSearchInput] = useState("")
 
     return (
         <div className='w-full h-full flex flex-col gap-5 bg-white'>
@@ -50,19 +13,25 @@ const AssetsListView = ({setAsset, closeDrawer}) => {
             <div className='flex gap-5 w-full'>
                         
                 {/* search bar */}
-                <SearchInput />
+                <SearchInput
+                value={searchInput}
+                onChange={(e)=>setSearchInput(e.target.value)} />
             </div>
 
             {/* list container */}
             <div className='flex flex-col gap-1 pb-5'>
                 {
-                    listData.map((list, index)=>(
+                    assetList.filter(asset=>asset?.currencyName?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((asset, index)=>(
                         <div
                         key={index}
                         onClick={()=>{
                             setAsset({
-                                title: list.name,
-                                value: list.assetId
+                                name: asset.currencyName,
+                                symbol: asset.symbol,
+                                assetId: asset.currency,
+                                networkName: asset.networkName,
+                                networkId: asset.network,
+                                image: asset.imageUrl
                             })
                             closeDrawer()
                         }} 
@@ -70,16 +39,16 @@ const AssetsListView = ({setAsset, closeDrawer}) => {
 
                             <img
                             alt=""
-                            src={list.imageUrl}
+                            src={asset.imageUrl}
                             className='h-[40px] w-[40px] rounded-[50%]' />
 
                             <div className='flex items-center gap-1'>
                                 <h4 className='font-semibold text-sm text-black'>
-                                    {list.name}
+                                    {asset.currencyName}
                                 </h4>
                                 
-                                <h4 className='font-normal text-xs text-[#8D85A0]'>
-                                    {list.alphabetCode}
+                                <h4 className='font-normal text-xs text-[#8D85A0] mt-auto'>
+                                    {asset.symbol}
                                 </h4>
                             </div>
                         </div>

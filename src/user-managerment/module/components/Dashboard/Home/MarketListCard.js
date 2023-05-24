@@ -8,11 +8,12 @@ const MarketListCard = ({
     coinPairText,
     hasAppreciated,
     changeInPercent,
-    currentPrice
+    currentPrice,
+    pathId
 }) => {
     return (
         <Link
-        to={"/home/overview/jkdfjdkfdkfjdfjd"} 
+        to={`/home/overview/${pathId}`} 
         className='w-full flex gap-2 items-center justify-between py-4 border-b border-[#F5F3F6] hover:no-underline'>
             
             {/* first container */}

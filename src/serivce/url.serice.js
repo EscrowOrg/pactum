@@ -1,5 +1,6 @@
 
 const BASE_URL = "https://escrowservice.fly.dev"
+export const COIN_GECKO_BASE = "https://api.coingecko.com"
 
 // const UrlService ={
 //   LOGIN_USERS: `${BASE_URL}/api/User/Login`,

@@ -7,7 +7,7 @@ import Checkbox from "../../components/Checkbox";
 import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import BASE_URL from "../../../../serivce/url.serice";
-import useMakeReq from "../../hooks/useMakeReq";
+import useMakeReq from "../../hooks/Global/useMakeReq";
 import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
 import { isEmpty } from "../../helpers/isEmpty";
 import { getFromLocalStorage, saveToLocalStorage } from "../../helpers/localStorageMethods";

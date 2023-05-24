@@ -4,9 +4,9 @@ import Drawer from '../../../layouts/Drawer'
 import "../../../layouts/Drawer/index.css"
 import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
 import HotlistDrawerView from './HotlistDrawerView'
-import useMakeReq from '../../../hooks/useMakeReq'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
-import { GET_CURRENCIES } from '../../../../../serivce/apiRoutes.service'
+import { GET_COIN_MARKETS } from '../../../../../serivce/apiRoutes.service'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
 import { roundToN } from '../../../helpers/roundToN'
@@ -24,19 +24,19 @@ const antIcon = (
 const HotList = () => {
 
     // DATA INITIALIZATION
+    const selectedCoin = [
+        "tether",
+        "usd-coin",
+        "ethereum",
+        "binancecoin",
+        "bitcoin",
+        "binance-usd",
+    ]
     const {
         data,
-        loading,
+        getLoading,
         makeGetRequest
     } = useMakeReq()
-    const selectedCoin = [
-        "Tether",
-        // "USDC",
-        "Ethereum",
-        "BNB",
-        "Bitcoin",
-        // "BUSD",
-    ]
 
 
     // STATES
@@ -53,8 +53,9 @@ const HotList = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(GET_CURRENCIES)
+        makeGetRequest(GET_COIN_MARKETS)
     }, [])
+
     useEffect(()=>{
         if(!isEmpty(data)) {
             setCryptoAssets(data)
@@ -83,26 +84,27 @@ const HotList = () => {
             <div className='w-full'>
 
                 {
-                    loading?
+                    getLoading?
                     <div className='flex bg-gray-50 rounded-md m-auto w-full h-[25vh] justify-center items-center'>
                         <Spin indicator={antIcon} />
                     </div>:
                     !isEmpty(cryptoAssets)?
                     <div className='w-full grid grid-flow-col grid-rows-[auto_auto] overflow-x-auto gap-4'>
                         {
-                            cryptoAssets.filter((currency)=>selectedCoin.includes(currency.name)).map((curr, index)=>(
+                            cryptoAssets?.filter((currency)=>selectedCoin.includes(currency.id))?.map((curr)=>(
                                 
                                 <HotlistCard
                                 key={curr?.id}
-                                imageUrl={"/images/dashboard/bitcoin.png"}
+                                pathId={curr?.id}
+                                imageUrl={curr?.image}
                                 currencyName={curr?.name}
-                                currentValue={new Intl.NumberFormat('en-US').format(roundToN(curr?.price, 2))}
-                                hasAppreciated={curr.percentChange1h>0}
-                                changePercentage={roundToN(curr.percentChange1h, 2)} />
+                                currentValue={new Intl.NumberFormat('en-US').format(roundToN(curr?.current_price, 2))}
+                                hasAppreciated={curr?.price_change_percentage_1h_in_currency>0}
+                                changePercentage={roundToN(curr?.price_change_percentage_1h_in_currency, 2)} />
                             ))
                         }
                     </div>: 
-                    <div className='flex bg-gray-50 rounded-md w-full h-[25vh] justify-center items-center font-semibold text-xs'>
+                    <div className='flex bg-white rounded-md w-full h-[25vh] justify-center items-center font-semibold text-xs'>
                         Nothing here!
                     </div>
                 }
