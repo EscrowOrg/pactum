@@ -32,10 +32,14 @@ const Transactions = () => {
     const [isDrawer1Open, setIsDrawer1Open] = useState(false);
     const [isDrawer2Open, setIsDrawer2Open] = useState(false);
     const [transactionList, setTransactionList] = useState([])
-    const [filterData, setFilterData] = useState({
-        status: "All",
-        coins: "All"
-    });
+    const [filterCoin, setFilterCoin] = useState({
+        name: "",
+        id: null
+    })
+    const [filterStatus, setFilterStatus] = useState({
+        name: "",
+        id: null
+    })
 
 
     // HANDLERS
@@ -48,11 +52,18 @@ const Transactions = () => {
     const toggleDrawer2 = () => {
         setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
     }
+    const fetchData = (url) => {
+        if(isEmpty(url)) {
+            makeGetRequest(`${GET_TRANSACTIONS_USERID}${getUserId()}`)
+        } else {
+            makeGetRequest(url)
+        }
+    }
 
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_TRANSACTIONS_USERID}${getUserId()}`)
+        fetchData()
     }, [])
     useEffect(()=>{
         if(!isEmpty(data) && isSuccessful===true) {
@@ -139,7 +150,12 @@ const Transactions = () => {
                     <TransactionFilterView
                     toggleDrawer1={toggleDrawer1}
                     toggleDrawer2={toggleDrawer2}
-                    closeDrawer={toggleDrawer} />                    
+                    closeDrawer={toggleDrawer}
+                    filterStatus={filterStatus}
+                    filterAsset={filterCoin}
+                    setFilterCoin={setFilterCoin}
+                    setFilterStatus={setFilterStatus}
+                    fetchData={fetchData} />                    
                 </StrictWrapper>
             </Drawer>
 
@@ -157,8 +173,8 @@ const Transactions = () => {
                 <SlideWrapper
                 title={"Select Status:"}>
                     <StatusFilterView
-                    filterValue={filterData.status}
-                    setFilterValue={setFilterData}
+                    filterStatus={filterStatus}
+                    setFilterStatus={setFilterStatus}
                     closeDrawer={toggleDrawer1} />
                 </SlideWrapper>
             </Drawer>
@@ -176,8 +192,8 @@ const Transactions = () => {
                 <SlideWrapper
                 title={"Select Coin:"}>
                     <AssetsPopup
-                    selectedValue={filterData.coins}
-                    setFilterValue={setFilterData}
+                    filterCoinId={filterCoin.id}
+                    setFilterCoin={setFilterCoin}
                     closeDrawer={toggleDrawer2}  />
                 </SlideWrapper>
             </Drawer>

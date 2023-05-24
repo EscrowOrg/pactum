@@ -2,8 +2,8 @@ import React from 'react'
 import { Radio } from 'antd';
 
 const StatusFilterView = ({
-    filterValue,
-    setFilterValue,
+    filterStatus,
+    setFilterStatus,
     closeDrawer
 }) => {
     return (
@@ -13,18 +13,16 @@ const StatusFilterView = ({
             <Radio.Group 
             className='flex flex-col gap-5'
             name="radiogroup" 
-            value={filterValue}
+            value={filterStatus.name || "All"}
             defaultValue={"All"}>
 
                 {/* first radio */}
                 <Radio 
                 onClick={closeDrawer}
                 onChange={({target: {value}})=>{
-                    setFilterValue((prevState)=>{
-                        return {
-                            ...prevState,
-                            status: value
-                        }
+                    setFilterStatus({
+                        name: value,
+                        id: 4
                     })
                 }}
                 className='flex flex-row-reverse w-full justify-between items-center after:content-none'
@@ -38,11 +36,9 @@ const StatusFilterView = ({
                 <Radio 
                 onClick={closeDrawer}
                 onChange={({target: {value}})=>{
-                    setFilterValue((prevState)=>{
-                        return {
-                            ...prevState,
-                            status: value
-                        }
+                    setFilterStatus({
+                        name: value,
+                        id: 1
                     })
                 }}
                 className='flex flex-row-reverse w-full justify-between items-center after:content-none'
@@ -56,11 +52,9 @@ const StatusFilterView = ({
                 <Radio 
                 onClick={closeDrawer}
                 onChange={({target: {value}})=>{
-                    setFilterValue((prevState)=>{
-                        return {
-                            ...prevState,
-                            status: value
-                        }
+                    setFilterStatus({
+                        name: value,
+                        id: 3
                     })
                 }}
                 className='flex flex-row-reverse w-full justify-between items-center after:content-none'
@@ -74,11 +68,9 @@ const StatusFilterView = ({
                 <Radio 
                 onClick={closeDrawer}
                 onChange={({target: {value}})=>{
-                    setFilterValue((prevState)=>{
-                        return {
-                            ...prevState,
-                            status: value
-                        }
+                    setFilterStatus({
+                        name: value,
+                        id: 2
                     })
                 }}
                 className='flex flex-row-reverse w-full justify-between items-center after:content-none'
