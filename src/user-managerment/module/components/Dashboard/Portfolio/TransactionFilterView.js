@@ -13,13 +13,12 @@ const TransactionFilterView = ({
     filterAsset,
     fetchData,
     setFilterCoin,
-    setFilterStatus
+    setFilterStatus,
+    setEndDate,
+    setStartDate,
+    startDate,
+    endDate
 }) => {
-
-    // STATES
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-
 
     // DATA INTIALIZATION
     const params = new URLSearchParams();

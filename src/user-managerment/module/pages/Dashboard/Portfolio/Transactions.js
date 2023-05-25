@@ -40,6 +40,8 @@ const Transactions = () => {
         name: "",
         id: null
     })
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
 
 
     // HANDLERS
@@ -155,6 +157,10 @@ const Transactions = () => {
                     filterAsset={filterCoin}
                     setFilterCoin={setFilterCoin}
                     setFilterStatus={setFilterStatus}
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                    startDate={startDate}
+                    endDate={endDate}
                     fetchData={fetchData} />                    
                 </StrictWrapper>
             </Drawer>

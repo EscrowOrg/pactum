@@ -49,6 +49,10 @@ const LoginUser  = () =>{
       if(user?.success===true) {
          navigate("/home", { replace: true })
       }
+
+      if(user?.success!==true) {
+         toast.error(user?.message)
+      }
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [user])
 
