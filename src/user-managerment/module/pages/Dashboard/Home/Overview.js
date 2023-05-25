@@ -228,7 +228,7 @@ const Overview = () => {
                                     <h3 
                                     onClick={(e)=>e.preventDefault()}
                                     dangerouslySetInnerHTML={{__html: coinChartInfo?.description?.en.replace(/<\/a>/ig, "")}}
-                                    className='font-normal text-xs text-[#141217]' />
+                                    className='font-normal text-xs text-[#141217] text-justify' />
                                 </div>
                             </div>
                         </div>
