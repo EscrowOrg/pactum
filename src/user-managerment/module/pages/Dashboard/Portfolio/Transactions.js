@@ -122,16 +122,16 @@ const Transactions = () => {
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===2)} />
                         </Tab>
                         <Tab
-                        title={"Swap"} >
-                            <TransactionList
-                            loading={getLoading}
-                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===3)} />
-                        </Tab>
-                        <Tab
                         title={"Buy"} >
                             <TransactionList
                             loading={getLoading}
                             transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===4)} />
+                        </Tab>
+                        <Tab
+                        title={"Sell"} >
+                            <TransactionList
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===5)} />
                         </Tab>
                     </Tabs>
                 </div>
