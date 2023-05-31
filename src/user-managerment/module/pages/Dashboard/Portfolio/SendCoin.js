@@ -71,6 +71,7 @@ const SendCoin = () => {
         const uId = getUserId()
 
         // payload
+        // Internal Users Transfer
         const payload = mode.value===1?{
             "userIdentifier": recipientId,
             "senderUserId": uId,
@@ -78,6 +79,8 @@ const SendCoin = () => {
             "currency": asset.assetId,
             "network": asset.networkId
         }:
+
+        // External Users Transfer
         mode.value===2?{
             "asset": asset.assetId,
             "address": recipientId,
