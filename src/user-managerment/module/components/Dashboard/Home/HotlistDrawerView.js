@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react'
 import Tabs,{Tab} from 'react-best-tabs';
 import 'react-best-tabs/dist/index.css';
 import MarketList from './MarketList'
-import useMakeReq from '../../../hooks/useMakeReq';
+import useMakeReq from '../../../hooks/Global/useMakeReq';
 import { isEmpty } from '../../../helpers/isEmpty';
-import { GET_CURRENCIES } from '../../../../../serivce/apiRoutes.service';
+import { GET_COIN_MARKETS, GET_CURRENCIES } from '../../../../../serivce/apiRoutes.service';
 
 const HotlistDrawerView = () => {
 
     // DATA INITIALIZATION
     const {
         data,
-        loading,
+        getLoading,
         makeGetRequest
     } = useMakeReq()
 
@@ -22,7 +22,7 @@ const HotlistDrawerView = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(GET_CURRENCIES)
+        makeGetRequest(GET_COIN_MARKETS)
     }, [])
     useEffect(()=>{
         if(!isEmpty(data)) {
@@ -35,38 +35,30 @@ const HotlistDrawerView = () => {
             {/* Tabs Container */}
             <Tabs 
             activeTab="1" >
-                
-                {/* Tab 1 */}
-                <Tab 
-                title={"Starred"}>
-                    <MarketList
-                    data={cryptoAssets}
-                    loading={loading} />
-                </Tab>
 
-                {/* Tab 2 */}
+                {/* Tab 1 */}
                 <Tab 
                 title={"All"}>
                     <MarketList                    
                     data={cryptoAssets}
-                    loading={loading} />
+                    loading={getLoading} />
 
+                </Tab>
+
+                {/* Tab 2 */}
+                <Tab 
+                title={"Gainers"}>
+                    <MarketList
+                    data={cryptoAssets.filter((asset=>asset.price_change_percentage_1h_in_currency > 0))}
+                    loading={getLoading} />
                 </Tab>
 
                 {/* Tab 3 */}
                 <Tab 
-                title={"Gainers"}>
-                    <MarketList                    
-                    data={cryptoAssets}
-                    loading={loading} />
-                </Tab>
-
-                {/* Tab 4 */}
-                <Tab 
                 title={"Losers"}>
                     <MarketList                    
-                    data={cryptoAssets}
-                    loading={loading} />
+                    data={cryptoAssets.filter((asset=>asset.price_change_percentage_1h_in_currency < 0))}
+                    loading={getLoading} />
                 </Tab>
             </Tabs> 
         </div>

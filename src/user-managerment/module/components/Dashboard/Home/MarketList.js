@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import MarketListCard from './MarketListCard'
 import { SearchInput } from '../../Input'
 import { Spin } from 'antd'
@@ -18,15 +18,26 @@ const antIcon = (
 
 const MarketList = ({loading, data}) => {
 
+    // STATES
+    const [assetData, setAssetData] = useState([])
+    const [searchInput, setSearchInput] = useState("")
+
+
     // DATA INITIALIZATION
     const selectedCoin = [
-        "Tether",
-        // "USDC",
-        "Ethereum",
-        "BNB",
-        "Bitcoin",
-        // "BUSD",
+        "tether",
+        "usd-coin",
+        "ethereum",
+        "binancecoin",
+        "bitcoin",
+        "binance-usd",
     ]
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        setAssetData(data?.filter((currency)=>selectedCoin.includes(currency.id)))
+    }, [data])
 
     return (
         <div className='w-full h-full flex flex-col gap-6 bg-white'>
@@ -35,7 +46,9 @@ const MarketList = ({loading, data}) => {
             <div className='flex gap-5 w-full'>
                         
                 {/* search bar */}
-                <SearchInput />
+                <SearchInput
+                value={searchInput}
+                onChange={(e)=>setSearchInput(e.target.value)} />
             </div>
 
             {/* list container */}
@@ -49,16 +62,17 @@ const MarketList = ({loading, data}) => {
                     !isEmpty(data)?
                     <>
                         {
-                            data.filter((currency)=>selectedCoin.includes(currency.name)).map((curr)=>(
+                            assetData.filter((asset)=>asset?.name.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((curr)=>(
                                 
                                 <MarketListCard
                                 key={curr?.id}
-                                imageUrl={"/images/dashboard/bitcoin.png"}
+                                pathId={curr?.id}
+                                imageUrl={curr?.image}
                                 coinName={curr?.name}
-                                coinPairText={`${curr?.symbol}/${curr?.convertCurrency}`}
-                                hasAppreciated={curr.percentChange1h>=0}
-                                changeInPercent={roundToN(curr.percentChange1h, 2)}
-                                currentPrice={new Intl.NumberFormat('en-US').format(roundToN(curr?.price, 2).toLocaleString())} />
+                                coinPairText={`${curr?.symbol?.toUpperCase()}/USD`}
+                                hasAppreciated={curr?.price_change_percentage_1h_in_currency>0}
+                                changeInPercent={roundToN(curr?.price_change_percentage_1h_in_currency, 2)}
+                                currentPrice={new Intl.NumberFormat('en-US').format(roundToN(curr?.current_price, 2))} />
 
                             ))
                         }

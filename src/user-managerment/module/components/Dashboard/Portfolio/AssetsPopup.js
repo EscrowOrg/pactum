@@ -1,110 +1,53 @@
-import React from 'react'
-import { SearchInput } from '../../Input'
+import React, { useState } from 'react'
 import { TickCircle } from 'iconsax-react'
+import { SearchInput } from '../../Input'
 
-const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
+const AssetsPopup = ({
+    setFilterCoin,
+    filterCoinId, 
+    closeDrawer,
+}) => {
+
+    // STATES
+    const [searchInput, setSearchInput] = useState("")
 
     // DATA INITIALIZATION
     const listData = [
         {
             name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
+            symbol: "BTC",
+            imageUrl: "/images/dashboard/bitcoin.png",
+            id: 4
         },
         {
             name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
+            symbol: "BNB",
+            imageUrl: "/images/dashboard/binance.png",
+            id: 3
         },
         {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
+            name: "Ethereum",
+            symbol: "ETH",
+            imageUrl: "/images/dashboard/ethereum.png",
+            id: 2
         },
         {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
+            name: "Binance USD",
+            symbol: "BUSD",
+            imageUrl: "https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766",
+            id: 5
         },
         {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
+            name: "USD Coin",
+            symbol: "USDC",
+            imageUrl: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
+            id: 1
         },
         {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
-        },
-        {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
-        },
-        {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
-        },
-        {
-            name: "Bitcoin",
-            alphabetCode: "BTC",
-            imageUrl: "/images/dashboard/bitcoin.png"
-        },
-        {
-            name: "Binance",
-            alphabetCode: "BNB",
-            imageUrl: "/images/dashboard/binance.png"
-        },
-        {
-            name: "Etheruem",
-            alphabetCode: "ETH",
-            imageUrl: "/images/dashboard/ethereum.png"
-        },
-        {
-            name: "Litcoin",
-            alphabetCode: "LTC",
-            imageUrl: "/images/dashboard/litcoin.png"
+            name: "Tether",
+            symbol: "USDT",
+            imageUrl: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
+            id: 0
         },
     ]
 
@@ -115,7 +58,9 @@ const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
             <div className='flex gap-5 w-full px-4'>
                         
                 {/* search bar */}
-                <SearchInput />
+                <SearchInput
+                value={searchInput}
+                onChange={(e)=>setSearchInput(e.target.value)} />
             </div>
 
             {/* list container */}
@@ -123,11 +68,9 @@ const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
 
                 <div
                 onClick={()=>{
-                    setFilterValue(prevState=>{
-                        return {
-                            ...prevState,
-                            coins: "All"
-                        }
+                    setFilterCoin({
+                        name: "All",
+                        id: null
                     })
                     closeDrawer()
                 }}
@@ -143,7 +86,7 @@ const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
                     </h4>
 
                     {
-                        selectedValue==="All" &&
+                        filterCoinId===null &&
                         <TickCircle
                         variant='Bulk'
                         size={18}
@@ -152,15 +95,13 @@ const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
                     }
                 </div>
                 {
-                    listData.map((list, index)=>(
+                    listData.filter(asset=>asset.name.toLowerCase().includes(searchInput.toLowerCase())).map((list, index)=>(
                         <div
                         key={index}
                         onClick={()=>{
-                            setFilterValue(prevState=>{
-                                return {
-                                    ...prevState,
-                                    coins: list.alphabetCode
-                                }
+                            setFilterCoin({
+                                name: list.symbol,
+                                id: list.id
                             })
                             closeDrawer()
                         }}
@@ -177,13 +118,13 @@ const AssetsPopup = ({setFilterValue, closeDrawer, selectedValue}) => {
                                 </h4>
                                 
                                 <h4 className='font-normal text-xs text-[#8D85A0]'>
-                                    {list.alphabetCode}
+                                    {list.symbol}
                                 </h4>
                             </div>
 
                             {/* icon */}
                             {
-                                selectedValue===list.alphabetCode &&
+                                filterCoinId===list.id &&
                                 <TickCircle
                                 variant='Bulk'
                                 size={18}

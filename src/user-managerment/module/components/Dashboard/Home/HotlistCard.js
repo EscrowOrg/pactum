@@ -1,15 +1,19 @@
 import React from 'react'
 import PercentageChange from './PercentageChange'
+import { Link } from 'react-router-dom'
 
 const HotlistCard = ({
     imageUrl,
     currencyName,
     currentValue,
     hasAppreciated,
-    changePercentage
+    changePercentage,
+    pathId
 }) => {
     return (
-        <div className='flex flex-col gap-3 p-3 rounded-2xl border border-gray-100 w-[180px]'>
+        <Link
+        to={`/home/overview/${pathId}`} 
+        className='flex flex-col gap-3 p-3 rounded-2xl border border-gray-100 w-[180px]'>
 
             {/* logo and percentage change */}
             <div className='w-full flex items-center justify-between gap-1'>
@@ -39,7 +43,7 @@ const HotlistCard = ({
                     ${currentValue<1?currentValue:currentValue.toLocaleString('en-US')}
                 </h3>
             </div>
-        </div>
+        </Link>
     )
 }
 

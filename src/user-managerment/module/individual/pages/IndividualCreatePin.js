@@ -4,10 +4,10 @@ import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../../../../serivce/url.serice";
-import useMakeReq from "../../hooks/useMakeReq";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
 import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
+import useMakeReq from "../../hooks/Global/useMakeReq";
 
 const IndividualCreatePin = () => {
 

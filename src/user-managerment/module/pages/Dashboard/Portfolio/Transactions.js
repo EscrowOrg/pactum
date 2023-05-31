@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PageWrapper from '../../../layouts/PageWrapper'
-import { ArrowSwapHorizontal, Filter, MoneyRecive, MoneySend, WalletAdd } from 'iconsax-react'
+import { ArrowSwapHorizontal, Filter, WalletAdd } from 'iconsax-react'
 import { BackButton } from '../../../components/Button'
 import Tabs, { Tab } from 'react-best-tabs'
 import TransactionList from '../../../components/Dashboard/Portfolio/TransactionList'
@@ -11,253 +11,41 @@ import TransactionFilterView from '../../../components/Dashboard/Portfolio/Trans
 import SlideWrapper from '../../../layouts/Drawer/SlideWrapper'
 import AssetsPopup from '../../../components/Dashboard/Portfolio/AssetsPopup'
 import StatusFilterView from '../../../components/Dashboard/Portfolio/StatusFilterView'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { GET_TRANSACTIONS_USERID } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
 
 const Transactions = () => {
 
     // DATA INITIALIZATION
-    const transactionList = [
-        {
-            type: "Sent",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <MoneySend size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Received",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <MoneyRecive size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Swapped",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "PENDING",
-            Icon: <ArrowSwapHorizontal size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Bought",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sold",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sent",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <MoneySend size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Received",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <MoneyRecive size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Swapped",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "PENDING",
-            Icon: <ArrowSwapHorizontal size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Bought",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sold",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sent",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <MoneySend size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Received",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <MoneyRecive size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Swapped",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "PENDING",
-            Icon: <ArrowSwapHorizontal size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Bought",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sold",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sent",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <MoneySend size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Received",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <MoneyRecive size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Swapped",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "PENDING",
-            Icon: <ArrowSwapHorizontal size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Bought",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sold",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sent",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <MoneySend size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Received",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <MoneyRecive size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Swapped",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "PENDING",
-            Icon: <ArrowSwapHorizontal size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Bought",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "SUCCESS",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-        {
-            type: "Sold",
-            amount: 400,
-            coin: "DOGE",
-            fiatEquiv: "$102.38",
-            walletType: "Wallet 1",
-            status: "FAILED",
-            Icon: <WalletAdd size="24" color="#A39CB2" variant="Bulk" />
-        },
-    ]
+    const {
+        data,
+        isSuccessful,
+        getLoading,
+        makeGetRequest
+    } = useMakeReq()
 
     
     // STATES
     const [isOpen, setIsOpen] = useState(false);
     const [isDrawer1Open, setIsDrawer1Open] = useState(false);
     const [isDrawer2Open, setIsDrawer2Open] = useState(false);
-    const [filterData, setFilterData] = useState({
-        status: "All",
-        coins: "All"
-    });
-
+    const [transactionList, setTransactionList] = useState([])
+    const [filterCoin, setFilterCoin] = useState({
+        name: "",
+        id: null
+    })
+    const [filterStatus, setFilterStatus] = useState({
+        name: "",
+        id: null
+    })
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
 
 
     // HANDLERS
-    const toggleDrawer = (value) => {
-        // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
+    const toggleDrawer = () => {
         setIsOpen(isOpen => !isOpen)
     }
     const toggleDrawer1 = () => {
@@ -266,6 +54,24 @@ const Transactions = () => {
     const toggleDrawer2 = () => {
         setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
     }
+    const fetchData = (url) => {
+        if(isEmpty(url)) {
+            makeGetRequest(`${GET_TRANSACTIONS_USERID}${getUserId()}`)
+        } else {
+            makeGetRequest(url)
+        }
+    }
+
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        fetchData()
+    }, [])
+    useEffect(()=>{
+        if(!isEmpty(data) && isSuccessful===true) {
+            setTransactionList(data.data)
+        }
+    }, [data, isSuccessful])
 
     return (
         <PageWrapper>
@@ -300,22 +106,32 @@ const Transactions = () => {
                         <Tab
                         title={"All"} >
                             <TransactionList
+                            loading={getLoading}
                             transactionData={transactionList} />
                         </Tab>
                         <Tab
                         title={"Send"} >
                             <TransactionList
-                            transactionData={transactionList.filter(transaction=>transaction.type==="Sent")} />
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===1)} />
                         </Tab>
                         <Tab
                         title={"Receive"} >
                             <TransactionList
-                            transactionData={transactionList.filter(transaction=>transaction.type==="Received")} />
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===2)} />
                         </Tab>
                         <Tab
-                        title={"Swap"} >
+                        title={"Buy"} >
                             <TransactionList
-                            transactionData={transactionList.filter(transaction=>transaction.type==="Swapped")} />
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===4)} />
+                        </Tab>
+                        <Tab
+                        title={"Sell"} >
+                            <TransactionList
+                            loading={getLoading}
+                            transactionData={transactionList?.filter(transaction=>transaction?.transactionGroup===5)} />
                         </Tab>
                     </Tabs>
                 </div>
@@ -336,7 +152,16 @@ const Transactions = () => {
                     <TransactionFilterView
                     toggleDrawer1={toggleDrawer1}
                     toggleDrawer2={toggleDrawer2}
-                    closeDrawer={toggleDrawer} />                    
+                    closeDrawer={toggleDrawer}
+                    filterStatus={filterStatus}
+                    filterAsset={filterCoin}
+                    setFilterCoin={setFilterCoin}
+                    setFilterStatus={setFilterStatus}
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                    startDate={startDate}
+                    endDate={endDate}
+                    fetchData={fetchData} />                    
                 </StrictWrapper>
             </Drawer>
 
@@ -354,8 +179,8 @@ const Transactions = () => {
                 <SlideWrapper
                 title={"Select Status:"}>
                     <StatusFilterView
-                    filterValue={filterData.status}
-                    setFilterValue={setFilterData}
+                    filterStatus={filterStatus}
+                    setFilterStatus={setFilterStatus}
                     closeDrawer={toggleDrawer1} />
                 </SlideWrapper>
             </Drawer>
@@ -373,8 +198,8 @@ const Transactions = () => {
                 <SlideWrapper
                 title={"Select Coin:"}>
                     <AssetsPopup
-                    selectedValue={filterData.coins}
-                    setFilterValue={setFilterData}
+                    filterCoinId={filterCoin.id}
+                    setFilterCoin={setFilterCoin}
                     closeDrawer={toggleDrawer2}  />
                 </SlideWrapper>
             </Drawer>

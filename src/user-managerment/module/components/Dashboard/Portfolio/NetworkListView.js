@@ -1,10 +1,18 @@
 import { InfoCircle } from 'iconsax-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const NetworkListView = ({
     setNetwork,
     closeDrawer
 }) => {
+
+    // STATES
+    const [asset, setAsset] = useState({
+        name: "",
+        valueId: "",
+        symbol: ""
+    })
+
 
     // DATA INITIALIZATION
     const listData = [
@@ -24,6 +32,12 @@ const NetworkListView = ({
             chainId: 2
         }
     ]
+
+
+    // SIDE EFFECT
+    useEffect(()=>{
+
+    }, [])
 
     return (
         <div className='w-full h-full flex flex-col gap-5 bg-white'>
