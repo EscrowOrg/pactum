@@ -10,3 +10,4 @@ export const GET_COIN_MARKETS = `${COIN_GECKO_BASE}/api/v3/coins/markets?vs_curr
 export const GET_SINGLE_COIN = `${COIN_GECKO_BASE}/api/v3/coins/`
 export const GET_TRANSACTIONS_USERID = `${BASE_URL}/api/Wallet/GetTransactionByFilter?userId=`
 export const GET_ASSETS_MAPPING = `${BASE_URL}/api/ChainOperation/GetAssetMapping`
+export const TRANSFER_INTERNAL_USERS = `${BASE_URL}/api/ChainOperation/TransferToInternalUser`
