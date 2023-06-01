@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
 import Modal from "react-modal"
-import "./index.css"
-import { CloseCircle } from 'iconsax-react'
 
-const MyModal = ({
+const AltModal = ({
     modalIsOpen, 
     toggleModal, 
     children, 
@@ -31,13 +29,6 @@ const MyModal = ({
                 {/* modal content */}
                 <div className="model-item-cont">
 
-                    {/* modal close button */}
-                    <CloseCircle
-                    onClick={toggleModal}
-                    variant='Bulk'
-                    size={48}
-                    color='#D9EFEE' />
-
                     {/* children */}
                     <div className='modal-children-container'>
                         {children}
@@ -48,4 +39,4 @@ const MyModal = ({
     )
 }
 
-export default MyModal
+export default AltModal

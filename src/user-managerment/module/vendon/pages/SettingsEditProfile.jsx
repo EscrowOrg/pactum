@@ -5,14 +5,17 @@ import { Briefcase, Call, Sms } from "iconsax-react";
 import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import MyModal from "../../layouts/MyModal";
-import RemovePhoto from "../../components/RemovePhoto";
 import SettingsChangePhoto from "../components/SettingsChangePhoto";
 import { isEmpty } from '../../helpers/isEmpty';
+import SlideWrapper from '../../layouts/Drawer/SlideWrapper';
+import Drawer from '../../layouts/Drawer';
+import RemovePhotoView from '../components/RemovePhotoView';
+import AltModal from '../../layouts/Drawer/AltModal';
 
 const SettingsEditProfile = () => {
 
     // STATES
-    const [changePhotoModalState, setChangePhotoModal] = useState(false);
+    const [changePhotoDrawerState, setChangePhotoDrawer] = useState(false);
     const [removePhotoModalState, setRemovePhotoModal] = useState(false);
     const [userImage, setUserImage] = useState("/images/dashboard/profile-image.png")
     const [files, setFiles] = useState([])
@@ -23,8 +26,8 @@ const SettingsEditProfile = () => {
 
 
     // HANDLERS
-    const toggleChangePhotoModal = () => {
-        setChangePhotoModal(!changePhotoModalState);
+    const toggleChangePhotoDrawer = () => {
+        setChangePhotoDrawer(!changePhotoDrawerState);
       };
     const toggleRemovePhotoModal = () => {
         setRemovePhotoModal(!removePhotoModalState);
@@ -73,7 +76,7 @@ const SettingsEditProfile = () => {
                     
                     {/* texts */}
                     <h3
-                    onClick={toggleChangePhotoModal}
+                    onClick={toggleChangePhotoDrawer}
                     className="text-[#3A0CA3] text-xs font-semibold">
                         Tap to change photo
                     </h3>
@@ -215,26 +218,36 @@ const SettingsEditProfile = () => {
 
         {/* MODALS */}
         {/* Change Photo Modal */}
-        <MyModal 
-        modalIsOpen={changePhotoModalState} 
-        toggleModal={toggleChangePhotoModal}>
+        <Drawer
+        relationshipStatus="alone"
+        height='!h-auto'
+        insertCurve={false}
+        type="slider"
+        isOpen={changePhotoDrawerState}
+        onClose={toggleChangePhotoDrawer}
+        position="bottom">
 
-            <SettingsChangePhoto 
-            files={files}
-            setFiles={setFiles}
-            closeModal={toggleChangePhotoModal}
-            toggleRemovePhotoModal={toggleRemovePhotoModal} />
-        </MyModal>
+            {/* content */}
+            <SlideWrapper
+            closeDrawer={toggleChangePhotoDrawer}
+            title={"Change Photo:"}>
+
+                <SettingsChangePhoto 
+                files={files}
+                setFiles={setFiles}
+                closeModal={toggleChangePhotoDrawer}
+                toggleRemovePhotoModal={toggleRemovePhotoModal} />
+            </SlideWrapper>
+        </Drawer>
 
         {/* Remove Photo Modal */}
-        <MyModal 
+        <AltModal 
         modalIsOpen={removePhotoModalState} 
         toggleModal={toggleRemovePhotoModal}>
 
-            <div className="w-full bg-white rounded-xl  gap-6 flex flex-col">
-            <RemovePhoto />
-            </div>
-        </MyModal>
+            {/* content */}
+            <RemovePhotoView />
+        </AltModal>
     </PageWrapper>
     )
 }

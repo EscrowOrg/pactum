@@ -19,6 +19,7 @@ const Drawer = ({
     className,
     onClose,
     type,
+    relationshipStatus,
     position = "bottom",
     removeWhenClosed = true
 }) => {
@@ -81,7 +82,7 @@ const Drawer = ({
             }
 
             {/* drawer container */}
-            <div className={cn(`drawer ${height}`, position, type)} role="dialog">
+            <div className={cn(`drawer ${height}`, position, type, relationshipStatus)} role="dialog">
                 {children}
             </div>
             

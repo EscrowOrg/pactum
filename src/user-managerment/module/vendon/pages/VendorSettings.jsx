@@ -82,7 +82,7 @@ const VendorSettings = () => {
 
                         {/* title */}
                         <h4 className='text-[#8D85A0] font-normal text-xs'>
-                            ACCOUNT
+                            ACCOUNT & SETTINGS
                         </h4>
 
                         {/* container */}

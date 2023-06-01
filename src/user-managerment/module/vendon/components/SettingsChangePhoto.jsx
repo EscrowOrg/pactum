@@ -24,63 +24,57 @@ const SettingsChangePhoto = ({
     });
 
     return (
-        <div className="w-full bg-white rounded-xl p-4 gap-6 flex flex-col">
+        <div className="flex w-[92%] mx-auto items-center justify-center px-4">
 
-            {/* container */}
-            <div className="p-4 text-center">
-        
-                {/* title */}
-                <h3 className="font-bold text-base">
-                    Change Photo:
-                </h3>
+            {/* body container */}
+            <div className="flex justify-center items-center bg-white w-full gap-10 pt-4 pb-10">
 
-                {/* body container */}
-                <div className="flex justify-center items-center bg-white border-slate-50 gap-4 py-4 px-5 my-3 rounded-2xl">
+                {/* Photo */}
+                <div>
 
-                    {/* Photo */}
-                    <div>
+                    <Camera
+                    variant="Bulk"
+                    size={18}
+                    color="#A39CB2"
+                    className="w-14 h-14 bg-[#F5F3F6] p-3 rounded-[50%] " />
 
-                        <Camera
+                    <p className="text-sm font-medium pt-2">
+                        Photo
+                    </p>
+                </div>
+
+                <div {...getRootProps()} >
+
+                    <input {...getInputProps()} />
+            
+                    <div >
+                        <Gallery
                         variant="Bulk"
                         size={18}
                         color="#A39CB2"
                         className="w-14 h-14 bg-[#F5F3F6] p-3 rounded-[50%] " />
 
-                        <p className="text-sm font-medium pt-2">
-                            Photo
-                        </p>
-                    </div>
+                        <button  className="text-sm font-medium pt-2">
+                            Gallery
+                        </button>
+                    </div> 
+                </div>
 
-                    <div {...getRootProps()} >
+                {/* Delete photo */}
+                <div onClick={()=>{
+                    closeModal()
+                    toggleRemovePhotoModal()
+                }}>
 
-                        <input {...getInputProps()} />
-                
-                        <div >
-                            <Gallery
-                            variant="Bulk"
-                            size={18}
-                            color="#A39CB2"
-                            className="w-14 h-14 bg-[#F5F3F6] p-3 rounded-[50%] " />
+                    <Trash
+                    variant="Bulk"
+                    size={18}
+                    color="#D1292D"
+                    className="w-14 h-14 bg-[#FBE9EA] p-3 rounded-[50%] " />
 
-                            <button  className="text-sm font-medium pt-2">
-                                Gallery
-                            </button>
-                        </div> 
-                    </div>
-
-                    {/* Delete photo */}
-                    <div onClick={toggleRemovePhotoModal}>
-
-                        <Trash
-                        variant="Bulk"
-                        size={18}
-                        color="#D1292D"
-                        className="w-14 h-14 bg-[#FBE9EA] p-3 rounded-[50%] " />
-
-                        <p className="text-[#D1292D] text-sm font-medium pt-2">
-                            Remove
-                        </p>
-                    </div>
+                    <p className="text-[#D1292D] text-sm font-medium pt-2">
+                        Remove
+                    </p>
                 </div>
             </div>
         </div>
