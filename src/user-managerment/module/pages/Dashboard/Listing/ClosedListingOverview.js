@@ -172,7 +172,7 @@ const ClosedListingOverview = () => {
                 <h4 className="text-base font-bold text-black">#100,000.00</h4>
 
                 {/* checkbox  */}
-                <Checkbox className={'mt-1'}/>
+                <Checkbox disabled={true}  value={true} className={'mt-1'}/>
 
                 <h4 className="font-semibold text-xs text-[#3A0CA3] mt-1">RECEIVED</h4>
               </div>

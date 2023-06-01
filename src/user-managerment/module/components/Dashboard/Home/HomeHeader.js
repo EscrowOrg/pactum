@@ -89,11 +89,11 @@ const HomeHeader = () => {
                     {/* expand details */}
                     <div className='flex items-center gap-2'>
                         <span className='text-[#F4EFFE] text-sm font-bold'>
-                            Expand Portfolio
+                            P2P Trading
                         </span>
 
                         <ArrowRight2
-                        size="24"
+                        size="18"
                         color="#F4EFFE"
                         variant="TwoTone" />
                     </div>
