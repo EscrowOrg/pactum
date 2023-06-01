@@ -50,6 +50,10 @@ import Overviews from "./pages/Dashboard/Listing/Overview";
 import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
 import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
 import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
+import VendorSetting from "./vendon/pages/VendorSetting";
+import IndividualSetting from "./individual/pages/IndividualSetting";
+import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
+import VendorEditProfile from "./vendon/pages/VendorEditProfile";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -147,9 +151,9 @@ const MainRouter = () => {
           element={<PasswordChangeSuccess />}
         />
 
+
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
-          
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -260,9 +264,19 @@ const MainRouter = () => {
           />
 
           {/* PROFILE */}
-          <Route exact path="/profile" element={<SettingProfile />} />
+          {/* <Route exact path="/profile" element={<SettingProfile />} /> */}
 
-          <Route exact path="/profile/edit-profile" element={<EditProfile />} />
+          <Route exact path="/profile" element={<VendorSetting />} />
+
+          {/* <Route exact path="/profile" element={<IndividualSetting />} /> */}
+
+
+        {/* EDIT PROFILE */}
+        <Route exact path="/individual/edit-profile" element={<IndividualEditProfile />}/>
+
+        <Route exact path="/vendon/edit-profile" element={<VendorEditProfile />}/>
+
+          {/* <Route exact path="/profile/edit-profile" element={<EditProfile />} /> */}
         </Route>
 
         <Route

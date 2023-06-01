@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BackButton,
-  ErrorButton,
-  PrimaryButton,
-} from "../../../components/Button";
+import {BackButton, ErrorButton, PrimaryButton} from "../../../components/Button";
 import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
@@ -60,8 +56,8 @@ const PendingOrderStatement = () => {
 
           <div className="flex flex-col bg-[#FAFAFB] border border-solid border-[#F5F3F6] rounded-lg w-full relative gap-6 px-4 py-3">
             {/* circles */}
-            <span className="absolute bottom-[53%] translate-y-[47%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
-            <span className="absolute bottom-[53%] translate-y-[47%] left-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
+            <span className="absolute bottom-[48%] translate-y-[47%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
+            <span className="absolute bottom-[48%] translate-y-[47%] left-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
 
             {/* info */}
             <div className="border-dashed border-b-2 flex flex-col w-full gap-5 pb-5">
@@ -77,12 +73,23 @@ const PendingOrderStatement = () => {
                 </div>
               </div>
 
+              {/* Rate-Fiat Value */}
               <div className="flex items-center justify-between">
                 <h4 className="font-normal text-xs text-[#8D85A0]">
                   Rate-Fiat Value
                 </h4>
                 <p className="text-black text-sm font-semibold inline-flex items-center gap-2">
                   ₦400
+                </p>
+              </div>
+
+              {/* Buyer's Name */}
+              <div className="flex items-center justify-between">
+                <h4 className="font-normal text-xs text-[#8D85A0]">
+                  Buyer's Name
+                </h4>
+                <p className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                  John Doe
                 </p>
               </div>
 

@@ -24,7 +24,7 @@ const Overviews = () => {
             Listed On: 9/04/2023 - 10:43AM
           </h3>
 
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between">
             <div className="flex gap-10">
               <div className="">
                 <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
@@ -46,7 +46,7 @@ const Overviews = () => {
             </div>
           </div>
 
-          <div className="flex justify-between my-4">
+          <div className="flex justify-between mt-3">
             <div className="flex gap-10">
               <div>
                 <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
@@ -74,13 +74,25 @@ const Overviews = () => {
             </span>
           </div>
 
-          {/* MIN-MAX LIMIT */}
-          <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
-            Min-Max Limit
-          </h4>
-          <h4 className="text-base font-bold text-black">
-            #2 000.00 - #230 000.00
-          </h4>
+          <div className="flex justify-between">
+            {/* MIN-MAX LIMIT */}
+            <div className="mt-3">
+              <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
+                Min-Max Limit
+              </h4>
+              <h4 className="text-base font-bold text-black">
+                #2 000.00 - #230 000.00
+              </h4>
+            </div>
+
+            {/* pause button */}
+            <span
+              onClick={() => navigate(-1)}
+              className="bg-[#FFF1D6] rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
+            >
+              Pause
+            </span>
+          </div>
         </div>
 
         {/* ALL PAYMENTS LISTS */}
@@ -92,14 +104,18 @@ const Overviews = () => {
               <p className="font-normal text-xs text-[#8D85A0] pb-1">
                 09/06/38 - 10:56AM
               </p>
-              <h4 className="text-base font-bold text-black">#100,000.00</h4>
+            <div className="flex gap-1">
+            <h4 className="text-base font-bold text-black">#100,000.00</h4>
+              <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+            </div>
+
               <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
                 ASEMOTA JOEL
               </h4>
             </div>
 
             {/* view more button */}
-            <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
+            <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
               View More
             </span>
           </div>
