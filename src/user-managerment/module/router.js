@@ -50,6 +50,7 @@ import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement
 import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
 import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
 import VendorSettings from "./vendon/pages/VendorSettings";
+import IndividualSettings from "./individual/pages/IndividualSettings";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
