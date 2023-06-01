@@ -41,8 +41,6 @@ import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
 import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
 import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 import CreateListing from "./pages/Dashboard/Listing/CreateListing";
-import { AuthContext } from "../../context/AuthContext";
-import EditProfile from "./pages/Dashboard/Profile/EditProfile";
 import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
 import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
@@ -51,9 +49,8 @@ import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStateme
 import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
 import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
 import VendorSetting from "./vendon/pages/VendorSetting";
-import IndividualSetting from "./individual/pages/IndividualSetting";
 import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
-import VendorEditProfile from "./vendon/pages/VendorEditProfile";
+import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -154,6 +151,7 @@ const MainRouter = () => {
 
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
+
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -263,33 +261,33 @@ const MainRouter = () => {
             element={<ClosedOrderStatement />}
           />
 
-          {/* PROFILE */}
-          {/* <Route exact path="/profile" element={<SettingProfile />} /> */}
+          {/* SETTINGS */}
+          <Route 
+          exact 
+          path="/profile" 
+          element={<VendorSetting />} />
 
-          <Route exact path="/profile" element={<VendorSetting />} />
+          <Route 
+          exact 
+          path="/individual/edit-profile" 
+          element={<IndividualEditProfile />}/>
 
-          {/* <Route exact path="/profile" element={<IndividualSetting />} /> */}
+          <Route 
+          exact 
+          path="/vendon/edit-profile" 
+          element={<SettingsEditProfile />}/>
 
-
-        {/* EDIT PROFILE */}
-        <Route exact path="/individual/edit-profile" element={<IndividualEditProfile />}/>
-
-        <Route exact path="/vendon/edit-profile" element={<VendorEditProfile />}/>
-
-          {/* <Route exact path="/profile/edit-profile" element={<EditProfile />} /> */}
-        </Route>
-
-        <Route
+          <Route
           exact
           path="/profile/terms-and-conditions"
-          element={<TermsAndConditions />}
-        />
+          element={<TermsAndConditions />} />
 
-        <Route
+          <Route
           exact
           path="/profile/privacy-policy"
-          element={<PrivacyPolicy />}
-        />
+          element={<PrivacyPolicy />} />
+        </Route>
+
       </Routes>
     </AnimatePresence>
   );

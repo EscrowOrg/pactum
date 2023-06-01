@@ -12,8 +12,10 @@ const IndividualEditProfile = () => {
   return (
     <PageWrapper>
       <div className="w-full h-full flex flex-col gap-8 py-5 overflow-auto">
+
         {/* HEADER */}
         <div className="flex items-center w-[92%] mx-auto justify-between">
+          
           <BackButton />
 
           {/* title */}
@@ -24,8 +26,10 @@ const IndividualEditProfile = () => {
 
         {/* BODY */}
         <div className="flex flex-col gap-6 min-h-fit pb-5 w-full">
+
           {/* profile photo */}
           <div className="w-full flex flex-col items-center gap-2 px-4">
+
             {/* image */}
             <div className="h-[64px] w-[64px] rounded-[50%] bg-[#3A0CA3] inline-flex items-center justify-center">
               <img
@@ -43,13 +47,16 @@ const IndividualEditProfile = () => {
 
           {/* Profile details */}
           <div className="flex flex-col gap-5 mt-2 px-5">
+
             {/* caption */}
             <h3 className="font-bold text-base text-black">Profile Details</h3>
 
             {/* container */}
             <div className="flex flex-col w-full gap-5">
+
               {/* first item */}
               <div className="flex items-center justify-between gap-1 w-full">
+
                 {/* icon container */}
                 <div className="flex items-center gap-2">
                   <Briefcase variant="Bulk" size={16} color="#48A9A6" />
@@ -65,6 +72,7 @@ const IndividualEditProfile = () => {
 
               {/* second item */}
               <div className="flex items-center justify-between gap-1 w-full">
+
                 {/* icon container */}
                 <div className="flex items-center gap-2">
                   <Sms variant="Bulk" size={16} color="#48A9A6" />
@@ -82,6 +90,7 @@ const IndividualEditProfile = () => {
 
               {/* third item */}
               <div className="flex items-center justify-between gap-1 w-full">
+
                 {/* icon container */}
                 <div className="flex items-center gap-1">
                   <Call variant="Bulk" size={16} color="#48A9A6" />
@@ -99,6 +108,7 @@ const IndividualEditProfile = () => {
 
                {/* fourth item */}
                <div className="flex items-center justify-between gap-1 w-full">
+
                 {/* icon container */}
                 <div className="flex items-center gap-1">
                 
@@ -131,6 +141,7 @@ const IndividualEditProfile = () => {
 
             {/* individual physical address container */}
             <label className="flex flex-col gap-2 w-full">
+
               {/* label text */}
               <span className="font-normal text-xs text-black">
                  Physical Address
@@ -142,8 +153,10 @@ const IndividualEditProfile = () => {
 
             {/* container */}
             <div className="flex w-full flex-col mt-7 items-center">
+
               {/* continue button */}
               <div className="w-full flex flex-col items-stretch">
+
                 <PrimaryButton
                   onClick={() => navigate("/individual-more-info")}
                   text={"Save Changes"}

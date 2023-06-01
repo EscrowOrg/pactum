@@ -4,14 +4,27 @@ import NoTransitionWrapper from "../../components/Dashboard/Home/NoTransitionWra
 // import { Logout as logUserOut } from '../../../../../serivce/apiCalls'
 import { AuthContext } from "../../../../context/AuthContext";
 import { Logout as logUserOut } from "../../../../serivce/apiCalls";
-import {Bank, Document, Like1, Lock1, Logout, Messages, ProfileCircle, Receipt1, Security, Star1, TableDocument} from "iconsax-react";
+import {
+  Bank, 
+  Document, 
+  Like1, 
+  Lock1, 
+  Logout, 
+  Messages, 
+  Receipt1, 
+  Security, 
+  Star1, 
+  TableDocument
+} from "iconsax-react";
 import { Link } from "react-router-dom";
 import SettingOptionCards from "../../components/Dashboard/Profile/SettingOptionCards";
 import UnverifiedLabel from "../../components/Dashboard/Profile/UnverifiedLabel";
 
 const IndividualSetting = () => {
+
   // DATA INITIALIZATION
   const { dispatch } = useContext(AuthContext);
+
 
   // HANDLERS
   const handleLogout = () => {
@@ -24,6 +37,7 @@ const IndividualSetting = () => {
 
         {/* HEADER */}
         <div className="flex items-center w-[92%] mx-auto justify-between">
+
           {/* title */}
           <h4 className="text-[22px] font-bold text-black">@pacpac</h4>
 
@@ -42,8 +56,10 @@ const IndividualSetting = () => {
 
         {/* BODY */}
         <div className="flex flex-col gap-6 w-full min-h-fit pb-20 px-4">
+
           {/* profile photo */}
           <div className="w-full flex flex-col items-center gap-2">
+
             {/* image */}
             <div className="h-[64px] w-[64px] rounded-[50%] bg-[#3A0CA3] inline-flex items-center justify-center">
               <img
@@ -55,6 +71,7 @@ const IndividualSetting = () => {
 
             {/* texts */}
             <div className="flex flex-col gap-1 items-center">
+
               {/* name */}
               <h4 className="text-base font-semibold text-black">Pactum Ltd</h4>
 
@@ -70,6 +87,7 @@ const IndividualSetting = () => {
 
           {/* account group */}
           <div className="flex flex-col gap-3 w-full">
+
             {/* title */}
             <h4 className="text-[#8D85A0] font-normal text-xs">ACCOUNT & SETTINGS</h4>
 
@@ -94,11 +112,13 @@ const IndividualSetting = () => {
 
           {/*support group */}
           <div className="flex flex-col gap-3 w-full">
+
             {/* title */}
             <h4 className="text-[#8D85A0] font-normal text-xs">SUPPORT</h4>
 
             {/* container */}
             <div className="p-3 flex flex-col gap-8 bg-[#FAFAFB] rounded-lg">
+
               <SettingOptionCards Icon={Like1} title={"Recommend Pactum"} />
 
               <SettingOptionCards Icon={Star1} title={"Review on Playstore"} />
@@ -109,6 +129,7 @@ const IndividualSetting = () => {
 
           {/* legal group  */}
           <div className="flex flex-col gap-3 w-full">
+            
             {/* title  */}
             <h4 className="text-[#8D85A0] font-normal text-xs">LEGAL</h4>
 
