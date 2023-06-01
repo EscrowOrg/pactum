@@ -26,7 +26,6 @@ import IndividualCreatePin from "./individual/pages/IndividualCreatePin";
 import Home from "./pages/Dashboard/Home";
 import Portfolio from "./pages/Dashboard/Portfolio";
 import Listing from "./pages/Dashboard/Listing";
-import SettingProfile from "./pages/Dashboard/Profile";
 import Overview from "./pages/Dashboard/Home/Overview";
 import BuySellCoin from "./pages/Dashboard/Home/BuySellCoin";
 import BuyCoin from "./pages/Dashboard/Home/BuyCoin";
@@ -48,9 +47,9 @@ import Overviews from "./pages/Dashboard/Listing/Overview";
 import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
 import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
 import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
-import VendorSetting from "./vendon/pages/VendorSetting";
 import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
 import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
+import VendorSettings from "./vendon/pages/VendorSettings";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -231,7 +230,10 @@ const MainRouter = () => {
           />
 
           {/* LISTING */}
-          <Route exact path="/listing" element={<Listing />} />
+          <Route 
+          exact 
+          path="/listing" 
+          element={<Listing />} />
 
           <Route
             exact
@@ -265,16 +267,11 @@ const MainRouter = () => {
           <Route 
           exact 
           path="/profile" 
-          element={<VendorSetting />} />
+          element={<VendorSettings />} />
 
           <Route 
           exact 
-          path="/individual/edit-profile" 
-          element={<IndividualEditProfile />}/>
-
-          <Route 
-          exact 
-          path="/vendon/edit-profile" 
+          path="/profile/edit-profile" 
           element={<SettingsEditProfile />}/>
 
           <Route
