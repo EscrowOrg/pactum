@@ -60,7 +60,7 @@ const SendCoin = () => {
 
     // HANDLERS
     const disableBtn = () => {
-        return !((asset.assetId && amount && recipientId ) || sendInternalUserLoading)
+        return !((asset.assetId && amount && recipientId && amount>0 ) || sendInternalUserLoading)
     }
     const toggleDrawer = (value) => {
         setIsOpen(isOpen => !isOpen)
