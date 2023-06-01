@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import Modal from "react-modal"
+import "./index.scss"
 
 const AltModal = ({
     modalIsOpen, 
@@ -16,13 +17,13 @@ const AltModal = ({
     }, [])
 
     return (
-        <div className='div-modal'>
+        <div className='alt-div-modal'>
             <Modal
             isOpen={modalIsOpen}
             onRequestClose={toggleModal}
             contentLabel="My dialog"
-            className="mymodal"
-            overlayClassName="modal-overlay"
+            className="altmodal"
+            overlayClassName="alt-modal-overlay"
             closeTimeoutMS={500}
             ariaHideApp={false}>
 

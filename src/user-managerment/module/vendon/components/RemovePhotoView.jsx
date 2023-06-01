@@ -1,6 +1,6 @@
 import React from 'react'
 
-const RemovePhotoView = ({closeModal}) => {
+const RemovePhotoView = ({closeModal, removePhoto}) => {
     return (
         <div className="w-full bg-white rounded-xl  gap-6 flex flex-col">
 
@@ -19,16 +19,18 @@ const RemovePhotoView = ({closeModal}) => {
                 </div>
 
                 {/* Remove button */}
-                <h4 className="w-full text-[#D1292D] font-semibold text-base border-t py-2 text-center">
+                <h4
+                onClick={removePhoto} 
+                className="w-full text-[#D1292D] font-semibold text-base border-t py-2 text-center">
                     Remove
                 </h4>
 
                 {/* Cancel button */}
-                <h4
+                <span
                 onClick={closeModal} 
                 className="font-normal text-base border-t py-2 w-full text-center my-auto">
                     Cancel
-                </h4>
+                </span>
             </div>
         </div>
     )

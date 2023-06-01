@@ -4,13 +4,12 @@ import { BackButton, PrimaryButton } from "../../components/Button";
 import { Briefcase, Call, Sms } from "iconsax-react";
 import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
-import MyModal from "../../layouts/MyModal";
 import SettingsChangePhoto from "../components/SettingsChangePhoto";
 import { isEmpty } from '../../helpers/isEmpty';
 import SlideWrapper from '../../layouts/Drawer/SlideWrapper';
 import Drawer from '../../layouts/Drawer';
 import RemovePhotoView from '../components/RemovePhotoView';
-import AltModal from '../../layouts/Drawer/AltModal';
+import AltModal from '../../layouts/AltModal';
 
 const SettingsEditProfile = () => {
 
@@ -241,12 +240,13 @@ const SettingsEditProfile = () => {
         </Drawer>
 
         {/* Remove Photo Modal */}
-        <AltModal 
+        <AltModal
         modalIsOpen={removePhotoModalState} 
         toggleModal={toggleRemovePhotoModal}>
 
             {/* content */}
-            <RemovePhotoView />
+            <RemovePhotoView
+            closeModal={toggleRemovePhotoModal} />
         </AltModal>
     </PageWrapper>
     )
