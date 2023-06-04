@@ -70,7 +70,7 @@ const AssetAccountList = ({
                     assetList.filter(asset=>asset?.currency?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map(((asset, index)=>(
                         <div
                         key={index}
-                        onClick={()=>navigate("/portfolio/checkout/kjkjkjfkdjkfjkdfd")} 
+                        onClick={()=>navigate(`/portfolio/checkout/${asset.id}`)} 
                         className='flex items-center justify-between w-full'>
 
                             {/* image section */}
