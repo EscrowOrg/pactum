@@ -190,7 +190,7 @@ const OrderStatement = () => {
 
                         <div className='flex flex-col items-stretch w-[40%]'>
                             <PrimaryButtonLight
-                            onClick={()=>navigate(-1)}
+                            onClick={()=>navigate('/home/buy-coin/:order-statement/report-order-statement')}
                             height="h-14"
                             text={"Cancel"} />
                         </div>

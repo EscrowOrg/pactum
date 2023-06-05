@@ -54,6 +54,8 @@ import VendorSetting from "./vendon/pages/VendorSetting";
 import IndividualSetting from "./individual/pages/IndividualSetting";
 import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
 import VendorEditProfile from "./vendon/pages/VendorEditProfile";
+import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
+import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -175,6 +177,8 @@ const MainRouter = () => {
             element={<OrderStatement />}
           />
 
+          <Route exact path="/home/buy-coin/:order-statement/report-order-statement" element={<ReportOrderStatement />}/>
+
           <Route
             exact
             path="/home/sell-coin/:coinId/sell-order-statement"
@@ -189,8 +193,8 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/home/sell-coin/success/:transactionId"
-            element={<TransactionSuccess />}
+            path="/home/sell-coin/success/:selltransactionId"
+            element={<SellTransactionSuccess />}
           />
 
           {/* PORTFOLIO */}
