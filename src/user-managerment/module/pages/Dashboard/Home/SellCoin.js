@@ -1,9 +1,8 @@
 import { useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import {ArrowRight2, Copy, RefreshCircle, TransactionMinus} from "iconsax-react";
-import { BackButton, ErrorButton, PrimaryButton,} from "../../../components/Button";
-import SelectInput from "../../../components/SelectInput";
-import { TextInput, TextLabelInput } from "../../../components/Input";
+import { BackButton, ErrorButton} from "../../../components/Button";
+import {  TextLabelInput } from "../../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import Drawer from "../../../layouts/Drawer";
