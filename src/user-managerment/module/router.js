@@ -26,7 +26,6 @@ import IndividualCreatePin from "./individual/pages/IndividualCreatePin";
 import Home from "./pages/Dashboard/Home";
 import Portfolio from "./pages/Dashboard/Portfolio";
 import Listing from "./pages/Dashboard/Listing";
-import SettingProfile from "./pages/Dashboard/Profile";
 import Overview from "./pages/Dashboard/Home/Overview";
 import BuySellCoin from "./pages/Dashboard/Home/BuySellCoin";
 import BuyCoin from "./pages/Dashboard/Home/BuyCoin";
@@ -41,8 +40,6 @@ import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
 import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
 import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
 import CreateListing from "./pages/Dashboard/Listing/CreateListing";
-import { AuthContext } from "../../context/AuthContext";
-import EditProfile from "./pages/Dashboard/Profile/EditProfile";
 import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
 import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
 import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
@@ -50,12 +47,12 @@ import Overviews from "./pages/Dashboard/Listing/Overview";
 import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
 import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
 import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
-import VendorSetting from "./vendon/pages/VendorSetting";
-import IndividualSetting from "./individual/pages/IndividualSetting";
 import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
-import VendorEditProfile from "./vendon/pages/VendorEditProfile";
-import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
+import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
+import VendorSettings from "./vendon/pages/VendorSettings";
+import IndividualSettings from "./individual/pages/IndividualSettings";
 import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
+import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -156,6 +153,7 @@ const MainRouter = () => {
 
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
+
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -237,7 +235,10 @@ const MainRouter = () => {
           />
 
           {/* LISTING */}
-          <Route exact path="/listing" element={<Listing />} />
+          <Route 
+          exact 
+          path="/listing" 
+          element={<Listing />} />
 
           <Route
             exact
@@ -267,33 +268,28 @@ const MainRouter = () => {
             element={<ClosedOrderStatement />}
           />
 
-          {/* PROFILE */}
-          {/* <Route exact path="/profile" element={<SettingProfile />} /> */}
+          {/* SETTINGS */}
+          <Route 
+          exact 
+          path="/profile" 
+          element={<VendorSettings />} />
 
-          <Route exact path="/profile" element={<VendorSetting />} />
+          <Route 
+          exact 
+          path="/profile/edit-profile" 
+          element={<SettingsEditProfile />}/>
 
-          {/* <Route exact path="/profile" element={<IndividualSetting />} /> */}
-
-
-        {/* EDIT PROFILE */}
-        <Route exact path="/individual/edit-profile" element={<IndividualEditProfile />}/>
-
-        <Route exact path="/vendon/edit-profile" element={<VendorEditProfile />}/>
-
-          {/* <Route exact path="/profile/edit-profile" element={<EditProfile />} /> */}
-        </Route>
-
-        <Route
+          <Route
           exact
           path="/profile/terms-and-conditions"
-          element={<TermsAndConditions />}
-        />
+          element={<TermsAndConditions />} />
 
-        <Route
+          <Route
           exact
           path="/profile/privacy-policy"
-          element={<PrivacyPolicy />}
-        />
+          element={<PrivacyPolicy />} />
+        </Route>
+
       </Routes>
     </AnimatePresence>
   );

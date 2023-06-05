@@ -1,0 +1,74 @@
+
+.altmodal {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border: 0px solid transparent;
+    background:transparent;
+    overflow: auto;
+    outline: none;
+    width: 92%;
+    height: auto;
+    max-width: 24rem;
+
+    & .model-item-cont {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .modal-children-container {
+            width: 80%;
+        }
+
+        & .modal-close-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            height: 48px;
+            width: 48px;
+            background-color: #091515;
+            transition: all .4s ease-in-out;
+            cursor: pointer;
+        }
+    }
+}
+
+/* @media (max-width: 1023px) {
+    .altmodal {
+        width: 85% !important;
+    }
+} */
+
+.modal-min-w {
+    min-width: 100%;
+}
+    
+.alt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+}
+    
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+}
+    
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+    
+.ReactModal__Overlay--before-close {
+    opacity: 0;
+}

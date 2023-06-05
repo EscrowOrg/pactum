@@ -15,7 +15,8 @@ export const TextLabelInput = ({
     name,
     placeholderText,
     type="text",
-    label
+    label,
+    paddingRight
 }) => {
 
     return(
@@ -28,7 +29,7 @@ export const TextLabelInput = ({
             value={value}
             disabled={disabled}
             onChange={onChange}
-            className="w-full text-sm font-normal h-14 px-4 placeholder:font-normal border-none [outline:1.4px_solid_#DAD7E0] rounded-xl focus:[outline:1.4px_solid_#3A0CA3] placeholder:text-xs placeholder:text-[#ACA6BA]"
+            className={`w-full ${paddingRight} text-sm font-normal h-14 px-4 placeholder:font-normal border-none [outline:1.4px_solid_#DAD7E0] rounded-xl focus:[outline:1.4px_solid_#3A0CA3] placeholder:text-xs placeholder:text-[#ACA6BA]`}
             placeholder={placeholderText} />
 
             {/* label */}
