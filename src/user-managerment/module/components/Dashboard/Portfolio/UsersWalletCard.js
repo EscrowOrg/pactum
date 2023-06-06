@@ -35,7 +35,6 @@ const UsersWalletCard = ({assetAccount}) => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    // DATA INITIALIZATION
     const {
         getLoading,
         data,

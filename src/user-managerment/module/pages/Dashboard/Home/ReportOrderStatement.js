@@ -1,33 +1,25 @@
-import { useState } from "react";
-import {
-  BackButton,
-  ErrorButton,
-  PrimaryButton,
-  PrimaryButtonLight,
-} from "../../../components/Button";
-import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import React, { useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
+import { BackButton, ErrorButton, PrimaryButton} from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
+import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import ReportStatement from "./ReportStatement";
 
-const SellOrderStatements = () => {
+const ReportOrderStatement = () => {
   // STATES
-  const [isSelected, setIsSelected] = useState(false);
-
-  //   Drawer State
   const [isOpen, setIsOpen] = useState(false);
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
 
-   //Drawer HANDLERS
-   const toggleDrawer = (value) => {
+  // HANDLERS
+  const toggleDrawer = (value) => {
     // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
-    setIsOpen(isOpen => !isOpen)
-}
+    setIsOpen((isOpen) => !isOpen);
+  };
 
   return (
     <PageWrapper>
@@ -42,7 +34,7 @@ const SellOrderStatements = () => {
             <h3 className="font-bold text-lg text-black">Order Statement</h3>
 
             <h3 className="text-xs font-normal text-[#141217]">
-              Closes in{" "}
+              Releasing in{" "}
               <span className="text-[#D1292D] font-normal">05:58</span>
             </h3>
           </div>
@@ -70,7 +62,7 @@ const SellOrderStatements = () => {
           {/* main info */}
           <div className="flex flex-col gap-3 items-center w-full">
             <h5 className="font-normal text-sm text-[#645B75]">
-              Amount to be received.
+              Amount to be paid.
             </h5>
 
             <h3 className="text-[#3F9491] text-[32px] font-bold">
@@ -78,7 +70,7 @@ const SellOrderStatements = () => {
             </h3>
 
             <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-              You will be deducted 0.844BTC
+              You will receive 0.844BTC
             </h3>
           </div>
 
@@ -111,21 +103,14 @@ const SellOrderStatements = () => {
                   />
                 </h3>
               </div>
-
-              {/* buyer name */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">Buyer</h3>
-
-                <h3 className="text-black text-sm font-semibold">
-                  jhoellasemota
-                </h3>
-              </div>
             </div>
 
+            {/* seller's bank details */}
+            <h3 className=" text-black font-bold text-sm text-center">
+              Seller's Bank Details
+            </h3>
             {/* bank details */}
             <div className="flex flex-col w-full gap-5">
-
-                <h3 className="text-center font-bold text-sm">Your Bank Details</h3>
               {/* bank name */}
               <div className="flex items-center justify-between">
                 <h3 className="font-normal text-xs text-[#8D85A0]">
@@ -134,6 +119,12 @@ const SellOrderStatements = () => {
 
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
                   First Bank
+                  <Copy
+                    onClick={() => copyToClipBoard("First Bank")}
+                    variant="Bulk"
+                    size={16}
+                    color="#3F9491"
+                  />
                 </h3>
               </div>
 
@@ -145,6 +136,12 @@ const SellOrderStatements = () => {
 
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
                   4890149295
+                  <Copy
+                    onClick={() => copyToClipBoard("4890149295")}
+                    variant="Bulk"
+                    size={16}
+                    color="#3F9491"
+                  />
                 </h3>
               </div>
 
@@ -156,6 +153,17 @@ const SellOrderStatements = () => {
 
                 <h3 className="text-black text-sm font-semibold">
                   Asemota Joel
+                </h3>
+              </div>
+
+              {/* user name */}
+              <div className="flex items-center justify-between">
+                <h3 className="font-normal text-xs text-[#8D85A0]">
+                  User Name
+                </h3>
+
+                <h3 className="text-black text-sm font-semibold">
+                  jhoellasemota
                 </h3>
               </div>
             </div>
@@ -171,37 +179,33 @@ const SellOrderStatements = () => {
               />
             </div>
 
-            <div className="flex flex-col items-stretch w-[60%]">
+            <div className="flex flex-col items-stretch w-[60%] opacity-40">
               <PrimaryButton
                 onClick={() =>
-                  navigate("/home/sell-coin/success/hnshbxsncidsckdmc")
+                  navigate("/home/buy-coin/success/kjfdkjfkdjkfdkjfkj")
                 }
                 height="h-14"
-                text={"Mark as Received"}
+                text={"Confirming..."}
               />
             </div>
           </div>
         </div>
 
-        
-         {/* Drawer */}
-         <Drawer
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-            position="bottom">
-
-                 {/* drawer content container */}
-                <StrictWrapper
-                title={"Report"}
-                closeDrawer={() => setIsOpen(false)}>
-
-                     {/* Body content  */}
-                    <ReportStatement />                    
-                </StrictWrapper>
-            </Drawer> 
+        {/* Drawer */}
+        <Drawer
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          position="bottom"
+        >
+          {/* drawer content container */}
+          <StrictWrapper title={"Report"} closeDrawer={() => setIsOpen(false)}>
+            {/* Body content */}
+            <ReportStatement />
+          </StrictWrapper>
+        </Drawer>
       </div>
     </PageWrapper>
   );
 };
 
-export default SellOrderStatements;
+export default ReportOrderStatement;
