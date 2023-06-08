@@ -58,16 +58,15 @@ const RegistrationVendon = ()=>{
             password: ""
         }}
         onSubmit={(values) => {
-            console.log(values)
-            // makePostRequest(
-            //     `${BASE_URL}/api/Vendor/BasicVendorRegistration`, 
-            //     {
-            //         basicVendorRegistration: {
-            //             companyEmail: formData.companyEmail,
-            //             password: formData.password
-            //         }
-            //     }, 
-            // );
+            makePostRequest(
+                `${BASE_URL}/api/Vendor/BasicVendorRegistration`, 
+                {
+                    basicVendorRegistration: {
+                        companyEmail: values.companyEmail,
+                        password: values.password
+                    }
+                }, 
+            );
         }}
         validationSchema={
             Yup.object({
