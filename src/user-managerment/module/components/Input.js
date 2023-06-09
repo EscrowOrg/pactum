@@ -79,7 +79,7 @@ export const SearchInput = ({
 }) => {
 
     return(
-        <div className='bg-[#FAFAFB] rounded-lg border border-[#F5F3F6] flex items-center gap-2 pl-5 pr-2 h-[44px] w-full'>
+        <div className='bg-[#FAFAFB] rounded-lg border border-[#F5F3F6] flex items-center gap-2 pl-5 pr-2 h-[44px] w-fullgit add .'>
             <HiOutlineSearch
             className='text-[#ACA6BA]' />
 
