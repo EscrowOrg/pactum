@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { CRED_EXPIRATION_TIME, getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
@@ -13,6 +13,7 @@ const PrivateRoutes = () => {
         makePostRequest,
         hasError
     } = useMakeReq()
+    const navigate = useNavigate()
 
 
     // STATES
@@ -27,6 +28,7 @@ const PrivateRoutes = () => {
 
 
     // SIDE EFFECTS
+    // check if refresh token return a data or has Error message
     useEffect(()=>{
         if(!isEmpty(data)){
             if(data.success === true) {
@@ -42,8 +44,17 @@ const PrivateRoutes = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, hasError])
 
-    useEffect(()=>{
+    // check if there's a cached userdata
+    // useEffect(()=>{
+    //     if() {
+    //         navigate("/loginIndividual", {
+    //             replace: true
+    //         })
+    //     }
+    // }, [])
 
+    // implement the interval for fetching data
+    useEffect(()=>{
         const intervalId = setInterval(() => {
 
             // user's cred
@@ -71,6 +82,13 @@ const PrivateRoutes = () => {
 
 
     // CONDITIONAL RETURN BLOCK
+    // return user to login if user isn't logged in
+    if(isEmpty(getUserData())) {
+        return (
+            <Navigate to='/loginIndividual'/>
+        )
+    }
+
     // return user to the login page, if cookie has been cleared
     if(isCleared) {
         return (
