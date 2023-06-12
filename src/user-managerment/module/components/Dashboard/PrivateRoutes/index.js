@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { CRED_EXPIRATION_TIME, getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
@@ -43,15 +43,6 @@ const PrivateRoutes = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, hasError])
-
-    // check if there's a cached userdata
-    // useEffect(()=>{
-    //     if() {
-    //         navigate("/loginIndividual", {
-    //             replace: true
-    //         })
-    //     }
-    // }, [])
 
     // implement the interval for fetching data
     useEffect(()=>{
