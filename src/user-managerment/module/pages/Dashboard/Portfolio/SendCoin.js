@@ -268,13 +268,17 @@ const SendCoin = () => {
                                 placeholderText={"Type in Amount"} />
 
                                 {/* bottom label */}
-                                <h4 className='text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2'>
-                                    Network fee: 0.00004 BTC
-                                    <InfoCircle
-                                    variant='Bulk'
-                                    size={12}
-                                    color="#ACA6BA" />
-                                </h4>
+                                {
+                                    mode?.value === 2?
+                                    <h4 className='text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2'>
+                                        Network fee: 0.00004 BTC
+                                        <InfoCircle
+                                        variant='Bulk'
+                                        size={12}
+                                        color="#ACA6BA" />
+                                    </h4>
+                                    :null
+                                }
                             </label>
 
                             {/* important message */}
