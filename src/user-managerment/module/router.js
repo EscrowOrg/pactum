@@ -53,9 +53,7 @@ import VendorSettings from "./vendon/pages/VendorSettings";
 import IndividualSettings from "./individual/pages/IndividualSettings";
 import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
-import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
-import NewUser from "./vendon/pages/NewUser";
-import AddUsers from "./vendon/pages/AddUsers";
+import Notification from "./pages/Dashboard/Home/Notification";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -203,6 +201,12 @@ const MainRouter = () => {
             exact
             path="/home/sell-coin/success/:selltransactionId"
             element={<SellTransactionSuccess />}
+          />
+
+          <Route
+            exact
+            path="/home/notification"
+            element={<Notification />}
           />
 
           {/* PORTFOLIO */}

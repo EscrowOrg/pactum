@@ -20,6 +20,8 @@ import { isEmpty } from '../../../helpers/isEmpty'
 import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
+import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
+import SelectWalletView from './SelectWalletView'
 
 // ant icon
 const antIcon = (
@@ -45,12 +47,17 @@ const UsersWalletCard = ({assetAccount}) => {
     // STATES
     const [isVendor, setIsVendor] = useState(false)
     const [isOpen, setIsOpen] = useState(false);
+    const [mode, setMode] = useState("")
+    const [isSelectWalletOpen, setIsSelectWalletOpen] = useState(false);
     const [filterValue, setFilterValue] = useState("A-Z")
 
 
     // HANDLERS
     const toggleDrawer = (value) => {
         setIsOpen(isOpen => !isOpen)
+    }
+    const toggleSelectWalletDrawer = (value) => {
+        setIsSelectWalletOpen(isSelectWalletOpen => !isSelectWalletOpen)
     }
 
 
@@ -84,10 +91,18 @@ const UsersWalletCard = ({assetAccount}) => {
 
                 {/* button */}
                 <ActionBtn
+                onClick={()=>{
+                    toggleSelectWalletDrawer()
+                    setMode("send")
+                }}
                 Icon={MoneySend}
                 text={"Send"} />
 
                 <ActionBtn
+                onClick={()=>{
+                    toggleSelectWalletDrawer()
+                    setMode("receive")
+                }}
                 Icon={MoneyRecive}
                 text={"Receive"} />
 
@@ -128,6 +143,25 @@ const UsersWalletCard = ({assetAccount}) => {
                     setFilterValue={setFilterValue}
                     closeDrawer={toggleDrawer} />
                 </SlideWrapper>
+            </Drawer>
+
+            {/* Wallets Drawer */}
+            <Drawer
+            isOpen={isSelectWalletOpen}
+            onClose={toggleSelectWalletDrawer}
+            position="bottom">
+
+                {/* drawer content container */}
+                <StrictWrapper
+                title={"Select a wallet"}
+                closeDrawer={toggleSelectWalletDrawer}>
+
+                    {/* Body content */}
+                    <SelectWalletView
+                    mode={mode}
+                    walletList={assetAccount}
+                    closeDrawer={toggleSelectWalletDrawer} />
+                </StrictWrapper>
             </Drawer>
         </div>
     )

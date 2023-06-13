@@ -77,16 +77,13 @@ const AssetAccountList = ({
                             <div className='flex items-center gap-3'>
                                 <img
                                 alt=""
-                                src="/images/dashboard/binance.png"
+                                src={asset.imageUrl}
                                 className='h-[40px] w-[40px]' />
 
                                 {/* title name */}
-                                <div className='flex flex-col gap-[2px]'>
+                                <div className='flex flex-col'>
                                     <h3 className='text-sm font-semibold text-black'>
                                         {asset.currency}
-                                    </h3>
-                                    <h3 className='text-[#8D85A0] text-xs font-normal'>
-                                        1 Wallet
                                     </h3>
                                 </div>
                             </div>
