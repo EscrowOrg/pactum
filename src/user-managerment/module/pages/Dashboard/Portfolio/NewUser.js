@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton } from "../../components/Button";
+import PageWrapper from "../../../layouts/PageWrapper";
+import { BackButton } from "../../../components/Button";
 import { ProfileAdd } from "iconsax-react";
-import { SearchInput } from "../../components/Input";
+import { SearchInput } from "../../../components/Input";
 import { useNavigate } from "react-router-dom";
 
 const NewUser = () => {

@@ -1,7 +1,7 @@
 import React from "react";
-import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
-import { TextInput, TextLabelInput } from "../../components/Input";
+import PageWrapper from "../../../layouts/PageWrapper";
+import { BackButton, PrimaryButton } from "../../../components/Button";
+import { TextInput, TextLabelInput } from "../../../components/Input";
 
 const AddUsers = () => {
   return (

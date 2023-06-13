@@ -54,6 +54,9 @@ import IndividualSettings from "./individual/pages/IndividualSettings";
 import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import Notification from "./pages/Dashboard/Home/Notification";
+import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
+import NewUser from "./pages/Dashboard/Portfolio/NewUser";
+import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -98,10 +101,6 @@ const MainRouter = () => {
         {/* VENDOR CREATE PIN SUCCESS */}
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
 
-        {/* VENDOR NEW USER */}
-        <Route path="/vendor-new-user" element={<NewUser />} />
-
-        <Route path="/vendor/add-users" element={<AddUsers />} />
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -217,6 +216,11 @@ const MainRouter = () => {
             path="/portfolio/create-wallet"
             element={<CreateWallet />}
           />
+
+          <Route path="/portfolio/new-user" element={<NewUser />} />
+
+          <Route path="/portfolio/new-user/add-user" element={<AddUsers />} />
+
 
           <Route
             exact
