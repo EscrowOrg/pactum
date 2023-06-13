@@ -48,7 +48,7 @@ const BuyOrder = () => {
           <span className="font-medium text-xs text-black">Listing Amount</span>
 
           {/* input field  */}
-          <TextLabelInput label={"BTC"} placeholderText={"400,000"} />
+          <TextLabelInput label={"BTC"} placeholderText={"400,000"} type="number" style={{display: 'none'}}/>
         </label>
 
         {/* Rate-Fiat Value  */}
@@ -59,7 +59,7 @@ const BuyOrder = () => {
           </span>
 
           {/* input field  */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"757.89"} />
+          <TextLabelInput label={"NAIRA"} placeholderText={"757.89"}  type="number" />
         </label>
 
         {/* Minimum Transaction Limit  */}
@@ -70,7 +70,7 @@ const BuyOrder = () => {
           </span>
 
           {/* input field  */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"200,000"} />
+          <TextLabelInput label={"NAIRA"} placeholderText={"200,000"}  type="number"/>
         </label>
 
         {/* Maximum Transaction Limit  */}
@@ -81,7 +81,7 @@ const BuyOrder = () => {
           </span>
 
           {/* input field */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"1,000,000"} />
+          <TextLabelInput label={"NAIRA"} placeholderText={"1,000,000"}  type="number"/>
         </label>
 
         {/* Receiving Bank  */}

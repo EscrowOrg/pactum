@@ -53,6 +53,9 @@ import VendorSettings from "./vendon/pages/VendorSettings";
 import IndividualSettings from "./individual/pages/IndividualSettings";
 import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
+import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
+import NewUser from "./vendon/pages/NewUser";
+import AddUsers from "./vendon/pages/AddUsers";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -96,6 +99,11 @@ const MainRouter = () => {
 
         {/* VENDOR CREATE PIN SUCCESS */}
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
+
+        {/* VENDOR NEW USER */}
+        <Route path="/vendor-new-user" element={<NewUser />} />
+
+        <Route path="/vendor/add-users" element={<AddUsers />} />
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -150,10 +158,8 @@ const MainRouter = () => {
           element={<PasswordChangeSuccess />}
         />
 
-
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
-
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -175,7 +181,11 @@ const MainRouter = () => {
             element={<OrderStatement />}
           />
 
-          <Route exact path="/home/buy-coin/:order-statement/report-order-statement" element={<ReportOrderStatement />}/>
+          <Route
+            exact
+            path="/home/buy-coin/:order-statement/report-order-statement"
+            element={<ReportOrderStatement />}
+          />
 
           <Route
             exact
@@ -235,10 +245,7 @@ const MainRouter = () => {
           />
 
           {/* LISTING */}
-          <Route 
-          exact 
-          path="/listing" 
-          element={<Listing />} />
+          <Route exact path="/listing" element={<Listing />} />
 
           <Route
             exact
@@ -269,27 +276,32 @@ const MainRouter = () => {
           />
 
           {/* SETTINGS */}
-          <Route 
-          exact 
-          path="/profile" 
-          element={<VendorSettings />} />
-
-          <Route 
-          exact 
-          path="/profile/edit-profile" 
-          element={<SettingsEditProfile />}/>
+          <Route exact path="/profile" element={<VendorSettings />} />
 
           <Route
-          exact
-          path="/profile/terms-and-conditions"
-          element={<TermsAndConditions />} />
+            exact
+            path="/profile/edit-profile"
+            element={<SettingsEditProfile />}
+          />
 
           <Route
-          exact
-          path="/profile/privacy-policy"
-          element={<PrivacyPolicy />} />
+            exact
+            path="/profile/change-password"
+            element={<ChangePassword />}
+          />
+
+          <Route
+            exact
+            path="/profile/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
+
+          <Route
+            exact
+            path="/profile/privacy-policy"
+            element={<PrivacyPolicy />}
+          />
         </Route>
-
       </Routes>
     </AnimatePresence>
   );
