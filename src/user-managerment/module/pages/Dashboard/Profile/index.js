@@ -111,7 +111,7 @@ const Profile = () => {
                             <SettingOptionCards
                             Icon={Lock1}
                             title={"Change Password"}
-                            pathTo='/profile/change-password' />
+                            pathTo="/profile/change-password" />
 
                             <SettingOptionCards
                             Icon={Lock1}
