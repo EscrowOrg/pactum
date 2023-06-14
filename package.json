@@ -13,6 +13,7 @@
     "classnames": "^2.3.2",
     "firebase": "^9.22.2",
     "focus-trap-react": "^10.1.1",
+    "formik": "^2.4.1",
     "framer-motion": "^10.11.6",
     "iconsax-react": "^0.0.8",
     "react": "^18.2.0",
@@ -29,7 +30,8 @@
     "react-toastify": "^9.1.2",
     "react-verification-input": "^3.3.0",
     "sass": "^1.58.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

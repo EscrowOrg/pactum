@@ -207,7 +207,6 @@ const SettingsEditProfile = () => {
                         <div className="w-full flex flex-col items-stretch">
 
                             <PrimaryButton
-                            onClick={() => navigate("/individual-more-info")}
                             text={"Save Changes"} />
                         </div>
                     </div>

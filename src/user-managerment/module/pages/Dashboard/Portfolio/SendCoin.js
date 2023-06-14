@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import PageWrapper from '../../../layouts/PageWrapper'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SelectInput from '../../../components/SelectInput'
 import { TextLabelInput } from '../../../components/Input'
 import { InfoCircle, ProfileCircle } from 'iconsax-react'
@@ -9,7 +9,7 @@ import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { toast } from 'react-toastify'
-import { GET_ASSETS_MAPPING, TRANSFER_INTERNAL_USERS } from '../../../../../serivce/apiRoutes.service'
+import { GET_ASSETS_MAPPING, GET_SINGLE_ACCOUNT, TRANSFER_INTERNAL_USERS } from '../../../../../serivce/apiRoutes.service'
 import EmptyDataComp from '../../../components/Global/EmptyDataComp'
 import LoadingSpinner from '../../../components/Global/LoadingSpinner'
 import DrawerSelectInput from '../../../components/Dashboard/Portfolio/DrawerSelectInput'
@@ -37,12 +37,18 @@ const SendCoin = () => {
         getLoading: getAssetLoading,
         makeGetRequest,
     } = useMakeReq()
+    const { coinId } = useParams()
+    const {
+        data: walletInfoData,
+        makeGetRequest: getWalletInfo,
+    } = useMakeReq()
 
 
     // STATES
     const [isOpen, setIsOpen] = useState(false);
     const [amount, setAmount] = useState("")
     const [recipientId, setRecipientID] = useState("")
+    const [walletInfo, setWalletInfo] = useState({})
     const [mode, setMode] = useState({
         value: 1,
         label: "Internal User"
@@ -60,7 +66,7 @@ const SendCoin = () => {
 
     // HANDLERS
     const disableBtn = () => {
-        return !((asset.assetId && amount && recipientId && amount>0 ) || sendInternalUserLoading)
+        return !((asset.assetId && amount && recipientId && amount>0 ) || sendInternalUserLoading || (parseInt(amount) > walletInfo?.balalance?.availableBalance ))
     }
     const toggleDrawer = (value) => {
         setIsOpen(isOpen => !isOpen)
@@ -96,6 +102,7 @@ const SendCoin = () => {
     // SIDE EFFECTS
     useEffect(()=>{
         makeGetRequest(GET_ASSETS_MAPPING)
+        getWalletInfo(`${GET_SINGLE_ACCOUNT}/${coinId}`)
     }, [])
 
     // get assets data
@@ -104,6 +111,13 @@ const SendCoin = () => {
             setAssetList(walletAssetData)
         }
     }, [walletAssetData])
+
+    // populating data
+    useEffect(()=>{
+        if(!isEmpty(walletInfoData)) {
+            setWalletInfo(walletInfoData?.data)
+        }
+    }, [walletInfoData])
 
     // create wallet feedback
     useEffect(()=>{
@@ -147,11 +161,11 @@ const SendCoin = () => {
                         <div className='flex flex-col gap-2 w-[92%] mx-auto'>
 
                             <h3 className='text-2xl font-bold text-black'>
-                                Send BTC
+                                {isEmpty(walletInfo)?"":`Send ${walletInfo.currency}`}
                             </h3>
 
                             <h4 className='text-sm font-normal text-[#645B75]'>
-                                Send BTC to crypto account.
+                                Send {isEmpty(walletInfo)?"":walletInfo.currency} to crypto account.
                             </h4>
                         </div>
 
@@ -240,7 +254,7 @@ const SendCoin = () => {
                                     </span>
 
                                     <h5 className='text-[#645B75] text-xs font-normal'>
-                                        Balance: 2,300 BNB
+                                        Balance{isEmpty(walletInfo)?"":`: ${walletInfo.balance.availableBalance}`}
                                     </h5>
                                 </div>
 
@@ -249,18 +263,22 @@ const SendCoin = () => {
                                 paddingRight='pr-[35%]'
                                 value={amount}
                                 onChange={(e)=>setAmount(e.target.value)}
-                                label={<>NAIRA | <span className='text-[#EB9B00] font-semibold'>Max</span></>}
+                                label={<>{isEmpty(walletInfo)?"":`${walletInfo.currency} | `} <span className='text-[#EB9B00] font-semibold'>Max</span></>}
                                 type='number'
                                 placeholderText={"Type in Amount"} />
 
                                 {/* bottom label */}
-                                <h4 className='text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2'>
-                                    Network fee: 0.00004 BTC
-                                    <InfoCircle
-                                    variant='Bulk'
-                                    size={12}
-                                    color="#ACA6BA" />
-                                </h4>
+                                {
+                                    mode?.value === 2?
+                                    <h4 className='text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2'>
+                                        Network fee: 0.00004 BTC
+                                        <InfoCircle
+                                        variant='Bulk'
+                                        size={12}
+                                        color="#ACA6BA" />
+                                    </h4>
+                                    :null
+                                }
                             </label>
 
                             {/* important message */}
@@ -283,11 +301,24 @@ const SendCoin = () => {
 
                                 {/* send button */}
                                 <div className='w-full flex flex-col items-stretch'>
-                                    <PrimaryButton
-                                    onClick={handleSendToInternalUser}
-                                    loading={sendInternalUserLoading}
-                                    disabled={disableBtn()}
-                                    text={disableBtn()?"Send":`Send ${amount}${asset.symbol}`} />
+                                    {
+                                        parseFloat(amount) > parseFloat(walletInfo?.balance?.availableBalance)?
+                                        <PrimaryButton
+                                        onClick={handleSendToInternalUser}
+                                        loading={sendInternalUserLoading}
+                                        disabled={true}
+                                        text={"Insufficent funds"} />:
+                                        disableBtn()?
+                                        <PrimaryButton
+                                        onClick={handleSendToInternalUser}
+                                        loading={sendInternalUserLoading}
+                                        disabled={disableBtn()}
+                                        text={"Send"} />:
+                                        <PrimaryButton
+                                        onClick={handleSendToInternalUser}
+                                        loading={sendInternalUserLoading}
+                                        text={`Send ${amount}${asset.symbol}`} />
+                                    }
                                 </div>
                             </div>
                         </form>

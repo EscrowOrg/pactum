@@ -11,6 +11,7 @@ import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
+import { useNavigate } from 'react-router-dom'
 
 const HomeHeader = () => {
 
@@ -19,6 +20,7 @@ const HomeHeader = () => {
         data,
         makeGetRequest,
     } = useMakeReq()
+    const navigate = useNavigate()
     
 
     // STATES
@@ -63,7 +65,9 @@ const HomeHeader = () => {
                     </p>
 
                     {/* notification icon */}
-                    <span className='w-[40px] h-[40px] flex items-center justify-center rounded-xl bg-white'>
+                    <span
+                    onClick={()=>navigate("/home/notification")} 
+                    className='w-[40px] h-[40px] flex items-center justify-center rounded-xl bg-white'>
                         <NotificationBing
                         size="20"
                         color="#6D34F0"
@@ -88,7 +92,9 @@ const HomeHeader = () => {
 
                     {/* expand details */}
                     <div className='flex items-center gap-2'>
-                        <span className='text-[#F4EFFE] text-sm font-bold'>
+                        <span
+                        onClick={()=>navigate("/listing")} 
+                        className='text-[#F4EFFE] text-sm font-bold'>
                             P2P Trading
                         </span>
 
