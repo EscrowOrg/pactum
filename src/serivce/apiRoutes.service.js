@@ -12,3 +12,4 @@ export const GET_TRANSACTIONS_USERID = `${BASE_URL}/api/Wallet/GetTransactionByF
 export const GET_ASSETS_MAPPING = `${BASE_URL}/api/ChainOperation/GetAssetMapping`
 export const TRANSFER_INTERNAL_USERS = `${BASE_URL}/api/ChainOperation/TransferToInternalUser`
 export const GET_SINGLE_ACCOUNT = `${BASE_URL}/api/Wallet/GetAcountById`
+export const VALIDATE_DEVICE_TOKEN = `${BASE_URL}/api/User/ValidateDeviceToken`
