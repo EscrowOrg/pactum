@@ -174,7 +174,7 @@ const SellOrderStatements = () => {
             <div className="flex flex-col items-stretch w-[60%]">
               <PrimaryButton
                 onClick={() =>
-                  navigate("/home/sell-coin/success/hnshbxsncidsckdmc")
+                  navigate("/home/sell-coin/success/id:17")
                 }
                 height="h-14"
                 text={"Mark as Received"}

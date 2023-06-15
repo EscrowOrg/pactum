@@ -102,6 +102,7 @@ const BuyCoin = () => {
                             <TextLabelInput
                             label={<>NAIRA | <span className='text-[#EB9B00] font-semibold'>Max</span></>}
                             name={"amount"}
+                            type='number'
                             value={formData.amount}
                             onChange={handleChange}
                             placeholderText={"Enter amount"} />
@@ -170,7 +171,7 @@ const BuyCoin = () => {
                             {/* continue button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                onClick={()=>navigate("/home/buy-coin/hdfhjdfkjdjfkdjfk/order-statement")}
+                                onClick={()=>navigate("/home/buy-coin/id:5/order-statement")}
                                 text={"Buy BTC"} />
                             </div>
                         </div>

@@ -51,7 +51,7 @@ const ClosedListingCard = () => {
       </div>
       {/* view more button */}
       <span
-        onClick={() => navigate("/listing/closed-listing/hjdye27jsb7hy6axbxg")}
+        onClick={() => navigate("/listing/closed-listing/id:13")}
         className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal"
       >
         View More

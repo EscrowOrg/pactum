@@ -54,6 +54,9 @@ import IndividualSettings from "./individual/pages/IndividualSettings";
 import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import Notification from "./pages/Dashboard/Home/Notification";
+import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
+import NewUser from "./pages/Dashboard/Portfolio/NewUser";
+import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -97,6 +100,7 @@ const MainRouter = () => {
 
         {/* VENDOR CREATE PIN SUCCESS */}
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
+
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -151,10 +155,8 @@ const MainRouter = () => {
           element={<PasswordChangeSuccess />}
         />
 
-
         {/* =========== HOME DASHBOARD ========== */}
         <Route element={<PrivateRoutes />}>
-
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -176,7 +178,11 @@ const MainRouter = () => {
             element={<OrderStatement />}
           />
 
-          <Route exact path="/home/buy-coin/:order-statement/report-order-statement" element={<ReportOrderStatement />}/>
+          <Route
+            exact
+            path="/home/buy-coin/:order-statement/report-order-statement"
+            element={<ReportOrderStatement />}
+          />
 
           <Route
             exact
@@ -211,6 +217,11 @@ const MainRouter = () => {
             element={<CreateWallet />}
           />
 
+          <Route path="/portfolio/new-user" element={<NewUser />} />
+
+          <Route path="/portfolio/new-user/add-user" element={<AddUsers />} />
+
+
           <Route
             exact
             path="/portfolio/transactions"
@@ -242,10 +253,7 @@ const MainRouter = () => {
           />
 
           {/* LISTING */}
-          <Route 
-          exact 
-          path="/listing" 
-          element={<Listing />} />
+          <Route exact path="/listing" element={<Listing />} />
 
           <Route
             exact
@@ -276,27 +284,32 @@ const MainRouter = () => {
           />
 
           {/* SETTINGS */}
-          <Route 
-          exact 
-          path="/profile" 
-          element={<VendorSettings />} />
-
-          <Route 
-          exact 
-          path="/profile/edit-profile" 
-          element={<SettingsEditProfile />}/>
+          <Route exact path="/profile" element={<VendorSettings />} />
 
           <Route
-          exact
-          path="/profile/terms-and-conditions"
-          element={<TermsAndConditions />} />
+            exact
+            path="/profile/edit-profile"
+            element={<SettingsEditProfile />}
+          />
 
           <Route
-          exact
-          path="/profile/privacy-policy"
-          element={<PrivacyPolicy />} />
+            exact
+            path="/profile/change-password"
+            element={<ChangePassword />}
+          />
+
+          <Route
+            exact
+            path="/profile/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
+
+          <Route
+            exact
+            path="/profile/privacy-policy"
+            element={<PrivacyPolicy />}
+          />
         </Route>
-
       </Routes>
     </AnimatePresence>
   );
