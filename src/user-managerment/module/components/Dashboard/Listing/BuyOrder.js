@@ -49,7 +49,12 @@ const BuyOrder = () => {
           <span className="font-medium text-xs text-black">Listing Amount</span>
 
           {/* input field  */}
-          <TextLabelInput label={""} placeholderText={"400,000"} type="number" style={{display: 'none'}}/>
+          <TextLabelInput
+            label={""}
+            placeholderText={"400,000"}
+            type="number"
+            style={{ display: "none" }}
+          />
         </label>
 
         {/* Rate-Fiat Value  */}
@@ -60,7 +65,11 @@ const BuyOrder = () => {
           </span>
 
           {/* input field  */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"757.89"}  type="number" />
+          <TextLabelInput
+            label={"NAIRA"}
+            placeholderText={"757.89"}
+            type="number"
+          />
         </label>
 
         {/* Minimum Transaction Limit  */}
@@ -71,7 +80,11 @@ const BuyOrder = () => {
           </span>
 
           {/* input field  */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"200,000"}  type="number"/>
+          <TextLabelInput
+            label={"NAIRA"}
+            placeholderText={"200,000"}
+            type="number"
+          />
         </label>
 
         {/* Maximum Transaction Limit  */}
@@ -82,10 +95,13 @@ const BuyOrder = () => {
           </span>
 
           {/* input field */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"1,000,000"}  type="number"/>
+          <TextLabelInput
+            label={"NAIRA"}
+            placeholderText={"1,000,000"}
+            type="number"
+          />
         </label>
 
-        
         {/* Payment Timeframe  */}
         <label className="flex flex-col gap-2 w-full">
           {/* title */}
@@ -94,7 +110,11 @@ const BuyOrder = () => {
           </span>
 
           {/* input field */}
-          <TextLabelInput label={"MINUTES"} placeholderText={"15"}  type="number"/>
+          <TextLabelInput
+            label={"MINUTES"}
+            placeholderText={"15"}
+            type="number"
+          />
         </label>
 
         {/* Receiving Bank  */}
@@ -135,21 +155,21 @@ const BuyOrder = () => {
         </StrictWrapper>
       </Drawer>
 
-         {/* Drawer */}
-         <Drawer
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-            position="bottom">
-
-                 {/* drawer content container */}
-                <StrictWrapper
-                title={"Receiving Bank"}
-                closeDrawer={() => setIsOpen(false)}>
-
-                     {/* Body content  */}
-                    <ReceivingBank />                    
-                </StrictWrapper>
-            </Drawer> 
+      {/* Drawer */}
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        position="bottom"
+      >
+        {/* drawer content container */}
+        <StrictWrapper
+          title={"Receiving Bank"}
+          closeDrawer={() => setIsOpen(false)}
+        >
+          {/* Body content  */}
+          <ReceivingBank />
+        </StrictWrapper>
+      </Drawer>
     </div>
   );
 };
