@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PageWrapper from '../../../layouts/PageWrapper'
 import { BackButton } from '../../../components/Button'
 import SingleNotification from '../../../components/Dashboard/Home/SingleNotification'
+import { messaging } from '../../../firebase/firebaseConfig'
+import axios from 'axios'
 
 const Notification = () => {
+    useEffect(()=>{
+
+    })
+
+const handleMessage =()=>{
+    messaging.requestPermission().then(() => {
+    console.log('Notification permission granted.');
+    // Get the device token
+    return messaging.getToken();
+  }).then((token) => {
+    console.log('Device token:', token);
+    // Send the token to your server to associate it with the user
+     axios.post(`${VALIDATE_DEVICE_TOKEN}`, token)
+    
+  }).catch((error) => {
+    console.error('Error obtaining permission:', error);
+  });
+
+}
     return (
         <PageWrapper>
 
