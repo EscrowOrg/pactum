@@ -68,7 +68,7 @@ const CreateListing = () => {
               onClick={handleClick2}
               className={`  w-1/2 py-2 px-2 text-center cursor-pointer transition-all duration-700 ${
                 clickTabs === "sell-order"
-                  ? "bg-green-500  rounded-md  text-white"
+                  ? "bg-[#48A9A6]  rounded-md  text-white"
                   : ""
               }`}
             >

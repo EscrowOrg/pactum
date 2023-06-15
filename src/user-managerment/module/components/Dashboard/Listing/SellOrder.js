@@ -48,7 +48,7 @@ const BuyOrder = () => {
           <span className="font-medium text-xs text-black">Listing Amount</span>
 
           {/* input field  */}
-          <TextLabelInput label={"BTC"} placeholderText={"400,000"} type="number" style={{display: 'none'}}/>
+          <TextLabelInput label={""} placeholderText={"400"} type="number" style={{display: 'none'}}/>
         </label>
 
         {/* Rate-Fiat Value  */}
@@ -70,7 +70,7 @@ const BuyOrder = () => {
           </span>
 
           {/* input field  */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"200,000"}  type="number"/>
+          <TextLabelInput label={"NAIRA"} placeholderText={"50,000.67"}  type="number"/>
         </label>
 
         {/* Maximum Transaction Limit  */}
@@ -81,20 +81,21 @@ const BuyOrder = () => {
           </span>
 
           {/* input field */}
-          <TextLabelInput label={"NAIRA"} placeholderText={"1,000,000"}  type="number"/>
+          <TextLabelInput label={"NAIRA"} placeholderText={"200,000"}  type="number"/>
         </label>
 
-        {/* Receiving Bank  */}
-        <label className="flex flex-col gap-2 w-full">
-          {/* label text  */}
-          <span className="font-medium text-xs text-black">Receiving Bank</span>
+          {/* Payment Timeframe  */}
+          <label className="flex flex-col gap-2 w-full">
+          {/* title */}
+          <span className="font-medium text-xs text-black">
+            Payment Timeframe
+          </span>
 
           {/* input field */}
-          <DrawerSelectInput
-            value={listingData?.receivingBank || "First Bank - 1234567891"}
-          />
+          <TextLabelInput label={"MINUTES"} placeholderText={"15"}  type="number"/>
         </label>
 
+        
         {/* container */}
         <div className="flex w-full flex-col">
           {/* continue button */}

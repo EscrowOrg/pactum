@@ -7,6 +7,7 @@ import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import AssetsListView from "../Portfolio/AssetsListView";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ReceivingBank from "../../../pages/Dashboard/Home/ReceivingBank";
 
 const BuyOrder = () => {
   // DATA INITIALIZATION
@@ -48,7 +49,7 @@ const BuyOrder = () => {
           <span className="font-medium text-xs text-black">Listing Amount</span>
 
           {/* input field  */}
-          <TextLabelInput label={"BTC"} placeholderText={"400,000"} type="number" style={{display: 'none'}}/>
+          <TextLabelInput label={""} placeholderText={"400,000"} type="number" style={{display: 'none'}}/>
         </label>
 
         {/* Rate-Fiat Value  */}
@@ -84,8 +85,20 @@ const BuyOrder = () => {
           <TextLabelInput label={"NAIRA"} placeholderText={"1,000,000"}  type="number"/>
         </label>
 
-        {/* Receiving Bank  */}
+        
+        {/* Payment Timeframe  */}
         <label className="flex flex-col gap-2 w-full">
+          {/* title */}
+          <span className="font-medium text-xs text-black">
+            Payment Timeframe
+          </span>
+
+          {/* input field */}
+          <TextLabelInput label={"MINUTES"} placeholderText={"15"}  type="number"/>
+        </label>
+
+        {/* Receiving Bank  */}
+        <label onClick={toggleDrawer} className="flex flex-col gap-2 w-full">
           {/* label text  */}
           <span className="font-medium text-xs text-black">Receiving Bank</span>
 
@@ -121,6 +134,22 @@ const BuyOrder = () => {
           />
         </StrictWrapper>
       </Drawer>
+
+         {/* Drawer */}
+         <Drawer
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            position="bottom">
+
+                 {/* drawer content container */}
+                <StrictWrapper
+                title={"Receiving Bank"}
+                closeDrawer={() => setIsOpen(false)}>
+
+                     {/* Body content  */}
+                    <ReceivingBank />                    
+                </StrictWrapper>
+            </Drawer> 
     </div>
   );
 };

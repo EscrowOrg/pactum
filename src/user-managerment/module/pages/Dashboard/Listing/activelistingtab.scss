@@ -1,13 +1,13 @@
 .active-listing-tab {
     font-weight: 600;
-    color: #3A0CA3;
+    color: #070214;
     position: relative;
 
     &::after {
         content: "";
         width: 110px;
         height: 6px;
-        background-color: #3A0CA3;
+        background-color: #070214;
         border-radius: 8px 8px 0 0;
         position: absolute;
         bottom: 0;

@@ -77,18 +77,21 @@ const ChangePassword = () => {
               placeholderText={"Enter your password"}
             />
 
-            {/* label text */}
-            <span className="font-normal text-xs text-black">
-              Repeat New Password
-            </span>
+            {/*repeat  password container */}
+            <label className="flex flex-col gap-2 w-full">
+              {/* label text */}
+              <span className="font-normal text-xs text-black">
+                Repeat New Password
+              </span>
 
-            {/* input field */}
-            <PasswordInput
-              name={"password"}
-              value={formData.password}
-              onChange={handleChange}
-              placeholderText={"Enter your password"}
-            />
+              {/* input field */}
+              <PasswordInput
+                name={"password"}
+                value={formData.password}
+                onChange={handleChange}
+                placeholderText={"Enter your password"}
+              />
+            </label>
 
             {/* password strength */}
             <div className="w-full flex flex-col gap-3 mt-2">
