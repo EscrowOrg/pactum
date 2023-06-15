@@ -309,7 +309,7 @@ const SellCoin = () => {
                 <ErrorButton
                   onClick={() =>
                     navigate(
-                      "/home/sell-coin/jdhfkdjkfjdkfjdk/sell-order-statement"
+                      "/home/sell-coin/id:11/sell-order-statement"
                     )
                   }
                   text={"Sell BTC"}

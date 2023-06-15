@@ -239,7 +239,7 @@ const BuySellCoin = () => {
                   {action === 1 ? (
                     <PrimaryButton
                       onClick={() =>
-                        navigate("/home/buy-coin/ksdjkfsdkfkdjjkdfd")
+                        navigate("/home/buy-coin/id:3")
                       }
                       height="h-10"
                       text="Buy"
@@ -247,7 +247,7 @@ const BuySellCoin = () => {
                   ) : (
                     <ErrorButton
                       onClick={() =>
-                        navigate("/home/sell-coin/ksdjkfsdkfkdjjkdfd")
+                        navigate("/home/sell-coin/id:3")
                       }
                       height="h-10"
                       text="Sell"

@@ -191,7 +191,7 @@ const OrderStatement = () => {
             <div className="flex flex-col items-stretch w-[60%]">
               <PrimaryButton
                 onClick={() =>
-                  navigate("/home/buy-coin/success/kjfdkjfkdjkfdkjfkj")
+                  navigate("/home/buy-coin/success/id:20")
                 }
                 height="h-14"
                 text={"Transfer Done"}

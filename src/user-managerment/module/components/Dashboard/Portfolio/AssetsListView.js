@@ -21,7 +21,7 @@ const AssetsListView = ({assetList, setAsset, closeDrawer}) => {
             {/* list container */}
             <div className='flex flex-col gap-1 pb-5'>
                 {
-                    assetList.filter(asset=>asset?.currencyName?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((asset, index)=>(
+                    assetList?.filter(asset=>asset?.currencyName?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((asset, index)=>(
                         <div
                         key={index}
                         onClick={()=>{

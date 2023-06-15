@@ -53,13 +53,13 @@ const OngoingListingCard = () => {
       {/* buttons */}
       <div className="w-full flex items-center justify-between gap-5 pb-4">
         {/* cancel button */}
-        <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#645B75] text-xs font-normal">
+        <span onClick={() => navigate(-1)} className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#645B75] text-xs font-normal">
           Cancel
         </span>
 
         {/* view more button */}
         <span
-          onClick={() => navigate("/listing/overview/awdgtsqrhbdfwtyu")}
+          onClick={() => navigate("/listing/overview/id:15")}
           className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal"
         >
           View More

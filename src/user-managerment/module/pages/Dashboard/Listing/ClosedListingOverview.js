@@ -112,7 +112,7 @@ const ClosedListingOverview = () => {
             </div>
 
             {/* view more button */}
-            <span onClick={()=>navigate('/listing/closed-listing-order/bvhjsm27uhdb34')} className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
+            <span onClick={()=>navigate('/listing/closed-listing-order/id:14')} className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
               View More
             </span>
           </div>
