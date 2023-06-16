@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/messaging';
+import 'firebase/compat/messaging';
 
 const firebaseConfig = {
   // Your Firebase configuration object goes here
