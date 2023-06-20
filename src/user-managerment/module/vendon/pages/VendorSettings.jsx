@@ -96,7 +96,8 @@ const VendorSettings = () => {
 
                             <SettingOptionCards
                             Icon={ProfileCircle}
-                            title={"My Users"} />
+                            title={"My Users"}
+                            pathTo='/profile/list-of-users'/>
 
                             <SettingOptionCards
                             Icon={Bank}

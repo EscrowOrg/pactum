@@ -57,6 +57,10 @@ import Notification from "./pages/Dashboard/Home/Notification";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
 import NewUser from "./pages/Dashboard/Portfolio/NewUser";
 import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
+import ListOfUsers from "./pages/Dashboard/Portfolio/ListOfUsers";
+import SendBTC from "./pages/Dashboard/Portfolio/SendBTC";
+import UserInviteStatus from "./pages/Dashboard/Portfolio/UserInviteStatus";
+import UserWallet from "./pages/Dashboard/Portfolio/UserWallet";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -100,7 +104,6 @@ const MainRouter = () => {
 
         {/* VENDOR CREATE PIN SUCCESS */}
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
-
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -202,11 +205,7 @@ const MainRouter = () => {
             element={<SellTransactionSuccess />}
           />
 
-          <Route
-            exact
-            path="/home/notification"
-            element={<Notification />}
-          />
+          <Route exact path="/home/notification" element={<Notification />} />
 
           {/* PORTFOLIO */}
           <Route exact path="/portfolio" element={<Portfolio />} />
@@ -219,8 +218,9 @@ const MainRouter = () => {
 
           <Route path="/portfolio/new-user" element={<NewUser />} />
 
-          <Route path="/portfolio/new-user/add-user" element={<AddUsers />} />
+          <Route path="/portfolio/new-user/add-user" element={<UserWallet />} />
 
+         
 
           <Route
             exact
@@ -292,6 +292,11 @@ const MainRouter = () => {
             element={<SettingsEditProfile />}
           />
 
+          <Route
+            exact
+            path="/profile/list-of-users"
+            element={<ListOfUsers />}
+          />
           <Route
             exact
             path="/profile/change-password"
