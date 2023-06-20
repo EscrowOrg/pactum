@@ -113,7 +113,6 @@ const userId = getUserId()
       formValues.bank = bankDetails.id
       formValues.userId = userId
       formValues.assets = asset.assetId
-      console.log(formValues)
 
       // create AdListing
       makePostRequest(CREATE_AD_LISTING, {
@@ -300,7 +299,7 @@ const userId = getUserId()
                 {/* continue button */}
                 <div className="w-full flex flex-col items-stretch">
                   <PrimaryButton
-                  disabled={!isValid}
+                  disabled={!isValid || isEmpty(asset.assetId) || isEmpty(bankDetails) || isEmpty(userId)}
                   loading={createListingLoading}
                   onClick={handleSubmit}
                   text={"Create"}
