@@ -1,14 +1,49 @@
 import React, { useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
-import { ProfileAdd } from "iconsax-react";
+import { ArrowDown2, ProfileAdd } from "iconsax-react";
 import { SearchInput } from "../../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { SlArrowRight } from "react-icons/sl";
+import Drawer from "../../../layouts/Drawer";
+import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import StatusFilterView from "../../../components/Dashboard/Portfolio/StatusFilterView";
 
 const ListOfUsers = () => {
   // STATES
   const [searchUsers, setSearchUsers] = useState("");
+  const [filterValue, setFilterValue] = useState("A-Z");
+  
+    // STATES
+    const [isOpen, setIsOpen] = useState(false);
+    const [isDrawer1Open, setIsDrawer1Open] = useState(false);
+    const [isDrawer2Open, setIsDrawer2Open] = useState(false);
+    const [transactionList, setTransactionList] = useState([])
+    const [filterCoin, setFilterCoin] = useState({
+        name: "",
+        id: null
+    })
+    const [filterStatus, setFilterStatus] = useState({
+        name: "",
+        id: null
+    })
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
+
+    //   DATA INITIALIZATION
+  const navigate = useNavigate();
+
+    // HANDLERS
+    const toggleDrawer = () => {
+        setIsOpen(isOpen => !isOpen)
+    }
+    const toggleDrawer1 = () => {
+        setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
+    }
+    const toggleDrawer2 = () => {
+        setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
+    }
+    
 
   const listOfUsersData = [
     {
@@ -17,7 +52,23 @@ const ListOfUsers = () => {
       username: " @talanvetrovs",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: false
+      isPending: false,
+    },
+    {
+      img: "/images/dashboard/profile-image.png",
+      name: " Martin Korsgaard",
+      username: "@martinkorsgaard",
+      amountInFiat: "$14,000.00",
+      amountInCrypto: "0BTC",
+      isPending: false,
+    },
+    {
+      img: "/images/dashboard/profile-image.png",
+      name: "James Baptista",
+      username: "  @jamesbaptista",
+      amountInFiat: "$0.00",
+      amountInCrypto: "0BTC",
+      isPending: true,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -25,7 +76,7 @@ const ListOfUsers = () => {
       username: "@martinkorsgaard",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: false
+      isPending: false,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -33,7 +84,7 @@ const ListOfUsers = () => {
       username: "  @jamesbaptista",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: true
+      isPending: true,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -41,7 +92,7 @@ const ListOfUsers = () => {
       username: "@martinkorsgaard",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: false
+      isPending: false,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -49,7 +100,15 @@ const ListOfUsers = () => {
       username: "  @jamesbaptista",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: true
+      isPending: true,
+    },
+    {
+      img: "/images/dashboard/profile-image.png",
+      name: "James Baptista",
+      username: "  @jamesbaptista",
+      amountInFiat: "$0.00",
+      amountInCrypto: "0BTC",
+      isPending: true,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -57,7 +116,7 @@ const ListOfUsers = () => {
       username: "@martinkorsgaard",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: false
+      isPending: false,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -65,15 +124,7 @@ const ListOfUsers = () => {
       username: "  @jamesbaptista",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: true
-    },
-    {
-      img: "/images/dashboard/profile-image.png",
-      name: "James Baptista",
-      username: "  @jamesbaptista",
-      amountInFiat: "$0.00",
-      amountInCrypto: "0BTC",
-      isPending: true
+      isPending: true,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -81,7 +132,7 @@ const ListOfUsers = () => {
       username: "@martinkorsgaard",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: false
+      isPending: false,
     },
     {
       img: "/images/dashboard/profile-image.png",
@@ -89,28 +140,9 @@ const ListOfUsers = () => {
       username: "  @jamesbaptista",
       amountInFiat: "$0.00",
       amountInCrypto: "0BTC",
-      isPending: true
-    },
-    {
-      img: "/images/dashboard/profile-image.png",
-      name: " Martin Korsgaard",
-      username: "@martinkorsgaard",
-      amountInFiat: "$0.00",
-      amountInCrypto: "0BTC",
-      isPending: false
-    },
-    {
-      img: "/images/dashboard/profile-image.png",
-      name: "James Baptista",
-      username: "  @jamesbaptista",
-      amountInFiat: "$0.00",
-      amountInCrypto: "0BTC",
-      isPending: true
+      isPending: true,
     },
   ];
-
-  //   DATA INITIALIZATION
-  const navigate = useNavigate();
 
   return (
     <PageWrapper>
@@ -122,8 +154,9 @@ const ListOfUsers = () => {
             {/* title */}
             <h3 className="font-bold text-lg mt-1">Users</h3>
 
+            {/* add user container */}
             <div
-              onClick={() => navigate("/portfolio/new-user/add-user")}
+              onClick={() => navigate("/vendor-add-user")}
               className="flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer"
             >
               <ProfileAdd color="#ffffff" size={18} variant="Bulk" />
@@ -144,24 +177,38 @@ const ListOfUsers = () => {
         {/* body */}
         <div className="w-full h-full px-5 py-3 bg-[#FAFAFB]">
           <div className="flex justify-between">
+            {/*number of users  */}
             <h3 className="font-bold">{listOfUsersData.length} users</h3>
-            <p>A-Z</p>
+
+            {/* filter toggle */}
+            <div
+              onClick={toggleDrawer1}
+              className="text-[10px] text-black font-semibold inline-flex items-center gap-1 py-[5px] px-2 rounded-md bg-[#F5F3F6]"
+            >
+              {filterValue}
+
+              <ArrowDown2 variant="TwoTone" color="#292D32" size={14} />
+            </div>
           </div>
 
+          {/* list of users */}
           <div>
             {listOfUsersData.map((user, index) => (
               <div
+                onClick={() => navigate("/vendor-user-wallet")}
                 key={index}
                 className="flex justify-between bg-white w-full px-2 py-2.5 rounded-md  my-3"
               >
                 <div className="flex items-center gap-1.5">
+                  {/* user image */}
                   <div className="h-[32px] w-[32px] rounded-[50%] bg-[#3A0CA3] ">
                     <img
                       alt=""
-                      src="/images/dashboard/profile-image.png"
+                      src={user.img}
                       className="h-full w-full rounded-[50%]"
                     />
                   </div>
+
                   {/* user name and email */}
                   <div>
                     <h3 className="text-sm font-semibold pb-0.5">
@@ -172,21 +219,24 @@ const ListOfUsers = () => {
                     </p>
                   </div>
                 </div>
+
+                {/* amount status */}
                 <div className="flex items-center gap-2">
                   {/* amount */}
-                  <div>
-                    {user.isPending ? 
+                  <>
+                    {user.isPending ? (
                       <h4 className="text-sm font-bold text-[#EB9B00]">
                         Pending
-                      </h4>:
+                      </h4>
+                    ) : (
                       <div className="inline-flex flex-col">
                         <h4 className="text-sm font-bold pb-0.5">$0.00</h4>
                         <p className="text-xs font-normal text-[#8D85A0] text-right">
                           0 BTC
                         </p>
                       </div>
-                    }
-                  </div>
+                    )}
+                  </>
 
                   <SlArrowRight
                     size={10}
@@ -199,6 +249,26 @@ const ListOfUsers = () => {
           </div>
         </div>
       </div>
+
+       {/* select status drawer */}
+       <Drawer
+            height='!h-auto'
+            insertCurve={false}
+            type="slider"
+            isOpen={isDrawer1Open}
+            onClose={toggleDrawer1}
+            position="bottom">
+
+                {/* drawer content container */}
+                <SlideWrapper
+                title={"Select Status:"}>
+                    <StatusFilterView
+                    filterStatus={filterStatus}
+                    setFilterStatus={setFilterStatus}
+                    closeDrawer={toggleDrawer1} />
+                </SlideWrapper>
+            </Drawer>
+            
     </PageWrapper>
   );
 };

@@ -45,10 +45,10 @@ const UserInviteStatus = (toggleRemovePhotoModal, closeModal) => {
 
           <div className="flex flex-col items-stretch w-[60%]">
             <PrimaryButton
-            onClick={()=>{
-                closeModal()
-                toggleRemovePhotoModal()
-            }}
+              onClick={() => {
+                closeModal();
+                toggleRemovePhotoModal();
+              }}
               // onClick={handleApplyFilter}
               height="h-14"
               text={"Revoke"}
