@@ -103,7 +103,7 @@ const userId = getUserId()
         fiatCurrency: 1,
         listingAmount: null,
         bank: null,
-        paymentTimeFrame: 0
+        paymentTimeFrame: null
     }}
     onSubmit={(values) => {
       const formValues = {...values}
@@ -250,6 +250,32 @@ const userId = getUserId()
                   errors.upperLimit && (
                     <FormError 
                     text={errors.upperLimit} />
+                  )
+                }
+              </label>
+
+              {/* Payment Timefram  */}
+              <label className="flex flex-col gap-2 w-full">
+
+                {/* title */}
+                <span className="font-medium text-xs text-black">
+                  Payment Timeframe
+                </span>
+
+                {/* input field */}
+                <TextLabelInput 
+                name={"paymentTimeFrame"}
+                value={values.paymentTimeFrame}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label={"MINUTES"} 
+                placeholderText={"Payment time frame"}  
+                type="number"/>
+                {
+                  touched.paymentTimeFrame && 
+                  errors.paymentTimeFrame && (
+                    <FormError 
+                    text={errors.paymentTimeFrame} />
                   )
                 }
               </label>
