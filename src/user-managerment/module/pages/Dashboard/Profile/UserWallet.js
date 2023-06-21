@@ -8,14 +8,34 @@ import {
 import { ArrowDown2 } from "iconsax-react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import Drawer from "../../../layouts/Drawer";
+import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
-const UserWallet = ({ toggleDrawer }) => {
+const UserWallet = ({}) => {
   // STATES
   const [searchInput, setSearchInput] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDrawer1Open, setIsDrawer1Open] = useState(false);
+  const [isDrawer2Open, setIsDrawer2Open] = useState(false);
+  const [transactionList, setTransactionList] = useState([]);
+  const [filterStatus, setFilterStatus] = useState({
+    name: "",
+    id: null,
+  });
+
   // DATE INITIALIAZATION
   const navigate = useNavigate();
+
+  // HANDLERS
+  // const toggleDrawer = () => {
+  //   setIsOpen((isOpen) => !isOpen);
+  // };
+  const toggleDrawer1 = () => {
+    setIsDrawer1Open((isDrawer1Open) => !isDrawer1Open);
+  };
 
   const UserWallets = [
     {
@@ -70,11 +90,11 @@ const UserWallet = ({ toggleDrawer }) => {
         {/* user info */}
         <div className="text-center mb-4">
           {/* user image */}
-          <div class="h-[48px] w-[48px] rounded-[50%] bg-[#3A0CA3] mx-auto mb-2">
+          <div className="h-[48px] w-[48px] rounded-[50%] bg-[#3A0CA3] mx-auto mb-2">
             <img
               alt=""
               src="/images/dashboard/profile-image.png"
-              class="h-full w-full rounded-[50%] "
+              className="h-full w-full rounded-[50%] "
             />
           </div>
           <h3 className="font-semibold">Talan Vetrovs</h3>
@@ -110,7 +130,7 @@ const UserWallet = ({ toggleDrawer }) => {
 
               {/* filter toggle */}
               <div
-                onClick={toggleDrawer}
+                onClick={toggleDrawer1}
                 className="text-[10px] text-black font-semibold inline-flex items-center gap-1 py-[5px] px-2 rounded-md bg-[#F5F3F6]"
               >
                 {filterValue}
@@ -168,7 +188,6 @@ const UserWallet = ({ toggleDrawer }) => {
         <div className="flex items-center gap-6 w-full mb-3 mt-4 ">
           <div className="flex flex-col items-stretch w-[40%]">
             <PrimaryButtonLight
-              // onClick={handleReset}
               height="h-14"
               text={"Change Limit"}
             />
@@ -176,14 +195,35 @@ const UserWallet = ({ toggleDrawer }) => {
 
           <div className="flex flex-col items-stretch w-[60%]">
             <PrimaryButton
-              onClick={() => {}}
-              // onClick={handleApplyFilter}
+              // onClick={() => {}}
               height="h-14"
               text={"Revoke"}
             />
           </div>
         </div>
       </div>
+
+      {/* select filter drawer */}
+      <Drawer
+        relationshipStatus="alone"
+        height="!h-auto"
+        insertCurve={false}
+        type="slider"
+        isOpen={isDrawer1Open}
+        onClose={toggleDrawer1}
+        position="bottom"
+      >
+        {/* drawer content container */}
+        <SlideWrapper title={"Filter by:"}>
+          <UserFilterStatus
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            closeDrawer={toggleDrawer1}
+          />
+        </SlideWrapper>
+      </Drawer>
     </PageWrapper>
   );
 };

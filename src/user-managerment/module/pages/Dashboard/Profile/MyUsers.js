@@ -8,6 +8,7 @@ import { SlArrowRight } from "react-icons/sl";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import StatusFilterView from "../../../components/Dashboard/Portfolio/StatusFilterView";
+import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
 const ListOfUsers = () => {
   // STATES
@@ -19,16 +20,10 @@ const ListOfUsers = () => {
     const [isDrawer1Open, setIsDrawer1Open] = useState(false);
     const [isDrawer2Open, setIsDrawer2Open] = useState(false);
     const [transactionList, setTransactionList] = useState([])
-    const [filterCoin, setFilterCoin] = useState({
-        name: "",
-        id: null
-    })
     const [filterStatus, setFilterStatus] = useState({
         name: "",
         id: null
     })
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
 
     //   DATA INITIALIZATION
   const navigate = useNavigate();
@@ -250,8 +245,9 @@ const ListOfUsers = () => {
         </div>
       </div>
 
-       {/* select status drawer */}
+       {/* select filter drawer */}
        <Drawer
+            relationshipStatus="alone"
             height='!h-auto'
             insertCurve={false}
             type="slider"
@@ -261,8 +257,10 @@ const ListOfUsers = () => {
 
                 {/* drawer content container */}
                 <SlideWrapper
-                title={"Select Status:"}>
-                    <StatusFilterView
+                title={"Filter by:"}>
+                    <UserFilterStatus
+                    filterValue={filterValue}
+                    setFilterValue={setFilterValue}
                     filterStatus={filterStatus}
                     setFilterStatus={setFilterStatus}
                     closeDrawer={toggleDrawer1} />

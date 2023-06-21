@@ -56,7 +56,7 @@ const ChangePassword = () => {
           <label className="flex flex-col gap-2 w-full">
             <span className="font-normal text-xs text-black">Old Password</span>
 
-            {/* input field */}
+            {/* old password field */}
             <PasswordInput
               name={"password"}
               value={formData.password}
@@ -69,6 +69,22 @@ const ChangePassword = () => {
             {/* label text */}
             <span className="font-normal text-xs text-black">New Password</span>
 
+            {/* new password field */}
+            <PasswordInput
+              name={"password"}
+              value={formData.password}
+              onChange={handleChange}
+              placeholderText={"Enter your password"}
+            />
+          </label>
+
+          {/*repeat new password container */}
+          <label className="flex flex-col gap-2 w-full">
+            {/* label text */}
+            <span className="font-normal text-xs text-black">
+              Repeat New Password
+            </span>
+
             {/* input field */}
             <PasswordInput
               name={"password"}
@@ -76,59 +92,40 @@ const ChangePassword = () => {
               onChange={handleChange}
               placeholderText={"Enter your password"}
             />
+          </label>
 
-            {/*repeat  password container */}
-            <label className="flex flex-col gap-2 w-full">
-              {/* label text */}
-              <span className="font-normal text-xs text-black">
-                Repeat New Password
-              </span>
-
-              {/* input field */}
-              <PasswordInput
-                name={"password"}
-                value={formData.password}
-                onChange={handleChange}
-                placeholderText={"Enter your password"}
-              />
+          {/* password strength */}
+          <div className="w-full flex flex-col gap-3 mt-2">
+            {/* characters contained */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox disabled={true} value={formData.password.length >= 8} />
+              Contains at least 8+ Characters
             </label>
 
-            {/* password strength */}
-            <div className="w-full flex flex-col gap-3 mt-2">
-              {/* characters contained */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox
-                  disabled={true}
-                  value={formData.password.length >= 8}
-                />
-                Contains at least 8+ Characters
-              </label>
+            {/* digits contained */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox disabled={true} value={hasDigit(formData.password)} />
+              Contains at least 1 number
+            </label>
 
-              {/* digits contained */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox disabled={true} value={hasDigit(formData.password)} />
-                Contains at least 1 number
-              </label>
+            {/* includes cases */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox
+                disabled={true}
+                value={
+                  hasLowerCase(formData.password) &&
+                  hasUpperCase(formData.password)
+                }
+              />
+              Contains both lower (a-z) and upper case letters (A - Z)
+            </label>
 
-              {/* includes cases */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox
-                  disabled={true}
-                  value={
-                    hasLowerCase(formData.password) &&
-                    hasUpperCase(formData.password)
-                  }
-                />
-                Contains both lower (a-z) and upper case letters (A - Z)
-              </label>
-
-              {/* new password match */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox disabled={true} value={hasDigit(formData.password)} />
-                New password match
-              </label>
-            </div>
-          </label>
+            {/* new password match */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox disabled={true} value={hasDigit(formData.password)} />
+              New password match
+            </label>
+          </div>
 
           {/* button container */}
           <div className="flex w-full flex-col items-center mt-auto">

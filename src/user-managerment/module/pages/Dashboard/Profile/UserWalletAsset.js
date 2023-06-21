@@ -1,7 +1,7 @@
 import React from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
-import { ArrowDown2, Filter, MoneySend, ProfileAdd } from "iconsax-react";
+import {  Filter, MoneySend } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
 
 const UserWalletAsset = () => {
@@ -13,31 +13,26 @@ const UserWalletAsset = () => {
       name: "Sent: 400 DOGE",
       assetStatus: "SUCCESS",
       amountInFiat: "$102.38",
-      numOfwallets: "Wallet 1",
-      isSuccessful: true
-      
+      isSuccessful: true,
     },
     {
-        name: "Sent: 400 DOGE",
-        assetStatus: "PENDING",
-        amountInFiat: "$102.38",
-        numOfwallets: "Wallet 1",
-        isSuccessful: false
-      },
-      {
-        name: "Sent: 400 DOGE",
-        assetStatus: "FAILED",
-        amountInFiat: "$102.38",
-        numOfwallets: "Wallet 1",
-        isSuccessful: false
-      },
-      {
-        name: "Received: 400 DOGE",
-        assetStatus: "FAILED",
-        amountInFiat: "$102.38",
-        numOfwallets: "Wallet 1",
-        isSuccessful: false
-      },
+      name: "Sent: 400 DOGE",
+      assetStatus: "PENDING",
+      amountInFiat: "$102.38",
+      isSuccessful: false,
+    },
+    {
+      name: "Sent: 400 DOGE",
+      assetStatus: "FAILED",
+      amountInFiat: "$102.38",
+      isSuccessful: false,
+    },
+    {
+      name: "Received: 400 DOGE",
+      assetStatus: "FAILED",
+      amountInFiat: "$102.38",
+      isSuccessful: false,
+    },
   ];
   return (
     <PageWrapper>
@@ -71,14 +66,12 @@ const UserWalletAsset = () => {
                 <div className="flex items-center gap-1.5">
                   {/* user image */}
                   <div className="h-[32px] w-[32px] rounded-[50%] bg-[#FAFAFB] flex justify-center items-center">
-                   <MoneySend size={16} variant="Bulk" color="#A39CB2"/>
+                    <MoneySend size={16} variant="Bulk" color="#A39CB2" />
                   </div>
 
                   {/* user name and email */}
                   <div>
-                    <h3 className="text-sm font-bold pb-0.5">
-                      {asset.name}
-                    </h3>
+                    <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
                     <p className="text-xs font-normal text-[#8D85A0]">
                       {asset.assetStatus}
                     </p>
@@ -89,12 +82,11 @@ const UserWalletAsset = () => {
                 <div className="flex items-center gap-2">
                   {/* amount */}
                   <>
-                  {/* {asset.isSuccessful ? {color: "green"} : {color: "red"}} */}
+                    {/* {asset.isSuccessful ? {color: "green"} : {color: "red"}} */}
                     <div className="inline-flex flex-col">
-                      <h4 className="text-sm font-bold pb-0.5">{asset.amountInFiat}</h4>
-                      <p className="text-xs font-normal text-[#8D85A0] text-right">
-                        {asset.numOfwallets}
-                      </p>
+                      <h4 className="text-sm font-bold pb-0.5">
+                        {asset.amountInFiat}
+                      </h4>
                     </div>
                   </>
                 </div>
