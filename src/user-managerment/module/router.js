@@ -59,6 +59,7 @@ import MyUsers from "./pages/Dashboard/Profile/MyUsers";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import AddUsers from "./pages/Dashboard/Profile/AddUsers";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
+import Chat from "./pages/Dashboard/Home/Chat";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -211,6 +212,8 @@ const MainRouter = () => {
           />
 
           <Route exact path="/home/notification" element={<Notification />} />
+
+          <Route exact path="/home/chat" element={<Chat />} />
 
           {/* PORTFOLIO */}
           <Route exact path="/portfolio" element={<Portfolio />} />
