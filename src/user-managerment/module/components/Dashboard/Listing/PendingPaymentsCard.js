@@ -26,7 +26,7 @@ const PendingPaymentsCard = () => {
 
           {/* see listing button */}
           <span
-            onClick={() => navigate("/listing/pending-payments/nbfrthjkut")}
+            onClick={() => navigate("/listing/pending-payments/id:12")}
             className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal mr-2"
           >
             See Listing
