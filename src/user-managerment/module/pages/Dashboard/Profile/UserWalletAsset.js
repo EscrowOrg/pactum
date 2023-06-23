@@ -13,25 +13,25 @@ const UserWalletAsset = () => {
       name: "Sent: 400 DOGE",
       assetStatus: "SUCCESS",
       amountInFiat: "$102.38",
-      isSuccessful: true,
+      color: "text-"
     },
     {
       name: "Sent: 400 DOGE",
       assetStatus: "PENDING",
       amountInFiat: "$102.38",
-      isSuccessful: false,
+      color: "yellow"
     },
     {
       name: "Sent: 400 DOGE",
       assetStatus: "FAILED",
       amountInFiat: "$102.38",
-      isSuccessful: false,
+      color: "red"
     },
     {
       name: "Received: 400 DOGE",
       assetStatus: "FAILED",
       amountInFiat: "$102.38",
-      isSuccessful: false,
+      color: "red"
     },
   ];
   return (
@@ -56,7 +56,7 @@ const UserWalletAsset = () => {
           {/* body */}
 
           {/* list of assets */}
-          <div className="">
+          <>
             {UserAssets.map((asset, index) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet")}
@@ -72,7 +72,7 @@ const UserWalletAsset = () => {
                   {/* user name and email */}
                   <div>
                     <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
-                    <p className="text-xs font-normal text-[#8D85A0]">
+                    <p className={`text-xs font-normal text-${asset.color}`}>
                       {asset.assetStatus}
                     </p>
                   </div>
@@ -92,7 +92,7 @@ const UserWalletAsset = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </>
         </div>
       </div>
     </PageWrapper>

@@ -12,15 +12,11 @@ import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
-const UserWallet = ({}) => {
+const UserWallet = () => {
   // STATES
   const [searchInput, setSearchInput] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
-
-  const [isOpen, setIsOpen] = useState(false);
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-  const [isDrawer2Open, setIsDrawer2Open] = useState(false);
-  const [transactionList, setTransactionList] = useState([]);
   const [filterStatus, setFilterStatus] = useState({
     name: "",
     id: null,
@@ -30,9 +26,6 @@ const UserWallet = ({}) => {
   const navigate = useNavigate();
 
   // HANDLERS
-  // const toggleDrawer = () => {
-  //   setIsOpen((isOpen) => !isOpen);
-  // };
   const toggleDrawer1 = () => {
     setIsDrawer1Open((isDrawer1Open) => !isDrawer1Open);
   };

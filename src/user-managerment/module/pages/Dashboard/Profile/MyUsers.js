@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { SlArrowRight } from "react-icons/sl";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
-import StatusFilterView from "../../../components/Dashboard/Portfolio/StatusFilterView";
 import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
 const ListOfUsers = () => {
@@ -16,10 +15,9 @@ const ListOfUsers = () => {
   const [filterValue, setFilterValue] = useState("A-Z");
   
     // STATES
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-    const [isDrawer2Open, setIsDrawer2Open] = useState(false);
-    const [transactionList, setTransactionList] = useState([])
+   
     const [filterStatus, setFilterStatus] = useState({
         name: "",
         id: null
@@ -29,16 +27,12 @@ const ListOfUsers = () => {
   const navigate = useNavigate();
 
     // HANDLERS
-    const toggleDrawer = () => {
-        setIsOpen(isOpen => !isOpen)
-    }
+    // const toggleDrawer = () => {
+    //     setIsOpen(isOpen => !isOpen)
+    // }
     const toggleDrawer1 = () => {
         setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
     }
-    const toggleDrawer2 = () => {
-        setIsDrawer2Open(isDrawer2Open => !isDrawer2Open)
-    }
-    
 
   const listOfUsersData = [
     {
