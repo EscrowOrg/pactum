@@ -59,7 +59,7 @@ import MyUsers from "./pages/Dashboard/Profile/MyUsers";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import AddUsers from "./pages/Dashboard/Profile/AddUsers";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
-import Chat from "./pages/Dashboard/Home/Chat";
+import Chat from "./pages/Dashboard/Home/ChatBox";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
