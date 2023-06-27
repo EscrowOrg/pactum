@@ -1,27 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
 import "../../../layouts/Drawer/index.css";
 import BuyOrder from "../../../components/Dashboard/Listing/BuyOrder";
 import SellOrder from "../../../components/Dashboard/Listing/SellOrder";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { isEmpty } from "../../../helpers/isEmpty";
+import { GET_ASSETS_MAPPING } from "../../../../../serivce/apiRoutes.service";
 
 const CreateListing = () => {
+
   // DATA INITIALIZATION
   const navigate = useNavigate();
+  const {
+    data: walletAssetData,
+    getLoading: getAssetLoading,
+    makeGetRequest,
+  } = useMakeReq()
+
 
   // STATES
-  const [isOpen, setIsOpen] = useState(false);
-  const [listingData, setListingData] = useState({
-    asset: "",
-    receivingBank: "",
-  });
+  const [assetList, setAssetList] = useState([])
   const [clickTabs, setClickTabs] = useState("buy-order");
-  // HANDLERS
-  const toggleDrawer = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
 
+
+  // HANDLERS
   const handleClick = (index) => {
     setClickTabs("buy-order");
   };
@@ -29,6 +33,19 @@ const CreateListing = () => {
   const handleClick2 = (index) => {
     setClickTabs("sell-order");
   };
+
+
+  // SIDE EFFECTS
+  useEffect(()=>{
+    makeGetRequest(GET_ASSETS_MAPPING)
+  }, [])
+
+  // get assets data
+  useEffect(()=>{
+    if(!isEmpty(walletAssetData)) {
+        setAssetList(walletAssetData)
+    }
+  }, [walletAssetData])
 
   return (
     <PageWrapper>
@@ -41,6 +58,7 @@ const CreateListing = () => {
 
         {/* body */}
         <div className="w-[92%] h-full flex flex-col mx-auto gap-8">
+
           {/* text captions */}
           <div className="flex flex-col w-full gap-2">
             <h3 className="text-2xl font-bold text-black">Create Listing</h3>
@@ -77,121 +95,15 @@ const CreateListing = () => {
           </div>
 
           {/* buy and sell order contents */}
-          <div>{clickTabs === "buy-order" ? <BuyOrder /> : <SellOrder />}</div>
-
-          {/* <form
-            className="flex flex-col gap-5 w-full h-full pb-5"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            {/* assets 
-            <label className="flex flex-col gap-2 w-full">
-              {/* label text 
-              <span className="font-medium text-xs text-black">Assets</span>
-
-              {/* input field 
-              <DrawerSelectInput
-                value={listingData?.asset || "Select asset"}
-                onClick={toggleDrawer}
-              />
-            </label>
-
-            {/* Listing Amount 
-            <label className="flex flex-col gap-2 w-full">
-              {/* title 
-              <span className="font-medium text-xs text-black">
-                Listing Amount
-              </span>
-
-              {/* input field 
-              <TextLabelInput
-                label={"BTC"}
-                placeholderText={"400,000"} 
-              />
-            </label>
-
-            {/* Rate-Fiat Value 
-            <label className="flex flex-col gap-2 w-full">
-              {/* title *
-              <span className="font-normal text-xs text-black">
-                Rate-Fiat Value
-              </span>
-
-              {/* input field 
-              <TextLabelInput
-                label={"NAIRA"}
-                placeholderText={"757.89"}
-              />
-            </label>
-
-            {/* Minimum Transaction Limit 
-            <label className="flex flex-col gap-2 w-full">
-              {/* title*
-              <span className="font-medium text-xs text-black">
-                Minimum Transaction Limit
-              </span>
-
-              {/* input field *
-              <TextLabelInput
-                label={"NAIRA"}
-                placeholderText={"200,000"}
-              />
-            </label>
-
-            {/* Maximum Transaction Limit *
-            <label className="flex flex-col gap-2 w-full">
-              {/* title *
-              <span className="font-medium text-xs text-black">
-                Maximum Transaction Limit
-              </span>
-
-              {/* input field *
-              <TextLabelInput
-                label={"NAIRA"}
-                placeholderText={"1,000,000"}
-              />
-            </label>
-
-            {/* Receiving Bank *
-            <label className="flex flex-col gap-2 w-full">
-              {/* label text *
-              <span className="font-medium text-xs text-black">
-                Receiving Bank
-              </span>
-
-              {/* input field *
-              <DrawerSelectInput
-                value={listingData?.receivingBank || "First Bank - 1234567891"}
-              />
-            </label>
-
-            {/* container *
-            <div className="flex w-full flex-col">
-              {/* continue button *
-              <div className="w-full flex flex-col items-stretch">
-                <PrimaryButton
-                  onClick={() => {
-                    toast.success("Listing created successful!");
-                    navigate("/listing");
-                  }}
-                  text={"Create"}
-                />
-              </div>
-            </div>
-                </form> */}
+          {
+            clickTabs === "buy-order" ? 
+            <BuyOrder
+            assetList={assetList} />:
+            <SellOrder
+            assetList={assetList} />
+          }
         </div>
       </div>
-
-      {/* Assets Drawer 
-      <Drawer isOpen={isOpen} onClose={toggleDrawer} position="bottom">
-        {/* drawer content container 
-        <StrictWrapper title={"Assets"} closeDrawer={toggleDrawer}>
-          {/* Body content *
-          <AssetsListView
-            closeDrawer={toggleDrawer}
-            setWalletData={setListingData}
-          />
-        </StrictWrapper>
-                </Drawer> */}
     </PageWrapper>
   );
 };
