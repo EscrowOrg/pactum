@@ -5,13 +5,13 @@ import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 
 const SendMessage = ({ scroll }) => {
   // STATES
-  const [messages, setMessages] = useState(["Hello", "Hi", "Bye"]);
+  const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
 
   //   DATA INITIALIZATION
   useEffect(() => {
     console.log(messages);
-  }, [messages]);
+  }, []);
 
   const sendMessage = () => {
     if (currentMessage.trim() !== "") {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../../components/Button";
 import { PasswordInput } from "../../../components/Input";
@@ -9,6 +9,10 @@ import {
   hasLowerCase,
   hasUpperCase,
 } from "../../../helpers/testForCase";
+import useMakeReq from "../../hooks/Global/useMakeReq";
+import BASE_URL from "../../../../../serivce/url.serice";
+import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
+import { toast } from "react-toastify";
 
 const ChangePassword = () => {
   // STATES
@@ -17,6 +21,29 @@ const ChangePassword = () => {
     password: "",
   });
 
+  // DATA INITIALIZATION
+  const {
+    // loading,
+    // data,
+    makePostRequest,
+    // error,
+    // isSuccessful
+  } = useMakeReq();
+
+   // SIDE EFFECT
+  // check if userId exists in the webStorageAPI
+  useEffect(()=>{
+    const uId = getFromLocalStorage("userId")
+    if(!(isEmpty(uId))) {
+      setFormData(prevState=>({
+        ...prevState,
+        userId: uId
+      }))
+    } else {
+      toast.error("Your old password is incorrect")
+      // navigate("/individual-register")
+    }
+  }, [])
   // HANDLERS
   const handleDisabledSubmitBtn = () => {
     const disable =
@@ -28,6 +55,11 @@ const ChangePassword = () => {
       formData.password.length < 8;
 
     return disable;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    makePostRequest(`${BASE_URL}/api/User/ChangePassword`, formData);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -132,6 +164,7 @@ const ChangePassword = () => {
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
               <PrimaryButton
+              onClick={handleSubmit}
                 text={"Update Password"}
                 height="h-14"
                 disabled={handleDisabledSubmitBtn()}
