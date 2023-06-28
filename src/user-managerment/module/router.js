@@ -57,6 +57,7 @@ import Notification from "./pages/Dashboard/Home/Notification";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
 import NewUser from "./pages/Dashboard/Portfolio/NewUser";
 import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
+import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -260,6 +261,13 @@ const MainRouter = () => {
             path="/listing/create-listing"
             element={<CreateListing />}
           />
+
+          <Route
+            exact
+            path="/listing/create-listing/info"
+            element={<CreateListingInfo />}
+          />
+
           <Route
             path="/listing/pending-payments/:orderId"
             element={<PendingOrderStatement />}
