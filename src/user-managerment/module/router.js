@@ -56,8 +56,13 @@ import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import Notification from "./pages/Dashboard/Home/Notification";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
 // import NewUser from "./pages/Dashboard/Portfolio/NewUser";
-// import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
+import AddUser from "./pages/Dashboard/Profile/AddUsers";
 import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
+import UserWallet from "./pages/Dashboard/Profile/UserWallet";
+import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
+import ChatBox from "./pages/Dashboard/Home/ChatBox";
+
+
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -103,11 +108,11 @@ const MainRouter = () => {
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
 
         {/* VENDOR'S USERS */}
-        {/* <Route path="/vendor-add-user" element={<AddUsers/>} /> */}
+        <Route path="/vendor-add-user" element={<AddUser />} />
 
-        {/* <Route path="/vendor-user-wallet" element={<UserWalletAsset />} /> */}
+        <Route path="/vendor-user-wallet" element={<UserWallet />} />
 
-        {/* <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset/>} /> */}
+        <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset />} />
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -211,7 +216,7 @@ const MainRouter = () => {
 
           <Route exact path="/home/notification" element={<Notification />} />
 
-          {/* <Route exact path="/home/chat" element={<Chat />} /> */}
+          <Route exact path="/home/chat" element={<ChatBox />} />
 
           {/* PORTFOLIO */}
           <Route exact path="/portfolio" element={<Portfolio />} />

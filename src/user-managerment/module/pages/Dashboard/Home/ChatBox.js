@@ -2,13 +2,13 @@ import React, { useRef } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import SendMessage from "../../../components/Dashboard/Home/SendMessage";
 
-const Chat = () => {
+const ChatBox = () => {
   // STATES
   const scroll = useRef();
 
   return (
     <PageWrapper>
-      {/* chat containter */}
+      {/* ChatBox containter */}
       <div className="w-full h-full py-5 gap-8">
         {/* send message  */}
         <span ref={scroll}></span>
@@ -18,4 +18,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatBox;
