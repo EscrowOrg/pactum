@@ -8,6 +8,7 @@ import SellOrder from "../../../components/Dashboard/Listing/SellOrder";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { GET_ASSETS_MAPPING } from "../../../../../serivce/apiRoutes.service";
+import { InfoCircle } from "iconsax-react";
 
 const CreateListing = () => {
 
@@ -61,7 +62,20 @@ const CreateListing = () => {
 
           {/* text captions */}
           <div className="flex flex-col w-full gap-2">
-            <h3 className="text-2xl font-bold text-black">Create Listing</h3>
+
+            <div className="flex w-full justify-between items-center gap-2">
+              <h3 className="text-2xl font-bold text-black">
+                Create Listing
+              </h3>
+
+              {/* icon */}
+              <InfoCircle
+              onClick={()=>navigate("/listing/create-listing/info")}
+              className="cursor-pointer"
+              size="24"
+              color="#070214"
+              variant="TwoTone" />
+            </div>
 
             <h4 className="text-sm font-normal text-[#645B75]">
               Put up ads in the P2P marketplace for other users.
@@ -86,7 +100,7 @@ const CreateListing = () => {
               onClick={handleClick2}
               className={`  w-1/2 py-2 px-2 text-center cursor-pointer transition-all duration-700 ${
                 clickTabs === "sell-order"
-                  ? "bg-green-500  rounded-md  text-white"
+                  ? "bg-[#48A9A6]  rounded-md  text-white"
                   : ""
               }`}
             >
