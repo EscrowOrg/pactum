@@ -10,7 +10,7 @@ import {
   hasUpperCase,
 } from "../../../helpers/testForCase";
 import BASE_URL from "../../../../../serivce/url.serice";
-import { getFromLocalStorage, saveToLocalStorage } from "../../../helpers/localStorageMethods";
+import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
 import { toast } from "react-toastify";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ const ChangePassword = () => {
   });
 
   // DATA INITIALIZATION
-  const { loading, data, makePostRequest, error, isSuccessful } = useMakeReq();
+  const { data, makePostRequest, isSuccessful } = useMakeReq();
 
   // SIDE EFFECT
 useEffect(() => {
@@ -45,7 +45,7 @@ useEffect(() => {
     toast.error(data.message || "Old Password is incorrect. Try again!")
     // saveToLocalStorage("userId", data.data)
 }
-}, [data, isSuccessful])
+}, [])
 
 useEffect(()=>{
   const userId = getFromLocalStorage("userId")
