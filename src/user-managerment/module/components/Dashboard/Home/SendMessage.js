@@ -11,7 +11,7 @@ const SendMessage = ({ scroll }) => {
   //   DATA INITIALIZATION
   useEffect(() => {
     console.log(messages);
-  }, []);
+  }, [messages]);
 
   const sendMessage = () => {
     if (currentMessage.trim() !== "") {

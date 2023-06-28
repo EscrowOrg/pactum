@@ -9,62 +9,81 @@ import {
   hasLowerCase,
   hasUpperCase,
 } from "../../../helpers/testForCase";
-import useMakeReq from "../../hooks/Global/useMakeReq";
 import BASE_URL from "../../../../../serivce/url.serice";
-import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
+import { getFromLocalStorage, saveToLocalStorage } from "../../../helpers/localStorageMethods";
 import { toast } from "react-toastify";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { useNavigate } from "react-router-dom";
+import { getUserData } from "../../../../../serivce/cookie.service";
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+
+  // get userId
+  const { userId, token } = getUserData();
+  // console.log(userId, token)
+
   // STATES
-  const [formData, setFormData] = useState({
+  const [changePasswordRequests, setChangePasswordRequest] = useState({
     emailAddress: "",
     password: "",
+    userId: "",
+    token: "",
+    newPassword: "",
+    repeatPassword: "",
   });
 
   // DATA INITIALIZATION
-  const {
-    // loading,
-    // data,
-    makePostRequest,
-    // error,
-    // isSuccessful
-  } = useMakeReq();
+  const { loading, data, makePostRequest, error, isSuccessful } = useMakeReq();
 
-   // SIDE EFFECT
-  // check if userId exists in the webStorageAPI
-  useEffect(()=>{
-    const uId = getFromLocalStorage("userId")
-    if(!(isEmpty(uId))) {
-      setFormData(prevState=>({
-        ...prevState,
-        userId: uId
-      }))
-    } else {
-      toast.error("Your old password is incorrect")
-      // navigate("/individual-register")
-    }
-  }, [])
+  // SIDE EFFECT
+useEffect(() => {
+  if(isSuccessful===true && data) {
+    toast.success(data.message || "Your password has been changed successfully!")
+    navigate("loginIndividual")
+} else if(isSuccessful===false && data) {
+    toast.error(data.message || "Old Password is incorrect. Try again!")
+    // saveToLocalStorage("userId", data.data)
+}
+}, [data, isSuccessful])
+
+useEffect(()=>{
+  const userId = getFromLocalStorage("userId")
+  if(!(isEmpty(userId))) {
+      toast.error("Complete your registration!")
+      navigate("/individual-profile")
+  }
+}, [])
+
+
   // HANDLERS
   const handleDisabledSubmitBtn = () => {
     const disable =
-      isEmpty(formData.emailAddress) ||
-      isEmpty(formData.password) ||
-      !hasDigit(formData.password) ||
-      !hasLowerCase(formData.password) ||
-      !hasUpperCase(formData.password) ||
-      formData.password.length < 8;
+      isEmpty(changePasswordRequests.newPassword) ||
+      isEmpty(changePasswordRequests.newPassword) ||
+      !hasDigit(changePasswordRequests.newPassword) ||
+      !hasLowerCase(changePasswordRequests.newPassword) ||
+      !hasUpperCase(changePasswordRequests.newPassword) ||
+      changePasswordRequests.password.length < 8;
 
     return disable;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    makePostRequest(`${BASE_URL}/api/User/ChangePassword`, formData);
+    makePostRequest(`${BASE_URL}/api/User/ChangePassword`, {
+      changePasswordRequests: {
+        userId: userId,
+        token: token,
+        newPassword: changePasswordRequests.newPassword,
+      },
+    });
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setChangePasswordRequest({
+      ...changePasswordRequests,
       [name]: value,
     });
   };
@@ -91,7 +110,7 @@ const ChangePassword = () => {
             {/* old password field */}
             <PasswordInput
               name={"password"}
-              value={formData.password}
+              value={changePasswordRequests.password}
               onChange={handleChange}
               placeholderText={"Enter your old password"}
             />
@@ -103,8 +122,8 @@ const ChangePassword = () => {
 
             {/* new password field */}
             <PasswordInput
-              name={"password"}
-              value={formData.password}
+              name={"newPassword"}
+              value={changePasswordRequests.newPassword}
               onChange={handleChange}
               placeholderText={"Enter your password"}
             />
@@ -119,8 +138,8 @@ const ChangePassword = () => {
 
             {/* input field */}
             <PasswordInput
-              name={"password"}
-              value={formData.password}
+              name={"repeatPassword"}
+              value={changePasswordRequests.repeatPassword}
               onChange={handleChange}
               placeholderText={"Enter your password"}
             />
@@ -130,13 +149,19 @@ const ChangePassword = () => {
           <div className="w-full flex flex-col gap-3 mt-2">
             {/* characters contained */}
             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-              <Checkbox disabled={true} value={formData.password.length >= 8} />
+              <Checkbox
+                disabled={true}
+                value={changePasswordRequests.newPassword?.length >= 8}
+              />
               Contains at least 8+ Characters
             </label>
 
             {/* digits contained */}
             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-              <Checkbox disabled={true} value={hasDigit(formData.password)} />
+              <Checkbox
+                disabled={true}
+                value={hasDigit(changePasswordRequests.newPassword)}
+              />
               Contains at least 1 number
             </label>
 
@@ -145,8 +170,8 @@ const ChangePassword = () => {
               <Checkbox
                 disabled={true}
                 value={
-                  hasLowerCase(formData.password) &&
-                  hasUpperCase(formData.password)
+                  hasLowerCase(changePasswordRequests.newPassword) &&
+                  hasUpperCase(changePasswordRequests.newPassword)
                 }
               />
               Contains both lower (a-z) and upper case letters (A - Z)
@@ -154,7 +179,10 @@ const ChangePassword = () => {
 
             {/* new password match */}
             <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-              <Checkbox disabled={true} value={hasDigit(formData.password)} />
+              <Checkbox
+                disabled={true}
+                value={hasDigit(changePasswordRequests.newPassword)}
+              />
               New password match
             </label>
           </div>
@@ -164,7 +192,7 @@ const ChangePassword = () => {
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
               <PrimaryButton
-              onClick={handleSubmit}
+                onClick={handleSubmit}
                 text={"Update Password"}
                 height="h-14"
                 disabled={handleDisabledSubmitBtn()}
