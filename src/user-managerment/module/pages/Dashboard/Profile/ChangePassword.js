@@ -37,24 +37,25 @@ const ChangePassword = () => {
   const { data, makePostRequest, isSuccessful } = useMakeReq();
 
   // SIDE EFFECT
-useEffect(() => {
-  if(isSuccessful===true && data) {
-    toast.success(data.message || "Your password has been changed successfully!")
-    navigate("loginIndividual")
-} else if(isSuccessful===false && data) {
-    toast.error(data.message || "Old Password is incorrect. Try again!")
-    // saveToLocalStorage("userId", data.data)
-}
-}, [])
+  useEffect(() => {
+    if (isSuccessful === true && data) {
+      toast.success(
+        data.message || "Your password has been changed successfully!"
+      );
+      navigate("loginIndividual");
+    } else if (isSuccessful === false && data) {
+      toast.error(data.message || "Old Password is incorrect. Try again!");
+      // saveToLocalStorage("userId", data.data)
+    }
+  }, []);
 
-useEffect(()=>{
-  const userId = getFromLocalStorage("userId")
-  if(!(isEmpty(userId))) {
-      toast.error("Complete your registration!")
-      navigate("/individual-profile")
-  }
-}, [])
-
+  useEffect(() => {
+    const userId = getFromLocalStorage("userId");
+    if (!isEmpty(userId)) {
+      toast.error("Complete your registration!");
+      navigate("/individual-profile");
+    }
+  }, []);
 
   // HANDLERS
   const handleDisabledSubmitBtn = () => {
