@@ -55,11 +55,9 @@ import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSucces
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import Notification from "./pages/Dashboard/Home/Notification";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
-import MyUsers from "./pages/Dashboard/Profile/MyUsers";
-import UserWallet from "./pages/Dashboard/Profile/UserWallet";
-import AddUsers from "./pages/Dashboard/Profile/AddUsers";
-import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
-import Chat from "./pages/Dashboard/Home/ChatBox";
+// import NewUser from "./pages/Dashboard/Portfolio/NewUser";
+// import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
+import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -105,11 +103,11 @@ const MainRouter = () => {
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
 
         {/* VENDOR'S USERS */}
-        <Route path="/vendor-add-user" element={<AddUsers/>} />
+        {/* <Route path="/vendor-add-user" element={<AddUsers/>} /> */}
 
-        <Route path="/vendor-user-wallet" element={<UserWallet />} />
+        {/* <Route path="/vendor-user-wallet" element={<UserWalletAsset />} /> */}
 
-        <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset/>} />
+        {/* <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset/>} /> */}
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -213,7 +211,7 @@ const MainRouter = () => {
 
           <Route exact path="/home/notification" element={<Notification />} />
 
-          <Route exact path="/home/chat" element={<Chat />} />
+          {/* <Route exact path="/home/chat" element={<Chat />} /> */}
 
           {/* PORTFOLIO */}
           <Route exact path="/portfolio" element={<Portfolio />} />
@@ -262,6 +260,13 @@ const MainRouter = () => {
             path="/listing/create-listing"
             element={<CreateListing />}
           />
+
+          <Route
+            exact
+            path="/listing/create-listing/info"
+            element={<CreateListingInfo />}
+          />
+
           <Route
             path="/listing/pending-payments/:orderId"
             element={<PendingOrderStatement />}
@@ -294,10 +299,10 @@ const MainRouter = () => {
             element={<SettingsEditProfile />}
           />
 
-          <Route exact 
+          {/* <Route exact 
           path="/profile/list-of-users" 
           element={<MyUsers />} 
-          />
+          /> */}
 
           <Route
             exact
