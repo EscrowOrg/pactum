@@ -61,6 +61,7 @@ import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
 import ChatBox from "./pages/Dashboard/Home/ChatBox";
+import MyUsers from "./pages/Dashboard/Profile/MyUsers";
 
 
 
@@ -304,10 +305,10 @@ const MainRouter = () => {
             element={<SettingsEditProfile />}
           />
 
-          {/* <Route exact 
+          <Route exact 
           path="/profile/list-of-users" 
           element={<MyUsers />} 
-          /> */}
+          />
 
           <Route
             exact

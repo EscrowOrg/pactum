@@ -9,7 +9,7 @@ import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
-const ListOfUsers = () => {
+const MyUsers= () => {
   // STATES
   const [searchUsers, setSearchUsers] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
@@ -265,4 +265,4 @@ const ListOfUsers = () => {
   );
 };
 
-export default ListOfUsers;
+export default MyUsers;
