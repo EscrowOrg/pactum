@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
-import { BackButton } from "../../../components/Button";
+import { BackButton } from "../../Button";
 import { ProfileAdd } from "iconsax-react";
-import { SearchInput } from "../../../components/Input";
+import { SearchInput } from "../../Input";
 import { useNavigate } from "react-router-dom";
 
 const NewUser = () => {
@@ -22,7 +22,7 @@ const NewUser = () => {
           {/* title */}
           <h3 className="font-bold text-lg mt-1">Users</h3>
 
-          <div onClick={()=>navigate("/vendor/add-users")} className="flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer">
+          <div onClick={()=>navigate("/vendor-add-user")} className="flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer">
             <ProfileAdd color="#ffffff" size={18} variant="Bulk" />
 
             {/* add user button */}

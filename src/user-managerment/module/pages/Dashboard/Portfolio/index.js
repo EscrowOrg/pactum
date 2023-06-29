@@ -76,7 +76,7 @@ const Portfolio = () => {
                     </button>
 
                     {/* user button */}
-                    <div onClick={()=>navigate("/vendor-new-user")} className='flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer'>
+                    <div className='flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer'>
 
                         <ProfileAdd
                         color='#ffffff'

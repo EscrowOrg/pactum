@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../../components/Button";
 import { PasswordInput } from "../../../components/Input";
@@ -9,30 +9,82 @@ import {
   hasLowerCase,
   hasUpperCase,
 } from "../../../helpers/testForCase";
+import BASE_URL from "../../../../../serivce/url.serice";
+import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
+import { toast } from "react-toastify";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { useNavigate } from "react-router-dom";
+import { getUserData } from "../../../../../serivce/cookie.service";
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+
+  // get userId
+  const { userId, token } = getUserData();
+  // console.log(userId, token)
+
   // STATES
-  const [formData, setFormData] = useState({
+  const [changePasswordRequests, setChangePasswordRequest] = useState({
     emailAddress: "",
     password: "",
+    userId: "",
+    token: "",
+    newPassword: "",
+    repeatPassword: "",
   });
+
+  // DATA INITIALIZATION
+  const { data, makePostRequest, isSuccessful } = useMakeReq();
+
+  // SIDE EFFECT
+  useEffect(() => {
+    if (isSuccessful === true && data) {
+      toast.success(
+        data.message || "Your password has been changed successfully!"
+      );
+      navigate("loginIndividual");
+    } else if (isSuccessful === false && data) {
+      toast.error(data.message || "Old Password is incorrect. Try again!");
+      // saveToLocalStorage("userId", data.data)
+    }
+  }, []);
+
+  useEffect(() => {
+    const userId = getFromLocalStorage("userId");
+    if (!isEmpty(userId)) {
+      toast.error("Complete your registration!");
+      navigate("/individual-profile");
+    }
+  }, []);
 
   // HANDLERS
   const handleDisabledSubmitBtn = () => {
     const disable =
-      isEmpty(formData.emailAddress) ||
-      isEmpty(formData.password) ||
-      !hasDigit(formData.password) ||
-      !hasLowerCase(formData.password) ||
-      !hasUpperCase(formData.password) ||
-      formData.password.length < 8;
+      isEmpty(changePasswordRequests.newPassword) ||
+      isEmpty(changePasswordRequests.newPassword) ||
+      !hasDigit(changePasswordRequests.newPassword) ||
+      !hasLowerCase(changePasswordRequests.newPassword) ||
+      !hasUpperCase(changePasswordRequests.newPassword) ||
+      changePasswordRequests.password.length < 8;
 
     return disable;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    makePostRequest(`${BASE_URL}/api/User/ChangePassword`, {
+      changePasswordRequests: {
+        userId: userId,
+        token: token,
+        newPassword: changePasswordRequests.newPassword,
+      },
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setChangePasswordRequest({
+      ...changePasswordRequests,
       [name]: value,
     });
   };
@@ -56,10 +108,10 @@ const ChangePassword = () => {
           <label className="flex flex-col gap-2 w-full">
             <span className="font-normal text-xs text-black">Old Password</span>
 
-            {/* input field */}
+            {/* old password field */}
             <PasswordInput
               name={"password"}
-              value={formData.password}
+              value={changePasswordRequests.password}
               onChange={handleChange}
               placeholderText={"Enter your old password"}
             />
@@ -69,14 +121,17 @@ const ChangePassword = () => {
             {/* label text */}
             <span className="font-normal text-xs text-black">New Password</span>
 
-            {/* input field */}
+            {/* new password field */}
             <PasswordInput
-              name={"password"}
-              value={formData.password}
+              name={"newPassword"}
+              value={changePasswordRequests.newPassword}
               onChange={handleChange}
               placeholderText={"Enter your password"}
             />
+          </label>
 
+          {/*repeat new password container */}
+          <label className="flex flex-col gap-2 w-full">
             {/* label text */}
             <span className="font-normal text-xs text-black">
               Repeat New Password
@@ -84,54 +139,61 @@ const ChangePassword = () => {
 
             {/* input field */}
             <PasswordInput
-              name={"password"}
-              value={formData.password}
+              name={"repeatPassword"}
+              value={changePasswordRequests.repeatPassword}
               onChange={handleChange}
               placeholderText={"Enter your password"}
             />
-
-            {/* password strength */}
-            <div className="w-full flex flex-col gap-3 mt-2">
-              {/* characters contained */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox
-                  disabled={true}
-                  value={formData.password.length >= 8}
-                />
-                Contains at least 8+ Characters
-              </label>
-
-              {/* digits contained */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox disabled={true} value={hasDigit(formData.password)} />
-                Contains at least 1 number
-              </label>
-
-              {/* includes cases */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox
-                  disabled={true}
-                  value={
-                    hasLowerCase(formData.password) &&
-                    hasUpperCase(formData.password)
-                  }
-                />
-                Contains both lower (a-z) and upper case letters (A - Z)
-              </label>
-
-              {/* new password match */}
-              <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
-                <Checkbox disabled={true} value={hasDigit(formData.password)} />
-                New password match
-              </label>
-            </div>
           </label>
+
+          {/* password strength */}
+          <div className="w-full flex flex-col gap-3 mt-2">
+            {/* characters contained */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox
+                disabled={true}
+                value={changePasswordRequests.newPassword?.length >= 8}
+              />
+              Contains at least 8+ Characters
+            </label>
+
+            {/* digits contained */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox
+                disabled={true}
+                value={hasDigit(changePasswordRequests.newPassword)}
+              />
+              Contains at least 1 number
+            </label>
+
+            {/* includes cases */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox
+                disabled={true}
+                value={
+                  hasLowerCase(changePasswordRequests.newPassword) &&
+                  hasUpperCase(changePasswordRequests.newPassword)
+                }
+              />
+              Contains both lower (a-z) and upper case letters (A - Z)
+            </label>
+
+            {/* new password match */}
+            <label className="flex items-center gap-2 font-normal text-xs text-[#645B75]">
+              <Checkbox
+                disabled={true}
+                value={hasDigit(changePasswordRequests.newPassword)}
+              />
+              New password match
+            </label>
+          </div>
 
           {/* button container */}
           <div className="flex w-full flex-col items-center mt-auto">
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
               <PrimaryButton
+                onClick={handleSubmit}
                 text={"Update Password"}
                 height="h-14"
                 disabled={handleDisabledSubmitBtn()}

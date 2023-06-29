@@ -55,9 +55,15 @@ import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSucces
 import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import Notification from "./pages/Dashboard/Home/Notification";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
-import NewUser from "./pages/Dashboard/Portfolio/NewUser";
-import AddUsers from "./pages/Dashboard/Portfolio/AddUsers";
+// import NewUser from "./pages/Dashboard/Portfolio/NewUser";
+import AddUser from "./pages/Dashboard/Profile/AddUsers";
 import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
+import UserWallet from "./pages/Dashboard/Profile/UserWallet";
+import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
+import ChatBox from "./pages/Dashboard/Home/ChatBox";
+import MyUsers from "./pages/Dashboard/Profile/MyUsers";
+
+
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -102,6 +108,12 @@ const MainRouter = () => {
         {/* VENDOR CREATE PIN SUCCESS */}
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
 
+        {/* VENDOR'S USERS */}
+        <Route path="/vendor-add-user" element={<AddUser />} />
+
+        <Route path="/vendor-user-wallet" element={<UserWallet />} />
+
+        <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset />} />
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
@@ -203,11 +215,9 @@ const MainRouter = () => {
             element={<SellTransactionSuccess />}
           />
 
-          <Route
-            exact
-            path="/home/notification"
-            element={<Notification />}
-          />
+          <Route exact path="/home/notification" element={<Notification />} />
+
+          <Route exact path="/home/chat" element={<ChatBox />} />
 
           {/* PORTFOLIO */}
           <Route exact path="/portfolio" element={<Portfolio />} />
@@ -217,11 +227,6 @@ const MainRouter = () => {
             path="/portfolio/create-wallet"
             element={<CreateWallet />}
           />
-
-          <Route path="/portfolio/new-user" element={<NewUser />} />
-
-          <Route path="/portfolio/new-user/add-user" element={<AddUsers />} />
-
 
           <Route
             exact
@@ -298,6 +303,11 @@ const MainRouter = () => {
             exact
             path="/profile/edit-profile"
             element={<SettingsEditProfile />}
+          />
+
+          <Route exact 
+          path="/profile/list-of-users" 
+          element={<MyUsers />} 
           />
 
           <Route

@@ -3,9 +3,8 @@ import {
   BackButton,
   ErrorButton,
   PrimaryButton,
-  PrimaryButtonLight,
 } from "../../../components/Button";
-import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
@@ -14,9 +13,6 @@ import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import ReportStatement from "./ReportStatement";
 
 const SellOrderStatements = () => {
-  // STATES
-  const [isSelected, setIsSelected] = useState(false);
-
   //   Drawer State
   const [isOpen, setIsOpen] = useState(false);
 

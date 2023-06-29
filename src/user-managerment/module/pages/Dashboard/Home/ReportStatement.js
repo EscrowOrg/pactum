@@ -6,10 +6,12 @@ const ReportStatement = () => {
   const navigate = useNavigate();
   return (
     <div className="w-full h-full">
-      {/* label  */}
-      <div className="mb-1">
-        <label className=" w-full text-[#A39CB2] text-sm">Title</label> <br />
-      </div>
+      {/* title */}
+      <input
+        type="text"
+        placeholder="Title"
+        className="w-full outline-0 border-0 text-sm"
+      />
 
       {/* input   */}
       <div className="h-96 w-full">

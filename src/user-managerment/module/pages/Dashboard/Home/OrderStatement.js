@@ -4,7 +4,7 @@ import {
   PrimaryButton,
   PrimaryButtonLight,
 } from "../../../components/Button";
-import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import { Copy, InfoCircle, Message, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
@@ -32,8 +32,8 @@ const OrderStatement = () => {
           </div>
 
           {/* transaction list button */}
-          <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-            <TransactionMinus size="14" color="#16053D" />
+          <button onClick={()=>navigate("/home/chat")} className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
+            <Message size="14" color="#16053D" />
           </button>
         </div>
 

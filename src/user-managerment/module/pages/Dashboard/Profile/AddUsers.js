@@ -3,7 +3,7 @@ import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../../components/Button";
 import { TextInput, TextLabelInput } from "../../../components/Input";
 
-const AddUsers = () => {
+const AddUser = () => {
   return (
     <PageWrapper>
       <div className="w-full h-full flex flex-col p-5">
@@ -68,4 +68,4 @@ const AddUsers = () => {
   );
 };
 
-export default AddUsers;
+export default AddUser;
