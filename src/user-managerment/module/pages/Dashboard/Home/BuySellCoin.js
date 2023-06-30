@@ -9,16 +9,32 @@ import { TextLabelInput } from "../../../components/Input";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import Assets from "./Assets";
+import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { GET_AD_LISTING } from "../../../../../serivce/apiRoutes.service";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
+import { isEmpty } from "../../../helpers/isEmpty";
+import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 
 const BuySellCoin = () => {
+
   // STATES
   const [action, setAction] = useState(1);
   const [coinSelect, setCoinSelect] = useState(null);
+  const [listingAds, setListingAds] = useState([])
+
 
   // DRAWER STATES
   const [isOpen, setIsOpen] = useState(false);
 
+
   // DATA INTIALIZATION
+  const {
+    getLoading,
+    makeGetRequest,
+    isSuccessful,
+    data
+  } = useMakeReq()
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const coinOptions = [
@@ -79,14 +95,17 @@ const BuySellCoin = () => {
     },
   ];
 
+
   // HANDLERS
   const toggleDrawer = (value) => {
     // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
     setIsOpen((isOpen) => !isOpen);
   };
 
+  
   // SIDE EFFECTS
   useEffect(() => {
+    setCoinSelect(coinOptions[0]);
     const id = searchParams?.get("id");
     if (id) {
       setAction(+id);
@@ -94,17 +113,26 @@ const BuySellCoin = () => {
       console.log("ID isn't present");
     }
   }, []);
+  useEffect(()=>{
+    makeGetRequest(`${GET_AD_LISTING}/${0}/${10}`)
+  }, [])
   useEffect(() => {
-    setCoinSelect(coinOptions[0]);
-  }, []);
+    console.log("success state: ", isSuccessful)
+    if(isSuccessful && !isEmpty(data)){
+      setListingAds(data?.data)
+    }
+  }, [data, isSuccessful]);
 
   return (
     <PageWrapper>
-      <div className="w-full h-full flex flex-col gap-3 bg-[#FAFAFB]">
+      <div className="w-full h-full flex flex-col gap-3 bg-[#f0f0f0]">
+
         {/* header */}
         <div className="border-b border-[#F5F3F6] bg-white pb-[14px] w-full flex flex-col pt-5 gap-4">
+
           {/* navbar */}
           <nav className="flex items-center w-[92%] mx-auto justify-between">
+
             {/* back button */}
             <BackButton />
 
@@ -137,8 +165,10 @@ const BuySellCoin = () => {
 
           {/* wrapper */}
           <div className="w-[92%] mx-auto">
+
             {/* container */}
             <div className="grid grid-cols-[2fr_1fr] w-full gap-x-3">
+              
               {/* textinput */}
               <TextLabelInput
                 label={"NGN"}
@@ -159,103 +189,133 @@ const BuySellCoin = () => {
 
         {/* body */}
         <div className="w-full flex flex-col mx-auto gap-5 pb-5 bg-transparent">
+
           {/* container */}
           <div className="w-[92%] flex flex-col mx-auto gap-5 bg-transparent">
-            {offers.map((offer, index) => (
-              <div
-                key={index}
-                className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4"
-              >
-                {/* profile info */}
-                <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
-                  {/* name */}
-                  <div className="flex items-center gap-2">
-                    <img
-                      alt=""
-                      src={offer.imgUrl}
-                      className="h-[40px] w-[40px] rounded-[50%]"
-                    />
+            {
+              getLoading?
+              <LoadingSpinner
+              viewPortHeight="h-[95vh]" />:
+              !isEmpty(listingAds)?
+              listingAds.map((listingAd, index) => (
+                <div
+                  className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4"
+                >
 
-                    <div className="flex flex-col gap-1">
-                      <h3 className="font-semibold text-black text-sm">
-                        {offer.name}
-                      </h3>
+                  {/* profile info */}
+                  <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
 
+                    {/* name */}
+                    <div className="flex items-center gap-2">
+                      <img
+                        alt=""
+                        src={listingAd.imgUrl}
+                        className="h-[40px] w-[40px] rounded-[50%]"
+                      />
+
+                      <div className="flex flex-col gap-1">
+                        <h3 className="font-semibold text-black text-sm">
+                          {listingAd.merchantName}
+                        </h3>
+
+                        <h4 className="text-[#8D85A0] text-xs font-normal">
+                          {listingAd.username}
+                        </h4>
+                      </div>
+                    </div>
+
+                    {/* price */}
+                    <div className="flex flex-col items-end gap-[2px]">
                       <h4 className="text-[#8D85A0] text-xs font-normal">
-                        {offer.username}
+                        Price
+                      </h4>
+
+                      <h4 className="text-lg font-bold text-[#2D6A68]">
+                        ₦{listingAd.tradePrice.toLocaleString('en-US')}
                       </h4>
                     </div>
                   </div>
 
-                  {/* price */}
-                  <div className="flex flex-col items-end gap-[2px]">
-                    <h4 className="text-[#8D85A0] text-xs font-normal">
-                      Price
-                    </h4>
+                  {/* available order & min-max order */}
+                  <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
+                    <div className="flex flex-col gap-[2px]">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Available Order
+                      </h3>
 
-                    <h4 className="text-lg font-bold text-[#2D6A68]">
-                      ₦300.00
-                    </h4>
+                      <h4 className="text-sm font-semibold text-black">
+                        ₦{listingAd?.availableOrder?.toLocaleString("en-US")}
+                      </h4>
+                    </div>
+
+                    <div className="flex flex-col gap-[2px] items-end">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Min - Max Order
+                      </h3>
+
+                      <h4 className="text-sm font-semibold text-black">
+                        ₦{listingAd.lowerLimit.toLocaleString("en-US")} -{" "}
+                        {listingAd.upperLimit.toLocaleString("en-US")}
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* trade percentage */}
+                  <div className="w-full flex items-center justify-between pb-4">
+                    <div className="flex flex-col gap-[2px]">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Trade
+                      </h3>
+
+                      <h4 className="text-sm font-semibold text-[#645B75]">
+                        {listingAd.tradeMade}{" "}
+                        <span className="text-[#8D85A0] font-normal">{`(${listingAd.completionPercentage}% Completion)`}</span>
+                      </h4>
+                    </div>
+
+                    {listingAd.listingType === 1 ? (
+                      <PrimaryButton
+                        onClick={() =>
+                          navigate("/home/buy-coin/id:3")
+                        }
+                        height="h-10"
+                        text="Buy"
+                      />
+                    ) : (
+                      <ErrorButton
+                        onClick={() =>
+                          navigate("/home/sell-coin/id:3")
+                        }
+                        height="h-10"
+                        text="Sell"
+                      />
+                    )}
                   </div>
                 </div>
+              )):
+              <EmptyDataComp
+              viewPortHeight="h-[95vh]" />
+            }
+          </div>
 
-                {/* available order & min-max order */}
-                <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
-                  <div className="flex flex-col gap-[2px]">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Available Order
-                    </h3>
+          {/* pagination */}
+          <div className="mx-auto px-2 w-[92%] flex items-center justify-between gap-2">
 
-                    <h4 className="text-sm font-semibold text-black">
-                      ₦{offer.availableOrder.toLocaleString("en-US")}
-                    </h4>
-                  </div>
+            {/* previous */}
+            <button
+            disabled={true} 
+            className="text-[#3A0CA3] text-sm font-semibold disabled:text-gray-500 disabled:font-normal inline-flex items-center gap-1">
+              <HiArrowSmLeft />
+              previous
+            </button>
 
-                  <div className="flex flex-col gap-[2px] items-end">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Min - Max Order
-                    </h3>
-
-                    <h4 className="text-sm font-semibold text-black">
-                      ₦{offer.minMaxOrder[0].toLocaleString("en-US")} -{" "}
-                      {offer.minMaxOrder[1].toLocaleString("en-US")}
-                    </h4>
-                  </div>
-                </div>
-
-                {/* trade percentage */}
-                <div className="w-full flex items-center justify-between pb-4">
-                  <div className="flex flex-col gap-[2px]">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Trade
-                    </h3>
-
-                    <h4 className="text-sm font-semibold text-[#645B75]">
-                      {offer.tradeMade}{" "}
-                      <span className="text-[#8D85A0] font-normal">{`(${offer.completionPercentage}% Completion)`}</span>
-                    </h4>
-                  </div>
-
-                  {action === 1 ? (
-                    <PrimaryButton
-                      onClick={() =>
-                        navigate("/home/buy-coin/id:3")
-                      }
-                      height="h-10"
-                      text="Buy"
-                    />
-                  ) : (
-                    <ErrorButton
-                      onClick={() =>
-                        navigate("/home/sell-coin/id:3")
-                      }
-                      height="h-10"
-                      text="Sell"
-                    />
-                  )}
-                </div>
-              </div>
-            ))}
+            {/* next */}
+            <button
+            disabled={false} 
+            className="text-[#3A0CA3] text-sm font-semibold disabled:text-gray-500 disabled:font-normal inline-flex items-center gap-1">
+              Next
+              <HiArrowSmRight />
+            </button>
           </div>
         </div>
 
@@ -267,6 +327,7 @@ const BuySellCoin = () => {
         >
           {/* drawer content container */}
           <StrictWrapper title={"Report"} closeDrawer={() => setIsOpen(false)}>
+            
             {/* Body content */}
             <Assets />
           </StrictWrapper>
