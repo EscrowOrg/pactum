@@ -18,6 +18,7 @@ export const VALIDATE_DEVICE_TOKEN = `${BASE_URL}/api/User/ValidateDeviceToken`
 export const GET_BANKS = `${BASE_URL}/api/User/GetBankByUserId`
 export const CREATE_AD_LISTING = `${BASE_URL}/api/ListingManagement/CreateAdListing`
 export const GET_AD_LISTING = `${BASE_URL}/api/ListingManagement/GetAdListing`
+export const CHANGE_PASSWORD = `${BASE_URL}/api/User/ChangePassword`
 
 
 //external url
