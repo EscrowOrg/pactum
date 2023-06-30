@@ -6,7 +6,8 @@ const SettingOptionCards = ({
     Icon,
     children,
     title,
-    pathTo="#"
+    pathTo="#",
+    onClick
 }) => {
     return (
         <Link

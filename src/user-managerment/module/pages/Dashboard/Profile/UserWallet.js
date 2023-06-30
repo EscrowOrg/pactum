@@ -1,26 +1,20 @@
 import React, { useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
-import {
-  BackButton,
-  PrimaryButton,
-  PrimaryButtonLight,
-} from "../../../components/Button";
+import {BackButton,PrimaryButton, PrimaryButtonLight} from "../../../components/Button";
 import { ArrowDown2 } from "iconsax-react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-import Drawer from "../../../layouts/Drawer";
-import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
-import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
+
 
 const UserWallet = () => {
   // STATES
   const [searchInput, setSearchInput] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-  const [filterStatus, setFilterStatus] = useState({
-    name: "",
-    id: null,
-  });
+  // const [filterStatus, setFilterStatus] = useState({
+  //   name: "",
+  //   id: null,
+  // });
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
@@ -188,35 +182,13 @@ const UserWallet = () => {
 
           <div className="flex flex-col items-stretch w-[60%]">
             <PrimaryButton
-              // onClick={() => {}}
+              onClick={() =>navigate("/vendor-user-wallet/id:7")}
               height="h-14"
-              text={"Revoke"}
+              text={"Send Asset"}
             />
           </div>
         </div>
-      </div>
-
-      {/* select filter drawer */}
-      <Drawer
-        relationshipStatus="alone"
-        height="!h-auto"
-        insertCurve={false}
-        type="slider"
-        isOpen={isDrawer1Open}
-        onClose={toggleDrawer1}
-        position="bottom"
-      >
-        {/* drawer content container */}
-        <SlideWrapper title={"Filter by:"}>
-          <UserFilterStatus
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-            filterStatus={filterStatus}
-            setFilterStatus={setFilterStatus}
-            closeDrawer={toggleDrawer1}
-          />
-        </SlideWrapper>
-      </Drawer>
+      </div>   
     </PageWrapper>
   );
 };

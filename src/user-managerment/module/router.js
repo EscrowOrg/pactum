@@ -62,8 +62,11 @@ import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
 import ChatBox from "./pages/Dashboard/Home/ChatBox";
 import MyUsers from "./pages/Dashboard/Profile/MyUsers";
-
-
+import Banks from "./pages/Dashboard/Profile/Banks";
+import AddBanks from "./pages/Dashboard/Profile/AddBanks";
+import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
+import ChangePin from "./pages/Dashboard/Profile/ChangePin";
+import SendChat from "./pages/Dashboard/Profile/SendChat";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -305,9 +308,16 @@ const MainRouter = () => {
             element={<SettingsEditProfile />}
           />
 
-          <Route exact 
-          path="/profile/list-of-users" 
-          element={<MyUsers />} 
+          <Route exact path="/profile/list-of-users" element={<MyUsers />} />
+
+          <Route exact path="/profile/banks" element={<Banks />} />
+
+          <Route exact path="/profile/add-bank" element={<AddBanks />} />
+
+          <Route
+            exact
+            path="/profile/add-bank/:list"
+            element={<ListOfBanks />}
           />
 
           <Route
@@ -315,6 +325,10 @@ const MainRouter = () => {
             path="/profile/change-password"
             element={<ChangePassword />}
           />
+
+          <Route exact path="/profile/change-pin" element={<ChangePin />} />
+
+          <Route exact path="/profile/send-chat" element={<SendChat/>}/>
 
           <Route
             exact

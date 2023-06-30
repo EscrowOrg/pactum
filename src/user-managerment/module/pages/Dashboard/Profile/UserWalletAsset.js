@@ -34,6 +34,8 @@ const UserWalletAsset = () => {
       color: "red"
     },
   ];
+
+  const colors = ["#10B981", '#EB9B00', '#D1292D', '#D1292D']
   return (
     <PageWrapper>
       <div className="w-full h-full">
@@ -72,7 +74,7 @@ const UserWalletAsset = () => {
                   {/* user name and email */}
                   <div>
                     <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
-                    <p className={`text-xs font-normal text-${asset.color}`}>
+                    <p className="text-xs font-bold"  style={{ color: colors[index] }}>
                       {asset.assetStatus}
                     </p>
                   </div>
