@@ -3,24 +3,21 @@ import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../../../components/Button";
 import { Add, Trash } from "iconsax-react";
+import AltModal from "../../../layouts/AltModal";
+import RemoveBank from "../../../components/Dashboard/Profile/RemoveBank";
 
 const ListOfBanks = (closeModal) => {
+  // STATES
+  const [removePhotoModalState, setRemovePhotoModal] = useState(false);
+
   const navigate = useNavigate();
 
   const BankDetails = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  // const [changePhotoDrawerState, setChangePhotoDrawer] = useState(false);
-  // const [removePhotoModalState, setRemovePhotoModal] = useState(false);
-
-   // HANDLERS
-//    const toggleChangePhotoDrawer = () => {
-//     setChangePhotoDrawer(!changePhotoDrawerState);
-//   };
-// const toggleRemovePhotoModal = () => {
-//     setRemovePhotoModal(!removePhotoModalState);
-// };
-
-// closeModal()
+  // HANDLERS
+  const toggleRemovePhotoModal = () => {
+    setRemovePhotoModal(!removePhotoModalState);
+  };
 
   return (
     <PageWrapper>
@@ -44,72 +41,37 @@ const ListOfBanks = (closeModal) => {
       </div>
       <div className="mt-2 bg-[#F4EFFE] h-full py-2 px-5">
         {BankDetails.map((bankdetail, index) => (
-          <div
-            key={index}
-            className="bg-[#fff] border rounded-[8px] my-2"
-          >
+          <div key={index} className="bg-[#fff] border rounded-[8px] my-2">
             <div className="flex justify-between items-center p-3">
               <div>
                 <h3 className="font-bold text-sm">First Bank</h3>
-                <p className="text-[#645B75] text-xs">1234567891 - Asemota Joel</p>
+                <p className="text-[#645B75] text-xs">
+                  1234567891 - Asemota Joel
+                </p>
               </div>
 
               {/* delete icon */}
-              <div onClick={()=>{
-                    // closeModal()
-                    // toggleRemovePhotoModal()
-                }}>
-                   <Trash variant="TwoTone" size={14} />
-                </div>
-             
+              <div
+                onClick={() => {
+                  // closeModal()
+                  toggleRemovePhotoModal();
+                }}
+                className="cursor-pointer"
+              >
+                <Trash variant="TwoTone" size={14} />
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-         {/* MODALS */}
-        {/* Change Photo Modal
-        <Drawer
-        relationshipStatus="alone"
-        height='!h-auto'
-        insertCurve={false}
-        type="slider"
-        isOpen={changePhotoDrawerState}
-        onClose={toggleChangePhotoDrawer}
-        position="bottom">
-
-            {/* content *
-            <SlideWrapper
-            closeDrawer={toggleChangePhotoDrawer}
-            title={"Change Photo:"}>
-
-                <SettingsChangePhoto 
-                // files={files}
-                // setFiles={setFiles}
-                closeModal={toggleChangePhotoDrawer}
-                toggleRemovePhotoModal={toggleRemovePhotoModal} />
-            </SlideWrapper>
-        </Drawer>
-
-        {/* Remove Photo Modal 
-        <AltModal
-        modalIsOpen={removePhotoModalState} 
-        toggleModal={toggleRemovePhotoModal}>
-
-            {/* content 
-            <RemovePhotoView
-            closeModal={toggleRemovePhotoModal} />
-        </AltModal> */}
-
-       {/* Remove Photo Modal */}
-       {/* <AltModal
-        // modalIsOpen={removePhotoModalState} 
-        toggleModal={toggleRemovePhotoModal}>
-
-           {/* content  
-            <RemovePhotoView
-            closeModal={toggleRemovePhotoModal} />
-        </AltModal> */}
+      <AltModal
+        modalIsOpen={removePhotoModalState}
+        toggleModal={toggleRemovePhotoModal}
+      >
+        {/* content */}
+        <RemoveBank closeModal={toggleRemovePhotoModal} />
+      </AltModal>
     </PageWrapper>
   );
 };

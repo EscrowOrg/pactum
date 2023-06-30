@@ -66,7 +66,7 @@ import Banks from "./pages/Dashboard/Profile/Banks";
 import AddBanks from "./pages/Dashboard/Profile/AddBanks";
 import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
 import ChangePin from "./pages/Dashboard/Profile/ChangePin";
-import SendUsChat from "./pages/Dashboard/Profile/SendUsChat";
+import SendChat from "./pages/Dashboard/Profile/SendChat";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -328,7 +328,7 @@ const MainRouter = () => {
 
           <Route exact path="/profile/change-pin" element={<ChangePin />} />
 
-          <Route exact path="/profile/send-chat" element={<SendUsChat/>}/>
+          <Route exact path="/profile/send-chat" element={<SendChat/>}/>
 
           <Route
             exact

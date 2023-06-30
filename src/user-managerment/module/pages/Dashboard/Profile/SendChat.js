@@ -1,8 +1,9 @@
 import React from "react";
-import { PrimaryButton } from "../../Button";
+import { PrimaryButton } from "../../../components/Button";
 
 const SendChat = () => {
   return (
+    // send a chat container
     <form className="w-full h-full flex flex-col px-4">
       {/* title field*/}
       <input

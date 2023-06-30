@@ -20,15 +20,17 @@ import UnverifiedLabel from "../../components/Dashboard/Profile/UnverifiedLabel"
 import { Link } from "react-router-dom";
 import { Logout as logUserOut } from "../../../../serivce/apiCalls";
 import Drawer from "../../layouts/Drawer";
-import ReviewPactum from "../../pages/Dashboard/Profile/ReviewPactum";
+import ReviewPactum from "../../pages/Dashboard/Profile/RecommendPactum";
 import SlideWrapper from "../../layouts/Drawer/SlideWrapper";
 import StrictWrapper from "../../layouts/Drawer/StrictWrapper";
-import SendChat from "../../components/Dashboard/Profile/SendChat";
+import SendChat from "../../pages/Dashboard/Profile/SendChat";
+import SendReview from "../../components/Dashboard/Profile/SendReview";
 
 const VendorSettings = () => {
   // STATES
   const [reviewDrawer, setReviewDrawer] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
 
   // DATA INITIALIZATION
   const { dispatch } = useContext(AuthContext);
@@ -38,9 +40,11 @@ const VendorSettings = () => {
     setReviewDrawer(!reviewDrawer);
   };
 
-  // HANDLERS
-  const toggleDrawer = (value) => {
-    // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
+  const toggleChatDrawer = (value) => {
+    setIsOpen1((isOpen1) => !isOpen1);
+  };
+
+  const toggleReviewDrawer = (value) => {
     setIsOpen((isOpen) => !isOpen);
   };
 
@@ -148,16 +152,18 @@ const VendorSettings = () => {
 
             {/* container */}
             <div className="p-3 flex flex-col gap-8 bg-[#FAFAFB] rounded-lg">
-              <SettingOptionCards Icon={Like1} title={"Recommend Pactum"} />
-
               <div onClick={toggleRateDrawer}>
+                <SettingOptionCards Icon={Like1} title={"Recommend Pactum"} />
+              </div>
+
+              <div onClick={toggleReviewDrawer}>
                 <SettingOptionCards
                   Icon={Star1}
                   title={"Review on Playstore"}
                 />
               </div>
 
-              <div onClick={toggleDrawer}>
+              <div onClick={toggleChatDrawer}>
                 <SettingOptionCards
                   Icon={Messages}
                   title={"Send us a Chat"}
@@ -194,21 +200,21 @@ const VendorSettings = () => {
 
         {/* send us a chat drawer */}
         <Drawer
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          isOpen={isOpen1}
+          onClose={() => setIsOpen1(false)}
           position="bottom"
         >
           {/* drawer content container */}
           <StrictWrapper
             title={"Send us a Chat"}
-            closeDrawer={() => setIsOpen(false)}
+            closeDrawer={() => setIsOpen1(false)}
           >
             {/* Body content */}
             <SendChat />
           </StrictWrapper>
         </Drawer>
 
-        {/* send a review modal */}
+        {/* rate Pactum modal */}
         <Drawer
           relationshipStatus="alone"
           height="!h-auto"
@@ -225,6 +231,22 @@ const VendorSettings = () => {
           >
             <ReviewPactum closeModal={toggleRateDrawer} />
           </SlideWrapper>
+        </Drawer>
+
+        {/* toggle review drawer */}
+        <Drawer
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          position="bottom"
+        >
+          {/* drawer content container */}
+          <StrictWrapper
+            title={"Write a Review"}
+            closeDrawer={() => setIsOpen(false)}
+          >
+            {/* Body content */}
+            <SendReview />
+          </StrictWrapper>
         </Drawer>
       </div>
     </NoTransitionWrapper>
