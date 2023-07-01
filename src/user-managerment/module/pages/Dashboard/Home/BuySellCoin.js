@@ -145,7 +145,7 @@ const BuySellCoin = () => {
               getLoading?
               <LoadingSpinner
               bgColor="bg-transparent"
-              viewPortHeight="h-[75vh]" />:
+              viewPortHeight="h-[60vh]" />:
               !isEmpty(listingAds?.items)?
               listingAds?.items?.filter(listingAd=>listingAd.listingType===action)?.map((listingAd, index) => (
                 <ListingAdCard
@@ -162,18 +162,19 @@ const BuySellCoin = () => {
               )):
               <EmptyDataComp
               bgColor="bg-transparent"
-              viewPortHeight="h-[75vh]" />
+              viewPortHeight="h-[60vh]" />
             }
           </div>
 
-          {/* pagination */}
-          <ListingAdPagination
-          totalCount={listingAds?.totalCount}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          skip={skip} />
         </div>
 
+        {/* pagination */}
+        <ListingAdPagination
+        totalCount={listingAds?.totalCount}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        skip={skip} />
+          
         {/* Drawer */}
         <Drawer
           isOpen={isOpen}
