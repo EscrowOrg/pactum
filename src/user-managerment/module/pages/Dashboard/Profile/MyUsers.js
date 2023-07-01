@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
 import { ArrowDown2, ProfileAdd } from "iconsax-react";
@@ -8,6 +8,9 @@ import { SlArrowRight } from "react-icons/sl";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import BASE_URL from "../../../../../serivce/url.serice";
 
 const MyUsers= () => {
   // STATES
@@ -22,7 +25,26 @@ const MyUsers= () => {
         name: "",
         id: null
     })
+    const [dateFutter, setDateFutter] = useState(null)
 
+   const {data, getLoading, makeGetRequest} = useMakeReq();
+
+   const{vendorId, userId} = getUserData();
+
+useEffect(()=>{
+   getUsers();
+},[])
+
+const getUsers = async ()=>{
+    try {
+     await makeGetRequest(`${BASE_URL}/api/Vendor/GetVendorSubUsers/${vendorId}/${userId}`)
+     // setFilterStatus(data.data);
+      setDateFutter(data && data.data)
+    } catch (error) {
+      setDateFutter(error)
+    }
+
+}
     //   DATA INITIALIZATION
   const navigate = useNavigate();
 
@@ -182,7 +204,7 @@ const MyUsers= () => {
 
           {/* list of users */}
           <div>
-            {listOfUsersData.map((user, index) => (
+            {dateFutter?.map((user, index) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet")}
                 key={index}
@@ -190,21 +212,21 @@ const MyUsers= () => {
               >
                 <div className="flex items-center gap-1.5">
                   {/* user image */}
-                  <div className="h-[32px] w-[32px] rounded-[50%] bg-[#3A0CA3] ">
+                  {/* <div className="h-[32px] w-[32px] rounded-[50%] bg-[#3A0CA3] ">
                     <img
                       alt=""
                       src={user.img}
                       className="h-full w-full rounded-[50%]"
                     />
-                  </div>
+                  </div> */}
 
                   {/* user name and email */}
                   <div>
                     <h3 className="text-sm font-semibold pb-0.5">
-                      {user.name}
+                      {user.email}
                     </h3>
                     <p className="text-xs font-normal text-[#8D85A0]">
-                      {user.username}
+                      {user.userName}
                     </p>
                   </div>
                 </div>

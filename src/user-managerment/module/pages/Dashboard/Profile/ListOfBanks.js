@@ -1,24 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../../../components/Button";
 import { Add, Trash } from "iconsax-react";
 import AltModal from "../../../layouts/AltModal";
 import RemoveBank from "../../../components/Dashboard/Profile/RemoveBank";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import BASE_URL from "../../../../../serivce/url.serice";
 
 const ListOfBanks = (closeModal) => {
   // STATES
   const [removePhotoModalState, setRemovePhotoModal] = useState(false);
 
   const navigate = useNavigate();
-
-  const BankDetails = [1, 2, 3, 4, 5, 6, 7, 8];
+   const [BankDetailss, setBankDetails] = useState(null);
+  //api/User/GetBankByUserId/
 
   // HANDLERS
   const toggleRemovePhotoModal = () => {
     setRemovePhotoModal(!removePhotoModalState);
   };
+  const {data, getLoading, makeGetRequest} = useMakeReq();
+  const {role, userId} = getUserData();
 
+  useEffect(()=>{
+    getBanks()
+  }, [])
+
+  const getBanks = async ()=>{
+    try {
+      await makeGetRequest(`${BASE_URL}/api/User/GetBankByUserId/${userId}/${role}`)
+      setBankDetails(data.data)
+    } catch (error) {
+      setBankDetails(error)
+    }
+  }
   return (
     <PageWrapper>
       <div className="w-full p-5 bg-[#F4EFFE]">
@@ -40,13 +57,13 @@ const ListOfBanks = (closeModal) => {
         </div>
       </div>
       <div className="mt-2 bg-[#F4EFFE] h-full py-2 px-5">
-        {BankDetails.map((bankdetail, index) => (
+        {BankDetailss.map((bankdetail, index) => (
           <div key={index} className="bg-[#fff] border rounded-[8px] my-2">
             <div className="flex justify-between items-center p-3">
               <div>
-                <h3 className="font-bold text-sm">First Bank</h3>
+                <h3 className="font-bold text-sm">{bankdetail.bankName}</h3>
                 <p className="text-[#645B75] text-xs">
-                  1234567891 - Asemota Joel
+                  {bankdetail.accountNumber} - {bankdetail.accountName}
                 </p>
               </div>
 

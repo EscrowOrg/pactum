@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import { getUserData } from "../../../../serivce/cookie.service"
 
 const useMakeReq = () => {
     
@@ -10,17 +11,20 @@ const useMakeReq = () => {
     const [hasError, setHasError] = useState(false)
     const [data, setData] = useState(null)
     const [isSuccessful, setIsSuccessful] = useState(false)
-
+   //const {token} = getUserData();
+   //console.log(token);
     // MAKING POST REQUEST
     const makePostRequest = async (url, formData) => {
 
         setLoading(true)
 
         try {
+            const {token} = getUserData()
             const {data} = await axios.post(url, formData,
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer  ${token}`,
                 }
             })
             setLoading(false)
@@ -45,9 +49,11 @@ const useMakeReq = () => {
 
         // begin consumption
         try {
+            const {token} =getUserData()
             const {data} = await axios.get(url, {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer  ${token}`,
                 }
             })
             setGetLoading(false)
