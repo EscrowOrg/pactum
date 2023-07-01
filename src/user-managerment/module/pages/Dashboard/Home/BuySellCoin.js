@@ -1,5 +1,5 @@
 import { TransactionMinus } from "iconsax-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {BackButton, ErrorButton,PrimaryButton} from "../../../components/Button";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -15,8 +15,8 @@ import { GET_AD_LISTING } from "../../../../../serivce/apiRoutes.service";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { isEmpty } from "../../../helpers/isEmpty";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import { AiOutlineUser } from "react-icons/ai";
 import ListingAdCard from "../../../components/Dashboard/Listing/ListingAdCard";
+import ListingAdPagination from "../Listing/ListingAdPagination";
 
 const BuySellCoin = () => {
 
@@ -29,6 +29,13 @@ const BuySellCoin = () => {
 
   // DRAWER STATES
   const [isOpen, setIsOpen] = useState(false);
+
+
+  // HOOKS
+  const skip = useMemo(()=>{
+    let output = (currentPage*10)-1;
+    return output<0?0:output
+  }, [currentPage])
 
 
   // DATA INTIALIZATION
@@ -44,14 +51,7 @@ const BuySellCoin = () => {
     { value: 2, label: "ETH" },
     { value: 3, label: "BNB" },
   ];
-
-
-  // HANDLERS
-  const toggleDrawer = (value) => {
-    // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
-    setIsOpen((isOpen) => !isOpen);
-  };
-
+  
   
   // SIDE EFFECTS
   useEffect(() => {
@@ -64,10 +64,9 @@ const BuySellCoin = () => {
     }
   }, []);
   useEffect(()=>{
-    makeGetRequest(`${GET_AD_LISTING}/${currentPage}/${10}`)
-  }, [])
+    makeGetRequest(`${GET_AD_LISTING}/${skip}/${10}`)
+  }, [currentPage])
   useEffect(() => {
-    console.log("success state: ", isSuccessful)
     if(isSuccessful && !isEmpty(data)){
       setListingAds(data?.data)
     }
@@ -75,7 +74,7 @@ const BuySellCoin = () => {
 
   return (
     <PageWrapper>
-      <div className="w-full h-full flex flex-col gap-3 bg-[#f0f0f0]">
+      <div className="w-full min-h-full flex flex-col gap-3 bg-[#f0f0f0]">
 
         {/* header */}
         <div className="border-b border-[#F5F3F6] bg-white pb-[14px] w-full flex flex-col pt-5 gap-4">
@@ -138,16 +137,17 @@ const BuySellCoin = () => {
         </div>
 
         {/* body */}
-        <div className="w-full flex flex-col justify-between h-full mx-auto gap-5 pb-5 bg-transparent">
+        <div className="w-full h-full flex flex-col justify-between mx-auto gap-5 bg-transparent">
 
           {/* container */}
           <div className="w-[92%] flex flex-col mx-auto gap-5 bg-transparent">
             {
               getLoading?
               <LoadingSpinner
-              viewPortHeight="h-[95vh]" />:
-              !isEmpty(listingAds)?
-              listingAds?.filter(listingAd=>listingAd.listingType===action)?.map((listingAd, index) => (
+              bgColor="bg-transparent"
+              viewPortHeight="h-[60vh]" />:
+              !isEmpty(listingAds?.items)?
+              listingAds?.items?.filter(listingAd=>listingAd.listingType===action)?.map((listingAd, index) => (
                 <ListingAdCard
                 key={index}
                 merchantName={listingAd.merchantName}
@@ -161,31 +161,20 @@ const BuySellCoin = () => {
                 listingType={listingAd.listingType} />
               )):
               <EmptyDataComp
-              viewPortHeight="h-[95vh]" />
+              bgColor="bg-transparent"
+              viewPortHeight="h-[60vh]" />
             }
           </div>
 
-          {/* pagination */}
-          <div className="mx-auto px-2 w-[92%] flex items-center justify-between gap-2 mt-auto pb-3">
-
-            {/* previous */}
-            <button
-            disabled={true} 
-            className="text-[#3A0CA3] text-sm font-semibold disabled:text-gray-500 disabled:font-normal inline-flex items-center gap-1">
-              <HiArrowSmLeft />
-              previous
-            </button>
-
-            {/* next */}
-            <button
-            disabled={false} 
-            className="text-[#3A0CA3] text-sm font-semibold disabled:text-gray-500 disabled:font-normal inline-flex items-center gap-1">
-              Next
-              <HiArrowSmRight />
-            </button>
-          </div>
         </div>
 
+        {/* pagination */}
+        <ListingAdPagination
+        totalCount={listingAds?.totalCount}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        skip={skip} />
+          
         {/* Drawer */}
         <Drawer
           isOpen={isOpen}
