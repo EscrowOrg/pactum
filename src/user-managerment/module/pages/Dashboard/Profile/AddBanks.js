@@ -1,11 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PageWrapper from '../../../layouts/PageWrapper'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import { TextInput, TextLabelInput } from '../../../components/Input'
 import { useNavigate } from 'react-router-dom'
+import { getUserData } from '../../../../../serivce/cookie.service'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import BASE_URL from '../../../../../serivce/url.serice'
+import { toast } from 'react-toastify'
+import { getFromLocalStorage } from '../../../helpers/localStorageMethods'
+import { isEmpty } from '../../../helpers/isEmpty'
 
 const AddBanks = () => {
   const navigate = useNavigate()
+
+  // {(() =>navigate("/profile/add-bank/:list"))}
+  const {userId} = getUserData();
+  const [addBank, setAddBanks] = useState({
+    bankName: "",
+    accountNumber: "",
+    accountName: "",
+    fiatCurrency: 1
+  });
+
+  const {data, makePostRequest, isSuccessful} = useMakeReq()
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAddBanks({
+      ...addBank,
+      [name]: value,
+    });
+  };
+  
+useEffect(()=>{
+  if(isSuccessful === true && data){
+    toast.success(
+      data.message || "Successfully Created Bank"
+    );
+    navigate("profile/add-bank/:list");
+  }else if (isSuccessful === false && data){
+    toast.error(data.message || "Error creating a bank details")
+  }
+},[])
+
+useEffect(() => {
+  const userId = getFromLocalStorage("userId");
+  if (!isEmpty(userId)) {
+    toast.error("Complete your registration!");
+    navigate("/individual-profile");
+  }
+}, []);
+   
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    
+    try {
+      await makePostRequest(`${BASE_URL}/api/User/CreateBank`,{
+        userId: userId,
+        accountName: addBank.accountName,
+        accountNumber: addBank.accountNumber,
+        bankName: addBank.bankName,
+        fiatCurrency: addBank.fiatCurrency,         
+      })
+      setAddBanks({})
+    } catch (error) {
+      setAddBanks(error)
+    }
+    
+   
+  }
   return (
     <PageWrapper>
            <div className="w-full h-full flex flex-col p-5">
@@ -27,7 +91,7 @@ const AddBanks = () => {
             <span className="font-medium text-xs text-black">Bank Name</span>
 
             {/* input field */}
-            <TextInput name={"nameOfBank"} placeholderText={"Enter bank name"} />
+            <TextInput name={"bankName"} placeholderText={"Enter bank name"} onChange={handleChange} />
           </label>
 
           {/* email input container */}
@@ -38,7 +102,7 @@ const AddBanks = () => {
             </span>
 
             {/* input field */}
-            <TextInput type='number' name={"accountNumber"} placeholderText={"Enter bank account number"} />
+            <TextInput type='number' name={"accountNumber"} placeholderText={"Enter bank account number"} onChange={handleChange} />
           </label>
 
           {/* transacion limit input container */}
@@ -54,6 +118,8 @@ const AddBanks = () => {
             //   label={"USDT"}
               type="type"
               placeholderText={"Enter bank account name"}
+              onChange={handleChange}
+
             />
           </label>
 
@@ -61,7 +127,7 @@ const AddBanks = () => {
           <div className="flex w-full flex-col items-center mt-auto">
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
-              <PrimaryButton text={"Add Bank"} height="h-14" onClick={(() =>navigate("/profile/add-bank/:list"))} />
+              <PrimaryButton text={"Add Bank"} height="h-14" onClick={handleSubmit} />
             </div>
           </div>
         </form>
