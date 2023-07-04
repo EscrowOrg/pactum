@@ -14,7 +14,8 @@ const ListingAdCard = ({
     tradeMade,
     percentageUsed,
     listingType,
-    imageUrl
+    imageUrl,
+    adID
 }) => {
 
     // DATA INITIALIZATION
@@ -105,7 +106,7 @@ const ListingAdCard = ({
             {listingType === 1 ? (
                 <PrimaryButton
                 onClick={() =>
-                    navigate("/home/buy-coin/id:3")
+                    navigate(`/home/buy-coin/${adID}`)
                 }
                 height="h-10"
                 text="Buy"
@@ -113,7 +114,7 @@ const ListingAdCard = ({
             ) : (
                 <ErrorButton
                 onClick={() =>
-                    navigate("/home/sell-coin/id:3")
+                    navigate(`/home/sell-coin/${adID}`)
                 }
                 height="h-10"
                 text="Sell"
