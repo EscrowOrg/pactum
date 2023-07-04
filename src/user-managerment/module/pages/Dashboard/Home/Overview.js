@@ -244,12 +244,12 @@ const Overview = () => {
 
                                     <WarningButton1
                                     height='h-14'
-                                    onClick={()=>navigate("/home/overview/coin-buy-sell?id=2")}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=2&asset=${coinId}`)}
                                     text={"Sell BTC"} />
 
                                     <PrimaryButton
                                     height='h-14'
-                                    onClick={()=>navigate("/home/overview/coin-buy-sell?id=1")}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=1&asset=${coinId}`)}
                                     text={"Buy BTC"} />
 
                                     <span
@@ -276,13 +276,13 @@ const Overview = () => {
                 <div className='w-full bg-white rounded-xl p-4 gap-6 flex flex-col'>
 
                     <Link
-                    to="/home/overview/coin-buy-sell?id=2"
+                    to={`/home/overview/coin-buy-sell?id=2&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Sell BTC
                     </Link>
 
                     <Link
-                    to="/home/overview/coin-buy-sell?id=1"
+                    to={`/home/overview/coin-buy-sell?id=1&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Buy BTC
                     </Link>
