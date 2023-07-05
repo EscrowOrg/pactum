@@ -24,7 +24,7 @@ const Listing = () => {
 
                     {/* title */}
                     <h4 className='text-lg font-bold text-black'>
-                        My Portfolio
+                        Listings
                     </h4>
 
                     {/* user button */}

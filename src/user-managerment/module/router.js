@@ -67,6 +67,7 @@ import AddBanks from "./pages/Dashboard/Profile/AddBanks";
 import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
 import ChangePin from "./pages/Dashboard/Profile/ChangePin";
 import SendChat from "./pages/Dashboard/Profile/SendChat";
+import SendAsset from "./pages/Dashboard/Profile/SendAsset";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -116,8 +117,11 @@ const MainRouter = () => {
 
         <Route path="/vendor-user-wallet" element={<UserWallet />} />
 
+        <Route path="/vendor-user-wallet/id:6" element={<SendAsset />} />
+
         <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset />} />
 
+       
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
         <Route
@@ -316,7 +320,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/profile/add-bank/:list"
+            path="/profile/list-bank"
             element={<ListOfBanks />}
           />
 

@@ -14,16 +14,16 @@ const ListOfBanks = (closeModal) => {
   const [removePhotoModalState, setRemovePhotoModal] = useState(false);
 
   const navigate = useNavigate();
-   const [BankDetailss, setBankDetails] = useState(null);
+   const [BankDetails, setBankDetails] = useState();
   //api/User/GetBankByUserId/
 
   // HANDLERS
   const toggleRemovePhotoModal = () => {
     setRemovePhotoModal(!removePhotoModalState);
   };
-  const {data, getLoading, makeGetRequest} = useMakeReq();
+  const {data, makeGetRequest} = useMakeReq();
   const {role, userId} = getUserData();
-
+    //console.log(data)
   useEffect(()=>{
     getBanks()
   }, [])
@@ -31,11 +31,15 @@ const ListOfBanks = (closeModal) => {
   const getBanks = async ()=>{
     try {
       await makeGetRequest(`${BASE_URL}/api/User/GetBankByUserId/${userId}/${role}`)
-      setBankDetails(data.data)
+      console.log(data)
+      setBankDetails(data.data);
+      //setBankDetails(data);
+     
     } catch (error) {
       setBankDetails(error)
     }
   }
+  console.log(BankDetails)
   return (
     <PageWrapper>
       <div className="w-full p-5 bg-[#F4EFFE]">
@@ -57,8 +61,9 @@ const ListOfBanks = (closeModal) => {
         </div>
       </div>
       <div className="mt-2 bg-[#F4EFFE] h-full py-2 px-5">
-        {BankDetailss.map((bankdetail, index) => (
-          <div key={index} className="bg-[#fff] border rounded-[8px] my-2">
+        {BankDetails && BankDetails.length && BankDetails.map((bankdetail)=>{
+          return(
+            <div key={bankdetail.id} className="bg-[#fff] border rounded-[8px] my-2">
             <div className="flex justify-between items-center p-3">
               <div>
                 <h3 className="font-bold text-sm">{bankdetail.bankName}</h3>
@@ -79,7 +84,8 @@ const ListOfBanks = (closeModal) => {
               </div>
             </div>
           </div>
-        ))}
+          )
+        })}
       </div>
 
       <AltModal

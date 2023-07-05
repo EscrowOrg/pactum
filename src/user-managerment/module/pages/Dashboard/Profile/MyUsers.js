@@ -39,6 +39,7 @@ const getUsers = async ()=>{
     try {
      await makeGetRequest(`${BASE_URL}/api/Vendor/GetVendorSubUsers/${vendorId}/${userId}`)
      // setFilterStatus(data.data);
+     console.log(data)
       setDateFutter(data && data.data)
     } catch (error) {
       setDateFutter(error)
@@ -49,9 +50,6 @@ const getUsers = async ()=>{
   const navigate = useNavigate();
 
     // HANDLERS
-    // const toggleDrawer = () => {
-    //     setIsOpen(isOpen => !isOpen)
-    // }
     const toggleDrawer1 = () => {
         setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
     }
@@ -204,10 +202,16 @@ const getUsers = async ()=>{
 
           {/* list of users */}
           <div>
-            {dateFutter?.map((user, index) => (
-              <div
+            {/* {dateFutter && dateFutter.length &&  dateFutter.map((user)=>{
+              return(
+
+              )
+            })} */}
+            {dateFutter && dateFutter.map((user)=>{
+              return(
+                <div
                 onClick={() => navigate("/vendor-user-wallet")}
-                key={index}
+                key={user.id}
                 className="flex justify-between bg-white w-full px-2 py-2.5 rounded-md  my-3"
               >
                 <div className="flex items-center gap-1.5">
@@ -256,7 +260,9 @@ const getUsers = async ()=>{
                   />
                 </div>
               </div>
-            ))}
+              )
+            })}
+           
           </div>
         </div>
       </div>

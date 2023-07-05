@@ -13,25 +13,21 @@ const UserWalletAsset = () => {
       name: "Sent: 400 DOGE",
       assetStatus: "SUCCESS",
       amountInFiat: "$102.38",
-      color: "text-"
     },
     {
       name: "Sent: 400 DOGE",
       assetStatus: "PENDING",
       amountInFiat: "$102.38",
-      color: "yellow"
     },
     {
       name: "Sent: 400 DOGE",
       assetStatus: "FAILED",
       amountInFiat: "$102.38",
-      color: "red"
     },
     {
       name: "Received: 400 DOGE",
       assetStatus: "FAILED",
       amountInFiat: "$102.38",
-      color: "red"
     },
   ];
 

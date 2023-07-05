@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
-import {BackButton,PrimaryButton, PrimaryButtonLight} from "../../../components/Button";
+import {
+  BackButton,
+  PrimaryButton,
+  PrimaryButtonLight,
+} from "../../../components/Button";
 import { ArrowDown2 } from "iconsax-react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { getUserId } from "../../../../../serivce/cookie.service";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { toast } from "react-toastify";
+import { GET_ASSETS_ACCOUNTS, TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
 
 
 const UserWallet = () => {
@@ -11,10 +19,9 @@ const UserWallet = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-  // const [filterStatus, setFilterStatus] = useState({
-  //   name: "",
-  //   id: null,
-  // });
+  const [Wallet, setWallet] = useState(null);
+  const { data,  makeGetRequest, isSuccessful } = useMakeReq();
+  const { makePostRequest } = useMakeReq();
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
@@ -24,48 +31,58 @@ const UserWallet = () => {
     setIsDrawer1Open((isDrawer1Open) => !isDrawer1Open);
   };
 
-  const UserWallets = [
-    {
-      img: "/images/dashboard/bitcoin.png",
-      name: "Bitcoin",
-      numOfwallets: "44 Wallets",
-      amountInCrypto: "66 BTC",
-      amountInFiat: "$40 000.00",
-      isPending: false,
-    },
-    {
-      img: "/images/dashboard/binance.png",
-      name: "BNB",
-      numOfwallets: "5 Wallets",
-      amountInCrypto: "66 BNB",
-      amountInFiat: "$40 000.00",
-      isPending: false,
-    },
-    {
-      img: "/images/dashboard/bitcoin.png",
-      name: "DogeCoin",
-      numOfwallets: "1 Wallets",
-      amountInCrypto: "66 DOGE",
-      amountInFiat: "$40 000.00",
-      isPending: false,
-    },
-    {
-      img: "/images/dashboard/ethereum.png",
-      name: "Ethereum",
-      numOfwallets: "4 Wallets",
-      amountInCrypto: "66 ETH",
-      amountInFiat: "$40 000.00",
-      isPending: false,
-    },
-    {
-      img: "/images/dashboard/litcoin.png",
-      name: "Litcoin",
-      numOfwallets: "6 Wallets",
-      amountInCrypto: "66 LTC",
-      amountInFiat: "$40 000.00",
-      isPending: false,
-    },
-  ];
+  // USE EFFECT
+  useEffect(() => {
+    getWallet();
+  }, [data, isSuccessful]);
+
+  useEffect(() => {
+    if(isSuccessful === true && data){
+        toast.success(
+          data.message || "We have sent an invitation to this user, you will be notified when they accept it."
+        );
+        navigate("/vendor-user-wallet/id:7");
+      }else if (isSuccessful === false && data){
+        toast.error(data.message || "Error creating a bank details")
+      }
+  }, [data, isSuccessful]);
+
+  const getWallet = async () => {
+    try {
+      const uId = getUserId();
+      // console.log(uId);
+      await makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`);
+      // console.log(data);
+      setWallet(data && data.data);
+    } catch (error) {
+      setWallet(error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const uId = getUserId();
+
+    // Internal Users Transfer
+    const payload ={
+      userIdentifier : Wallet.id,
+      senderUserId: uId,
+      amount: Wallet.Balance.accountBalance,
+      currency: Wallet.currency,
+      network: Wallet.accountingCurrency,
+    }
+    try {
+      // console.log(uId)
+      // console.log(payload);
+
+      await makePostRequest(TRANSFER_INTERNAL_USERS, payload);
+      console.log(data);
+      setWallet(data && data.data);
+    } catch (error) {
+      setWallet(error);
+    }
+  };
+
   return (
     <PageWrapper>
       <div className="w-full h-full my-4">
@@ -128,29 +145,31 @@ const UserWallet = () => {
           </div>
 
           {/* User Wallet */}
-          <div className="my-4">
-            {UserWallets.map((wallet, index) => (
+          <div className="my-4 w-full" >
+            {Wallet?.map((Wallet) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet/id:7")}
-                key={index}
-                className="flex justify-between border-b w-full py-3 "
+                key={Wallet.id}
+                className="flex justify-between border-b w-full py-3 h-full"
               >
                 <div className="flex items-center gap-1.5">
                   {/* user image */}
                   <div className="h-[32px] w-[32px] rounded-[50%]">
                     <img
                       alt=""
-                      src={wallet.img}
+                      src={Wallet.imageUrl}
                       className="h-full w-full rounded-[50%]"
                     />
                   </div>
 
                   {/* crypto coin and wallet numbers */}
                   <div>
-                    <h3 className="text-sm font-bold pb-0.5">{wallet.name}</h3>
-                    <p className="text-xs font-normal text-[#8D85A0]">
-                      {wallet.numOfwallets}
-                    </p>
+                    <h3 className="text-sm font-bold pb-0.5">
+                      {Wallet.currency}
+                    </h3>
+                    {/* <p className="text-xs font-normal text-[#8D85A0]">
+                      {Wallet.numOfwallets}
+                    </p> */}
                   </div>
                 </div>
 
@@ -159,36 +178,36 @@ const UserWallet = () => {
                   {/* amount */}
                   <div className="inline-flex flex-col">
                     <h4 className="text-sm font-bold pb-0.5 text-right">
-                      {wallet.amountInCrypto}
+                      {Wallet.balance.availableBalance}
                     </h4>
-                    <p className="text-xs font-normal text-[#8D85A0] text-right">
-                      {wallet.amountInFiat}
-                    </p>
+                    {/* <p className="text-xs font-normal text-[#8D85A0] text-right">
+                      {Wallet.fiatValue}
+                    </p> */}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* buttons */}
-        <div className="flex items-center gap-6 w-full mb-3 mt-4 ">
+              {/* buttons */}
+        <div className="flex items-center gap-6 w-full mt-72">
           <div className="flex flex-col items-stretch w-[40%]">
-            <PrimaryButtonLight
-              height="h-14"
-              text={"Change Limit"}
-            />
+            <PrimaryButtonLight height="h-14" text={"Change Limit"} />
           </div>
 
           <div className="flex flex-col items-stretch w-[60%]">
             <PrimaryButton
-              onClick={() =>navigate("/vendor-user-wallet/id:7")}
+              onClick={() =>navigate("/vendor-user-wallet/id:6")}
+              // onClick={handleSubmit}
               height="h-14"
               text={"Send Asset"}
             />
           </div>
         </div>
-      </div>   
+        </div>
+
+    
+      </div>
     </PageWrapper>
   );
 };

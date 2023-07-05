@@ -49,6 +49,7 @@ const LoginUser  = () =>{
       if(user?.success===true) {
          navigate("/home", { replace: true })
       }
+      
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [user])
 

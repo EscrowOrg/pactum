@@ -35,21 +35,21 @@ const AddBanks = () => {
 useEffect(()=>{
   if(isSuccessful === true && data){
     toast.success(
-      data.message || "Successfully Created Bank"
+      data.message || "Bank Details successfully added!"
     );
-    navigate("profile/add-bank/:list");
+    navigate("/profile/list-bank");
   }else if (isSuccessful === false && data){
     toast.error(data.message || "Error creating a bank details")
   }
-},[])
+},[isSuccessful, data])
 
-useEffect(() => {
-  const userId = getFromLocalStorage("userId");
-  if (!isEmpty(userId)) {
-    toast.error("Complete your registration!");
-    navigate("/individual-profile");
-  }
-}, []);
+// useEffect(() => {
+//   const userId = getFromLocalStorage("userId");
+//   if (!isEmpty(userId)) {
+//     toast.error("Complete your registration!");
+//     navigate("/individual-profile");
+//   }
+// }, []);
    
 
   const handleSubmit = async(e)=>{
