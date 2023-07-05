@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { BackButton, PrimaryButton } from "../../../components/Button";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { useNavigate, useParams } from "react-router-dom";
-import SelectInput from "../../../components/SelectInput";
 import { TextLabelInput } from "../../../components/Input";
 import { InfoCircle, ProfileCircle } from "iconsax-react";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { getUserId } from "../../../../../serivce/cookie.service";
+import {  getUserId } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { toast } from "react-toastify";
 import {
@@ -21,17 +20,13 @@ import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import AssetsListView from "../../../components/Dashboard/Portfolio/AssetsListView";
 import Drawer from "../../../layouts/Drawer";
 
-const SendCoin = () => {
+const SendAsset = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
-  const modeOptions = [
-    { value: 1, label: "Internal User" },
-    { value: 2, label: "External User" },
-  ];
   const {
     data: sendInternalUserData,
     isSuccessful: isSendInternalUserSuccess,
-    error: isSendInternalUserError,
+    // error: isSendInternalUserError,
     loading: sendInternalUserLoading,
     makePostRequest,
   } = useMakeReq();
@@ -76,31 +71,20 @@ const SendCoin = () => {
   const handleSendToInternalUser = () => {
     // getting user ID
     const uId = getUserId();
+    // const {userId} = getUserData();
 
-    // payload
     // Internal Users Transfer
-    const payload =
-      mode.value === 1
-        ? {
-            userIdentifier: recipientId,
-            senderUserId: uId,
-            amount: amount,
-            currency: asset.assetId,
-            network: asset.networkId,
-          }
-        : // External Users Transfer
-        mode.value === 2
-        ? {
-            asset: asset.assetId,
-            address: recipientId,
-            amount: amount,
-            networkChain: asset.networkId,
-            userId: uId,
-          }
-        : null;
+    const payload = {
+      userIdentifier: recipientId,
+      senderUserId: uId,
+      amount: amount,
+      currency: asset.assetId,
+      network: asset.networkId,
+    };
 
     makePostRequest(TRANSFER_INTERNAL_USERS, payload);
   };
+
 
   // SIDE EFFECTS
   useEffect(() => {
@@ -129,7 +113,7 @@ const SendCoin = () => {
         toast.success(sendInternalUserData.message, {
           toastId: "success1",
         });
-        navigate("/portfolio");
+        navigate("/profile/list-of-users");
       } else if (isSendInternalUserSuccess === false) {
         toast.error(sendInternalUserData.message, {
           toastId: "error1",
@@ -138,7 +122,6 @@ const SendCoin = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sendInternalUserData, isSendInternalUserSuccess]);
-
   return (
     <PageWrapper>
       {/* container */}
@@ -176,10 +159,11 @@ const SendCoin = () => {
                 {/* label text */}
                 <span className="font-normal text-xs text-black">Mode</span>
 
-                <SelectInput
-                  onChange={(e) => setMode(e)}
-                  value={mode}
-                  options={modeOptions}
+                {/* readOnly field */}
+                <TextLabelInput
+                  paddingRight="pr-[15%]"
+                  value={"Internal User"}
+                  readOnly={true}
                 />
               </label>
 
@@ -187,52 +171,29 @@ const SendCoin = () => {
               <label className="flex flex-col gap-2 w-[92%] mx-auto">
                 {/* label text */}
                 <span className="font-normal text-xs text-black">
-                  {mode.value === 1
-                    ? "Recipient's Username"
-                    : mode.value === 2
-                    ? "Destination Address"
-                    : null}
+                  Recipient's Username
                 </span>
 
                 {/* input field */}
                 <TextLabelInput
                   paddingRight="pr-[15%]"
                   value={recipientId}
+                  placeholderText={"Recipient's Username"}
                   onChange={(e) => setRecipientID(e.target.value)}
                   label={
                     <ProfileCircle variant="Bulk" size={22} color="#ACA6BA" />
                   }
-                  placeholderText={`${
-                    mode.value === 1
-                      ? "Enter recipient's username"
-                      : mode.value === 2
-                      ? "Enter recipient's crypto address"
-                      : null
-                  }`}
                 />
               </label>
 
               {/* currency/asset*/}
               <label className="flex flex-col gap-2 w-[92%] mx-auto">
                 {/* label text */}
-                <span className="font-normal text-xs text-black">
-                  {mode.value === 1
-                    ? "Currency"
-                    : mode.value === 2
-                    ? "Asset"
-                    : null}
-                </span>
+                <span className="font-normal text-xs text-black">Currency</span>
 
                 {/* input field */}
                 <DrawerSelectInput
-                  value={
-                    asset?.name ||
-                    (mode.value === 1
-                      ? "Select Currency"
-                      : mode.value === 2
-                      ? "Select Asset"
-                      : null)
-                  }
+                  value={asset?.name || "Select Currency"}
                   onClick={toggleDrawer}
                 />
               </label>
@@ -267,12 +228,11 @@ const SendCoin = () => {
                 />
 
                 {/* bottom label */}
-                {mode?.value === 2 ? (
-                  <h4 className="text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2">
-                    Network fee: 0.00004 BTC
-                    <InfoCircle variant="Bulk" size={12} color="#ACA6BA" />
-                  </h4>
-                ) : null}
+
+                <h4 className="text-[#645B75] font-normal text-xs w-full text-center justify-center flex items-center gap-2">
+                  Network fee: 0.00004 BTC
+                  <InfoCircle variant="Bulk" size={12} color="#ACA6BA" />
+                </h4>
               </label>
 
               {/* important message */}
@@ -338,4 +298,4 @@ const SendCoin = () => {
   );
 };
 
-export default SendCoin;
+export default SendAsset;

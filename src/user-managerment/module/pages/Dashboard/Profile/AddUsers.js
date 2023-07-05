@@ -7,8 +7,6 @@ import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { getUserData } from "../../../../../serivce/cookie.service";
 import BASE_URL from "../../../../../serivce/url.serice";
 import { toast } from "react-toastify";
-import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
-import { isEmpty } from "../../../helpers/isEmpty";
 
 const AddUser = () => {
 
@@ -23,25 +21,20 @@ const [createVendorUserRequest, setcreateVendorUserRequest] = useState({
   password: ""
 });
 
+const {data, makePostRequest, isSuccessful} = useMakeReq();
+
 useEffect(()=>{
   if(isSuccessful === true && data){
     toast.success(
-      data.message || "Successfully Created Bank"
+      data.message || "User added"
     );
-    navigate("profile/add-bank/:list");
+    navigate("/profile/list-of-users");
   }else if (isSuccessful === false && data){
-    toast.error(data.message || "Error creating a bank details")
+    toast.error(data.message || "Error adding a user")
   }
-},[])
+},[data, isSuccessful])
 
-useEffect(() => {
-  const userId = getFromLocalStorage("userId");
-  if (!isEmpty(userId)) {
-    toast.error("Complete your registration!");
-    navigate("/individual-profile");
-  }
-}, []);
-const {data, makePostRequest, isSuccessful} = useMakeReq();
+
 const{vendorId} = getUserData();
  const handleSubmit = async (e) =>{
   e.preventDefault();
@@ -158,7 +151,7 @@ const{vendorId} = getUserData();
                />
            </label>
           {/* button container */}
-          <div className="flex w-full flex-col items-center mt-auto">
+          <div className="flex w-full flex-col items-center mt-6 mb-3">
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
               <PrimaryButton text={"Add User"} height="h-14" onClick={handleSubmit} />
