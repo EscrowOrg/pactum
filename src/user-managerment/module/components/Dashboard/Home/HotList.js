@@ -25,12 +25,12 @@ const HotList = () => {
 
     // DATA INITIALIZATION
     const selectedCoin = [
-        "tether",
-        "usd-coin",
+        // "tether",
+        // "usd-coin",
         "ethereum",
         "binancecoin",
         "bitcoin",
-        "binance-usd",
+        // "binance-usd",
     ]
     const {
         data,

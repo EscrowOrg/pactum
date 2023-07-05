@@ -11,12 +11,13 @@ import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import Assets from "./Assets";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { GET_AD_LISTING } from "../../../../../serivce/apiRoutes.service";
+import { GET_AD_LISTING, GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { isEmpty } from "../../../helpers/isEmpty";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import ListingAdCard from "../../../components/Dashboard/Listing/ListingAdCard";
 import ListingAdPagination from "../Listing/ListingAdPagination";
+import { getUserData } from "../../../../../serivce/cookie.service";
 
 const BuySellCoin = () => {
 
@@ -47,25 +48,31 @@ const BuySellCoin = () => {
   } = useMakeReq()
   const [searchParams] = useSearchParams();
   const coinOptions = [
-    { value: 1, label: "BTC" },
-    { value: 2, label: "ETH" },
-    { value: 3, label: "BNB" },
+    { value: 1, label: "bitcoin" },
+    { value: 2, label: "ethereum" },
+    { value: 3, label: "binancecoin" },
   ];
+  const coinId = searchParams?.get("asset")
+  const id = searchParams?.get("id");
   
   
   // SIDE EFFECTS
   useEffect(() => {
-    setCoinSelect(coinOptions[0]);
-    const id = searchParams?.get("id");
+
+    setCoinSelect(coinId?coinOptions.find(item => item.label === coinId):coinOptions[0]);
+
+    console.log(coinId)
     if (id) {
       setAction(+id);
     } else {
       console.log("ID isn't present");
     }
   }, []);
+
   useEffect(()=>{
-    makeGetRequest(`${GET_AD_LISTING}/${skip}/${10}`)
-  }, [currentPage])
+    const {userId, vendorId} = getUserData()
+    makeGetRequest(`${GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&vendorId=${vendorId}&asset=${coinSelect?.value || (coinId?coinOptions.find(item => item.label === coinId).value:1)}&userId=${userId}`)
+  }, [currentPage, coinSelect])
   useEffect(() => {
     if(isSuccessful && !isEmpty(data)){
       setListingAds(data?.data)
@@ -127,7 +134,7 @@ const BuySellCoin = () => {
 
               {/* select input */}
               <SelectInput
-                isDisabled
+                isDisabled={getLoading}
                 value={coinSelect}
                 onChange={(e) => setCoinSelect(e)}
                 options={coinOptions}
@@ -150,6 +157,7 @@ const BuySellCoin = () => {
               listingAds?.items?.filter(listingAd=>listingAd.listingType===action)?.map((listingAd, index) => (
                 <ListingAdCard
                 key={index}
+                adID={listingAd.adId}
                 merchantName={listingAd.merchantName}
                 username={listingAd.username}
                 tradePrice={listingAd.tradePrice}
