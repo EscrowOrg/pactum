@@ -4,11 +4,8 @@ import {ArrowRight2, Copy, RefreshCircle, TransactionMinus} from "iconsax-react"
 import { BackButton, ErrorButton} from "../../../components/Button";
 import {  TextLabelInput } from "../../../components/Input";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-// import Assets from "./Assets";
-import ReceivingBank from "./ReceivingBank";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { CREATE_SELL_SESSION, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
@@ -16,9 +13,9 @@ import { isEmpty } from "../../../helpers/isEmpty";
 import { toast } from "react-toastify";
 import BanksView from "../../../components/Dashboard/Listing/BanksView";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 
 const SellCoin = () => {
-  const [isSelected, setIsSelected] = useState(false);
 
   // DATA INITIALIZATION
   const role = getUserRole()
@@ -69,9 +66,9 @@ const SellCoin = () => {
             userId: uId,
             adId: adID,
             cryptoAmount: formData.amount,
-            accountName: bankDetails,
-            bankName: bankDetails,
-            accountNumber: bankDetails 
+            accountName: bankDetails.accountName,
+            bankName: bankDetails.bankName,
+            accountNumber: bankDetails.accountNumber 
         }
     )
 }
@@ -174,189 +171,95 @@ useEffect(()=>{
             </div>
 
             {/* summary details */}
-            {isSelected ? (
-              <div className="flex w-full flex-col gap-6">
-                {/* info */}
-                <div className="flex flex-col w-full gap-5 bg-gray-100 py-3 px-4 rounded-lg">
-                  {/*  Payment Timeframe */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Payment Timeframe
-                    </h3>
+            <div className="flex w-full flex-col gap-6">
 
-                    <h3 className="text-black text-sm font-semibold">15 min</h3>
-                  </div>
+              {/* info */}
+              <div className="flex flex-col w-full gap-5 bg-gray-100 py-3 px-4 rounded-lg">
+                {/*  Payment Timeframe */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-normal text-xs text-[#8D85A0]">
+                    Payment Timeframe
+                  </h3>
 
-                  {/*  Min - Max Order Amount */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Min - Max Order Amount
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold">
-                      0.989 - 4.583 BTC
-                    </h3>
-                  </div>
-
-                  {/* fiat amount */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Fiat Amount
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                      ₦---
-                    </h3>
-                  </div>
-
-                  {/* username */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Buyer
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold">
-                      jhoellasemota
-                    </h3>
-                  </div>
+                  <h3 className="text-black text-sm font-semibold">15 min</h3>
                 </div>
 
-                {/* Existing Bank details */}
-                <div className="flex items-center w-full bg-[#6D34F0]">
-                  {/* first cont */}
-                  <div className="bg-[#6D34F0] flex flex-col gap-2 py-3 px-4 w-full">
-                    <h5 className="text-[8px] font-normal text-[#D2C1FA]">
-                      BANK DETAILS LAST USED
-                    </h5>
+                {/*  Min - Max Order Amount */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-normal text-xs text-[#8D85A0]">
+                    Min - Max Order Amount
+                  </h3>
 
-                    <h5 className="font-bold text-base text-[#F4EFFE]">
-                      {getBankLoading?"Loading...":bankDetails?.bankName || "Empty"}
-                    </h5>
-                    
-                    <h5 className="font-semibold text-[#F4EFFE] text-sm">
-                      {getBankLoading?"Loading...":`${bankDetails?.accountNumber} - ${bankDetails?.accountName}`}
-                    </h5>
-                  </div>
-                  <div
-                    onClick={toggleBankDrawer}
-                    className="flex items-center justify-center h-full w-16 bg-[rgba(255,255,255,.2)] cursor-pointer"
-                  >
-                    <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
-                  </div>
+                  <h3 className="text-black text-sm font-semibold">
+                    0.989 - 4.583 BTC
+                  </h3>
+                </div>
+
+                {/* fiat amount */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-normal text-xs text-[#8D85A0]">
+                    Fiat Amount
+                  </h3>
+
+                  <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                    ₦---
+                  </h3>
+                </div>
+
+                {/* username */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-normal text-xs text-[#8D85A0]">
+                    Buyer
+                  </h3>
+
+                  <h3 className="text-black text-sm font-semibold">
+                    jhoellasemota
+                  </h3>
                 </div>
               </div>
-            ) : (
-              <div className="flex flex-col bg-gray-100 py-3 px-4 gap-6 rounded-lg w-full relative overflow-hidden">
-                {/* circles */}
-                <span className="absolute bottom-[55%] translate-y-[45%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
-                <span className="absolute bottom-[55%] translate-y-[45%] left-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
 
-                {/* info */}
-                <div className="flex flex-col w-full gap-5 pb-7 [border-bottom:1px_dashed_#DAD7E0]">
-                  {/* receiving wallet */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Receiving Wallet
-                    </h3>
+              {/* Existing Bank details */}
+              {
+                  getBankLoading?
+                  <LoadingSpinner
+                  viewPortHeight="h-[20vh]"
+                  bgColor="bg-gray-100" />:
+                  !isEmpty(bankDetails) ? 
+                  <div className="flex items-center w-full bg-[#6D34F0]">
+                    {/* first cont */}
+                    <div className="bg-[#6D34F0] flex flex-col gap-2 py-3 px-4 w-full">
+                      <h5 className="text-[8px] font-normal text-[#D2C1FA]">
+                        BANK DETAILS LAST USED
+                      </h5>
 
-                    <h3 className="text-black text-sm font-semibold">$240</h3>
-                  </div>
-
-                  {/* price */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Price
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold">$240</h3>
-                  </div>
-
-                  {/* order id */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Order ID
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                      hfsbg4u9ui093u290u02
-                      <Copy
-                        onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
-                        variant="Bulk"
-                        size={16}
-                        color="#3F9491"
-                      />
-                    </h3>
-                  </div>
-                </div>
-
-                {/* bank details */}
-                <div className="flex flex-col w-full gap-5">
-                  {/* bank name */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Bank Name
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                      First Bank
-                      <Copy
-                        onClick={() => copyToClipBoard("First Bank")}
-                        variant="Bulk"
-                        size={16}
-                        color="#3F9491"
-                      />
-                    </h3>
-                  </div>
-
-                  {/* account number */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Account Number
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                      4890149295
-                      <Copy
-                        onClick={() => copyToClipBoard("4890149295")}
-                        variant="Bulk"
-                        size={16}
-                        color="#3F9491"
-                      />
-                    </h3>
-                  </div>
-
-                  {/* account name */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      Account Name
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold">
-                      Asemota Joel
-                    </h3>
-                  </div>
-
-                  {/* user name */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-normal text-xs text-[#8D85A0]">
-                      User Name
-                    </h3>
-
-                    <h3 className="text-black text-sm font-semibold">
-                      jhoellasemota
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            )}
+                      <h5 className="font-bold text-base text-[#F4EFFE]">
+                        {getBankLoading?"Loading...":bankDetails?.bankName || "Empty"}
+                      </h5>
+                      
+                      <h5 className="font-semibold text-[#F4EFFE] text-sm">
+                        {getBankLoading?"Loading...":`${bankDetails?.accountNumber} - ${bankDetails?.accountName}`}
+                      </h5>
+                    </div>
+                    <div
+                      onClick={toggleBankDrawer}
+                      className="flex items-center justify-center h-full w-16 bg-[rgba(255,255,255,.2)] cursor-pointer"
+                    >
+                      <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
+                    </div>
+                  </div>:
+                <></>
+               }
+            </div>
 
             {/* container */}
             <div className="flex w-full flex-col mt-auto">
               {/* continue button */}
               <div className="w-full flex flex-col items-stretch">
                 <ErrorButton
-                  onClick={handleSubmit}
-                  text={`Sell ${getAssetLabel(+assetId)}`}
+                loading={isSellLoading}
+                disabled={isEmpty(bankDetails) || !formData.amount}
+                onClick={handleSubmit}
+                text={`Sell ${getAssetLabel(+assetId)}`}
                 />
               </div>
             </div>
