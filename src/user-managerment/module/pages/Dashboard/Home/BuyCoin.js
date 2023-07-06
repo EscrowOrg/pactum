@@ -1,24 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PageWrapper from '../../../layouts/PageWrapper'
 import { RefreshCircle, TransactionMinus } from 'iconsax-react'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import SelectInput from '../../../components/SelectInput'
 import { TextLabelInput } from '../../../components/Input'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import BASE_URL from '../../../../../serivce/url.serice'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { CREATE_BUY_SESSION, GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { isEmpty } from '../../../helpers/isEmpty'
+import { roundToN } from '../../../helpers/roundToN'
+import { toast } from 'react-toastify'
 
 const BuyCoin = () => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const options = [
-        { value: 1, label: 'Trust Wallet' },
-        { value: 2, label: 'MetaMask' },
-      ]
+    const {coinId} = useParams()
+    const [searchParams] = useSearchParams();
+    const assetName = searchParams?.get("asset")
+    const { data,  makeGetRequest, isSuccessful } = useMakeReq();
+    const { 
+        data: buyAssetData, 
+        loading: isBuyLoading,  
+        makePostRequest, 
+        isSuccessful: isBuySuccess,
+        error: buyError 
+    } = useMakeReq();
 
 
     // STATES
+    const [assetAccounts, setAssetAccounts] = useState([])
     const [formData, setFormData] = useState({
         amount: "",
     })
@@ -32,16 +44,52 @@ const BuyCoin = () => {
             [name]: value
         })
     }
+    const handleSubmit = () => {
 
-    const verified = async(e) =>{
-        e.preventDefault()
-        try {
-            await axios.post(`${BASE_URL}`)
-            navigate("/reset-password")       
-         } catch (error) {
-            
+        const uId = getUserId()
+
+        makePostRequest(CREATE_BUY_SESSION,
+            {
+                userId: uId,
+                adId: coinId,
+                amount: formData.amount
+            }
+        )
+    }
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+        const uId = getUserId()
+        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`)
+    }, [])
+    // getting data
+    useEffect(()=>{
+    if(!isEmpty(data)) {
+        if(isSuccessful) {
+            setAssetAccounts(data?.data?.map((wallet, index)=>({
+                value: index+1,
+                label: `${wallet?.currency} - $${roundToN(wallet?.fiatValue, 1)}`,
+            })))
         }
-     }
+    }
+    }, [data, isSuccessful])
+    useEffect(()=>{
+        if(!isEmpty(buyAssetData)) {
+            if(isBuySuccess===true) {
+                toast.success(buyAssetData?.message || "Purchase was successful!")
+                navigate(`/home/buy-coin/${coinId}/order-statement`, {
+                    replace: true
+                })
+            } else if(isBuySuccess===false) {
+                toast.error(buyAssetData?.message || "Couldn't make the purchase")
+            }
+        }
+    }, [buyAssetData, isBuySuccess])
+    useEffect(()=>{
+        if(buyError) {
+            toast.error(buyError || "Couldn't make the purchase")
+        }
+    }, [buyError])
     
     return (
         <PageWrapper>
@@ -55,7 +103,7 @@ const BuyCoin = () => {
 
                     {/* text */}
                     <h3 className='font-bold text-lg text-black'>
-                        Buy BTC
+                        Buy {assetName}
                     </h3>
 
                     {/* transaction list button */}
@@ -86,7 +134,7 @@ const BuyCoin = () => {
 
                             {/* input field */}
                             <SelectInput
-                            options={options} />
+                            options={assetAccounts} />
                         </label>
 
                         {/* Company's email address container */}
@@ -171,8 +219,10 @@ const BuyCoin = () => {
                             {/* continue button */}
                             <div className='w-full flex flex-col items-stretch'>
                                 <PrimaryButton
-                                onClick={()=>navigate("/home/buy-coin/id:5/order-statement")}
-                                text={"Buy BTC"} />
+                                disabled={!formData.amount}
+                                loading={isBuyLoading}
+                                onClick={handleSubmit}
+                                text={`Buy ${assetName}`} />
                             </div>
                         </div>
                     </form>

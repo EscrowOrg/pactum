@@ -1,33 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import {ArrowRight2, Copy, RefreshCircle, TransactionMinus} from "iconsax-react";
 import { BackButton, ErrorButton} from "../../../components/Button";
 import {  TextLabelInput } from "../../../components/Input";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 // import Assets from "./Assets";
 import ReceivingBank from "./ReceivingBank";
+import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
+import { CREATE_SELL_SESSION, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { isEmpty } from "../../../helpers/isEmpty";
+import { toast } from "react-toastify";
+import BanksView from "../../../components/Dashboard/Listing/BanksView";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 
 const SellCoin = () => {
   const [isSelected, setIsSelected] = useState(false);
 
   // DATA INITIALIZATION
+  const role = getUserRole()
+  const userId = getUserId()
+
   const navigate = useNavigate();
-  const options = [
-    { value: 1, label: "Trust Wallet" },
-    { value: 2, label: "MetaMask" },
-  ];
+  const {coinId: adID} = useParams()
+  const [searchParams] = useSearchParams();
+  const assetId = searchParams?.get("asset")
+  const {
+    data: bankData,
+    getLoading: getBankLoading,
+    makeGetRequest,
+  } = useMakeReq()
+  const {
+      data: sellAssetData, 
+      loading: isSellLoading,  
+      makePostRequest, 
+      isSuccessful: isSellSuccess,
+      error: sellError 
+  } = useMakeReq();
 
-//   Drawer State
-  const [isOpen, setIsOpen] = useState(false);
 
+  // STATES
+  const [isBankDrawerOpen, setIsBankDrawerOpen] = useState(false);
   const [formData, setFormData] = useState({
     amount: "",
   });
+  const [banks, setBanks] = useState([])
+  const [bankDetails, setBankDetails] = useState({});
+
 
   // HANDLERS
+  const toggleBankDrawer = () => {
+    setIsBankDrawerOpen((isOpen)=>!isOpen)
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -35,13 +62,49 @@ const SellCoin = () => {
       [name]: value,
     });
   };
-
-  
-  //Drawer HANDLERS
-  const toggleDrawer = (value) => {
-    // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
-    setIsOpen(isOpen => !isOpen)
+  const handleSubmit = () => {
+    const uId = getUserId()
+    makePostRequest(CREATE_SELL_SESSION,
+        {
+            userId: uId,
+            adId: adID,
+            cryptoAmount: formData.amount,
+            accountName: bankDetails,
+            bankName: bankDetails,
+            accountNumber: bankDetails 
+        }
+    )
 }
+
+
+// SIDE EFFECTS
+useEffect(()=>{
+  makeGetRequest(`${GET_BANKS}/${userId}/${role}`)
+}, [])
+useEffect(()=>{
+  if(!isEmpty(bankData?.data)) {
+      setBanks(bankData.data)
+      setBankDetails(bankData?.data[0])
+  }
+}, [bankData])
+useEffect(()=>{
+  if(!isEmpty(sellAssetData)) {
+      if(isSellSuccess===true) {
+          toast.success(sellAssetData?.message || "Sale was successful!")
+          navigate(`/home/sell-coin/${adID}/sell-order-statement`, {
+              replace: true
+          })
+      } else if(isSellSuccess===false) {
+          toast.error(sellAssetData?.message || "Couldn't make the sale")
+      }
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [sellAssetData, isSellSuccess])
+useEffect(()=>{
+  if(sellError) {
+      toast.error(sellError || "Couldn't make the sale")
+  }
+}, [sellError])
 
   return (
     <PageWrapper>
@@ -52,7 +115,7 @@ const SellCoin = () => {
           <BackButton />
 
           {/* text */}
-          <h3 className="font-bold text-lg text-black">Sell BTC</h3>
+          <h3 className="font-bold text-lg text-black">Sell {getAssetLabel(+assetId)}</h3>
 
           {/* transaction list button */}
           <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
@@ -67,21 +130,6 @@ const SellCoin = () => {
             className="flex flex-col gap-5 w-full h-full"
             onSubmit={(e) => e.preventDefault()}
           >
-            {/* {/* wallet 
-                        <label className="flex flex-col gap-2 w-full">
-
-                            {/* label text 
-                            <span
-                            className="font-normal text-xs text-black">
-                               Crypto Amount
-                            </span>
-
-                            {/* input field
-                            <SelectInput
-                            options={options} />
-                        </label> */}
-
-            {/* Company's email address container */}
             <label className="flex flex-col gap-2 w-full">
               {/* worth of assets in naira */}
               <span className="font-normal text-xs text-black">
@@ -92,7 +140,7 @@ const SellCoin = () => {
               <TextLabelInput
                 label={
                   <>
-                    BTC |
+                    {getAssetLabel(+assetId)} |
                     <span className="text-[#EB9B00] font-semibold">Max</span>
                   </>
                 }
@@ -126,7 +174,7 @@ const SellCoin = () => {
             </div>
 
             {/* summary details */}
-            {!isSelected ? (
+            {isSelected ? (
               <div className="flex w-full flex-col gap-6">
                 {/* info */}
                 <div className="flex flex-col w-full gap-5 bg-gray-100 py-3 px-4 rounded-lg">
@@ -182,15 +230,15 @@ const SellCoin = () => {
                     </h5>
 
                     <h5 className="font-bold text-base text-[#F4EFFE]">
-                      First bank
+                      {getBankLoading?"Loading...":bankDetails?.bankName || "Empty"}
                     </h5>
-
+                    
                     <h5 className="font-semibold text-[#F4EFFE] text-sm">
-                      2682727911 - Asemota Joel
+                      {getBankLoading?"Loading...":`${bankDetails?.accountNumber} - ${bankDetails?.accountName}`}
                     </h5>
                   </div>
                   <div
-                    onClick={toggleDrawer}
+                    onClick={toggleBankDrawer}
                     className="flex items-center justify-center h-full w-16 bg-[rgba(255,255,255,.2)] cursor-pointer"
                   >
                     <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
@@ -307,12 +355,8 @@ const SellCoin = () => {
               {/* continue button */}
               <div className="w-full flex flex-col items-stretch">
                 <ErrorButton
-                  onClick={() =>
-                    navigate(
-                      "/home/sell-coin/id:11/sell-order-statement"
-                    )
-                  }
-                  text={"Sell BTC"}
+                  onClick={handleSubmit}
+                  text={`Sell ${getAssetLabel(+assetId)}`}
                 />
               </div>
             </div>
@@ -321,17 +365,20 @@ const SellCoin = () => {
 
          {/* Drawer */}
          <Drawer
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
+            isOpen={isBankDrawerOpen}
+            onClose={toggleBankDrawer}
             position="bottom">
 
                  {/* drawer content container */}
                 <StrictWrapper
                 title={"Receiving Bank"}
-                closeDrawer={() => setIsOpen(false)}>
+                closeDrawer={toggleBankDrawer}>
 
-                     {/* Body content  */}
-                    <ReceivingBank />                    
+              {/* Body content  */}
+              <BanksView
+                listItem={banks}
+                closeDrawer={toggleBankDrawer}
+                setBank={setBankDetails}/>              
                 </StrictWrapper>
             </Drawer> 
       </div>
