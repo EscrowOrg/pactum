@@ -58,10 +58,7 @@ const BuySellCoin = () => {
   
   // SIDE EFFECTS
   useEffect(() => {
-
     setCoinSelect(coinId?coinOptions.find(item => item.label === coinId):coinOptions[0]);
-
-    console.log(coinId)
     if (id) {
       setAction(+id);
     } else {
@@ -70,9 +67,17 @@ const BuySellCoin = () => {
   }, []);
 
   useEffect(()=>{
+
+    // get user data
     const {userId, vendorId} = getUserData()
-    makeGetRequest(`${GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&vendorId=${vendorId}&asset=${coinSelect?.value || (coinId?coinOptions.find(item => item.label === coinId).value:1)}&userId=${userId}`)
+
+    // making GET request
+    makeGetRequest(`${GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${userId}`)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, coinSelect])
+
+  // populate data
   useEffect(() => {
     if(isSuccessful && !isEmpty(data)){
       setListingAds(data?.data)
@@ -154,8 +159,9 @@ const BuySellCoin = () => {
               bgColor="bg-transparent"
               viewPortHeight="h-[60vh]" />:
               !isEmpty(listingAds?.items)?
-              listingAds?.items?.filter(listingAd=>listingAd.listingType===action)?.map((listingAd, index) => (
+              listingAds?.items?.filter(listingAd=>listingAd.listingType===action && listingAd.active===true)?.map((listingAd, index) => (
                 <ListingAdCard
+                defaultAssetLabel={coinId}
                 key={index}
                 adID={listingAd.adId}
                 merchantName={listingAd.merchantName}
@@ -166,18 +172,19 @@ const BuySellCoin = () => {
                 upperLimit={listingAd.upperLimit}
                 tradeMade={listingAd.tradeMade}
                 percentageUsed={listingAd.percentageUsed}
-                listingType={listingAd.listingType} />
+                listingType={listingAd.listingType}
+                asset={coinSelect} />
               )):
               <EmptyDataComp
               bgColor="bg-transparent"
               viewPortHeight="h-[60vh]" />
             }
           </div>
-
         </div>
 
         {/* pagination */}
         <ListingAdPagination
+        disabledNextBtn={isEmpty(listingAds) || isEmpty(listingAds.items)}
         totalCount={listingAds?.totalCount}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}

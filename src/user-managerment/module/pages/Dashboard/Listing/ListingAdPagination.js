@@ -5,7 +5,8 @@ const ListingAdPagination = ({
     currentPage,
     skip,
     totalCount,
-    setCurrentPage
+    setCurrentPage,
+    disabledNextBtn
 }) => {
     return (
         <div className="mx-auto px-2 w-[92%] flex items-center justify-between gap-2 mt-auto pb-3">
@@ -31,7 +32,7 @@ const ListingAdPagination = ({
             onClick={()=>{
                 setCurrentPage(currentPage+1)
             }}
-            disabled={skip+1<=totalCount} 
+            disabled={skip+1<=totalCount || disabledNextBtn} 
             className="text-[#3A0CA3] text-sm font-semibold disabled:text-gray-300 disabled:font-normal inline-flex items-center gap-1">
                 Next
                 <HiArrowSmRight />

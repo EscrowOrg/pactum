@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ErrorButton, PrimaryButton } from '../../Button'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AiOutlineUser } from 'react-icons/ai'
 import { isEmpty } from '../../../helpers/isEmpty'
 
@@ -15,12 +15,14 @@ const ListingAdCard = ({
     percentageUsed,
     listingType,
     imageUrl,
-    adID
+    adID,
+    asset,
+    defaultAssetLabel
 }) => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-
+    
     return (
         <div
             className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4"
@@ -74,7 +76,7 @@ const ListingAdCard = ({
                 </h3>
 
                 <h4 className="text-sm font-semibold text-black">
-                {availableBalance} BTC
+                {`${availableBalance} ${asset?.label || defaultAssetLabel}`}
                 </h4>
             </div>
 
@@ -106,7 +108,7 @@ const ListingAdCard = ({
             {listingType === 1 ? (
                 <PrimaryButton
                 onClick={() =>
-                    navigate(`/home/buy-coin/${adID}`)
+                    navigate(`/home/buy-coin/${adID}?asset=${asset?.label}`)
                 }
                 height="h-10"
                 text="Buy"
@@ -114,7 +116,7 @@ const ListingAdCard = ({
             ) : (
                 <ErrorButton
                 onClick={() =>
-                    navigate(`/home/sell-coin/${adID}`)
+                    navigate(`/home/sell-coin/${adID}?asset=${asset?.value}`)
                 }
                 height="h-10"
                 text="Sell"
