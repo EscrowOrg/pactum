@@ -20,6 +20,8 @@ export const CREATE_AD_LISTING = `${BASE_URL}/api/ListingManagement/CreateAdList
 export const GET_AD_LISTING = `${BASE_URL}/api/ListingManagement/GetAdListing`
 export const GET_AD_LISTING_BY_VALUE = `${BASE_URL}/api/ListingManagement/GetAdListingByValue`
 export const CHANGE_PASSWORD = `${BASE_URL}/api/User/ChangePassword`
+export const CREATE_BUY_SESSION = `${BASE_URL}/api/ListingManagement/CreateBuySession`
+export const CREATE_SELL_SESSION = `${BASE_URL}/api/ListingManagement/CreateSellSession`
 
 
 //external url

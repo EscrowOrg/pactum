@@ -31,6 +31,7 @@ const useMakeReq = () => {
             setData(data)
             setIsSuccessful(data.success)
         } catch(error) {
+            console.log(error)
             setLoading(false)
             const errorMessage = error.response.data.message
             setError(errorMessage)
@@ -60,6 +61,7 @@ const useMakeReq = () => {
             setData(data)
             setIsSuccessful(data.success)
         } catch(error) {
+            console.log(error)
             setGetLoading(false)
             const errorMessage = error.response.data.message
             setError(errorMessage)

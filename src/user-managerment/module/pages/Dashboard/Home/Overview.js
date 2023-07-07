@@ -245,12 +245,12 @@ const Overview = () => {
                                     <WarningButton1
                                     height='h-14'
                                     onClick={()=>navigate(`/home/overview/coin-buy-sell?id=2&asset=${coinId}`)}
-                                    text={"Sell BTC"} />
+                                    text={`Sell ${coinChartInfo.name || ""}`} />
 
                                     <PrimaryButton
                                     height='h-14'
                                     onClick={()=>navigate(`/home/overview/coin-buy-sell?id=1&asset=${coinId}`)}
-                                    text={"Buy BTC"} />
+                                    text={`Buy ${coinChartInfo.name || ""}`} />
 
                                     <span
                                     onClick={toggleModal} 
@@ -278,19 +278,19 @@ const Overview = () => {
                     <Link
                     to={`/home/overview/coin-buy-sell?id=2&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
-                        Sell BTC
+                        Sell {coinChartInfo.name || ""}
                     </Link>
 
                     <Link
                     to={`/home/overview/coin-buy-sell?id=1&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
-                        Buy BTC
+                        Buy {coinChartInfo.name || ""}
                     </Link>
 
                     <Link
                     to="#"
                     className='hover:no-underline text-black text-sm font-semibold'>
-                        Swap BTC
+                        Swap {coinChartInfo.name || ""}
                     </Link>
                 </div>
             </MyModal>
