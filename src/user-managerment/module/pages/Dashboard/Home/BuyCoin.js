@@ -7,10 +7,12 @@ import { TextLabelInput } from '../../../components/Input'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { getUserId } from '../../../../../serivce/cookie.service'
-import { CREATE_BUY_SESSION, GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { CREATE_BUY_SESSION, GET_ADLISTING_DETAILS, GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { roundToN } from '../../../helpers/roundToN'
 import { toast } from 'react-toastify'
+import { getAssetLabel } from '../../../helpers/getAssetLabel'
+import LoadingSpinner from '../../../components/Global/LoadingSpinner'
 
 const BuyCoin = () => {
 
@@ -18,8 +20,13 @@ const BuyCoin = () => {
     const navigate = useNavigate()
     const {coinId} = useParams()
     const [searchParams] = useSearchParams();
-    const assetName = searchParams?.get("asset")
-    const { data,  makeGetRequest, isSuccessful } = useMakeReq();
+    const assetId = searchParams?.get("asset")
+    const { data,  getLoading, makeGetRequest, isSuccessful } = useMakeReq();
+    const { 
+        data: listingAdData,
+        makeGetRequest: getListingAds,
+        getLoading: isgetLIstingAdsLoading
+    } = useMakeReq();
     const { 
         data: buyAssetData, 
         loading: isBuyLoading,  
@@ -31,6 +38,7 @@ const BuyCoin = () => {
 
     // STATES
     const [assetAccounts, setAssetAccounts] = useState([])
+    const [singleListing, setSingleListing] = useState(null)
     const [formData, setFormData] = useState({
         amount: "",
     })
@@ -45,9 +53,7 @@ const BuyCoin = () => {
         })
     }
     const handleSubmit = () => {
-
         const uId = getUserId()
-
         makePostRequest(CREATE_BUY_SESSION,
             {
                 userId: uId,
@@ -58,11 +64,11 @@ const BuyCoin = () => {
     }
 
     // SIDE EFFECTS
+    // get wallets
     useEffect(()=>{
         const uId = getUserId()
         makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`)
     }, [])
-    // getting data
     useEffect(()=>{
     if(!isEmpty(data)) {
         if(isSuccessful) {
@@ -73,6 +79,18 @@ const BuyCoin = () => {
         }
     }
     }, [data, isSuccessful])
+
+    // get ad details
+    useEffect(()=>{
+        getListingAds(`${GET_ADLISTING_DETAILS}/${coinId}`)
+    }, [])
+    useEffect(()=>{
+    if(!isEmpty(listingAdData?.data)) {
+        setSingleListing(listingAdData?.data)
+    }
+    }, [listingAdData])
+
+    // creating buy order
     useEffect(()=>{
         if(!isEmpty(buyAssetData)) {
             if(isBuySuccess===true) {
@@ -103,7 +121,7 @@ const BuyCoin = () => {
 
                     {/* text */}
                     <h3 className='font-bold text-lg text-black'>
-                        Buy {assetName}
+                        Buy {getAssetLabel(+assetId)}
                     </h3>
 
                     {/* transaction list button */}
@@ -134,6 +152,7 @@ const BuyCoin = () => {
 
                             {/* input field */}
                             <SelectInput
+                            isDisabled={getLoading}
                             options={assetAccounts} />
                         </label>
 
@@ -157,61 +176,70 @@ const BuyCoin = () => {
                         </label>
 
                         {/* transaction details */}
-                        <div className='flex items-center w-full justify-between text-sm'>
+                        {
+                            isgetLIstingAdsLoading?
+                            <LoadingSpinner
+                            viewPortHeight="h-[20vh]" />:
+                            !isEmpty(singleListing) ? 
+                            <>
+                                <div className='flex items-center w-full justify-center text-sm'>
 
-                            <div className='font-normal text-[#ACA6BA]'>
-                                Price: <span className='text-[#141217] font-semibold'>₦400</span>
-                            </div>
+                                    <div className='font-normal text-[#ACA6BA]'>
+                                        Trade price: <span className='text-[#141217] font-semibold'>₦{singleListing?.tradePrice}</span>
+                                    </div>
 
-                            {/* circle */}
-                            <div className="flex items-center text-[#DAD7E0] gap-1">
-                                <RefreshCircle
-                                variant='TwoTone'
-                                size={24}
-                                color="#16053D" />
-                            </div>
+                                    {/* circle */}
+                                    {/* <div className="flex items-center text-[#DAD7E0] gap-1">
+                                        <RefreshCircle
+                                        variant='TwoTone'
+                                        size={24}
+                                        color="#16053D" />
+                                    </div>
 
-                            <div className='font-normal text-[#ACA6BA]'>
-                                You will receive: <span className='text-[#141217] font-semibold'>0.844BTC</span>
-                            </div>
-                        </div>
+                                    <div className='font-normal text-[#ACA6BA]'>
+                                        You will receive: <span className='text-[#141217] font-semibold'>0.844BTC</span>
+                                    </div> */}
+                                </div>
 
-                        {/* summary */}
-                        <div className='w-full border border-[#F5F3F6] rounded-lg flex flex-col gap-6 py-3 px-4 bg-[#FAFAFB]'>
+                                {/* summary */}
+                                <div className='w-full border border-[#F5F3F6] rounded-lg flex flex-col gap-6 py-3 px-4 bg-[#FAFAFB]'>
 
-                            {/* payment timeframe */}
-                            <div className="flex items-center justify-between w-full">
-                                <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                    Payment Timeframe
-                                </h3>
+                                    {/* payment timeframe */}
+                                    <div className="flex items-center justify-between w-full">
+                                        <h3 className='font-normal text-xs text-[#8D85A0]'>
+                                            Payment Timeframe
+                                        </h3>
 
-                                <h3 className='font-semibold text-sm text-black'>
-                                    15 min
-                                </h3>
-                            </div>
+                                        <h3 className='font-semibold text-sm text-black'>
+                                            {singleListing?.timeFrame} min
+                                        </h3>
+                                    </div>
 
-                            {/* min-max order */}
-                            <div className="flex items-center justify-between w-full">
-                                <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                    Min - Max Order
-                                </h3>
+                                    {/* min-max order */}
+                                    <div className="flex items-center justify-between w-full">
+                                        <h3 className='font-normal text-xs text-[#8D85A0]'>
+                                            Min - Max Order
+                                        </h3>
 
-                                <h3 className='font-semibold text-sm text-black'>
-                                    ₦2 000.00 - ₦230 000.00
-                                </h3>
-                            </div>
+                                        <h3 className='font-semibold text-sm text-black'>
+                                            {`₦${singleListing.lowerLimit}`} - {`₦${singleListing.upperLimit}`}
+                                        </h3>
+                                    </div>
 
-                            {/* available order */}
-                            <div className="flex items-center justify-between w-full">
-                                <h3 className='font-normal text-xs text-[#8D85A0]'>
-                                    Available Order
-                                </h3>
+                                    {/* available order */}
+                                    <div className="flex items-center justify-between w-full">
+                                        <h3 className='font-normal text-xs text-[#8D85A0]'>
+                                            Available Order
+                                        </h3>
 
-                                <h3 className='font-semibold text-sm text-black'>
-                                    ₦100 000.00
-                                </h3>
-                            </div>
-                        </div>
+                                        <h3 className='font-semibold text-sm text-black'>
+                                            {`${singleListing.availableBalance}${getAssetLabel(+assetId)}`}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </>:
+                            <></>
+                        }
 
                         {/* container */}
                         <div className="flex w-full flex-col mt-auto">
@@ -222,7 +250,7 @@ const BuyCoin = () => {
                                 disabled={!formData.amount}
                                 loading={isBuyLoading}
                                 onClick={handleSubmit}
-                                text={`Buy ${assetName}`} />
+                                text={`Buy ${getAssetLabel(+assetId)}`} />
                             </div>
                         </div>
                     </form>
