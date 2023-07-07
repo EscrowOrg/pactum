@@ -11,6 +11,7 @@ import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterSt
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { getUserData } from "../../../../../serivce/cookie.service";
 import BASE_URL from "../../../../../serivce/url.serice";
+import { isEmpty } from "../../../helpers/isEmpty";
 
 const MyUsers= () => {
   // STATES
@@ -35,6 +36,12 @@ useEffect(()=>{
    getUsers();
 },[])
 
+
+useEffect(()=>{
+  if(!isEmpty(data)) {
+      setDateFutter(data?.data)
+  }
+}, [data])
 const getUsers = async ()=>{
     try {
      await makeGetRequest(`${BASE_URL}/api/Vendor/GetVendorSubUsers/${vendorId}/${userId}`)

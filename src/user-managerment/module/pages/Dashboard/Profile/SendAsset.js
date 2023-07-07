@@ -43,10 +43,10 @@ const SendAsset = () => {
   const [amount, setAmount] = useState("");
   const [recipientId, setRecipientID] = useState("");
   const [walletInfo, setWalletInfo] = useState({});
-  const [mode, setMode] = useState({
-    value: 1,
-    label: "Internal User",
-  });
+//   const [mode, setMode] = useState({
+//     value: 1,
+//     label: "Internal User",
+//   });
   const [assetList, setAssetList] = useState([]);
   const [asset, setAsset] = useState({
     name: "",
@@ -171,7 +171,7 @@ const SendAsset = () => {
               <label className="flex flex-col gap-2 w-[92%] mx-auto">
                 {/* label text */}
                 <span className="font-normal text-xs text-black">
-                  Recipient's Username
+                  Recipient's Email
                 </span>
 
                 {/* input field */}

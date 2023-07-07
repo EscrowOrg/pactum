@@ -10,9 +10,9 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { toast } from "react-toastify";
-import { GET_ASSETS_ACCOUNTS, TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
-
+// import { toast } from "react-toastify";
+import { GET_ASSETS_ACCOUNTS } from "../../../../../serivce/apiRoutes.service";
+import { isEmpty } from "../../../helpers/isEmpty";
 
 const UserWallet = () => {
   // STATES
@@ -20,8 +20,7 @@ const UserWallet = () => {
   const [filterValue, setFilterValue] = useState("A-Z");
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
   const [Wallet, setWallet] = useState(null);
-  const { data,  makeGetRequest, isSuccessful } = useMakeReq();
-  const { makePostRequest } = useMakeReq();
+  const { data, makeGetRequest } = useMakeReq();
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
@@ -34,18 +33,13 @@ const UserWallet = () => {
   // USE EFFECT
   useEffect(() => {
     getWallet();
-  }, [data, isSuccessful]);
+  }, []);
 
   useEffect(() => {
-    if(isSuccessful === true && data){
-        toast.success(
-          data.message || "We have sent an invitation to this user, you will be notified when they accept it."
-        );
-        navigate("/vendor-user-wallet/id:7");
-      }else if (isSuccessful === false && data){
-        toast.error(data.message || "Error creating a bank details")
-      }
-  }, [data, isSuccessful]);
+    if (!isEmpty(data)) {
+      setWallet(data?.data);
+    }
+  }, [data]);
 
   const getWallet = async () => {
     try {
@@ -53,30 +47,6 @@ const UserWallet = () => {
       // console.log(uId);
       await makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`);
       // console.log(data);
-      setWallet(data && data.data);
-    } catch (error) {
-      setWallet(error);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const uId = getUserId();
-
-    // Internal Users Transfer
-    const payload ={
-      userIdentifier : Wallet.id,
-      senderUserId: uId,
-      amount: Wallet.Balance.accountBalance,
-      currency: Wallet.currency,
-      network: Wallet.accountingCurrency,
-    }
-    try {
-      // console.log(uId)
-      // console.log(payload);
-
-      await makePostRequest(TRANSFER_INTERNAL_USERS, payload);
-      console.log(data);
       setWallet(data && data.data);
     } catch (error) {
       setWallet(error);
@@ -145,7 +115,7 @@ const UserWallet = () => {
           </div>
 
           {/* User Wallet */}
-          <div className="my-4 w-full" >
+          <div className="my-4 w-full">
             {Wallet?.map((Wallet) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet/id:7")}
@@ -189,24 +159,22 @@ const UserWallet = () => {
             ))}
           </div>
 
-              {/* buttons */}
-        <div className="flex items-center gap-6 w-full mt-72">
-          <div className="flex flex-col items-stretch w-[40%]">
-            <PrimaryButtonLight height="h-14" text={"Change Limit"} />
-          </div>
+          {/* buttons */}
+          <div className="flex items-center gap-6 w-full mt-72">
+            <div className="flex flex-col items-stretch w-[40%]">
+              <PrimaryButtonLight height="h-14" text={"Change Limit"} />
+            </div>
 
-          <div className="flex flex-col items-stretch w-[60%]">
-            <PrimaryButton
-              onClick={() =>navigate("/vendor-user-wallet/id:6")}
-              // onClick={handleSubmit}
-              height="h-14"
-              text={"Send Asset"}
-            />
+            <div className="flex flex-col items-stretch w-[60%]">
+              <PrimaryButton
+                onClick={() => navigate("/vendor-user-wallet/id:6")}
+                // onClick={handleSubmit}
+                height="h-14"
+                text={"Send Asset"}
+              />
+            </div>
           </div>
         </div>
-        </div>
-
-    
       </div>
     </PageWrapper>
   );
