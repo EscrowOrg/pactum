@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
 import { ErrorButton, PrimaryButton } from '../../Button'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AiOutlineUser } from 'react-icons/ai'
 import { isEmpty } from '../../../helpers/isEmpty'
 
@@ -105,10 +104,10 @@ const ListingAdCard = ({
                 </h4>
             </div>
 
-            {listingType === 1 ? (
+            {listingType === 2 ? (
                 <PrimaryButton
                 onClick={() =>
-                    navigate(`/home/buy-coin/${adID}?asset=${asset?.label}`)
+                    navigate(`/home/buy-coin/${adID}?asset=${asset?.value}`)
                 }
                 height="h-10"
                 text="Buy"

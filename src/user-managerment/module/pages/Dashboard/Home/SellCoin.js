@@ -7,7 +7,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
-import { CREATE_SELL_SESSION, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import { CREATE_SELL_SESSION, GET_ADLISTING_DETAILS, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { toast } from "react-toastify";
@@ -20,7 +20,6 @@ const SellCoin = () => {
   // DATA INITIALIZATION
   const role = getUserRole()
   const userId = getUserId()
-
   const navigate = useNavigate();
   const {coinId: adID} = useParams()
   const [searchParams] = useSearchParams();
@@ -30,6 +29,11 @@ const SellCoin = () => {
     getLoading: getBankLoading,
     makeGetRequest,
   } = useMakeReq()
+  const { 
+    data: listingAdData,
+    makeGetRequest: getListingAds,
+    getLoading: isgetLIstingAdsLoading
+} = useMakeReq();
   const {
       data: sellAssetData, 
       loading: isSellLoading,  
@@ -41,6 +45,7 @@ const SellCoin = () => {
 
   // STATES
   const [isBankDrawerOpen, setIsBankDrawerOpen] = useState(false);
+  const [singleListing, setSingleListing] = useState(null)
   const [formData, setFormData] = useState({
     amount: "",
   });
@@ -75,6 +80,7 @@ const SellCoin = () => {
 
 
 // SIDE EFFECTS
+// get banks
 useEffect(()=>{
   makeGetRequest(`${GET_BANKS}/${userId}/${role}`)
 }, [])
@@ -84,6 +90,18 @@ useEffect(()=>{
       setBankDetails(bankData?.data[0])
   }
 }, [bankData])
+
+// get ad details
+useEffect(()=>{
+  getListingAds(`${GET_ADLISTING_DETAILS}/${adID}`)
+}, [])
+useEffect(()=>{
+if(!isEmpty(listingAdData?.data)) {
+  setSingleListing(listingAdData?.data)
+}
+}, [listingAdData])
+
+// creating sell order
 useEffect(()=>{
   if(!isEmpty(sellAssetData)) {
       if(isSellSuccess===true) {
@@ -106,6 +124,7 @@ useEffect(()=>{
   return (
     <PageWrapper>
       <div className="w-full h-full flex flex-col py-5 gap-8">
+
         {/* header */}
         <div className="flex items-center w-[92%] mx-auto justify-between">
           {/* back button */}
@@ -149,107 +168,121 @@ useEffect(()=>{
             </label>
 
             {/* transaction details */}
-            <div className="flex items-center w-full justify-between text-sm">
+            <div className='font-normal text-[#ACA6BA]'>
+                Trade price: <span className='text-[#141217] font-semibold'>₦{singleListing?.tradePrice}</span>
+            </div>
+            {/* <div className="flex items-center w-full justify-between text-sm">
               <div className="font-normal text-[#ACA6BA]">
                 Price:
                 <span className="text-[#141217] font-semibold">₦400</span>
               </div>
-              {/* left line */}
+              left line
               <hr className="w-16" />
-              {/* circle */}
+              circle
               <div className="flex items-center text-[#DAD7E0] gap-1">
                 <RefreshCircle variant="TwoTone" size={24} color="#16053D" />
               </div>
 
-              {/* right line */}
+              right line
               <hr className="w-16" />
 
               <div className="font-normal text-[#ACA6BA]">
                 You will receive:{" "}
                 <span className="text-[#141217] font-semibold">...</span>
               </div>
-            </div>
+            </div> */}
 
             {/* summary details */}
             <div className="flex w-full flex-col gap-6">
 
               {/* info */}
-              <div className="flex flex-col w-full gap-5 bg-gray-100 py-3 px-4 rounded-lg">
-                {/*  Payment Timeframe */}
-                <div className="flex items-center justify-between">
-                  <h3 className="font-normal text-xs text-[#8D85A0]">
-                    Payment Timeframe
-                  </h3>
-
-                  <h3 className="text-black text-sm font-semibold">15 min</h3>
-                </div>
-
-                {/*  Min - Max Order Amount */}
-                <div className="flex items-center justify-between">
-                  <h3 className="font-normal text-xs text-[#8D85A0]">
-                    Min - Max Order Amount
-                  </h3>
-
-                  <h3 className="text-black text-sm font-semibold">
-                    0.989 - 4.583 BTC
-                  </h3>
-                </div>
-
-                {/* fiat amount */}
-                <div className="flex items-center justify-between">
-                  <h3 className="font-normal text-xs text-[#8D85A0]">
-                    Fiat Amount
-                  </h3>
-
-                  <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                    ₦---
-                  </h3>
-                </div>
-
-                {/* username */}
-                <div className="flex items-center justify-between">
-                  <h3 className="font-normal text-xs text-[#8D85A0]">
-                    Buyer
-                  </h3>
-
-                  <h3 className="text-black text-sm font-semibold">
-                    jhoellasemota
-                  </h3>
-                </div>
-              </div>
-
-              {/* Existing Bank details */}
               {
-                  getBankLoading?
-                  <LoadingSpinner
-                  viewPortHeight="h-[20vh]"
-                  bgColor="bg-gray-100" />:
-                  !isEmpty(bankDetails) ? 
-                  <div className="flex items-center w-full bg-[#6D34F0]">
-                    {/* first cont */}
-                    <div className="bg-[#6D34F0] flex flex-col gap-2 py-3 px-4 w-full">
-                      <h5 className="text-[8px] font-normal text-[#D2C1FA]">
-                        BANK DETAILS LAST USED
-                      </h5>
+                isgetLIstingAdsLoading?
+                <LoadingSpinner
+                viewPortHeight="h-[20vh]"
+                bgColor="bg-gray-100"  />:
+                !isEmpty(singleListing) ? 
+                <>
+                  <div className="flex flex-col w-full gap-5 bg-gray-100 py-3 px-4 rounded-lg">
+                    {/*  Payment Timeframe */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Payment Timeframe
+                      </h3>
 
-                      <h5 className="font-bold text-base text-[#F4EFFE]">
-                        {getBankLoading?"Loading...":bankDetails?.bankName || "Empty"}
-                      </h5>
-                      
-                      <h5 className="font-semibold text-[#F4EFFE] text-sm">
-                        {getBankLoading?"Loading...":`${bankDetails?.accountNumber} - ${bankDetails?.accountName}`}
-                      </h5>
+                      <h3 className="text-black text-sm font-semibold">{singleListing?.timeFrame} min</h3>
                     </div>
-                    <div
-                      onClick={toggleBankDrawer}
-                      className="flex items-center justify-center h-full w-16 bg-[rgba(255,255,255,.2)] cursor-pointer"
-                    >
-                      <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
+
+                    {/*  Min - Max Order Amount */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Min - Max Order Amount
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold">
+                        {/* 0.989 - 4.583 BTC */}
+                        {`${singleListing.lowerLimit}${getAssetLabel(assetId)}`} - {`${singleListing.upperLimit}${getAssetLabel(assetId)}`}
+                      </h3>
                     </div>
-                  </div>:
+
+                    {/* fiat amount */}
+                    {/* <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Fiat Amount
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                        ₦---
+                      </h3>
+                    </div> */}
+
+                    {/* username */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Buyer name
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold">
+                        {singleListing.merchantName}
+                      </h3>
+                    </div>
+                  </div>
+                </>:
                 <></>
-               }
+              }
             </div>
+
+            {/* Existing Bank details */}
+            {
+                getBankLoading?
+                <LoadingSpinner
+                viewPortHeight="h-[20vh]"
+                bgColor="bg-gray-100" />:
+                !isEmpty(bankDetails) ? 
+                <div className="flex items-center w-full bg-[#6D34F0]">
+                  {/* first cont */}
+                  <div className="bg-[#6D34F0] flex flex-col gap-2 py-3 px-4 w-full">
+                    <h5 className="text-[8px] font-normal text-[#D2C1FA]">
+                      BANK DETAILS LAST USED
+                    </h5>
+
+                    <h5 className="font-bold text-base text-[#F4EFFE]">
+                      {getBankLoading?"Loading...":bankDetails?.bankName || "Empty"}
+                    </h5>
+                    
+                    <h5 className="font-semibold text-[#F4EFFE] text-sm">
+                      {getBankLoading?"Loading...":`${bankDetails?.accountNumber} - ${bankDetails?.accountName}`}
+                    </h5>
+                  </div>
+                  <div
+                    onClick={toggleBankDrawer}
+                    className="flex items-center justify-center h-full w-16 bg-[rgba(255,255,255,.2)] cursor-pointer"
+                  >
+                    <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
+                  </div>
+                </div>:
+              <></>
+              }
 
             {/* container */}
             <div className="flex w-full flex-col mt-auto">

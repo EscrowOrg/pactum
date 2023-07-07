@@ -244,12 +244,12 @@ const Overview = () => {
 
                                     <WarningButton1
                                     height='h-14'
-                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=2&asset=${coinId}`)}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=1&asset=${coinId}`)}
                                     text={`Sell ${coinChartInfo.name || ""}`} />
 
                                     <PrimaryButton
                                     height='h-14'
-                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=1&asset=${coinId}`)}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=2&asset=${coinId}`)}
                                     text={`Buy ${coinChartInfo.name || ""}`} />
 
                                     <span
@@ -276,13 +276,13 @@ const Overview = () => {
                 <div className='w-full bg-white rounded-xl p-4 gap-6 flex flex-col'>
 
                     <Link
-                    to={`/home/overview/coin-buy-sell?id=2&asset=${coinId}`}
+                    to={`/home/overview/coin-buy-sell?id=1&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Sell {coinChartInfo.name || ""}
                     </Link>
 
                     <Link
-                    to={`/home/overview/coin-buy-sell?id=1&asset=${coinId}`}
+                    to={`/home/overview/coin-buy-sell?id=2&asset=${coinId}`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Buy {coinChartInfo.name || ""}
                     </Link>

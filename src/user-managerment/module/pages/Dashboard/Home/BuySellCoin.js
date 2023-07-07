@@ -100,18 +100,18 @@ const BuySellCoin = () => {
             {/* text */}
             <div className="flex items-center gap-6">
               <h3
-                onClick={() => setAction(1)}
+                onClick={() => setAction(2)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === 1 ? "active-action1" : "text-[#C3BFCD]"
+                  action === 2 ? "active-action1" : "text-[#C3BFCD]"
                 }`}
               >
                 Buy
               </h3>
 
               <h3
-                onClick={() => setAction(2)}
+                onClick={() => setAction(1)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === 2 ? "active-action2" : "text-[#C3BFCD]"
+                  action === 1 ? "active-action2" : "text-[#C3BFCD]"
                 }`}
               >
                 Sell

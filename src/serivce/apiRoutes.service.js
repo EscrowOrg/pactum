@@ -1,8 +1,6 @@
 import BASE_URL, { COIN_GECKO_BASE } from "./url.serice";
 
 
-
-
 //Your own base_url or in house url
 export const GET_PORTFOLIO_BALANCE = `${BASE_URL}/api/Wallet/GetPortfolioBalance/USD`
 export const GET_USER_DETS = `${BASE_URL}/api/User/GetUserByUserId`
@@ -22,6 +20,7 @@ export const GET_AD_LISTING_BY_VALUE = `${BASE_URL}/api/ListingManagement/GetAdL
 export const CHANGE_PASSWORD = `${BASE_URL}/api/User/ChangePassword`
 export const CREATE_BUY_SESSION = `${BASE_URL}/api/ListingManagement/CreateBuySession`
 export const CREATE_SELL_SESSION = `${BASE_URL}/api/ListingManagement/CreateSellSession`
+export const GET_ADLISTING_DETAILS = `${BASE_URL}/api/ListingManagement/GetAdListingById`
 
 
 //external url
