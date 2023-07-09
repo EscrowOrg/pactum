@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
-import {  Filter, MoneySend } from "iconsax-react";
+import { Filter, MoneySend } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import BASE_URL from "../../../../../serivce/url.serice";
+import { getUserData } from "../../../../../serivce/cookie.service";
 
 const UserWalletAsset = () => {
+  // STATES
+  const [getAsset, setGetAsset] = useState();
+  const { data, makeGetRequest } = useMakeReq();
+
+  const {userId} = getUserData()
+
   // DATA INITIALIAZATION
   const navigate = useNavigate();
+
+  // USE EFFECT
+  useEffect(() => {
+    getUserAsset()
+  }, []);
+
+  const getUserAsset = async () => {
+    try {
+      await makeGetRequest(`${BASE_URL}/api/Vendor/GetTransactionSentToSubUsers/${userId}/`);
+    } catch (error) {
+      setGetAsset(error);
+    }
+  };
 
   const UserAssets = [
     {
@@ -31,7 +53,7 @@ const UserWalletAsset = () => {
     },
   ];
 
-  const colors = ["#10B981", '#EB9B00', '#D1292D', '#D1292D']
+  const colors = ["#10B981", "#EB9B00", "#D1292D", "#D1292D"];
   return (
     <PageWrapper>
       <div className="w-full h-full">
@@ -70,7 +92,10 @@ const UserWalletAsset = () => {
                   {/* user name and email */}
                   <div>
                     <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
-                    <p className="text-xs font-bold"  style={{ color: colors[index] }}>
+                    <p
+                      className="text-xs font-bold"
+                      style={{ color: colors[index] }}
+                    >
                       {asset.assetStatus}
                     </p>
                   </div>

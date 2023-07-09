@@ -8,6 +8,7 @@ import RemoveBank from "../../../components/Dashboard/Profile/RemoveBank";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { getUserData } from "../../../../../serivce/cookie.service";
 import BASE_URL from "../../../../../serivce/url.serice";
+import { isEmpty } from "../../../helpers/isEmpty";
 
 const ListOfBanks = (closeModal) => {
   // STATES
@@ -27,6 +28,12 @@ const ListOfBanks = (closeModal) => {
   useEffect(()=>{
     getBanks()
   }, [])
+
+  useEffect(()=>{
+    if(!isEmpty(data)) {
+        setBankDetails(data?.data)
+    }
+}, [data])
 
   const getBanks = async ()=>{
     try {
