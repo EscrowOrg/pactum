@@ -25,7 +25,7 @@ const MyUsers= () => {
         name: "",
         id: null
     })
-    const [dateFutter, setDateFutter] = useState(null)
+    const [dateFutter, setDateFutter] = useState([])
 
    const {data, getLoading, makeGetRequest} = useMakeReq();
 
@@ -33,14 +33,12 @@ const MyUsers= () => {
 
 useEffect(()=>{
    getUsers();
-},[])
+},[data])
 
 const getUsers = async ()=>{
     try {
      await makeGetRequest(`${BASE_URL}/api/Vendor/GetVendorSubUsers/${vendorId}/${userId}`)
-     // setFilterStatus(data.data);
-     console.log(data)
-      setDateFutter(data && data.data)
+      setDateFutter(data?.data)
     } catch (error) {
       setDateFutter(error)
     }

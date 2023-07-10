@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const SingleNotification = ({
     title="",
-    description="",
+    body="",
     viewMorePath=""
 }) => {
     return (
@@ -24,7 +24,7 @@ const SingleNotification = ({
 
             {/* brief description */}
             <h4 className='font-normal text-xs text-[#344054] w-full'>
-                {description}
+                {body}
             </h4>
         </div>
     )

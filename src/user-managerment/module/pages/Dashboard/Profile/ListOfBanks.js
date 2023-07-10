@@ -14,8 +14,7 @@ const ListOfBanks = (closeModal) => {
   const [removePhotoModalState, setRemovePhotoModal] = useState(false);
 
   const navigate = useNavigate();
-   const [BankDetails, setBankDetails] = useState();
-  //api/User/GetBankByUserId/
+   const [BankDetails, setBankDetails] = useState([]);
 
   // HANDLERS
   const toggleRemovePhotoModal = () => {
@@ -23,23 +22,19 @@ const ListOfBanks = (closeModal) => {
   };
   const {data, makeGetRequest} = useMakeReq();
   const {role, userId} = getUserData();
-    //console.log(data)
   useEffect(()=>{
     getBanks()
-  }, [])
+  }, [data])
 
   const getBanks = async ()=>{
     try {
       await makeGetRequest(`${BASE_URL}/api/User/GetBankByUserId/${userId}/${role}`)
-      console.log(data)
-      setBankDetails(data.data);
-      //setBankDetails(data);
+      setBankDetails(data?.data);
      
     } catch (error) {
       setBankDetails(error)
     }
   }
-  console.log(BankDetails)
   return (
     <PageWrapper>
       <div className="w-full p-5 bg-[#F4EFFE]">

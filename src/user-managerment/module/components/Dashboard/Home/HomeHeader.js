@@ -8,10 +8,12 @@ import {
 } from 'react'
 import PortfolioBalance from './PortfolioBalance'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { getUserId } from '../../../../../serivce/cookie.service'
+import { getUserData, getUserId } from '../../../../../serivce/cookie.service'
 import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { useNavigate } from 'react-router-dom'
+import { messaging } from '../../../firebase/firebaseConfig'
+import BASE_URL from '../../../../../serivce/url.serice'
 
 const HomeHeader = () => {
 
@@ -19,9 +21,10 @@ const HomeHeader = () => {
     const {
         data,
         makeGetRequest,
+        makePostRequest
     } = useMakeReq()
     const navigate = useNavigate()
-    
+  //const {token, userId}= getUserData();
 
     // STATES
     const [name, setName] = useState("")
@@ -38,7 +41,7 @@ const HomeHeader = () => {
             setName(data?.data?.userName)
         }
     }, [data])
-
+    
     return (
         <div className='w-full flex items-center justify-center bg-[#6D34F0] min-h-[190px] relative'>
 
@@ -63,7 +66,6 @@ const HomeHeader = () => {
                             "Hey! 😎"
                         }
                     </p>
-
                     {/* notification icon */}
                     <span
                     onClick={()=>navigate("/home/notification")} 
