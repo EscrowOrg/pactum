@@ -68,6 +68,7 @@ import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
 import ChangePin from "./pages/Dashboard/Profile/ChangePin";
 import SendChat from "./pages/Dashboard/Profile/SendChat";
 import SendAsset from "./pages/Dashboard/Profile/SendAsset";
+import AuthRoutes from "./components/AuthRoutes";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -176,7 +177,7 @@ const MainRouter = () => {
         />
 
         {/* =========== HOME DASHBOARD ========== */}
-        <Route element={<PrivateRoutes />}>
+        <Route element={<AuthRoutes />}>
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
