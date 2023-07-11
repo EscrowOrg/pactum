@@ -29,7 +29,6 @@ const PrivateRoutes = () => {
 
     // SIDE EFFECTS
     // check if refresh token return a data or has Error message
-    const {token} = getUserData();
     useEffect(()=>{
         if(!isEmpty(data)){
             if(data.success === true) {
