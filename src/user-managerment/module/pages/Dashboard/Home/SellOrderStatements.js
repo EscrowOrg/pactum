@@ -119,9 +119,9 @@ const SellOrderStatements = () => {
                 <h3 className="font-normal text-xs text-[#8D85A0]">Order ID</h3>
 
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  hfsbg4u9ui093u290u02
+                  {singleOrder.sessId}
                   <Copy
-                    onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
+                    onClick={() => copyToClipBoard(singleOrder.sessId || "")}
                     variant="Bulk"
                     size={16}
                     color="#3F9491"
