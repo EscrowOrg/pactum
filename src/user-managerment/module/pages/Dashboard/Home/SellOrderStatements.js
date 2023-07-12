@@ -1,29 +1,50 @@
-import { useState } from "react";
+import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AUTH_GET_ESCROW_SESSION_BYID } from "../../../../../serivce/apiRoutes.service";
 import {
   BackButton,
   ErrorButton,
   PrimaryButton,
 } from "../../../components/Button";
-import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { useNavigate } from "react-router-dom";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
+import PageWrapper from "../../../layouts/PageWrapper";
 import ReportStatement from "./ReportStatement";
 
 const SellOrderStatements = () => {
+
   //   Drawer State
   const [isOpen, setIsOpen] = useState(false);
+  const [singleOrder, setSingleOrder] = useState(null)
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
+  const {orderId} = useParams()
+  console.log("order statement:", orderId)
+  const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
    //Drawer HANDLERS
    const toggleDrawer = (value) => {
     // value?setIsOpen(value):setIsOpen(isOpen => !isOpen)
     setIsOpen(isOpen => !isOpen)
 }
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+      makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${orderId}`)
+    }, [])
+    useEffect(()=>{
+    if(!isEmpty(data)) {
+      if(isSuccessful) {
+        setSingleOrder(data?.data)
+      }
+    }
+  }, [data, isSuccessful])
 
   return (
     <PageWrapper>
@@ -74,7 +95,7 @@ const SellOrderStatements = () => {
             </h3>
 
             <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-              You will be deducted 0.844BTC
+              {`You will be deducted ${singleOrder.cryptoAmount}${getAssetLabel(singleOrder.asset)}`}
             </h3>
           </div>
 
@@ -113,7 +134,7 @@ const SellOrderStatements = () => {
                 <h3 className="font-normal text-xs text-[#8D85A0]">Buyer</h3>
 
                 <h3 className="text-black text-sm font-semibold">
-                  jhoellasemota
+                  {singleOrder.initatorName}
                 </h3>
               </div>
             </div>
@@ -140,7 +161,7 @@ const SellOrderStatements = () => {
                 </h3>
 
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  4890149295
+                  {singleOrder.accountNumber}
                 </h3>
               </div>
 
@@ -151,7 +172,7 @@ const SellOrderStatements = () => {
                 </h3>
 
                 <h3 className="text-black text-sm font-semibold">
-                  Asemota Joel
+                  {singleOrder.accountName}
                 </h3>
               </div>
             </div>
