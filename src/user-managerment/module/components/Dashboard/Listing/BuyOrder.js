@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { AUTH_GET_BANKS, CREATE_AD_LISTING } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_CREATE_AD_LISTING, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
@@ -32,7 +32,7 @@ const BuyOrder = ({
     isSuccessful: isCreateSuccess,
     error: isCreateError,
     loading: createListingLoading,
-    makePostRequest,
+    makeAuthPostReq,
 } = useMakeReq()
 const role = getUserRole() || ""
 const userId = getUserId() || ""
@@ -115,7 +115,7 @@ const userId = getUserId() || ""
       formValues.assets = asset.assetId
 
       // create AdListing
-      makePostRequest(CREATE_AD_LISTING, {
+      makeAuthPostReq(AUTH_CREATE_AD_LISTING, {
         adListRequest: formValues
       })
     }}

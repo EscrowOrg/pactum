@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   AUTH_GET_ASSETS_MAPPING,
-  AUTH_TRANSFER_INTERNAL_USERS,
-  GET_SINGLE_ACCOUNT
+  AUTH_GET_SINGLE_ACCOUNT,
+  AUTH_TRANSFER_INTERNAL_USERS
 } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
@@ -89,7 +89,7 @@ const SendAsset = () => {
   // SIDE EFFECTS
   useEffect(() => {
     makeAuthGetReq(AUTH_GET_ASSETS_MAPPING);
-    getWalletInfo(`${GET_SINGLE_ACCOUNT}/${coinId}`);
+    getWalletInfo(`${AUTH_GET_SINGLE_ACCOUNT}/${coinId}`);
   }, []);
 
   // get assets data

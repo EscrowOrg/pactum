@@ -2,7 +2,7 @@ import { ArrowRight2, TransactionMinus } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AUTH_CREATE_SELL_SESSION, AUTH_GET_BANKS, GET_ADLISTING_DETAILS } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_CREATE_SELL_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { BackButton, ErrorButton } from "../../../components/Button";
 import BanksView from "../../../components/Dashboard/Listing/BanksView";
@@ -93,7 +93,7 @@ useEffect(()=>{
 
 // get ad details
 useEffect(()=>{
-  getListingAds(`${GET_ADLISTING_DETAILS}/${adID}`)
+  getListingAds(`${AUTH_GET_ADLISTING_DETAILS}/${adID}`)
 }, [])
 useEffect(()=>{
 if(!isEmpty(listingAdData?.data)) {

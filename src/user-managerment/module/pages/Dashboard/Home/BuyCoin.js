@@ -2,7 +2,7 @@ import { TransactionMinus } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AUTH_CREATE_BUY_SESSION, AUTH_GET_ASSETS_ACCOUNTS, GET_ADLISTING_DETAILS } from '../../../../../serivce/apiRoutes.service'
+import { AUTH_CREATE_BUY_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import LoadingSpinner from '../../../components/Global/LoadingSpinner'
@@ -82,7 +82,7 @@ const BuyCoin = () => {
 
     // get ad details
     useEffect(()=>{
-        getListingAds(`${GET_ADLISTING_DETAILS}/${coinId}`)
+        getListingAds(`${AUTH_GET_ADLISTING_DETAILS}/${coinId}`)
     }, [])
     useEffect(()=>{
     if(!isEmpty(listingAdData?.data)) {

@@ -7,7 +7,7 @@ import {
     useState
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
+import { AUTH_GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
@@ -30,7 +30,7 @@ const HomeHeader = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeAuthGetReq(`${GET_USER_DETS}/${getUserId()}`)
+        makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`)
     }, [])
 
     // populating data
