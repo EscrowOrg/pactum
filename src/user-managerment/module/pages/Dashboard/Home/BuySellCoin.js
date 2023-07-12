@@ -11,13 +11,13 @@ import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import Assets from "./Assets";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { GET_AD_LISTING, GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_AD_LISTING_BY_VALUE, GET_AD_LISTING, GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { isEmpty } from "../../../helpers/isEmpty";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import ListingAdCard from "../../../components/Dashboard/Listing/ListingAdCard";
 import ListingAdPagination from "../Listing/ListingAdPagination";
-import { getUserData } from "../../../../../serivce/cookie.service";
+import { getUserData, getUserId, removeUserToken } from "../../../../../serivce/cookie.service";
 
 const BuySellCoin = () => {
 
@@ -42,7 +42,7 @@ const BuySellCoin = () => {
   // DATA INTIALIZATION
   const {
     getLoading,
-    makeGetRequest,
+    makeAuthGetReq,
     isSuccessful,
     data
   } = useMakeReq()
@@ -54,6 +54,8 @@ const BuySellCoin = () => {
   ];
   const coinId = searchParams?.get("asset")
   const id = searchParams?.get("id");
+  // get user data
+  const userId = getUserId()
   
   
   // SIDE EFFECTS
@@ -68,11 +70,8 @@ const BuySellCoin = () => {
 
   useEffect(()=>{
 
-    // get user data
-    const {userId, vendorId} = getUserData()
-
     // making GET request
-    makeGetRequest(`${GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${userId}`)
+    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${ userId || ""}`)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, coinSelect])

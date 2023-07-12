@@ -1,5 +1,6 @@
 import axios from "axios";
 import BASE_URL from "./url.serice";
+import { LOGIN_USER } from "./apiRoutes.service";
 
 
 // Login
@@ -8,7 +9,7 @@ export const LoginCall = async (userCre, dispatch) =>{
         type: "LOGIN_START"
     });
     try {
-        const res = await axios.post(`${BASE_URL}/api/User/Login`, 
+        const res = await axios.post(LOGIN_USER, 
         {
             loginRequest: {
                 email: userCre.emailAddress,
