@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { useEffect, useState } from "react";
-import BASE_URL from "../../../../../serivce/url.serice";
+import { useNavigate } from "react-router-dom";
+import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRoutes.service";
 import { getUserData } from "../../../../../serivce/cookie.service";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 
 const PendingPaymentsCard = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
-  const {data, makeGetRequest} = useMakeReq();
+  const {data, makeAuthGetReq} = useMakeReq();
 
   const [pendingOrder, setPendingOrder] = useState([]);
  const {userId} = getUserData();
@@ -16,7 +16,7 @@ useEffect(()=>{
 },[data])
   const getPendingOrder = async ()=>{
      try {
-       await makeGetRequest(`${BASE_URL}/api/ListingManagement/GetAwaitingEscrowSessions/${userId}`)
+       await makeAuthGetReq(`${AUTH_GET_AWAITING_ESCROW_SESSION}/${userId}`)
        setPendingOrder(data?.data?.orders)
      } catch (error) {
       setPendingOrder(error)

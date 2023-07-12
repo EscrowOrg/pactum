@@ -1,10 +1,10 @@
 import { Eye, EyeSlash } from 'iconsax-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { AUTH_GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { roundToN } from '../../../helpers/roundToN'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 
 const PortfolioBalance = ({usdValue, btcValue, loading}) => {
 
@@ -12,7 +12,7 @@ const PortfolioBalance = ({usdValue, btcValue, loading}) => {
     const {
         getLoading,
         data,
-        makeGetRequest,
+        makeAuthGetReq,
     } = useMakeReq()
 
 
@@ -32,7 +32,7 @@ const PortfolioBalance = ({usdValue, btcValue, loading}) => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_PORTFOLIO_BALANCE}/${getUserId()}`)
+        makeAuthGetReq(`${AUTH_GET_PORTFOLIO_BALANCE}/${getUserId()}`)
     }, [])
 
     // populating data

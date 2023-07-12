@@ -1,26 +1,24 @@
-import { 
-    ArrowRight2, 
-    NotificationBing 
+import {
+    ArrowRight2,
+    NotificationBing
 } from 'iconsax-react'
-import { 
-    useEffect, 
-    useState 
+import {
+    useEffect,
+    useState
 } from 'react'
-import PortfolioBalance from './PortfolioBalance'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { getUserData, getUserId } from '../../../../../serivce/cookie.service'
-import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
-import { isEmpty } from '../../../helpers/isEmpty'
 import { useNavigate } from 'react-router-dom'
-import { messaging } from '../../../firebase/firebaseConfig'
-import BASE_URL from '../../../../../serivce/url.serice'
+import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { isEmpty } from '../../../helpers/isEmpty'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import PortfolioBalance from './PortfolioBalance'
 
 const HomeHeader = () => {
 
     // DATA INITIALIZATION
     const {
         data,
-        makeGetRequest,
+        makeAuthGetReq,
         makePostRequest
     } = useMakeReq()
     const navigate = useNavigate()
@@ -32,7 +30,7 @@ const HomeHeader = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_USER_DETS}/${getUserId()}`)
+        makeAuthGetReq(`${GET_USER_DETS}/${getUserId()}`)
     }, [])
 
     // populating data

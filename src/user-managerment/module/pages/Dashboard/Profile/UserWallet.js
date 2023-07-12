@@ -1,17 +1,17 @@
+import { ArrowDown2 } from "iconsax-react";
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
+import { HiOutlineSearch } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AUTH_GET_ASSETS_ACCOUNTS, TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
 import {
   BackButton,
   PrimaryButton,
   PrimaryButtonLight,
 } from "../../../components/Button";
-import { ArrowDown2 } from "iconsax-react";
-import { HiOutlineSearch } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
-import { getUserId } from "../../../../../serivce/cookie.service";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { toast } from "react-toastify";
-import { GET_ASSETS_ACCOUNTS, TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 
 const UserWallet = () => {
@@ -20,7 +20,7 @@ const UserWallet = () => {
   const [filterValue, setFilterValue] = useState("A-Z");
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
   const [Wallet, setWallet] = useState(null);
-  const { data,  makeGetRequest, isSuccessful } = useMakeReq();
+  const { data,  makeAuthGetReq, isSuccessful } = useMakeReq();
   const { makePostRequest } = useMakeReq();
 
   // DATE INITIALIAZATION
@@ -51,7 +51,7 @@ const UserWallet = () => {
     try {
       const uId = getUserId();
       // console.log(uId);
-      await makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`);
+      await makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${uId}&USD`);
       // console.log(data);
       setWallet(data && data.data);
     } catch (error) {

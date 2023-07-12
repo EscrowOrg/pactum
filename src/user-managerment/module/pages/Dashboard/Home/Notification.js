@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import PageWrapper from '../../../layouts/PageWrapper'
+import { AUTH_GET_USER_NOTIFICATIONS } from '../../../../../serivce/apiRoutes.service'
+import { getUserData } from '../../../../../serivce/cookie.service'
 import { BackButton } from '../../../components/Button'
 import SingleNotification from '../../../components/Dashboard/Home/SingleNotification'
-import { messaging } from '../../../firebase/firebaseConfig'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
-import BASE_URL from '../../../../../serivce/url.serice'
-import { getUserData } from '../../../../../serivce/cookie.service'
+import PageWrapper from '../../../layouts/PageWrapper'
 
 const Notification = () => {
    
     const [notifications, setNotification] = useState([])
 
-const {data, makeGetRequest, isSuccessful} = useMakeReq()
+const {data, makeAuthGetReq, isSuccessful} = useMakeReq()
 const {token, userId}= getUserData();
 
 
@@ -23,7 +22,7 @@ useEffect(()=>{
 
 const getNotification = async() =>{
     try {
-        await makeGetRequest(`${BASE_URL}/api/User/GetUserNotifications/${userId}`)
+        await makeAuthGetReq(`${AUTH_GET_USER_NOTIFICATIONS}/${userId}`)
        setNotification(data?.data) 
     } catch (error) {
         setNotification(error)
