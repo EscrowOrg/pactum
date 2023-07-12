@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRoutes.service";
-import { getUserData } from "../../../../../serivce/cookie.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 
 const PendingPaymentsCard = () => {
@@ -10,7 +10,7 @@ const PendingPaymentsCard = () => {
   const {data, makeAuthGetReq} = useMakeReq();
 
   const [pendingOrder, setPendingOrder] = useState([]);
- const {userId} = getUserData();
+ const userId = getUserId() || "";
 useEffect(()=>{
   getPendingOrder()
 },[data])

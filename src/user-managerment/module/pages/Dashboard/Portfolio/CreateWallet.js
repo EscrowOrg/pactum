@@ -4,7 +4,7 @@ import { BackButton, PrimaryButton } from '../../../components/Button'
 import PageWrapper from '../../../layouts/PageWrapper'
 
 import { toast } from 'react-toastify'
-import { AUTH_GET_ASSETS_MAPPING, CREATE_NEW_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { AUTH_CREATE_NEW_ASSETS_ACCOUNTS, AUTH_GET_ASSETS_MAPPING } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import AssetsListView from '../../../components/Dashboard/Portfolio/AssetsListView'
 import DrawerSelectInput from '../../../components/Dashboard/Portfolio/DrawerSelectInput'
@@ -25,7 +25,7 @@ const CreateWallet = () => {
         isSuccessful: isCreateSuccess,
         error: isCreateError,
         loading: createWalletLoading,
-        makePostRequest,
+        makeAuthPostReq,
     } = useMakeReq()
     const {
         data: walletAssetData,
@@ -55,7 +55,7 @@ const CreateWallet = () => {
 
         const uId = getUserId()
 
-        makePostRequest(CREATE_NEW_ASSETS_ACCOUNTS,
+        makeAuthPostReq(AUTH_CREATE_NEW_ASSETS_ACCOUNTS,
             {
                 "chain": +asset.networkId,
                 "asset": +asset.assetId,

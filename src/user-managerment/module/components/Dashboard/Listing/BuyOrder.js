@@ -34,8 +34,8 @@ const BuyOrder = ({
     loading: createListingLoading,
     makePostRequest,
 } = useMakeReq()
-const role = getUserRole()
-const userId = getUserId()
+const role = getUserRole() || ""
+const userId = getUserId() || ""
 
 
   // STATES

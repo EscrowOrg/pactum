@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AUTH_GET_ASSETS_ACCOUNTS, TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_ASSETS_ACCOUNTS, AUTH_TRANSFER_INTERNAL_USERS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import {
   BackButton,
@@ -21,7 +21,7 @@ const UserWallet = () => {
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
   const [Wallet, setWallet] = useState(null);
   const { data,  makeAuthGetReq, isSuccessful } = useMakeReq();
-  const { makePostRequest } = useMakeReq();
+  const { makeAuthPostReq } = useMakeReq();
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const UserWallet = () => {
       // console.log(uId)
       // console.log(payload);
 
-      await makePostRequest(TRANSFER_INTERNAL_USERS, payload);
+      await makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
       console.log(data);
       setWallet(data && data.data);
     } catch (error) {

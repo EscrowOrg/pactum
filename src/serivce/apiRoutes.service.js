@@ -1,8 +1,16 @@
 import BASE_URL, { COIN_GECKO_BASE } from "./url.serice";
 
 
-//Your own base_url or in house url
+// PUBLIC URL
+// ONBOARDING
 export const LOGIN_USER = `${BASE_URL}/api/User/Login`
+export const COMPLETE_REGISTRATION = `${BASE_URL}/api/User/CompleteRegistration`
+export const BASIC_REGISTRATION = `${BASE_URL}/api/User/BasicRegistration`
+export const COMPLETE_VENDOR_REGISTRATION = `${BASE_URL}/api/Vendor/CompleteVendorRegistration`
+export const BASIC_VENDOR_REGISTRATION = `${BASE_URL}/api/Vendor/BasicVendorRegistration`
+export const ADD_PIN = `${BASE_URL}/api/User/AddPin`
+
+//Your own base_url or in house url
 export const GET_PORTFOLIO_BALANCE = `${BASE_URL}/api/Wallet/GetPortfolioBalance/USD`
 export const GET_USER_DETS = `${BASE_URL}/api/User/GetUserByUserId`
 export const REFRESH_USER_TOKEN = `${BASE_URL}/api/User/RefreshToken`
@@ -54,4 +62,5 @@ export const AUTH_GET_ADLISTING_DETAILS = "/api/ListingManagement/GetAdListingBy
 export const AUTH_GET_VENDOR_SUBUSERS = "/api/Vendor/GetVendorSubUsers"
 export const AUTH_GET_USER_NOTIFICATIONS = "/api/User/GetUserNotifications"
 export const AUTH_GET_AWAITING_ESCROW_SESSION = "/api/ListingManagement/GetAwaitingEscrowSessions"
-
+export const AUTH_CREATE_VENDOR_USERS = "/api/Vendor/CreateVendorUsers"
+export const AUTH_CREATE_BANK = "/api/User/CreateBank"

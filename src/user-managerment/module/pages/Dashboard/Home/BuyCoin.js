@@ -2,7 +2,7 @@ import { TransactionMinus } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AUTH_GET_ASSETS_ACCOUNTS, CREATE_BUY_SESSION, GET_ADLISTING_DETAILS } from '../../../../../serivce/apiRoutes.service'
+import { AUTH_CREATE_BUY_SESSION, AUTH_GET_ASSETS_ACCOUNTS, GET_ADLISTING_DETAILS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import LoadingSpinner from '../../../components/Global/LoadingSpinner'
@@ -30,7 +30,7 @@ const BuyCoin = () => {
     const { 
         data: buyAssetData, 
         loading: isBuyLoading,  
-        makePostRequest, 
+        makeAuthPostReq, 
         isSuccessful: isBuySuccess,
         error: buyError 
     } = useMakeReq();
@@ -54,7 +54,7 @@ const BuyCoin = () => {
     }
     const handleSubmit = () => {
         const uId = getUserId()
-        makePostRequest(CREATE_BUY_SESSION,
+        makeAuthPostReq(AUTH_CREATE_BUY_SESSION,
             {
                 userId: uId,
                 adId: coinId,

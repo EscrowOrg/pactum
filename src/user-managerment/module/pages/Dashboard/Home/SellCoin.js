@@ -2,7 +2,7 @@ import { ArrowRight2, TransactionMinus } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AUTH_GET_BANKS, CREATE_SELL_SESSION, GET_ADLISTING_DETAILS } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_CREATE_SELL_SESSION, AUTH_GET_BANKS, GET_ADLISTING_DETAILS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { BackButton, ErrorButton } from "../../../components/Button";
 import BanksView from "../../../components/Dashboard/Listing/BanksView";
@@ -37,7 +37,7 @@ const SellCoin = () => {
   const {
       data: sellAssetData, 
       loading: isSellLoading,  
-      makePostRequest, 
+      makeAuthPostReq, 
       isSuccessful: isSellSuccess,
       error: sellError 
   } = useMakeReq();
@@ -66,7 +66,7 @@ const SellCoin = () => {
   };
   const handleSubmit = () => {
     const uId = getUserId()
-    makePostRequest(CREATE_SELL_SESSION,
+    makeAuthPostReq(AUTH_CREATE_SELL_SESSION,
         {
             userId: uId,
             adId: adID,

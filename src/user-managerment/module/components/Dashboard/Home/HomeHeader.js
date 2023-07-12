@@ -19,7 +19,7 @@ const HomeHeader = () => {
     const {
         data,
         makeAuthGetReq,
-        makePostRequest
+        makeAuthPostReq
     } = useMakeReq()
     const navigate = useNavigate()
   //const {token, userId}= getUserData();

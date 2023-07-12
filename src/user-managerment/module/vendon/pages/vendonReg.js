@@ -1,20 +1,20 @@
+import { Formik } from "formik";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
-import { PasswordInput, TextInput } from "../../components/Input";
-import Checkbox from "../../components/Checkbox";
-import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
-import BASE_URL from "../../../../serivce/url.serice";
-import useMakeReq from "../../hooks/Global/useMakeReq";
-import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { BASIC_VENDOR_REGISTRATION } from "../../../../serivce/apiRoutes.service";
+import { BackButton, PrimaryButton } from "../../components/Button";
+import Checkbox from "../../components/Checkbox";
+import FormError from "../../components/Global/FormError";
+import { PasswordInput, TextInput } from "../../components/Input";
 import { isEmpty } from "../../helpers/isEmpty";
 import { getFromLocalStorage, saveToLocalStorage } from "../../helpers/localStorageMethods";
-import { toast } from "react-toastify";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import FormError from "../../components/Global/FormError";
+import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
+import useMakeReq from "../../hooks/Global/useMakeReq";
+import PageWrapper from "../../layouts/PageWrapper";
 
 const RegistrationVendon = ()=>{
 
@@ -59,7 +59,7 @@ const RegistrationVendon = ()=>{
         }}
         onSubmit={(values) => {
             makePostRequest(
-                `${BASE_URL}/api/Vendor/BasicVendorRegistration`, 
+                BASIC_VENDOR_REGISTRATION, 
                 {
                     basicVendorRegistration: {
                         companyEmail: values.companyEmail,

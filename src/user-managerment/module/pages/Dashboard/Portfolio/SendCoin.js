@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   AUTH_GET_ASSETS_MAPPING,
   AUTH_GET_SINGLE_ACCOUNT,
-  TRANSFER_INTERNAL_USERS
+  AUTH_TRANSFER_INTERNAL_USERS
 } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
@@ -33,7 +33,7 @@ const SendCoin = () => {
     isSuccessful: isSendInternalUserSuccess,
     error: isSendInternalUserError,
     loading: sendInternalUserLoading,
-    makePostRequest,
+    makeAuthPostReq,
   } = useMakeReq();
   const {
     data: walletAssetData,
@@ -99,7 +99,7 @@ const SendCoin = () => {
           }
         : null;
 
-    makePostRequest(TRANSFER_INTERNAL_USERS, payload);
+    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
   };
 
   // SIDE EFFECTS

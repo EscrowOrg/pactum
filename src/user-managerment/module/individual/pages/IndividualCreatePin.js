@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import VerificationInput from "react-verification-input";
-import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BASE_URL from "../../../../serivce/url.serice";
 import { toast } from "react-toastify";
+import VerificationInput from "react-verification-input";
+import { ADD_PIN } from "../../../../serivce/apiRoutes.service";
+import { BackButton, PrimaryButton } from "../../components/Button";
 import { isEmpty } from "../../helpers/isEmpty";
 import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
 import useMakeReq from "../../hooks/Global/useMakeReq";
+import PageWrapper from "../../layouts/PageWrapper";
 
 const IndividualCreatePin = () => {
 
@@ -30,7 +30,7 @@ const IndividualCreatePin = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    makePostRequest(`${BASE_URL}/api/User/AddPin`, formData);
+    makePostRequest(ADD_PIN, formData);
   };
 
 

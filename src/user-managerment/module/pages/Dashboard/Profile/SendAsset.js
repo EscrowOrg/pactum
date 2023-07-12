@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   AUTH_GET_ASSETS_MAPPING,
-  GET_SINGLE_ACCOUNT,
-  TRANSFER_INTERNAL_USERS
+  AUTH_TRANSFER_INTERNAL_USERS,
+  GET_SINGLE_ACCOUNT
 } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
@@ -28,7 +28,7 @@ const SendAsset = () => {
     isSuccessful: isSendInternalUserSuccess,
     // error: isSendInternalUserError,
     loading: sendInternalUserLoading,
-    makePostRequest,
+    makeAuthPostReq,
   } = useMakeReq();
   const {
     data: walletAssetData,
@@ -82,7 +82,7 @@ const SendAsset = () => {
       network: asset.networkId,
     };
 
-    makePostRequest(TRANSFER_INTERNAL_USERS, payload);
+    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
   };
 
 
