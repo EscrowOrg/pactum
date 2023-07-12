@@ -43,10 +43,10 @@ export const hasUserTokenExpired = () => {
 export const getUserId = () => {
     const stringifyData = getCookie("userData")
     if(isEmpty(stringifyData)) {
-        return null
+        return undefined
     }
     const uData = JSON.parse(stringifyData)
-    return uData.userId     
+    return isEmpty(uData)?undefined:uData.userId     
 }
 
 
@@ -54,10 +54,10 @@ export const getUserId = () => {
 export const getUserRole = () => {
     const stringifyData = getCookie("userData")
     if(isEmpty(stringifyData)) {
-        return null
+        return undefined
     }
     const uData = JSON.parse(stringifyData)
-    return uData.role
+    return isEmpty(uData)?undefined:uData.role
 }
 
 
@@ -65,7 +65,7 @@ export const getUserRole = () => {
 export const getUserData = () => {
     const stringifyData = getCookie("userData")
     if(isEmpty(stringifyData)) {
-        return null
+        return undefined
     }
     return JSON.parse(stringifyData)
 }
@@ -73,8 +73,8 @@ export const getUserData = () => {
 export const getAccessToken = () => {
     const stringifyData = getCookie("userData")
     if(isEmpty(stringifyData)) {
-        return null
+        return undefined
     }
     const uData = JSON.parse(stringifyData)
-    return uData.token
+    return isEmpty(uData)?undefined:uData.token
 }

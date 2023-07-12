@@ -55,7 +55,7 @@ const BuySellCoin = () => {
   const coinId = searchParams?.get("asset")
   const id = searchParams?.get("id");
   // get user data
-  const userId = getUserId()
+  const userId = isEmpty(getUserId())?"":getUserId()
   
   
   // SIDE EFFECTS
@@ -71,7 +71,7 @@ const BuySellCoin = () => {
   useEffect(()=>{
 
     // making GET request
-    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${ userId || ""}`)
+    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${ userId}`)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, coinSelect])
