@@ -1,24 +1,24 @@
+import { Filter } from "iconsax-react";
 import { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { ArrowSwapHorizontal, Filter, WalletAdd } from "iconsax-react";
-import { BackButton } from "../../../components/Button";
 import Tabs, { Tab } from "react-best-tabs";
-import TransactionList from "../../../components/Dashboard/Portfolio/TransactionList";
-import Drawer from "../../../layouts/Drawer";
-import "../../../layouts/Drawer/index.css";
-import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-import TransactionFilterView from "../../../components/Dashboard/Portfolio/TransactionFilterView";
-import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import { AUTH_GET_TRANSACTIONS_USERID } from "../../../../../serivce/apiRoutes.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
+import { BackButton } from "../../../components/Button";
 import AssetsPopup from "../../../components/Dashboard/Portfolio/AssetsPopup";
 import StatusFilterView from "../../../components/Dashboard/Portfolio/StatusFilterView";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
+import TransactionFilterView from "../../../components/Dashboard/Portfolio/TransactionFilterView";
+import TransactionList from "../../../components/Dashboard/Portfolio/TransactionList";
 import { isEmpty } from "../../../helpers/isEmpty";
-import { GET_TRANSACTIONS_USERID } from "../../../../../serivce/apiRoutes.service";
-import { getUserId } from "../../../../../serivce/cookie.service";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import Drawer from "../../../layouts/Drawer";
+import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
+import "../../../layouts/Drawer/index.css";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const Transactions = () => {
   // DATA INITIALIZATION
-  const { data, isSuccessful, getLoading, makeGetRequest } = useMakeReq();
+  const { data, isSuccessful, getLoading, makeAuthGetReq } = useMakeReq();
 
   // STATES
   const [isOpen, setIsOpen] = useState(false);
@@ -48,9 +48,9 @@ const Transactions = () => {
   };
   const fetchData = (url) => {
     if (isEmpty(url)) {
-      makeGetRequest(`${GET_TRANSACTIONS_USERID}${getUserId()}`);
+      makeAuthGetReq(`${AUTH_GET_TRANSACTIONS_USERID}${getUserId()}`);
     } else {
-      makeGetRequest(url);
+      makeAuthGetReq(url);
     }
   };
 

@@ -1,21 +1,47 @@
-import React from "react";
+import { Copy, InfoCircle, Message } from "iconsax-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AUTH_GET_ESCROW_SESSION_BYID } from "../../../../../serivce/apiRoutes.service";
 import {
   BackButton,
   PrimaryButton,
   PrimaryButtonLight,
 } from "../../../components/Button";
-import { Copy, InfoCircle, Message, TransactionMinus } from "iconsax-react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { useNavigate } from "react-router-dom";
+import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const OrderStatement = () => {
-  // DATA INITIALIZATION
-  const navigate = useNavigate();
+
+    // DATA INITIALIZATION
+    const navigate = useNavigate()
+    const {orderId} = useParams()
+    console.log("order statement:", orderId)
+    const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
+
+    // STATES
+    const [singleOrder, setSingleOrder] = useState(null)
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+      makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${orderId}`)
+    }, [])
+    useEffect(()=>{
+    if(!isEmpty(data)) {
+      if(isSuccessful) {
+        console.log(data?.data)
+        setSingleOrder(data?.data)
+      }
+    }
+  }, [data, isSuccessful])
 
   return (
     <PageWrapper>
       <div className="w-full h-full flex flex-col py-5 gap-8">
+
         {/* header */}
         <div className="flex items-center w-[92%] mx-auto justify-between">
           {/* back button */}
@@ -49,156 +75,166 @@ const OrderStatement = () => {
           </h4>
         </div>
 
-        {/* body */}
-        <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
-          {/* main info */}
-          <div className="flex flex-col gap-3 items-center w-full">
-            <h5 className="font-normal text-sm text-[#645B75]">
-              Amount to be paid.
-            </h5>
+        {
+          getLoading?
+          <LoadingSpinner
+          viewPortHeight='h-[80vh]' />:
+          !isEmpty(singleOrder)?
+            <>
+              {/* body */}
+              <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
+                {/* main info */}
+                <div className="flex flex-col gap-3 items-center w-full">
+                  <h5 className="font-normal text-sm text-[#645B75]">
+                    Amount to be paid.
+                  </h5>
 
-            <h3 className="text-[#3F9491] text-[32px] font-bold">
-              ₦100,000.00
-            </h3>
+                  <h3 className="text-[#3F9491] text-[32px] font-bold">
+                    ₦100,000.00
+                  </h3>
 
-            <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-              You will receive 0.844BTC
-            </h3>
-          </div>
+                  <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
+                    You will receive 0.844BTC
+                  </h3>
+                </div>
 
-          {/* summary details */}
-          <div className="flex flex-col bg-gray-100 py-3 px-4 gap-6 rounded-lg w-full relative overflow-hidden">
-            {/* circles */}
-            <span className="absolute bottom-[55%] translate-y-[45%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
-            <span className="absolute bottom-[55%] translate-y-[45%] left-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
+                {/* summary details */}
+                <div className="flex flex-col bg-gray-100 py-3 px-4 gap-6 rounded-lg w-full relative overflow-hidden">
+                  {/* circles */}
+                  <span className="absolute bottom-[55%] translate-y-[45%] right-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
+                  <span className="absolute bottom-[55%] translate-y-[45%] left-[-1.2rem] rounded-[50%] bg-white h-[32px] w-[32px]" />
 
-            {/* info */}
-            <div className="flex flex-col w-full gap-5 pb-7 [border-bottom:1px_dashed_#DAD7E0]">
-              {/* receiving wallet */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">
-                  Receiving Wallet
-                </h3>
+                  {/* info */}
+                  <div className="flex flex-col w-full gap-5 pb-7 [border-bottom:1px_dashed_#DAD7E0]">
+                    {/* receiving wallet */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Receiving Wallet
+                      </h3>
 
-                <h3 className="text-black text-sm font-semibold">$240</h3>
+                      <h3 className="text-black text-sm font-semibold">$240</h3>
+                    </div>
+
+                    {/* price */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">Price</h3>
+
+                      <h3 className="text-black text-sm font-semibold">$240</h3>
+                    </div>
+
+                    {/* order id */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">Order ID</h3>
+
+                      <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                        hfsbg4u9ui093u290u02
+                        <Copy
+                          onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
+                          variant="Bulk"
+                          size={16}
+                          color="#3F9491"
+                        />
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* bank details */}
+                  <div className="flex flex-col w-full gap-5">
+                    {/* bank name */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Bank Name
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                        First Bank
+                        <Copy
+                          onClick={() => copyToClipBoard("First Bank")}
+                          variant="Bulk"
+                          size={16}
+                          color="#3F9491"
+                        />
+                      </h3>
+                    </div>
+
+                    {/* account number */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Account Number
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
+                        4890149295
+                        <Copy
+                          onClick={() => copyToClipBoard("4890149295")}
+                          variant="Bulk"
+                          size={16}
+                          color="#3F9491"
+                        />
+                      </h3>
+                    </div>
+
+                    {/* account name */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        Account Name
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold">
+                        Asemota Joel
+                      </h3>
+                    </div>
+
+                    {/* user name */}
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-normal text-xs text-[#8D85A0]">
+                        User Name
+                      </h3>
+
+                      <h3 className="text-black text-sm font-semibold">
+                        jhoellasemota
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+
+                {/* important notice */}
+                <div>
+                  <h3 className="text-[#EB9B00] font-bold">IMPORTANT NOTICE:</h3>
+                  <p className="text-xs font-medium">
+                    Please chat with the seller before making payment.
+                  </p>
+                </div>
+
+                {/* buttons */}
+                <div className="mt-auto flex items-center gap-6 w-full">
+                  <div className="flex flex-col items-stretch w-[40%]">
+                    <PrimaryButtonLight
+                      onClick={() =>
+                        navigate(
+                          "/home/buy-coin/:order-statement/report-order-statement"
+                        )
+                      }
+                      height="h-14"
+                      text={"Cancel"}
+                    />
+                  </div>
+
+                  <div className="flex flex-col items-stretch w-[60%]">
+                    <PrimaryButton
+                      onClick={() =>
+                        navigate("/home/buy-coin/success/id:20")
+                      }
+                      height="h-14"
+                      text={"Transfer Done"}
+                    />
+                  </div>
+                </div>
               </div>
-
-              {/* price */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">Price</h3>
-
-                <h3 className="text-black text-sm font-semibold">$240</h3>
-              </div>
-
-              {/* order id */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">Order ID</h3>
-
-                <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  hfsbg4u9ui093u290u02
-                  <Copy
-                    onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
-                    variant="Bulk"
-                    size={16}
-                    color="#3F9491"
-                  />
-                </h3>
-              </div>
-            </div>
-
-            {/* bank details */}
-            <div className="flex flex-col w-full gap-5">
-              {/* bank name */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">
-                  Bank Name
-                </h3>
-
-                <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  First Bank
-                  <Copy
-                    onClick={() => copyToClipBoard("First Bank")}
-                    variant="Bulk"
-                    size={16}
-                    color="#3F9491"
-                  />
-                </h3>
-              </div>
-
-              {/* account number */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">
-                  Account Number
-                </h3>
-
-                <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  4890149295
-                  <Copy
-                    onClick={() => copyToClipBoard("4890149295")}
-                    variant="Bulk"
-                    size={16}
-                    color="#3F9491"
-                  />
-                </h3>
-              </div>
-
-              {/* account name */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">
-                  Account Name
-                </h3>
-
-                <h3 className="text-black text-sm font-semibold">
-                  Asemota Joel
-                </h3>
-              </div>
-
-              {/* user name */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-normal text-xs text-[#8D85A0]">
-                  User Name
-                </h3>
-
-                <h3 className="text-black text-sm font-semibold">
-                  jhoellasemota
-                </h3>
-              </div>
-            </div>
-          </div>
-
-          {/* important notice */}
-          <div>
-            <h3 className="text-[#EB9B00] font-bold">IMPORTANT NOTICE:</h3>
-            <p className="text-xs font-medium">
-              Please chat with the seller before making payment.
-            </p>
-          </div>
-
-          {/* buttons */}
-          <div className="mt-auto flex items-center gap-6 w-full">
-            <div className="flex flex-col items-stretch w-[40%]">
-              <PrimaryButtonLight
-                onClick={() =>
-                  navigate(
-                    "/home/buy-coin/:order-statement/report-order-statement"
-                  )
-                }
-                height="h-14"
-                text={"Cancel"}
-              />
-            </div>
-
-            <div className="flex flex-col items-stretch w-[60%]">
-              <PrimaryButton
-                onClick={() =>
-                  navigate("/home/buy-coin/success/id:20")
-                }
-                height="h-14"
-                text={"Transfer Done"}
-              />
-            </div>
-          </div>
-        </div>
+            </>:
+          <EmptyDataComp
+          viewPortHeight='h-[80vh]' />
+        }
       </div>
     </PageWrapper>
   );

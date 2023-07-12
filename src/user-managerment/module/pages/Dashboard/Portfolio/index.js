@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
+import { ProfileAdd, TransactionMinus } from 'iconsax-react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
-import { ProfileAdd, TransactionMinus } from 'iconsax-react'
-import { useNavigate } from 'react-router-dom'
 import EmptyWalletCard from '../../../components/Dashboard/Portfolio/EmptyWalletCard'
 import UsersWalletCard from '../../../components/Dashboard/Portfolio/UsersWalletCard'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
 import { isEmpty } from '../../../helpers/isEmpty'
-import { GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
-import { getUserId } from '../../../../../serivce/cookie.service'
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons';
+import useMakeReq from '../../../hooks/Global/useMakeReq'
 
 // ant icon
 const antIcon = (
@@ -35,14 +35,14 @@ const Portfolio = () => {
         getLoading,
         isSuccessful,
         loading,
-        makeGetRequest
+        makeAuthGetReq
     } = useMakeReq()
 
     
     // USE EFFECTS
     useEffect(()=>{
         const uId = getUserId()
-        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`)
+        makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${uId}&USD`)
     }, [])
 
     // getting data

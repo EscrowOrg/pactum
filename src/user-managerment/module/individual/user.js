@@ -1,7 +1,7 @@
 import { FcGoogle } from "react-icons/fc"
 import { BsApple } from "react-icons/bs"
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PageWrapper from "../layouts/PageWrapper";
 import { PrimaryButton } from "../components/Button";
 import { PasswordInput, TextInput } from "../components/Input";
@@ -13,6 +13,8 @@ const LoginUser  = () =>{
 
    // DATA INITIALIZATION
    const navigate = useNavigate()
+   const location = useLocation();
+   const from = location.state?.from || "/home";
    // const cookieExpirtyTime = inFiveMinutes()
    const {
       user, 
@@ -47,7 +49,7 @@ const LoginUser  = () =>{
    // SIDE EFFECTS
    useEffect(()=>{
       if(user?.success===true) {
-         navigate("/home", { replace: true })
+         navigate(from, { replace: true });
       }
       
    // eslint-disable-next-line react-hooks/exhaustive-deps

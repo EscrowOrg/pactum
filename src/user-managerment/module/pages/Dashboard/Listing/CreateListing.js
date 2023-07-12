@@ -1,14 +1,14 @@
+import { InfoCircle } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageWrapper from "../../../layouts/PageWrapper";
+import { AUTH_GET_ASSETS_MAPPING } from "../../../../../serivce/apiRoutes.service";
 import { BackButton } from "../../../components/Button";
-import "../../../layouts/Drawer/index.css";
 import BuyOrder from "../../../components/Dashboard/Listing/BuyOrder";
 import SellOrder from "../../../components/Dashboard/Listing/SellOrder";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
-import { GET_ASSETS_MAPPING } from "../../../../../serivce/apiRoutes.service";
-import { InfoCircle } from "iconsax-react";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import "../../../layouts/Drawer/index.css";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const CreateListing = () => {
 
@@ -17,7 +17,7 @@ const CreateListing = () => {
   const {
     data: walletAssetData,
     getLoading: getAssetLoading,
-    makeGetRequest,
+    makeAuthGetReq,
   } = useMakeReq()
 
 
@@ -38,7 +38,7 @@ const CreateListing = () => {
 
   // SIDE EFFECTS
   useEffect(()=>{
-    makeGetRequest(GET_ASSETS_MAPPING)
+    makeAuthGetReq(AUTH_GET_ASSETS_MAPPING)
   }, [])
 
   // get assets data

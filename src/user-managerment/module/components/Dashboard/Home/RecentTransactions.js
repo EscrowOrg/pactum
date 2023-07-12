@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
-import TransactionCard from './TransactionCard'
+import {
+    ArrowSwapHorizontal,
+    MoneyRecive,
+    MoneySend,
+    WalletAdd
+} from 'iconsax-react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AUTH_GET_TRANSACTIONS_USERID } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
-import { GET_TRANSACTIONS_USERID } from '../../../../../serivce/apiRoutes.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { 
-    ArrowSwapHorizontal, 
-    MoneyRecive, 
-    MoneySend, 
-    WalletAdd 
-} from 'iconsax-react'
 import LoadingSpinner from '../../Global/LoadingSpinner'
+import TransactionCard from './TransactionCard'
 
 const RecentTransactions = () => {
 
@@ -64,13 +64,13 @@ const RecentTransactions = () => {
         data,
         isSuccessful,
         getLoading,
-        makeGetRequest
+        makeAuthGetReq
     } = useMakeReq()
 
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_TRANSACTIONS_USERID}${getUserId()}`)
+        makeAuthGetReq(`${AUTH_GET_TRANSACTIONS_USERID}${getUserId()}`)
     }, [])
     useEffect(()=>{
         if(!isEmpty(data) && isSuccessful===true) {

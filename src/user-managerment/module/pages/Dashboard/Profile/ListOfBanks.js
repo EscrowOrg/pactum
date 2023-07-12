@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { useNavigate } from "react-router-dom";
-import { BackButton } from "../../../components/Button";
 import { Add, Trash } from "iconsax-react";
-import AltModal from "../../../layouts/AltModal";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import { BackButton } from "../../../components/Button";
 import RemoveBank from "../../../components/Dashboard/Profile/RemoveBank";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { getUserData } from "../../../../../serivce/cookie.service";
-import BASE_URL from "../../../../../serivce/url.serice";
+import AltModal from "../../../layouts/AltModal";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const ListOfBanks = (closeModal) => {
   // STATES
@@ -20,7 +20,7 @@ const ListOfBanks = (closeModal) => {
   const toggleRemovePhotoModal = () => {
     setRemovePhotoModal(!removePhotoModalState);
   };
-  const {data, makeGetRequest} = useMakeReq();
+  const {data, makeAuthGetReq} = useMakeReq();
   const {role, userId} = getUserData();
   useEffect(()=>{
     getBanks()
@@ -28,7 +28,7 @@ const ListOfBanks = (closeModal) => {
 
   const getBanks = async ()=>{
     try {
-      await makeGetRequest(`${BASE_URL}/api/User/GetBankByUserId/${userId}/${role}`)
+      await makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
       setBankDetails(data?.data);
      
     } catch (error) {

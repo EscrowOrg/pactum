@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { CRED_EXPIRATION_TIME, getUserData, hasUserTokenExpired, persistUserToken, removeUserToken } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
-import { REFRESH_USER_TOKEN } from '../../../../../serivce/apiRoutes.service'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
 
 const PrivateRoutes = () => {
@@ -54,14 +53,14 @@ const PrivateRoutes = () => {
             if(hasUserTokenExpired()) {
                 clearBiscuits()
             } else {
-                makePostRequest(REFRESH_USER_TOKEN, {
-                    refreshTokenRequest: {
-                        userId: uData?.userId,
-                        role: uData?.role,
-                        token: uData?.token,
-                        refreshToken: uData?.refreshToken
-                    }
-                })
+                // makePostRequest(REFRESH_USER_TOKEN, {
+                //     refreshTokenRequest: {
+                //         userId: uData?.userId,
+                //         role: uData?.role,
+                //         token: uData?.token,
+                //         refreshToken: uData?.refreshToken
+                //     }
+                // })
             }
         }, (10000));
 

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AUTH_CHANGE_PASSWORD } from "../../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
-import { PasswordInput } from "../../../components/Input";
 import Checkbox from "../../../components/Checkbox";
+import { PasswordInput } from "../../../components/Input";
 import { isEmpty } from "../../../helpers/isEmpty";
+import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
 import {
   hasDigit,
   hasLowerCase,
   hasUpperCase,
 } from "../../../helpers/testForCase";
-import BASE_URL from "../../../../../serivce/url.serice";
-import { getFromLocalStorage } from "../../../helpers/localStorageMethods";
-import { toast } from "react-toastify";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { useNavigate } from "react-router-dom";
-import { getUserData } from "../../../../../serivce/cookie.service";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const ChangePassword = () => {
   });
 
   // DATA INITIALIZATION
-  const { data, makePostRequest, isSuccessful } = useMakeReq();
+  const { data, makeAuthPostReq, isSuccessful } = useMakeReq();
 
   // SIDE EFFECT
   useEffect(() => {
@@ -72,7 +72,7 @@ const ChangePassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    makePostRequest(`${BASE_URL}/api/User/ChangePassword`, {
+    makeAuthPostReq(`${AUTH_CHANGE_PASSWORD}`, {
       changePasswordRequests: {
         userId: userId,
         token: token,

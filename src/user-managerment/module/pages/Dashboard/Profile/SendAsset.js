@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { BackButton, PrimaryButton } from "../../../components/Button";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { useNavigate, useParams } from "react-router-dom";
-import { TextLabelInput } from "../../../components/Input";
 import { InfoCircle, ProfileCircle } from "iconsax-react";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import {  getUserId } from "../../../../../serivce/cookie.service";
-import { isEmpty } from "../../../helpers/isEmpty";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  GET_ASSETS_MAPPING,
-  GET_SINGLE_ACCOUNT,
-  TRANSFER_INTERNAL_USERS,
+  AUTH_GET_ASSETS_MAPPING,
+  AUTH_GET_SINGLE_ACCOUNT,
+  AUTH_TRANSFER_INTERNAL_USERS
 } from "../../../../../serivce/apiRoutes.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
+import { BackButton, PrimaryButton } from "../../../components/Button";
+import AssetsListView from "../../../components/Dashboard/Portfolio/AssetsListView";
+import DrawerSelectInput from "../../../components/Dashboard/Portfolio/DrawerSelectInput";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
-import DrawerSelectInput from "../../../components/Dashboard/Portfolio/DrawerSelectInput";
-import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-import AssetsListView from "../../../components/Dashboard/Portfolio/AssetsListView";
+import { TextLabelInput } from "../../../components/Input";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
+import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const SendAsset = () => {
   // DATA INITIALIZATION
@@ -28,15 +28,15 @@ const SendAsset = () => {
     isSuccessful: isSendInternalUserSuccess,
     // error: isSendInternalUserError,
     loading: sendInternalUserLoading,
-    makePostRequest,
+    makeAuthPostReq,
   } = useMakeReq();
   const {
     data: walletAssetData,
     getLoading: getAssetLoading,
-    makeGetRequest,
+    makeAuthGetReq,
   } = useMakeReq();
   const { coinId } = useParams();
-  const { data: walletInfoData, makeGetRequest: getWalletInfo } = useMakeReq();
+  const { data: walletInfoData, makeAuthGetReq: getWalletInfo } = useMakeReq();
 
   // STATES
   const [isOpen, setIsOpen] = useState(false);
@@ -82,14 +82,14 @@ const SendAsset = () => {
       network: asset.networkId,
     };
 
-    makePostRequest(TRANSFER_INTERNAL_USERS, payload);
+    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
   };
 
 
   // SIDE EFFECTS
   useEffect(() => {
-    makeGetRequest(GET_ASSETS_MAPPING);
-    getWalletInfo(`${GET_SINGLE_ACCOUNT}/${coinId}`);
+    makeAuthGetReq(AUTH_GET_ASSETS_MAPPING);
+    getWalletInfo(`${AUTH_GET_SINGLE_ACCOUNT}/${coinId}`);
   }, []);
 
   // get assets data

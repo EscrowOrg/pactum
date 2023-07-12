@@ -1,20 +1,20 @@
+import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import DrawerSelectInput from "../Portfolio/DrawerSelectInput";
-import { TextLabelInput } from "../../Input";
-import { PrimaryButton } from "../../Button";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { AUTH_CREATE_AD_LISTING, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-import AssetsListView from "../Portfolio/AssetsListView";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { CREATE_AD_LISTING, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
-import { Formik } from "formik";
-import * as Yup from "yup";
+import { PrimaryButton } from "../../Button";
 import FormError from "../../Global/FormError";
-import { isEmpty } from "../../../helpers/isEmpty";
+import { TextLabelInput } from "../../Input";
+import AssetsListView from "../Portfolio/AssetsListView";
+import DrawerSelectInput from "../Portfolio/DrawerSelectInput";
 import BanksView from "./BanksView";
-import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 
 const BuyOrder = ({assetList}) => {
 
@@ -23,14 +23,14 @@ const BuyOrder = ({assetList}) => {
   const {
     data: bankData,
     getLoading: getBankLoading,
-    makeGetRequest,
+    makeAuthGetReq,
   } = useMakeReq()
   const {
     data: createListingData,
     isSuccessful: isCreateSuccess,
     error: isCreateError,
     loading: createListingLoading,
-    makePostRequest,
+    makeAuthPostReq,
 } = useMakeReq()
 const role = getUserRole()
 const userId = getUserId()
@@ -61,7 +61,7 @@ const userId = getUserId()
 
   // SIDE EFFECTS
   useEffect(()=>{
-    makeGetRequest(`${GET_BANKS}/${userId}/${role}`)
+    makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
   }, [])
   useEffect(()=>{
     if(!isEmpty(bankData?.data)) {
@@ -112,7 +112,7 @@ const userId = getUserId()
       formValues.assets = asset.assetId
 
       // create AdListing
-      makePostRequest(CREATE_AD_LISTING, {
+      makeAuthPostReq(AUTH_CREATE_AD_LISTING, {
         adListRequest: formValues
       })
     }}

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   ArrowSwapHorizontal,
   MoneyRecive,
@@ -6,21 +7,20 @@ import {
   WalletAdd,
   WalletMinus,
 } from "iconsax-react";
-import ActionBtn from "./ActionBtn";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Drawer from "../../../layouts/Drawer";
-import "../../../layouts/Drawer/index.css";
-import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
-import AssetsFilterView from "./AssetsFilterView";
-import AssetAccountList from "./AssetAccountList";
-import AccountBalanceCard from "./AccountBalanceCard";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
-import { GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import Drawer from "../../../layouts/Drawer";
+import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
+import "../../../layouts/Drawer/index.css";
+import AccountBalanceCard from "./AccountBalanceCard";
+import ActionBtn from "./ActionBtn";
+import AssetAccountList from "./AssetAccountList";
+import AssetsFilterView from "./AssetsFilterView";
 import SelectWalletView from "./SelectWalletView";
 
 // ant icon
@@ -37,7 +37,7 @@ const antIcon = (
 const UsersWalletCard = ({ assetAccount }) => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
-  const { getLoading, data, makeGetRequest } = useMakeReq();
+  const { getLoading, data, makeAuthGetReq } = useMakeReq();
 
   // STATES
   const [isVendor, setIsVendor] = useState(false);
@@ -56,7 +56,7 @@ const UsersWalletCard = ({ assetAccount }) => {
 
   // SIDE EFFECTS
   useEffect(() => {
-    makeGetRequest(`${GET_USER_DETS}/${getUserId()}`);
+    makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`);
   }, []);
 
   // populating data

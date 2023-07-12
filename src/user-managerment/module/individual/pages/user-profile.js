@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../layouts/PageWrapper";
-import { TextInput } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { COMPLETE_REGISTRATION } from "../../../../serivce/apiRoutes.service";
 import { PrimaryButton } from "../../components/Button";
+import { TextInput } from "../../components/Input";
 import PhoneINumberInput from "../../components/PhoneINumberInput";
-import BASE_URL from "../../../../serivce/url.serice";
+import { isEmpty } from "../../helpers/isEmpty";
 import { getFromLocalStorage } from "../../helpers/localStorageMethods";
 import useMakeReq from "../../hooks/Global/useMakeReq";
-import { toast } from "react-toastify";
-import { isEmpty } from "../../helpers/isEmpty";
+import PageWrapper from "../../layouts/PageWrapper";
 
 const Profile = ()=>{
 
@@ -43,7 +43,7 @@ const Profile = ()=>{
     const handleSubmit = (e)=>{
       e.preventDefault()
       makePostRequest(
-        `${BASE_URL}/api/User/CompleteRegistration`, 
+        COMPLETE_REGISTRATION, 
         {
           completeRegistration: {
             userId: formData.userId,

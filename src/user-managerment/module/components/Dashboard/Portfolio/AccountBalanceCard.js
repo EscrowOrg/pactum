@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import BalanceCard from './BalanceCard'
 import { useNavigate } from 'react-router-dom'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
+import { AUTH_GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { roundToN } from '../../../helpers/roundToN'
-import { GET_PORTFOLIO_BALANCE } from '../../../../../serivce/apiRoutes.service'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import BalanceCard from './BalanceCard'
 
 const AccountBalanceCard = ({isVendor}) => {
 
@@ -14,7 +14,7 @@ const AccountBalanceCard = ({isVendor}) => {
     const {
         getLoading,
         data,
-        makeGetRequest,
+        makeAuthGetReq,
     } = useMakeReq()
 
 
@@ -27,7 +27,7 @@ const AccountBalanceCard = ({isVendor}) => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_PORTFOLIO_BALANCE}/${getUserId()}`)
+        makeAuthGetReq(`${AUTH_GET_PORTFOLIO_BALANCE}/${getUserId()}`)
     }, [])
 
     // populating data

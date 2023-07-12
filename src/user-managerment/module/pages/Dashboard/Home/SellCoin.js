@@ -1,19 +1,19 @@
+import { ArrowRight2, TransactionMinus } from "iconsax-react";
 import { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import {ArrowRight2, Copy, RefreshCircle, TransactionMinus} from "iconsax-react";
-import { BackButton, ErrorButton} from "../../../components/Button";
-import {  TextLabelInput } from "../../../components/Input";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AUTH_CREATE_SELL_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
+import { BackButton, ErrorButton } from "../../../components/Button";
+import BanksView from "../../../components/Dashboard/Listing/BanksView";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
+import { TextLabelInput } from "../../../components/Input";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
-import { CREATE_SELL_SESSION, GET_ADLISTING_DETAILS, GET_BANKS } from "../../../../../serivce/apiRoutes.service";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { isEmpty } from "../../../helpers/isEmpty";
-import { toast } from "react-toastify";
-import BanksView from "../../../components/Dashboard/Listing/BanksView";
-import { getAssetLabel } from "../../../helpers/getAssetLabel";
-import LoadingSpinner from "../../../components/Global/LoadingSpinner";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const SellCoin = () => {
 
@@ -27,17 +27,17 @@ const SellCoin = () => {
   const {
     data: bankData,
     getLoading: getBankLoading,
-    makeGetRequest,
+    makeAuthGetReq,
   } = useMakeReq()
   const { 
     data: listingAdData,
-    makeGetRequest: getListingAds,
+    makeAuthGetReq: getListingAds,
     getLoading: isgetLIstingAdsLoading
 } = useMakeReq();
   const {
       data: sellAssetData, 
       loading: isSellLoading,  
-      makePostRequest, 
+      makeAuthPostReq, 
       isSuccessful: isSellSuccess,
       error: sellError 
   } = useMakeReq();
@@ -66,7 +66,7 @@ const SellCoin = () => {
   };
   const handleSubmit = () => {
     const uId = getUserId()
-    makePostRequest(CREATE_SELL_SESSION,
+    makeAuthPostReq(AUTH_CREATE_SELL_SESSION,
         {
             userId: uId,
             adId: adID,
@@ -82,7 +82,7 @@ const SellCoin = () => {
 // SIDE EFFECTS
 // get banks
 useEffect(()=>{
-  makeGetRequest(`${GET_BANKS}/${userId}/${role}`)
+  makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
 }, [])
 useEffect(()=>{
   if(!isEmpty(bankData?.data)) {
@@ -93,7 +93,7 @@ useEffect(()=>{
 
 // get ad details
 useEffect(()=>{
-  getListingAds(`${GET_ADLISTING_DETAILS}/${adID}`)
+  getListingAds(`${AUTH_GET_ADLISTING_DETAILS}/${adID}`)
 }, [])
 useEffect(()=>{
 if(!isEmpty(listingAdData?.data)) {

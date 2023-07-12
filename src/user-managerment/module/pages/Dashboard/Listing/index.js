@@ -1,16 +1,10 @@
-import { useState } from 'react'
+import { ProfileAdd } from 'iconsax-react'
+import { useNavigate } from 'react-router-dom'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ProfileAdd } from 'iconsax-react'
-import EmptyListingCard from '../../../components/Dashboard/Listing/EmptyListingCard'
 import UserListingCard from './UserListingCard'
 
 const Listing = () => {
-
-    // STATES
-    const [hasListing, setHasListing] = useState(true)
-
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
@@ -48,11 +42,7 @@ const Listing = () => {
                     
                     
                     {/* container */}
-                    {
-                        hasListing!==true?
-                        <EmptyListingCard />:
-                        <UserListingCard />
-                    }
+                    <UserListingCard />
 
                 </div>                
 

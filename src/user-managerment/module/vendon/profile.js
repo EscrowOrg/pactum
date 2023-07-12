@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../layouts/PageWrapper";
-import { TextInput } from "../components/Input";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { COMPLETE_VENDOR_REGISTRATION } from "../../../serivce/apiRoutes.service";
 import { PrimaryButton } from "../components/Button";
+import { TextInput } from "../components/Input";
 import PhoneINumberInput from "../components/PhoneINumberInput";
-import BASE_URL from "../../../serivce/url.serice";
 import { isEmpty } from "../helpers/isEmpty";
 import { deleteItemFromLocalStorage, getFromLocalStorage } from "../helpers/localStorageMethods";
-import { toast } from "react-toastify";
 import useMakeReq from "../hooks/Global/useMakeReq";
+import PageWrapper from "../layouts/PageWrapper";
 
 const ProfileVendon = ()=>{
 
@@ -44,7 +44,7 @@ const ProfileVendon = ()=>{
   const handleSubmit = (e)=>{
     e.preventDefault()
     makePostRequest(
-      `${BASE_URL}/api/Vendor/CompleteVendorRegistration`, 
+      COMPLETE_VENDOR_REGISTRATION, 
       {
         completeVendorRegistration: {
           userId: formData.userId,
