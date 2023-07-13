@@ -20,7 +20,7 @@ const UserListingCard = () => {
                 <h3
                 onClick={()=>setActiveTab(1)} 
                 className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${activeTab===1?"active-listing-tab act-tb1":""}`}>
-                    Pending Orders <span>2</span>
+                    Pending Orders 
                 </h3>
 
                 <h3

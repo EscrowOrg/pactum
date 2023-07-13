@@ -287,7 +287,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/listing/overview/:listingId"
+            path="/listing/overview/:id"
             element={<Overviews />}
           />
 

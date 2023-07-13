@@ -3,9 +3,36 @@ import { BackButton } from "../../../components/Button";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
 import OverviewPayment from "../../../components/Dashboard/Listing/OverviewPayment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import BASE_URL from "../../../../../serivce/url.serice";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const Overviews = () => {
+const Overviews = (ordersData) => {
+  // States
+  const [viewMore, setViewMore] = useState();
+  const { data, getLoading: getBankLoading, makeGetRequest } = useMakeReq();
+
+  //  {ordersData.id === adListId}
+
+  const { id } = useParams();
+
+  console.log(id);
+
+  useEffect(() => {
+    getViewMore();
+  }, []);
+  const getViewMore = async () => {
+    try {
+      await makeGetRequest(
+        `${BASE_URL}/api/ListingManagement/GetEscrowSessionByAdList/${id}`
+      );
+      // console.log(data)
+    } catch (error) {
+      setViewMore(data);
+    }
+  };
   // DATA INITIALIZATION
   const navigate = useNavigate();
 
@@ -52,7 +79,7 @@ const Overviews = () => {
                 <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
                   Price
                 </h4>
-                <h4 className="text-base font-bold text-black">#2,000.00</h4>
+                <h4 className="text-base font-bold text-black">#{ordersData.tradePrice}</h4>
               </div>
 
               <div className="pl-4">
@@ -97,17 +124,17 @@ const Overviews = () => {
 
         {/* ALL PAYMENTS LISTS */}
         <div className="mt-8">
-          <h4 className="text-base font-bold text-black pb-2">All Payments</h4>
+          <h4 className="text-base font-bold text-black pb-2">All Orders</h4>
 
           <div className="flex justify-between mt-2 py-3 border-b border-solid">
             <div>
               <p className="font-normal text-xs text-[#8D85A0] pb-1">
                 09/06/38 - 10:56AM
               </p>
-            <div className="flex gap-1">
-            <h4 className="text-base font-bold text-black">#100,000.00</h4>
-              <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
-            </div>
+              <div className="flex gap-1">
+                <h4 className="text-base font-bold text-black">#100,000.00</h4>
+                <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+              </div>
 
               <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
                 ASEMOTA JOEL
@@ -115,7 +142,11 @@ const Overviews = () => {
             </div>
 
             {/* view more button */}
-            <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
+
+            <span
+              onClick={() => navigate("/listing/closed-listing/id:13")}
+              className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
+            >
               View More
             </span>
           </div>
