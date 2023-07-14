@@ -19,12 +19,10 @@ const useMakeReq = () => {
         setLoading(true)
 
         try {
-            const {token} = getUserData()
             const {data} = await axios.post(url, formData,
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer  ${token}`,
                 }
             })
             setLoading(false)
@@ -54,7 +52,6 @@ const useMakeReq = () => {
             const {data} = await axios.get(url, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer  ${token}`,
                 }
             })
             setGetLoading(false)
