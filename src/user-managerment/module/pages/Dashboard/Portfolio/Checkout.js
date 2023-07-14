@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import PageWrapper from '../../../layouts/PageWrapper'
-import { BackButton, PrimaryButton, WarningButton1 } from '../../../components/Button'
 import { More, TransactionMinus } from 'iconsax-react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import MyModal from '../../../layouts/MyModal'
+import { AUTH_GET_SINGLE_ACCOUNT } from '../../../../../serivce/apiRoutes.service'
+import { BackButton, PrimaryButton, WarningButton1 } from '../../../components/Button'
 import CheckoutChartInfo from '../../../components/Dashboard/Portfolio/CheckoutChartInfo'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { isEmpty } from '../../../helpers/isEmpty'
 import EmptyDataComp from '../../../components/Global/EmptyDataComp'
 import LoadingSpinner from '../../../components/Global/LoadingSpinner'
-import { GET_SINGLE_ACCOUNT } from '../../../../../serivce/apiRoutes.service'
+import { isEmpty } from '../../../helpers/isEmpty'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import MyModal from '../../../layouts/MyModal'
+import PageWrapper from '../../../layouts/PageWrapper'
 
 const Checkout = () => {
 
@@ -19,7 +19,7 @@ const Checkout = () => {
     const {
         getLoading,
         data,
-        makeGetRequest,
+        makeAuthGetReq,
     } = useMakeReq()
 
 
@@ -36,7 +36,7 @@ const Checkout = () => {
     
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_SINGLE_ACCOUNT}/${coinId}`)
+        makeAuthGetReq(`${AUTH_GET_SINGLE_ACCOUNT}/${coinId}`)
     }, [])
 
     // populating data

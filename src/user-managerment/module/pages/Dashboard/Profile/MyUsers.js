@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { BackButton } from "../../../components/Button";
 import { ArrowDown2, ProfileAdd } from "iconsax-react";
-import { SearchInput } from "../../../components/Input";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { SlArrowRight } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
+import { AUTH_GET_VENDOR_SUBUSERS } from "../../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import { BackButton } from "../../../components/Button";
+import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
+import { SearchInput } from "../../../components/Input";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
-import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { getUserData } from "../../../../../serivce/cookie.service";
-import BASE_URL from "../../../../../serivce/url.serice";
 import { isEmpty } from "../../../helpers/isEmpty";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const MyUsers= () => {
   // STATES
@@ -26,15 +26,15 @@ const MyUsers= () => {
         name: "",
         id: null
     })
-    const [dateFutter, setDateFutter] = useState(null)
+    const [dateFutter, setDateFutter] = useState([])
 
-   const {data, getLoading, makeGetRequest} = useMakeReq();
+   const {data, getLoading, makeAuthGetReq} = useMakeReq();
 
    const{vendorId, userId} = getUserData();
 
 useEffect(()=>{
    getUsers();
-},[])
+},[data])
 
 
 useEffect(()=>{
@@ -44,14 +44,11 @@ useEffect(()=>{
 }, [data])
 const getUsers = async ()=>{
     try {
-     await makeGetRequest(`${BASE_URL}/api/Vendor/GetVendorSubUsers/${vendorId}/${userId}`)
-     // setFilterStatus(data.data);
-     console.log(data)
-      setDateFutter(data && data.data)
+     await makeAuthGetReq(`${AUTH_GET_VENDOR_SUBUSERS}/${vendorId}/${userId}`)
+      setDateFutter(data?.data)
     } catch (error) {
       setDateFutter(error)
     }
-
 }
     //   DATA INITIALIZATION
   const navigate = useNavigate();

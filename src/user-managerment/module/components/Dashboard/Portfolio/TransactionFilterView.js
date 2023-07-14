@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { PrimaryButton, PrimaryButtonLight } from '../../Button'
-import DrawerSelectInput from './DrawerSelectInput'
 import { DatePicker } from 'antd';
+import { AUTH_GET_TRANSACTIONS_FILTER } from '../../../../../serivce/apiRoutes.service';
 import { getUserId } from '../../../../../serivce/cookie.service';
-import BASE_URL from '../../../../../serivce/url.serice';
+import { PrimaryButton, PrimaryButtonLight } from '../../Button';
+import DrawerSelectInput from './DrawerSelectInput';
 
 const TransactionFilterView = ({
     closeDrawer, 
@@ -59,7 +58,7 @@ const TransactionFilterView = ({
         
         // contructing request url
         const queryString = params.toString();
-        const apiUrl = `${BASE_URL}/api/Wallet/GetTransactionByFilter`
+        const apiUrl = `${AUTH_GET_TRANSACTIONS_FILTER}`
         const urlWithQuery = `${apiUrl}?${queryString}`
 
         // Making api GET CAll

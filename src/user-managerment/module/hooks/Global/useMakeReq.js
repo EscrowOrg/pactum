@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { getUserData } from "../../../../serivce/cookie.service"
+import api from "../../../../serivce/api"
 
 const useMakeReq = () => {
     
@@ -11,8 +12,7 @@ const useMakeReq = () => {
     const [hasError, setHasError] = useState(false)
     const [data, setData] = useState(null)
     const [isSuccessful, setIsSuccessful] = useState(false)
-   //const {token} = getUserData();
-   //console.log(token);
+    
     // MAKING POST REQUEST
     const makePostRequest = async (url, formData) => {
 
@@ -68,6 +68,49 @@ const useMakeReq = () => {
             setTimeout(()=>{setError("")}, 5000)
         }
     }
+    
+    // MAKING AUTHENTICATED POST REQUEST
+    const makeAuthPostReq = async (url, formData) => {
+
+        setLoading(true)
+
+        try {
+            const {data} = await api.post(url, formData)
+            setLoading(false)
+            setData(data)
+            setIsSuccessful(data.success)
+        } catch(error) {
+            console.log(error)
+            setLoading(false)
+            const errorMessage = error.response.data.message
+            setError(errorMessage)
+            setHasError(true)
+            setTimeout(()=>{
+                setError("")
+            }, 5000)
+        }
+    }
+
+    // MAKING AUTHENTICATED GET REQUEST
+    const makeAuthGetReq = async (url) => {
+
+        // loading becomes true
+        setGetLoading(true)
+
+        // begin consumption
+        try {
+            const {data} = await api.get(url)
+            setGetLoading(false)
+            setData(data)
+            setIsSuccessful(data.success)
+        } catch(error) {
+            console.log(error)
+            setGetLoading(false)
+            const errorMessage = error.response.data.message
+            setError(errorMessage)
+            setTimeout(()=>{setError("")}, 5000)
+        }
+    }
 
     return {
         loading,
@@ -77,7 +120,9 @@ const useMakeReq = () => {
         makePostRequest,
         makeGetRequest,
         isSuccessful,
-        hasError
+        hasError,
+        makeAuthPostReq,
+        makeAuthGetReq
     }
 }
 

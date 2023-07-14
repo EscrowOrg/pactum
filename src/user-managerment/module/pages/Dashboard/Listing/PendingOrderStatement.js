@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {BackButton, ErrorButton, PrimaryButton} from "../../../components/Button";
 import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 
-const PendingOrderStatement = () => {
+
+
+const PendingOrderStatement = (order) => {
+ 
   return (
     <PageWrapper>
       <div className="w-full h-full py-5 flex flex-col gap-8 overflow-x-hidden">

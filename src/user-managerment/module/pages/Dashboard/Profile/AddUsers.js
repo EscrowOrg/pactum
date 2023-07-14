@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AUTH_CREATE_VENDOR_USERS } from "../../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
 import { PasswordInput, TextInput, TextLabelInput } from "../../../components/Input";
-import { useNavigate } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { getUserData } from "../../../../../serivce/cookie.service";
-import BASE_URL from "../../../../../serivce/url.serice";
-import { toast } from "react-toastify";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 const AddUser = () => {
 
@@ -21,7 +21,7 @@ const [createVendorUserRequest, setcreateVendorUserRequest] = useState({
   password: ""
 });
 
-const {data, makePostRequest, isSuccessful} = useMakeReq();
+const {data, makeAuthPostReq, isSuccessful} = useMakeReq();
 
 useEffect(()=>{
   if(isSuccessful === true && data){
@@ -39,7 +39,7 @@ const{vendorId} = getUserData();
  const handleSubmit = async (e) =>{
   e.preventDefault();
   try {
-      await makePostRequest(`${BASE_URL}/api/Vendor/CreateVendorUsers`,{
+      await makeAuthPostReq(AUTH_CREATE_VENDOR_USERS, {
       createVendorUserRequest: {
          vendorId: vendorId,
          userName: createVendorUserRequest.userName,

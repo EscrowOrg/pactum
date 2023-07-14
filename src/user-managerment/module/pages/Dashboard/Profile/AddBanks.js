@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import PageWrapper from '../../../layouts/PageWrapper'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { AUTH_CREATE_BANK } from '../../../../../serivce/apiRoutes.service'
+import { getUserData } from '../../../../../serivce/cookie.service'
 import { BackButton, PrimaryButton } from '../../../components/Button'
 import { TextInput, TextLabelInput } from '../../../components/Input'
-import { useNavigate } from 'react-router-dom'
-import { getUserData } from '../../../../../serivce/cookie.service'
 import useMakeReq from '../../../hooks/Global/useMakeReq'
-import BASE_URL from '../../../../../serivce/url.serice'
-import { toast } from 'react-toastify'
-import { getFromLocalStorage } from '../../../helpers/localStorageMethods'
-import { isEmpty } from '../../../helpers/isEmpty'
+import PageWrapper from '../../../layouts/PageWrapper'
 
 const AddBanks = () => {
   const navigate = useNavigate()
@@ -22,7 +20,7 @@ const AddBanks = () => {
     fiatCurrency: 1
   });
 
-  const {data, makePostRequest, isSuccessful} = useMakeReq()
+  const {data, makeAuthPostReq, isSuccessful} = useMakeReq()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +46,7 @@ useEffect(()=>{
     e.preventDefault();
     
     try {
-      await makePostRequest(`${BASE_URL}/api/User/CreateBank`,{
+      await makeAuthPostReq(AUTH_CREATE_BANK, {
         userId: userId,
         accountName: addBank.accountName,
         accountNumber: addBank.accountNumber,

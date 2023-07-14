@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import Tabs,{Tab} from 'react-best-tabs';
+import { useEffect, useState } from 'react';
+import Tabs, { Tab } from 'react-best-tabs';
 import 'react-best-tabs/dist/index.css';
-import MarketList from './MarketList'
-import useMakeReq from '../../../hooks/Global/useMakeReq';
+import { GET_COIN_MARKETS } from '../../../../../serivce/apiRoutes.service';
 import { isEmpty } from '../../../helpers/isEmpty';
-import { GET_COIN_MARKETS, GET_CURRENCIES } from '../../../../../serivce/apiRoutes.service';
+import useMakeReq from '../../../hooks/Global/useMakeReq';
+import MarketList from './MarketList';
 
 const HotlistDrawerView = () => {
 

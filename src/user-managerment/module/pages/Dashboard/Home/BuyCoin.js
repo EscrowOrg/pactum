@@ -1,18 +1,18 @@
+import { TransactionMinus } from 'iconsax-react'
 import { useEffect, useState } from 'react'
-import PageWrapper from '../../../layouts/PageWrapper'
-import { RefreshCircle, TransactionMinus } from 'iconsax-react'
-import { BackButton, PrimaryButton } from '../../../components/Button'
-import SelectInput from '../../../components/SelectInput'
-import { TextLabelInput } from '../../../components/Input'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
+import { toast } from 'react-toastify'
+import { AUTH_CREATE_BUY_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
-import { CREATE_BUY_SESSION, GET_ADLISTING_DETAILS, GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
+import { BackButton, PrimaryButton } from '../../../components/Button'
+import LoadingSpinner from '../../../components/Global/LoadingSpinner'
+import { TextLabelInput } from '../../../components/Input'
+import SelectInput from '../../../components/SelectInput'
+import { getAssetLabel } from '../../../helpers/getAssetLabel'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { roundToN } from '../../../helpers/roundToN'
-import { toast } from 'react-toastify'
-import { getAssetLabel } from '../../../helpers/getAssetLabel'
-import LoadingSpinner from '../../../components/Global/LoadingSpinner'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import PageWrapper from '../../../layouts/PageWrapper'
 
 const BuyCoin = () => {
 
@@ -21,16 +21,16 @@ const BuyCoin = () => {
     const {coinId} = useParams()
     const [searchParams] = useSearchParams();
     const assetId = searchParams?.get("asset")
-    const { data,  getLoading, makeGetRequest, isSuccessful } = useMakeReq();
+    const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
     const { 
         data: listingAdData,
-        makeGetRequest: getListingAds,
+        makeAuthGetReq: getListingAds,
         getLoading: isgetLIstingAdsLoading
     } = useMakeReq();
     const { 
         data: buyAssetData, 
         loading: isBuyLoading,  
-        makePostRequest, 
+        makeAuthPostReq, 
         isSuccessful: isBuySuccess,
         error: buyError 
     } = useMakeReq();
@@ -54,7 +54,7 @@ const BuyCoin = () => {
     }
     const handleSubmit = () => {
         const uId = getUserId()
-        makePostRequest(CREATE_BUY_SESSION,
+        makeAuthPostReq(AUTH_CREATE_BUY_SESSION,
             {
                 userId: uId,
                 adId: coinId,
@@ -67,7 +67,7 @@ const BuyCoin = () => {
     // get wallets
     useEffect(()=>{
         const uId = getUserId()
-        makeGetRequest(`${GET_ASSETS_ACCOUNTS}/${uId}&USD`)
+        makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${uId}&USD`)
     }, [])
     useEffect(()=>{
     if(!isEmpty(data)) {
@@ -82,7 +82,7 @@ const BuyCoin = () => {
 
     // get ad details
     useEffect(()=>{
-        getListingAds(`${GET_ADLISTING_DETAILS}/${coinId}`)
+        getListingAds(`${AUTH_GET_ADLISTING_DETAILS}/${coinId}`)
     }, [])
     useEffect(()=>{
     if(!isEmpty(listingAdData?.data)) {

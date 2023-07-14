@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PageWrapper from "../../layouts/PageWrapper";
-import { BackButton, PrimaryButton } from "../../components/Button";
-import { PasswordInput, TextInput } from "../../components/Input";
-import Checkbox from "../../components/Checkbox";
-import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
-import BASE_URL from "../../../../serivce/url.serice";
-import useMakeReq from "../../hooks/Global/useMakeReq";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { BASIC_REGISTRATION } from "../../../../serivce/apiRoutes.service";
+import { BackButton, PrimaryButton } from "../../components/Button";
+import Checkbox from "../../components/Checkbox";
+import { PasswordInput, TextInput } from "../../components/Input";
+import { isEmpty } from "../../helpers/isEmpty";
 import { getFromLocalStorage, saveToLocalStorage } from "../../helpers/localStorageMethods";
 import { hasDigit, hasLowerCase, hasUpperCase } from "../../helpers/testForCase";
-import { isEmpty } from "../../helpers/isEmpty";
+import useMakeReq from "../../hooks/Global/useMakeReq";
+import PageWrapper from "../../layouts/PageWrapper";
 
 const RegistrationIndividual = ()=>{
 
@@ -48,7 +48,7 @@ const RegistrationIndividual = ()=>{
     const handleSubmit = (e) =>{
         e.preventDefault();
         makePostRequest(
-            `${BASE_URL}/api/User/BasicRegistration`, 
+            BASIC_REGISTRATION, 
             {
                 basicRegistration: {
                     email: formData.emailAddress,

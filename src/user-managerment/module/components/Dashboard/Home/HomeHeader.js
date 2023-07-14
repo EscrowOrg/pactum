@@ -1,27 +1,28 @@
-import { 
-    ArrowRight2, 
-    NotificationBing 
+import {
+    ArrowRight2,
+    NotificationBing
 } from 'iconsax-react'
-import { 
-    useEffect, 
-    useState 
+import {
+    useEffect,
+    useState
 } from 'react'
-import PortfolioBalance from './PortfolioBalance'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { getUserId } from '../../../../../serivce/cookie.service'
-import { GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
-import { isEmpty } from '../../../helpers/isEmpty'
 import { useNavigate } from 'react-router-dom'
+import { AUTH_GET_USER_DETS } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
+import { isEmpty } from '../../../helpers/isEmpty'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import PortfolioBalance from './PortfolioBalance'
 
 const HomeHeader = () => {
 
     // DATA INITIALIZATION
     const {
         data,
-        makeGetRequest,
+        makeAuthGetReq,
+        makeAuthPostReq
     } = useMakeReq()
     const navigate = useNavigate()
-    
+  //const {token, userId}= getUserData();
 
     // STATES
     const [name, setName] = useState("")
@@ -29,7 +30,7 @@ const HomeHeader = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(`${GET_USER_DETS}/${getUserId()}`)
+        makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`)
     }, [])
 
     // populating data
@@ -38,7 +39,7 @@ const HomeHeader = () => {
             setName(data?.data?.userName)
         }
     }, [data])
-
+    
     return (
         <div className='w-full flex items-center justify-center bg-[#6D34F0] min-h-[190px] relative'>
 
@@ -63,7 +64,6 @@ const HomeHeader = () => {
                             "Hey! 😎"
                         }
                     </p>
-
                     {/* notification icon */}
                     <span
                     onClick={()=>navigate("/home/notification")} 

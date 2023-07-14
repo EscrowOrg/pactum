@@ -1,73 +1,71 @@
-import React, { useContext } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Profile from "./individual/pages/user-profile";
+import React from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import RegistrationIndividual from "./individual/pages/individual";
+import Profile from "./individual/pages/user-profile";
 import LoginUser from "./individual/user";
 import Onborading from "./pages/onborading";
-import ProfileVendon from "./vendon/profile";
 import RegistrationVendon from "./vendon/pages/vendonReg";
+import ProfileVendon from "./vendon/profile";
 // import ResetPassword from "./reset-password";
-import ResetPassword from "./pages/ResetPassword";
-import ForgotPassword from "./pages/forgot-password";
-import SplashScreen from "./pages/SplashScreen";
 import { AnimatePresence } from "framer-motion";
-import Info from "./pages/Info";
-import Verification from "./pages/Verification";
-import PasswordChangeSuccess from "./pages/PasswordChangeSuccess";
-import VendorVerificationPage from "./vendon/pages/VerificationPage";
-import VendorVerified from "./vendon/pages/VendorVerified";
-import VendorCreatePin from "./vendon/pages/VendorCreatePin";
-import VendorPinSuccess from "./vendon/pages/VendorPinSuccess";
+import IndividualCreatePin from "./individual/pages/IndividualCreatePin";
+import IndividualPinSuccess from "./individual/pages/IndividualPinSuccess";
 import IndividualVerificationPage from "./individual/pages/IndividualVerificationPage";
 import IndividualVerified from "./individual/pages/IndividualVerified";
 import MoreInfo from "./individual/pages/MoreInfo";
-import IndividualPinSuccess from "./individual/pages/IndividualPinSuccess";
-import IndividualCreatePin from "./individual/pages/IndividualCreatePin";
 import Home from "./pages/Dashboard/Home";
-import Portfolio from "./pages/Dashboard/Portfolio";
-import Listing from "./pages/Dashboard/Listing";
-import Overview from "./pages/Dashboard/Home/Overview";
-import BuySellCoin from "./pages/Dashboard/Home/BuySellCoin";
 import BuyCoin from "./pages/Dashboard/Home/BuyCoin";
+import BuySellCoin from "./pages/Dashboard/Home/BuySellCoin";
+import Notification from "./pages/Dashboard/Home/Notification";
 import OrderStatement from "./pages/Dashboard/Home/OrderStatement";
-import TransactionSuccess from "./pages/Dashboard/Home/TransactionSuccess";
+import Overview from "./pages/Dashboard/Home/Overview";
+import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
 import SellCoin from "./pages/Dashboard/Home/SellCoin";
 import SellOrderStatements from "./pages/Dashboard/Home/SellOrderStatements";
-import CreateWallet from "./pages/Dashboard/Portfolio/CreateWallet";
-import Transactions from "./pages/Dashboard/Portfolio/Transactions";
-import Checkout from "./pages/Dashboard/Portfolio/Checkout";
-import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
-import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
-import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
-import CreateListing from "./pages/Dashboard/Listing/CreateListing";
-import PrivateRoutes from "./components/Dashboard/PrivateRoutes";
-import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
-import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
-import Overviews from "./pages/Dashboard/Listing/Overview";
-import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
+import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
+import TransactionSuccess from "./pages/Dashboard/Home/TransactionSuccess";
+import Listing from "./pages/Dashboard/Listing";
 import ClosedListingOverview from "./pages/Dashboard/Listing/ClosedListingOverview";
 import ClosedOrderStatement from "./pages/Dashboard/Listing/ClosedOrderStatement";
-import IndividualEditProfile from "./individual/pages/IndividualEditProfile";
-import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
-import VendorSettings from "./vendon/pages/VendorSettings";
-import IndividualSettings from "./individual/pages/IndividualSettings";
-import SellTransactionSuccess from "./pages/Dashboard/Home/SellTransactionSuccess";
-import ReportOrderStatement from "./pages/Dashboard/Home/ReportOrderStatement";
-import Notification from "./pages/Dashboard/Home/Notification";
+import CreateListing from "./pages/Dashboard/Listing/CreateListing";
+import Overviews from "./pages/Dashboard/Listing/Overview";
+import PendingOrderStatement from "./pages/Dashboard/Listing/PendingOrderStatement";
+import Portfolio from "./pages/Dashboard/Portfolio";
+import Checkout from "./pages/Dashboard/Portfolio/Checkout";
+import CreateWallet from "./pages/Dashboard/Portfolio/CreateWallet";
+import ReceiveCoin from "./pages/Dashboard/Portfolio/ReceiveCoin";
+import SendCoin from "./pages/Dashboard/Portfolio/SendCoin";
+import SwapBridgeCoin from "./pages/Dashboard/Portfolio/SwapBridgeCoin";
+import Transactions from "./pages/Dashboard/Portfolio/Transactions";
 import ChangePassword from "./pages/Dashboard/Profile/ChangePassword";
+import PrivacyPolicy from "./pages/Dashboard/Profile/PrivacyPolicy";
+import TermsAndConditions from "./pages/Dashboard/Profile/TermsAndConditions";
+import Info from "./pages/Info";
+import PasswordChangeSuccess from "./pages/PasswordChangeSuccess";
+import ResetPassword from "./pages/ResetPassword";
+import SplashScreen from "./pages/SplashScreen";
+import Verification from "./pages/Verification";
+import ForgotPassword from "./pages/forgot-password";
+import SettingsEditProfile from "./vendon/pages/SettingsEditProfile";
+import VendorCreatePin from "./vendon/pages/VendorCreatePin";
+import VendorPinSuccess from "./vendon/pages/VendorPinSuccess";
+import VendorSettings from "./vendon/pages/VendorSettings";
+import VendorVerified from "./vendon/pages/VendorVerified";
+import VendorVerificationPage from "./vendon/pages/VerificationPage";
 // import NewUser from "./pages/Dashboard/Portfolio/NewUser";
-import AddUser from "./pages/Dashboard/Profile/AddUsers";
+import AuthRoutes from "./components/AuthRoutes";
+import ChatBox from "./pages/Dashboard/Home/ChatBox";
 import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
+import AddBanks from "./pages/Dashboard/Profile/AddBanks";
+import AddUser from "./pages/Dashboard/Profile/AddUsers";
+import Banks from "./pages/Dashboard/Profile/Banks";
+import ChangePin from "./pages/Dashboard/Profile/ChangePin";
+import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
+import MyUsers from "./pages/Dashboard/Profile/MyUsers";
+import SendAsset from "./pages/Dashboard/Profile/SendAsset";
+import SendChat from "./pages/Dashboard/Profile/SendChat";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
-import ChatBox from "./pages/Dashboard/Home/ChatBox";
-import MyUsers from "./pages/Dashboard/Profile/MyUsers";
-import Banks from "./pages/Dashboard/Profile/Banks";
-import AddBanks from "./pages/Dashboard/Profile/AddBanks";
-import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
-import ChangePin from "./pages/Dashboard/Profile/ChangePin";
-import SendChat from "./pages/Dashboard/Profile/SendChat";
-import SendAsset from "./pages/Dashboard/Profile/SendAsset";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -176,7 +174,7 @@ const MainRouter = () => {
         />
 
         {/* =========== HOME DASHBOARD ========== */}
-        <Route element={<PrivateRoutes />}>
+        <Route element={<AuthRoutes />}>
           {/* HOME */}
           <Route exact path="/home" element={<Home />} />
 
@@ -194,7 +192,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/home/buy-coin/:coinId/order-statement"
+            path="/home/buy-coin/:orderId/order-statement"
             element={<OrderStatement />}
           />
 
@@ -206,7 +204,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/home/sell-coin/:coinId/sell-order-statement"
+            path="/home/sell-coin/:orderId/sell-order-statement"
             element={<SellOrderStatements />}
           />
 

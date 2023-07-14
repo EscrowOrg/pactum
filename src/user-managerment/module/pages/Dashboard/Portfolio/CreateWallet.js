@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react'
-import PageWrapper from '../../../layouts/PageWrapper'
-import { BackButton, PrimaryButton } from '../../../components/Button'
 import { useNavigate } from 'react-router-dom'
+import { BackButton, PrimaryButton } from '../../../components/Button'
+import PageWrapper from '../../../layouts/PageWrapper'
 
-import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
-import Drawer from '../../../layouts/Drawer'
-import "../../../layouts/Drawer/index.css"
+import { toast } from 'react-toastify'
+import { AUTH_CREATE_NEW_ASSETS_ACCOUNTS, AUTH_GET_ASSETS_MAPPING } from '../../../../../serivce/apiRoutes.service'
+import { getUserId } from '../../../../../serivce/cookie.service'
 import AssetsListView from '../../../components/Dashboard/Portfolio/AssetsListView'
 import DrawerSelectInput from '../../../components/Dashboard/Portfolio/DrawerSelectInput'
-import NetworkListView from '../../../components/Dashboard/Portfolio/NetworkListView'
-import { toast } from 'react-toastify'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { CREATE_NEW_ASSETS_ACCOUNTS, GET_ASSETS_MAPPING } from '../../../../../serivce/apiRoutes.service'
-import { getUserId } from '../../../../../serivce/cookie.service'
-import { isEmpty } from '../../../helpers/isEmpty'
-import LoadingSpinner from '../../../components/Global/LoadingSpinner'
 import EmptyDataComp from '../../../components/Global/EmptyDataComp'
+import LoadingSpinner from '../../../components/Global/LoadingSpinner'
+import { isEmpty } from '../../../helpers/isEmpty'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import Drawer from '../../../layouts/Drawer'
+import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
+import "../../../layouts/Drawer/index.css"
 
 const CreateWallet = () => {
 
@@ -26,12 +25,12 @@ const CreateWallet = () => {
         isSuccessful: isCreateSuccess,
         error: isCreateError,
         loading: createWalletLoading,
-        makePostRequest,
+        makeAuthPostReq,
     } = useMakeReq()
     const {
         data: walletAssetData,
         getLoading: getAssetLoading,
-        makeGetRequest,
+        makeAuthGetReq,
     } = useMakeReq()
 
 
@@ -56,7 +55,7 @@ const CreateWallet = () => {
 
         const uId = getUserId()
 
-        makePostRequest(CREATE_NEW_ASSETS_ACCOUNTS,
+        makeAuthPostReq(AUTH_CREATE_NEW_ASSETS_ACCOUNTS,
             {
                 "chain": +asset.networkId,
                 "asset": +asset.assetId,
@@ -68,7 +67,7 @@ const CreateWallet = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
-        makeGetRequest(GET_ASSETS_MAPPING)
+        makeAuthGetReq(AUTH_GET_ASSETS_MAPPING)
     }, [])
 
     // get assets data

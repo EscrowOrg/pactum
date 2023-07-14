@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import Chart from "react-apexcharts";
 import Tabs, { Tab } from 'react-best-tabs';
-import { isEmpty } from '../../../helpers/isEmpty';
-import useMakeReq from '../../../hooks/Global/useMakeReq';
 import { COIN_GECKO_BASE } from '../../../../../serivce/url.serice';
-import LoadingSpinner from '../../Global/LoadingSpinner';
-import EmptyDataComp from '../../Global/EmptyDataComp';
+import { isEmpty } from '../../../helpers/isEmpty';
 import { roundToN } from '../../../helpers/roundToN';
+import useMakeReq from '../../../hooks/Global/useMakeReq';
+import EmptyDataComp from '../../Global/EmptyDataComp';
+import LoadingSpinner from '../../Global/LoadingSpinner';
 
 const ChartBox = ({ assetId }) => {
 
