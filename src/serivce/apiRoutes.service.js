@@ -41,3 +41,4 @@ export const AUTH_GET_AWAITING_ESCROW_SESSION = "/api/ListingManagement/GetAwait
 export const AUTH_CREATE_VENDOR_USERS = "/api/Vendor/CreateVendorUsers"
 export const AUTH_CREATE_BANK = "/api/User/CreateBank"
 export const AUTH_GET_ESCROW_SESSION_BYID = "/api/ListingManagement/GetEscrowSessionById"
+export const AUTH_RECIEVE_CRYPTO = "/api/Wallet/Recieve"

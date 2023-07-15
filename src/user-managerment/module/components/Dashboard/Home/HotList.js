@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import HotlistCard from './HotlistCard'
-import Drawer from '../../../layouts/Drawer'
-import "../../../layouts/Drawer/index.css"
-import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
-import HotlistDrawerView from './HotlistDrawerView'
-import useMakeReq from '../../../hooks/Global/useMakeReq'
-import { isEmpty } from '../../../helpers/isEmpty'
-import { GET_COIN_MARKETS } from '../../../../../serivce/apiRoutes.service'
+import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react'
+import { GET_COIN_MARKETS } from '../../../../../serivce/apiRoutes.service'
+import { isEmpty } from '../../../helpers/isEmpty'
 import { roundToN } from '../../../helpers/roundToN'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import Drawer from '../../../layouts/Drawer'
+import StrictWrapper from '../../../layouts/Drawer/StrictWrapper'
+import "../../../layouts/Drawer/index.css"
+import HotlistCard from './HotlistCard'
+import HotlistDrawerView from './HotlistDrawerView'
 
 // ant icon
 const antIcon = (
@@ -25,7 +25,7 @@ const HotList = () => {
 
     // DATA INITIALIZATION
     const selectedCoin = [
-        // "tether",
+        "tether",
         // "usd-coin",
         "ethereum",
         "binancecoin",
