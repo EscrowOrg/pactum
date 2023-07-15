@@ -1,5 +1,5 @@
 export const getAssetLabel = (assetId) => {
-    const coinLabel = ["","BTC", "ETH", "BNB"]
+    const coinLabel = ["USDT","BTC", "ETH", "BNB"]
     if(typeof assetId !== "number") {
         console.log("assetId must be a number")
         return undefined
