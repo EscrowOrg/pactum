@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import { SearchInput } from '../../Input'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { roundToN } from '../../../helpers/roundToN'
 import { isEmpty } from '../../../helpers/isEmpty'
+import { roundToN } from '../../../helpers/roundToN'
 import EmptyDataComp from '../../Global/EmptyDataComp'
+import { SearchInput } from '../../Input'
 
 const SelectWalletView = ({walletList, mode}) => {
 
     // STATES
     const [searchInput, setSearchInput] = useState("")
-
+ 
 
     // DATA INITIALIZATION
     const navigate = useNavigate()

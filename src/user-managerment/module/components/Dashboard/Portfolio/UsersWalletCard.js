@@ -9,7 +9,7 @@ import {
 } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_ASSETS_MAPPING, AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
@@ -21,6 +21,7 @@ import AccountBalanceCard from "./AccountBalanceCard";
 import ActionBtn from "./ActionBtn";
 import AssetAccountList from "./AssetAccountList";
 import AssetsFilterView from "./AssetsFilterView";
+import ReceiveAssetList from "./RecieveAssetList";
 import SelectWalletView from "./SelectWalletView";
 
 // ant icon
@@ -38,13 +39,28 @@ const UsersWalletCard = ({ assetAccount }) => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const { getLoading, data, makeAuthGetReq } = useMakeReq();
+  const {
+    data: walletAssetData,
+    getLoading: getAssetLoading,
+    makeAuthGetReq: getAssets,
+} = useMakeReq()
 
   // STATES
   const [isVendor, setIsVendor] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState("");
   const [isSelectWalletOpen, setIsSelectWalletOpen] = useState(false);
+  const [isSelectAssetOpen, setIsSelectAssetOpen] = useState(false);
   const [filterValue, setFilterValue] = useState("A-Z");
+  const [assetList, setAssetList] = useState([])
+  const [asset, setAsset] = useState({
+      name: "",
+      symbol: "",
+      assetId: null,
+      networkName: "",
+      networkId: null,
+      image: ""
+  })
 
   // HANDLERS
   const toggleDrawer = (value) => {
@@ -53,12 +69,24 @@ const UsersWalletCard = ({ assetAccount }) => {
   const toggleSelectWalletDrawer = (value) => {
     setIsSelectWalletOpen((isSelectWalletOpen) => !isSelectWalletOpen);
   };
+  const toggleSelectAssetDrawer = (value) => {
+    setIsSelectAssetOpen((isSelectAssetOpen) => !isSelectAssetOpen);
+  };
 
   // SIDE EFFECTS
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`);
   }, []);
+  useEffect(()=>{
+    getAssets(AUTH_GET_ASSETS_MAPPING)
+}, [])
 
+// get assets data
+useEffect(()=>{
+    if(!isEmpty(walletAssetData)) {
+        setAssetList(walletAssetData)
+    }
+}, [walletAssetData])
   // populating data
   useEffect(() => {
     if (!isEmpty(data)) {
@@ -91,8 +119,7 @@ const UsersWalletCard = ({ assetAccount }) => {
 
         <ActionBtn
           onClick={() => {
-            toggleSelectWalletDrawer();
-            setMode("receive");
+            toggleSelectAssetDrawer();
           }}
           Icon={MoneyRecive}
           text={"Receive"}
@@ -152,6 +179,24 @@ const UsersWalletCard = ({ assetAccount }) => {
             walletList={assetAccount}
             closeDrawer={toggleSelectWalletDrawer}
           />
+        </StrictWrapper>
+      </Drawer>
+
+      {/* assets Drawer */}
+      <Drawer
+        isOpen={isSelectAssetOpen}
+        onClose={toggleSelectAssetDrawer}
+        position="bottom"
+      >
+        {/* drawer content container */}
+        <StrictWrapper
+          title={"Select an Asset"}
+          closeDrawer={toggleSelectAssetDrawer}
+        >
+          {/* Body content */}
+          <ReceiveAssetList
+            assetList={assetList}
+            closeDrawer={toggleDrawer}/>
         </StrictWrapper>
       </Drawer>
     </div>
