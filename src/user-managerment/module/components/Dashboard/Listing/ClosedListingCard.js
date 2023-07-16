@@ -13,20 +13,20 @@ const ClosedListingCard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getClosedData();
+    // getClosedData();
   }, [data]);
 
-  const getClosedData = async () => {
-    try {
-      await makeGetRequest(
-        `${BASE_URL}/api/ListingManagement/GetAdListing/${0}/${10}`
-      );
-      setClosedListingData(data?.data?.items);
-      // console.log(data.data.items)
-    } catch (error) {
-      setClosedListingData(error);
-    }
-  };
+  // const getClosedData = async () => {
+  //   try {
+  //     await makeGetRequest(
+  //       `${BASE_URL}/api/ListingManagement/GetAdListing/${0}/${10}`
+  //     );
+  //     setClosedListingData(data?.data?.items);
+  //     // console.log(data.data.items)
+  //   } catch (error) {
+  //     setClosedListingData(error);
+  //   }
+  // };
 // console.log(closedListingData)
   return (
     <>
