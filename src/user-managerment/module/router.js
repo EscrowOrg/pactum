@@ -291,7 +291,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/listing/closed-listing/:closedListingId"
+            path="/listing/closed-listing/:id"
             element={<ClosedListingOverview />}
           />
 
