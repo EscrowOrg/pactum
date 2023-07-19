@@ -6,6 +6,7 @@ import { getUserData } from "../../../../../serivce/cookie.service";
 import { BackButton } from "../../../components/Button";
 import RemoveBank from "../../../components/Dashboard/Profile/RemoveBank";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { isEmpty } from "../../../helpers/isEmpty";
 import AltModal from "../../../layouts/AltModal";
 import PageWrapper from "../../../layouts/PageWrapper";
 
@@ -25,6 +26,12 @@ const ListOfBanks = (closeModal) => {
   useEffect(()=>{
     getBanks()
   }, [data])
+
+  useEffect(()=>{
+    if(!isEmpty(data)) {
+        setBankDetails(data?.data)
+    }
+}, [data])
 
   const getBanks = async ()=>{
     try {

@@ -10,6 +10,7 @@ import { SearchInput } from "../../../components/Input";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import { isEmpty } from "../../../helpers/isEmpty";
 import PageWrapper from "../../../layouts/PageWrapper";
 
 const MyUsers= () => {
@@ -35,6 +36,12 @@ useEffect(()=>{
    getUsers();
 },[data])
 
+
+useEffect(()=>{
+  if(!isEmpty(data)) {
+      setDateFutter(data?.data)
+  }
+}, [data])
 const getUsers = async ()=>{
     try {
      await makeAuthGetReq(`${AUTH_GET_VENDOR_SUBUSERS}/${vendorId}/${userId}`)
@@ -42,7 +49,6 @@ const getUsers = async ()=>{
     } catch (error) {
       setDateFutter(error)
     }
-
 }
     //   DATA INITIALIZATION
   const navigate = useNavigate();
