@@ -6,6 +6,7 @@ import { isEmpty } from "../../../helpers/isEmpty";
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import LoadingSpinner from "../../Global/LoadingSpinner";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 
 const ClosedListingCard = () => {
   // STATES
@@ -75,7 +76,7 @@ const ClosedListingCard = () => {
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
-                        BTC(#000001)
+                        {`${getAssetLabel(+closedOrders.assets)}(#000001)`}
                       </h3>
 
                       <h4 className="text-[#8D85A0] text-xs font-normal">

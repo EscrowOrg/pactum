@@ -8,6 +8,7 @@ import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -22,7 +23,7 @@ const ClosedListingOverview = () => {
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${id}`);
   }, []);
-  // console.log("hello")
+
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
@@ -57,7 +58,9 @@ const ClosedListingOverview = () => {
                     <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
                       Asset
                     </h4>
-                    <h4 className="text-base font-bold text-black">BTC</h4>
+                    <h4 className="text-base font-bold text-black">
+                      {getAssetLabel(closedOverview.asset)}
+                    </h4>
                   </div>
 
                   <div className="pl-16">
@@ -113,22 +116,18 @@ const ClosedListingOverview = () => {
             </div>
 
             {/* ALL PAYMENTS LISTS */}
-            {closedOverview.payments.map((payment, index) => {
-              return (
-                <div className="mt-8">
-                  <h4 className="text-base font-bold text-black pb-2">
-                    All Payments
-                  </h4>
 
-                  {/* Received Order */}
-                  <div
-                    key={index}
-                    className="flex justify-between mt-2 py-3 border-b border-solid"
-                  >
+            <div className="mt-8">
+              <h4 className="text-base font-bold text-black pb-2">
+                All Payments
+              </h4>
+              {closedOverview.payments.map((payment, index) => {
+                return (
+                  <div key={index} className="flex justify-between mt-2 py-3 border-b border-solid">
                     {/* Order date and time */}
                     <div>
                       <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        09/06/38 - 10:56AM
+                        {payment.created}
                       </p>
 
                       {/* Received Order */}
@@ -147,7 +146,7 @@ const ClosedListingOverview = () => {
 
                       {/*  */}
                       <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        ASEMOTA JOEL
+                        {payment.adListing.merchantName}
                       </h4>
                     </div>
 
@@ -161,123 +160,9 @@ const ClosedListingOverview = () => {
                       View More
                     </span>
                   </div>
-
-                  {/* Pending Order */}
-                  <div className="flex justify-between mt-2 py-3 border-b border-solid">
-                    <div>
-                      <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        09/06/38 - 10:56AM
-                      </p>
-                      <div className="flex gap-1">
-                        <h4 className="text-base font-bold text-black">
-                          #100,000.00
-                        </h4>
-                        <h4 className="font-semibold text-xs text-[#EB9B00] mt-1">
-                          PENDING
-                        </h4>
-                      </div>
-                      <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        ASEMOTA JOEL
-                      </h4>
-                    </div>
-
-                    {/* view more button */}
-                    <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
-                      View More
-                    </span>
-                  </div>
-
-                  {/* Pending Order */}
-                  <div className="flex justify-between mt-2 py-3 border-b border-solid">
-                    <div>
-                      <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        09/06/38 - 10:56AM
-                      </p>
-                      <div className="flex gap-1">
-                        <h4 className="text-base font-bold text-black">
-                          #100,000.00
-                        </h4>
-                        <h4 className=" font-semibold text-xs text-[#EB9B00] mt-1">
-                          {" "}
-                          PENDING
-                        </h4>
-                      </div>
-                      <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        ASEMOTA JOEL
-                      </h4>
-                    </div>
-
-                    {/* view more button */}
-                    <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
-                      View More
-                    </span>
-                  </div>
-
-                  {/* Received Order */}
-                  <div className="flex justify-between mt-2 py-3 border-b border-solid">
-                    {/* Order date and time */}
-                    <div>
-                      <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        09/06/38 - 10:56AM
-                      </p>
-
-                      {/* Received Order */}
-                      <div className="flex gap-1">
-                        <h4 className="text-base font-bold text-black">
-                          #100,000.00
-                        </h4>
-
-                        {/* checkbox  */}
-                        <Checkbox
-                          disabled={true}
-                          value={true}
-                          className={"mt-1"}
-                        />
-
-                        <h4 className="font-semibold text-xs text-[#3A0CA3] mt-1">
-                          RECEIVED
-                        </h4>
-                      </div>
-
-                      {/*  */}
-                      <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        ASEMOTA JOEL
-                      </h4>
-                    </div>
-
-                    {/* view more button */}
-                    <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
-                      View More
-                    </span>
-                  </div>
-
-                  {/* Pending Order */}
-                  <div className="flex justify-between mt-2 py-3 border-b border-solid">
-                    <div>
-                      <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        09/06/38 - 10:56AM
-                      </p>
-                      <div className="flex gap-1">
-                        <h4 className="text-base font-bold text-black">
-                          #100,000.00
-                        </h4>
-                        <h4 className="font-semibold text-xs text-[#EB9B00] mt-1">
-                          PENDING
-                        </h4>
-                      </div>
-                      <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        ASEMOTA JOEL
-                      </h4>
-                    </div>
-
-                    {/* view more button */}
-                    <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
-                      View More
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </>
       ) : null}

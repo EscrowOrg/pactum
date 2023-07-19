@@ -8,6 +8,7 @@ import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.service";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 
 const Overviews = () => {
   // States
@@ -18,6 +19,9 @@ const Overviews = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+   
+  const asset = getAssetLabel()
+  console.log(getAssetLabel(2))
 
   // console.log(id);
 
@@ -35,8 +39,8 @@ const Overviews = () => {
   }, [data, isSuccessful]);
 
 
-  console.log(viewMore);
-  const listPayments = [1, 2, 3, 4];
+  // console.log(viewMore);
+  // const listPayments = [1, 2, 3, 4];
 
   return (
     <NoTransitionWrapper>
@@ -54,7 +58,7 @@ const Overviews = () => {
 
                   <div>
                     <h3 className="font-normal text-sm text-[#8D85A0] my-3">
-                      Listed On: {viewMore.created}
+                      Listed On: 9/04/2023 - 10:43AM
                     </h3>
 
                     <div  className="flex justify-between">
@@ -64,7 +68,7 @@ const Overviews = () => {
                             Asset
                           </h4>
                           <h4 className="text-base font-bold text-black">
-                            BTC
+                            {getAssetLabel(+viewMore.asset)}
                           </h4>
                         </div>
 
@@ -138,7 +142,10 @@ const Overviews = () => {
                       All Orders
                     </h4>
                     {viewMore.payments.map((index) => {
-                      <OverviewPayment key={index}/>
+                      return (
+                        <OverviewPayment key={index}/>
+                      )
+                     
                     })}
                   </div>
                 

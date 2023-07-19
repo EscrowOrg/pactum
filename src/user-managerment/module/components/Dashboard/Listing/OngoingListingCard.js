@@ -6,6 +6,7 @@ import LoadingSpinner from "../../Global/LoadingSpinner";
 import { AUTH_GET_LISTING_ORDERS } from "../../../../../serivce/apiRoutes.service";
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 // import { getAccessToken } from "../../../../../serivce/cookie.service";
 
 const OngoingListingCard = () => {
@@ -39,6 +40,8 @@ const OngoingListingCard = () => {
       }
     }
   }, [data, isSuccessful]);
+
+  
 
   return (
     <>
@@ -79,7 +82,7 @@ const OngoingListingCard = () => {
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
-                        (#000001)
+                        {`${getAssetLabel(+ordersData.assets)} (#000001)`}
                       </h3>
 
                       <h4 className="text-[#8D85A0] text-xs font-normal">
