@@ -1,11 +1,10 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import {
-  ArrowSwapHorizontal,
   MoneyRecive,
   MoneySend,
   WalletAdd,
-  WalletMinus,
+  WalletMinus
 } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -110,7 +109,7 @@ useEffect(()=>{
         {/* button */}
         <ActionBtn
           onClick={() => {
-            toggleSelectWalletDrawer();
+            toggleSelectAssetDrawer();
             setMode("send");
           }}
           Icon={MoneySend}
@@ -120,20 +119,21 @@ useEffect(()=>{
         <ActionBtn
           onClick={() => {
             toggleSelectAssetDrawer();
+            setMode("receive");
           }}
           Icon={MoneyRecive}
           text={"Receive"}
         />
 
-        <ActionBtn
-          onClick={() => navigate("/portfolio/swap-bridge")}
-          Icon={ArrowSwapHorizontal}
-          text={"Swap"}
-        />
+        <ActionBtn 
+        onClick={()=>navigate("/home/overview/coin-buy-sell?id=2&asset=ethereum")}
+        Icon={WalletAdd} 
+        text={"Buy"} />
 
-        <ActionBtn Icon={WalletAdd} text={"Buy"} />
-
-        <ActionBtn Icon={WalletMinus} text={"Sell"} />
+        <ActionBtn 
+        onClick={()=>navigate("/home/overview/coin-buy-sell?id=1&asset=ethereum")}
+        Icon={WalletMinus} 
+        text={"Sell"} />
       </div>
 
       {/* My Assets */}
@@ -195,8 +195,10 @@ useEffect(()=>{
         >
           {/* Body content */}
           <ReceiveAssetList
-            assetList={assetList}
-            closeDrawer={toggleDrawer}/>
+          mode={mode}
+          loading={getAssetLoading}
+          assetList={assetList}
+          closeDrawer={toggleDrawer}/>
         </StrictWrapper>
       </Drawer>
     </div>

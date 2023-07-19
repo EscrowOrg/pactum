@@ -4,12 +4,14 @@ import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRout
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
+import EmptyDataComp from "../../Global/EmptyDataComp";
+import LoadingSpinner from "../../Global/LoadingSpinner";
 
 const PendingPaymentsCard = () => {
 
   // DATA INITIALIZATION
 const navigate = useNavigate();
-const {data, makeAuthGetReq, isSuccessful} = useMakeReq();
+const {data, makeAuthGetReq, isSuccessful, getLoading} = useMakeReq();
 
 // STATES
 const [pendingOrder, setPendingOrder] = useState([]);
@@ -29,11 +31,14 @@ if(!isEmpty(data)) {
 
 return (
     <div className="w-full flex flex-col gap-4">
-       { 
-        !isEmpty(pendingOrder) && pendingOrder?.map((order, index)=>{
-          return(
+      {
+          getLoading?
+          <LoadingSpinner
+          bgColor="bg-transparent"
+          viewPortHeight="h-[60vh]" />:
+          !isEmpty(pendingOrder) ? pendingOrder?.map((order, index)=>(
             <div 
-              key={index} 
+            key={index} 
             className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4">
               <div
               className="flex justify-between py-3 border-b border-solid">
@@ -101,8 +106,10 @@ return (
                 </div>
               </div>
             </div>
-          )
-        })
+          )):
+          <EmptyDataComp
+          bgColor="bg-transparent"
+          viewPortHeight="h-[60vh]" />
       }
     </div>
   );

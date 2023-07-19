@@ -47,6 +47,7 @@ const BuySellCoin = () => {
   } = useMakeReq()
   const [searchParams] = useSearchParams();
   const coinOptions = [
+    {value: 0, label: "tether"},
     { value: 1, label: "bitcoin" },
     { value: 2, label: "ethereum" },
     { value: 3, label: "binancecoin" },
@@ -70,7 +71,7 @@ const BuySellCoin = () => {
   useEffect(()=>{
 
     // making GET request
-    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === coinId).value || 1)}&userId=${ userId}`)
+    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === (coinId || 2)).value || 1)}`)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, coinSelect])

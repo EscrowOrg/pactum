@@ -103,6 +103,19 @@ const SendCoin = () => {
   };
 
   // SIDE EFFECTS
+  useEffect(()=>{
+    if((coinId!==undefined || coinId !==null) && !isEmpty(assetList)) {
+      const selectedAsset = assetList.find(asset=>asset.currency===(+coinId ?? 1))
+      setAsset({
+        name: selectedAsset.currencyName || "",
+        symbol: selectedAsset.symbol || "",
+        assetId: selectedAsset.currency || null,
+        networkName: selectedAsset.networkName || "",
+        networkId: selectedAsset.network || null,
+        image: selectedAsset.imageUrl || ""
+      })
+    }
+  }, [coinId, assetList])
   useEffect(() => {
     makeAuthGetReq(AUTH_GET_ASSETS_MAPPING);
     getWalletInfo(`${AUTH_GET_SINGLE_ACCOUNT}/${coinId}`);

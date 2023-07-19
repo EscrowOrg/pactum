@@ -21,6 +21,12 @@ const Checkout = () => {
         data,
         makeAuthGetReq,
     } = useMakeReq()
+    const assetsLabels = {
+        USDT: "tether",
+        BTC: "bitcoin",
+        ETH: "ethereum",
+        BNB: "binancecoin"
+    }
 
 
     // STATES
@@ -190,12 +196,12 @@ const Checkout = () => {
 
                                     <WarningButton1
                                     height='h-[48px]'
-                                    // onClick={()=>navigate("/home/overview/coin-buy-sell?id=2")}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=1&asset=${assetsLabels[`${walletInfo.currency}`]}`)}
                                     text={"Sell BTC"} />
 
                                     <PrimaryButton
                                     height='h-[48px]'
-                                    // onClick={()=>navigate("/home/overview/coin-buy-sell?id=1")}
+                                    onClick={()=>navigate(`/home/overview/coin-buy-sell?id=2&asset=${assetsLabels[`${walletInfo.currency}`]}`)}
                                     text={"Buy BTC"} />
 
                                     <span
@@ -223,14 +229,14 @@ const Checkout = () => {
 
                     <Link
                     onClick={toggleModal}
-                    to={`/portfolio/checkout/${coinId}/send`}
+                    to={`/portfolio/checkout/${Object.keys(assetsLabels).indexOf(walletInfo.currency) || 0}/send`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Send BTC
                     </Link>
 
                     <Link
                     onClick={toggleModal}
-                    to={`/portfolio/checkout/${coinId}/receive`}
+                    to={`/portfolio/checkout/${Object.keys(assetsLabels).indexOf(walletInfo.currency) || 0}/receive`}
                     className='hover:no-underline text-black text-sm font-semibold'>
                         Receive BTC
                     </Link>
