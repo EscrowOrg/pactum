@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { isEmpty } from '../../../helpers/isEmpty'
+import EmptyDataComp from '../../Global/EmptyDataComp'
+import LoadingSpinner from '../../Global/LoadingSpinner'
 import { SearchInput } from '../../Input'
 
-const ReceiveAssetList = ({assetList, closeDrawer}) => {
+const ReceiveAssetList = ({assetList, closeDrawer, mode, loading}) => {
 
     // STATES
     const [searchInput, setSearchInput] = useState("")
@@ -25,11 +28,16 @@ const ReceiveAssetList = ({assetList, closeDrawer}) => {
             {/* list container */}
             <div className='flex flex-col gap-1 pb-5'>
                 {
+                    loading?
+                    <LoadingSpinner
+                    bgColor="bg-transparent"
+                    viewPortHeight="h-[60vh]" />:
+                    !isEmpty(assetList)?
                     assetList?.filter(asset=>asset?.currencyName?.toLowerCase()?.includes(searchInput?.toLowerCase()))?.map((asset, index)=>(
                         <div
                         key={index}
                         onClick={()=>{
-                            navigate(`/portfolio/checkout/${asset.currency}/receive`)
+                            navigate(`/portfolio/checkout/${asset.currency}/${mode || "receive"}`)
                             closeDrawer()
                         }} 
                         className='flex items-center gap-3 py-4 border-b border-[#F5F3F6] first:pt-0'>
@@ -49,7 +57,10 @@ const ReceiveAssetList = ({assetList, closeDrawer}) => {
                                 </h4>
                             </div>
                         </div>
-                    ))
+                    )):
+                    <EmptyDataComp
+                    bgColor="bg-transparent"
+                    viewPortHeight="h-[60vh]" />
                 }
             </div>
         </div>
