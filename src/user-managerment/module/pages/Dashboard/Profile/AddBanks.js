@@ -41,14 +41,6 @@ useEffect(()=>{
   }
 },[isSuccessful, data])
 
-// useEffect(() => {
-//   const userId = getFromLocalStorage("userId");
-//   if (!isEmpty(userId)) {
-//     toast.error("Complete your registration!");
-//     navigate("/individual-profile");
-//   }
-// }, []);
-   
 
   const handleSubmit = async(e)=>{
     e.preventDefault();

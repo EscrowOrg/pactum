@@ -12,6 +12,7 @@ import {
 } from "../../../components/Button";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import PageWrapper from "../../../layouts/PageWrapper";
+import { isEmpty } from "../../../helpers/isEmpty";
 
 
 const UserWallet = () => {
@@ -34,18 +35,13 @@ const UserWallet = () => {
   // USE EFFECT
   useEffect(() => {
     getWallet();
-  }, [data, isSuccessful]);
+  }, []);
 
   useEffect(() => {
-    if(isSuccessful === true && data){
-        toast.success(
-          data.message || "We have sent an invitation to this user, you will be notified when they accept it."
-        );
-        navigate("/vendor-user-wallet/id:7");
-      }else if (isSuccessful === false && data){
-        toast.error(data.message || "Error creating a bank details")
-      }
-  }, [data, isSuccessful]);
+    if (!isEmpty(data)) {
+      setWallet(data?.data);
+    }
+  }, [data]);
 
   const getWallet = async () => {
     try {
@@ -145,7 +141,7 @@ const UserWallet = () => {
           </div>
 
           {/* User Wallet */}
-          <div className="my-4 w-full" >
+          <div className="my-4 w-full">
             {Wallet?.map((Wallet) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet/id:7")}
@@ -189,24 +185,22 @@ const UserWallet = () => {
             ))}
           </div>
 
-              {/* buttons */}
-        <div className="flex items-center gap-6 w-full mt-72">
-          <div className="flex flex-col items-stretch w-[40%]">
-            <PrimaryButtonLight height="h-14" text={"Change Limit"} />
-          </div>
+          {/* buttons */}
+          <div className="flex items-center gap-6 w-full mt-72">
+            <div className="flex flex-col items-stretch w-[40%]">
+              <PrimaryButtonLight height="h-14" text={"Change Limit"} />
+            </div>
 
-          <div className="flex flex-col items-stretch w-[60%]">
-            <PrimaryButton
-              onClick={() =>navigate("/vendor-user-wallet/id:6")}
-              // onClick={handleSubmit}
-              height="h-14"
-              text={"Send Asset"}
-            />
+            <div className="flex flex-col items-stretch w-[60%]">
+              <PrimaryButton
+                onClick={() => navigate("/vendor-user-wallet/id:6")}
+                // onClick={handleSubmit}
+                height="h-14"
+                text={"Send Asset"}
+              />
+            </div>
           </div>
         </div>
-        </div>
-
-    
       </div>
     </PageWrapper>
   );
