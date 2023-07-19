@@ -13,7 +13,6 @@ import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
-import { isEmpty } from "../../../helpers/isEmpty";
 import PageWrapper from "../../../layouts/PageWrapper";
 
 const MyUsers= () => {
