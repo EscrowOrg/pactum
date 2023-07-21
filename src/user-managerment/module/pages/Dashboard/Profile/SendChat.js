@@ -26,7 +26,7 @@ const SendChat = ({closeDrawer}) => {
       toast.success(data?.message || "Message sent!")
       closeDrawer()
     }
-  }, [isSuccessful, ])
+  }, [isSuccessful])
 
   return(
   <Formik
