@@ -62,13 +62,11 @@ const ListOfBanks = (closeModal) => {
     }
 }, [data])
   useEffect(()=>{
-    if(isDeleteBankSuccess && !isEmpty(deleteBankRes)) {
+    if(isDeleteBankSuccess) {
       toast.success("Bank deleted successfully!")
       makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
-    } else if(isDeleteBankSuccess===false) {
-      toast.error(deleteBankRes?.message||"Couldn't delete bank")
     }
-}, [isDeleteBankSuccess, deleteBankRes])
+}, [isDeleteBankSuccess])
 
   return (
     <PageWrapper>
