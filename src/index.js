@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {AuthContextProvider} from "./context/AuthContext";
 import firebase from 'firebase/compat/app';
+//import { initializeApp } from "firebase/app";
+import * as serviceWorker from "./serviceWorker"
+
 import 'firebase/compat/messaging';
 
 
@@ -19,7 +22,7 @@ const firebaseConfig = {
   measurementId: "G-17T1LN91KM"
 };
 
-firebase.initializeApp(firebaseConfig);
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -37,3 +40,4 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+serviceWorker.unregister()
