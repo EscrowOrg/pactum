@@ -213,7 +213,8 @@ const VendorSettings = () => {
             closeDrawer={() => setIsOpen1(false)}
           >
             {/* Body content */}
-            <SendChat />
+            <SendChat
+            closeDrawer={()=>setIsOpen1(false)} />
           </StrictWrapper>
         </Drawer>
 
