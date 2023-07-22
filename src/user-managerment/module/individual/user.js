@@ -11,6 +11,7 @@ import { PrimaryButton } from "../components/Button";
 import FormError from "../components/Global/FormError";
 import { PasswordInput, TextInput } from "../components/Input";
 import PageWrapper from "../layouts/PageWrapper";
+import useMakeReq from "../hooks/Global/useMakeReq";
 
 const LoginUser  = () =>{
 
@@ -18,6 +19,7 @@ const LoginUser  = () =>{
    const navigate = useNavigate()
    const location = useLocation();
    const from = location.state?.from || "/home";
+   // const {userId} = getUserData();
    // const cookieExpirtyTime = inFiveMinutes()
    const {
       user, 
@@ -26,6 +28,7 @@ const LoginUser  = () =>{
       error: loginError
    } = useContext(AuthContext);
 
+   const {makePostRequest} = useMakeReq
    // HANDLERS
    // const handleSubmit = (e)=>{
    //    e.preventDefault();
@@ -33,7 +36,7 @@ const LoginUser  = () =>{
    //    return user;
    // }
 
-
+     
    // SIDE EFFECTS
    useEffect(()=>{
       if(user?.success===true) {
