@@ -1,7 +1,3 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../../context/AuthContext";
-import BottomNav from "../../components/Dashboard/Home/BottomNav";
-import NoTransitionWrapper from "../../components/Dashboard/Home/NoTransitionWrapper";
 import {
   Bank,
   Document,
@@ -15,16 +11,20 @@ import {
   Star1,
   TableDocument,
 } from "iconsax-react";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthContext";
+import { Logout as logUserOut } from "../../../../serivce/apiCalls";
+import BottomNav from "../../components/Dashboard/Home/BottomNav";
+import NoTransitionWrapper from "../../components/Dashboard/Home/NoTransitionWrapper";
+import SendReview from "../../components/Dashboard/Profile/SendReview";
 import SettingOptionCards from "../../components/Dashboard/Profile/SettingOptionCards";
 import UnverifiedLabel from "../../components/Dashboard/Profile/UnverifiedLabel";
-import { Link } from "react-router-dom";
-import { Logout as logUserOut } from "../../../../serivce/apiCalls";
 import Drawer from "../../layouts/Drawer";
-import ReviewPactum from "../../pages/Dashboard/Profile/RecommendPactum";
 import SlideWrapper from "../../layouts/Drawer/SlideWrapper";
 import StrictWrapper from "../../layouts/Drawer/StrictWrapper";
+import ReviewPactum from "../../pages/Dashboard/Profile/RecommendPactum";
 import SendChat from "../../pages/Dashboard/Profile/SendChat";
-import SendReview from "../../components/Dashboard/Profile/SendReview";
 
 const VendorSettings = () => {
   // STATES
@@ -129,7 +129,10 @@ const VendorSettings = () => {
                 pathTo="/profile/banks"
               />
 
-              <SettingOptionCards Icon={Receipt1} title={"Transactions"} />
+              <SettingOptionCards
+              pathTo="/portfolio/transactions" 
+              Icon={Receipt1} 
+              title={"Transactions"} />
 
               <SettingOptionCards
                 Icon={Lock1}
@@ -210,7 +213,8 @@ const VendorSettings = () => {
             closeDrawer={() => setIsOpen1(false)}
           >
             {/* Body content */}
-            <SendChat />
+            <SendChat
+            closeDrawer={()=>setIsOpen1(false)} />
           </StrictWrapper>
         </Drawer>
 

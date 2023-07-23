@@ -20,7 +20,7 @@ const AddBanks = () => {
     fiatCurrency: 1
   });
 
-  const {data, makeAuthPostReq, isSuccessful} = useMakeReq()
+  const {data, makeAuthPostReq, isSuccessful, loading} = useMakeReq()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -117,7 +117,12 @@ useEffect(()=>{
           <div className="flex w-full flex-col items-center mt-auto">
             {/* add user button */}
             <div className="w-full flex flex-col items-stretch">
-              <PrimaryButton text={"Add Bank"} height="h-14" onClick={handleSubmit} />
+              <PrimaryButton 
+              disabled={loading} 
+              loading={loading} 
+              text={"Add Bank"} 
+              height="h-14" 
+              onClick={handleSubmit} />
             </div>
           </div>
         </form>

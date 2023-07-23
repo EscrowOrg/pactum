@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import "./activelistingtab.scss"
 import ListingBodyContent from "../../../components/Dashboard/Listing/ListingBodyContent"
+import "./activelistingtab.scss"
 
 const UserListingCard = () => {
 

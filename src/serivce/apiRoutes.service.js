@@ -44,3 +44,6 @@ export const AUTH_GET_ESCROW_SESSION_BYID = "/api/ListingManagement/GetEscrowSes
 export const AUTH_GET_LISTING_ORDERS = "/api/ListingManagement/GetAdListing"
 export const AUTH_RECIEVE_CRYPTO = "/api/Wallet/Recieve"
 export const AUTH_GET_OVERVIEW_ORDERS = "/api/ListingManagement/GetEscrowSessionByAdList"
+export const AUTH_POST_VALIDATE_DEVICE_TOKEN= "/api/User/ValidateDeviceToken"
+export const AUTH_DELETE_BANK = "/api/User/DeleteBank"
+export const AUTH_SEND_CHAT = "/api/User/SendChat"
