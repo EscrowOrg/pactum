@@ -23,7 +23,6 @@ function App() {
           //console.log("Registration successful, scope is:", registration);
           if (permission === 'granted') {
             const messaging = getMessaging(firebaseApp);
-            debugger
             getToken(messaging,{
                 vapidKey: 'BLNjIenLs4D2Aw8PQmUIuJnwzHCgungwqnzOxdEH_KqV13NIT29d85FFTUvGw84a7Marnk8SvL68jBRHjEfPFj', // Replace with your public VAPID key
               }).then((currentToken) => {

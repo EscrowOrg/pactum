@@ -285,7 +285,7 @@ const MainRouter = () => {
 
           <Route exact path="/listing/overview/:id" element={<Overviews />} />
 
-          <Route exact path="/listing/overview/more-info/:id" element={<ListingMoreInfo/>} />
+          <Route exact path="/listing/overview/more-info/:bankId" element={<ListingMoreInfo/>} />
 
           <Route
             exact

@@ -20,10 +20,6 @@ const ClosedListingOverview = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  // console.log(id)
-
-  // console.log(closedOverview)
-  // console.log(closedOverview.payments[0].adListing)
 
   // USE EFFECT
   useEffect(() => {
@@ -38,6 +34,7 @@ const ClosedListingOverview = () => {
       }
     }
   }, [data, isSuccessful]);
+
   return (
     <PageWrapper>
       {getLoading ? (
@@ -102,7 +99,7 @@ const ClosedListingOverview = () => {
                     <h4
                       onClick={() =>
                         navigate(
-                          `/listing/overview/more-info/${closedOverview.id}`
+                          `/listing/overview/more-info/${closedOverview.bankId}`
                         )
                       }
                       className=" text-[#48A9A6] border-b border-solid border-[#48A9A6] cursor-pointer"
@@ -139,7 +136,6 @@ const ClosedListingOverview = () => {
               {!isEmpty(closedOverview) ? (
                 <>
                   {closedOverview.payments.map((payment, index) => {
-                  //  console.log(payment.adListing.bankDetailId)
                     return (
                       <div
                         key={index}
@@ -167,16 +163,6 @@ const ClosedListingOverview = () => {
                               RECEIVED
                             </h4>
                           </div>
-                          {/* <h4
-                      onClick={() =>
-                        navigate(
-                          `/listing/overview/more-info/${payment.adListing.bankDetailId}`
-                        )
-                      }
-                      className=" text-[#48A9A6] border-b border-solid border-[#48A9A6] cursor-pointer"
-                    >
-                      Click to view
-                    </h4> */}
                         </div>
 
                         {/* view more button */}

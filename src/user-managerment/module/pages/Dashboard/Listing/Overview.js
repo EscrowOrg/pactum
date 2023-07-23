@@ -95,7 +95,7 @@ const Overviews = () => {
                     <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
                       Receiving Bank
                     </h4>
-                    <h4  onClick={()=>navigate(`/listing/overview/more-info/:id`)} className=" text-[#48A9A6] border-b border-solid border-[#48A9A6]">
+                    <h4  onClick={()=>navigate(`/listing/overview/more-info/${viewMore.bankId}`)} className=" text-[#48A9A6] border-b border-solid border-[#48A9A6]">
                       Click to view
                     </h4>
                   </div>
