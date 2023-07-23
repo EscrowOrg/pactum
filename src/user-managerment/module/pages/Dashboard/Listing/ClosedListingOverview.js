@@ -9,6 +9,8 @@ import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.servi
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
+import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -18,6 +20,10 @@ const ClosedListingOverview = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  // console.log(id)
+
+  // console.log(closedOverview)
+  // console.log(closedOverview.payments[0].adListing)
 
   // USE EFFECT
   useEffect(() => {
@@ -32,14 +38,13 @@ const ClosedListingOverview = () => {
       }
     }
   }, [data, isSuccessful]);
-  console.log(data);
   return (
     <PageWrapper>
       {getLoading ? (
         <LoadingSpinner viewPortHeight="h-[80vh]" />
       ) : !isEmpty(closedOverview) ? (
         <>
-          <div className="w-full border border-[#F5F3F6] bg-white rounded-lg py-4 px-5 flex flex-col gap-4">
+          <div className="w-full h-full border border-[#F5F3F6] bg-white rounded-lg py-4 px-5 flex flex-col gap-4">
             <div className="flex gap-10">
               <BackButton />
               <h1 className="text-lg font-bold text-black pl-10 mt-2">
@@ -73,7 +78,10 @@ const ClosedListingOverview = () => {
                   </div>
                 </div>
 
-                <div>{closedOverview.percentageUsed}</div>
+                <div>
+                  <CircularProgress percent={100} />
+                </div>
+                {/* {closedOverview.percentageUsed} */}
               </div>
 
               <div className="flex justify-between my-4">
@@ -91,7 +99,14 @@ const ClosedListingOverview = () => {
                     <h4 className="font-normal text-xs text-[#8D85A0] pb-2">
                       Receiving Bank
                     </h4>
-                    <h4 className=" text-[#48A9A6] border-b border-solid border-[#48A9A6]">
+                    <h4
+                      onClick={() =>
+                        navigate(
+                          `/listing/overview/more-info/${closedOverview.id}`
+                        )
+                      }
+                      className=" text-[#48A9A6] border-b border-solid border-[#48A9A6] cursor-pointer"
+                    >
                       Click to view
                     </h4>
                   </div>
@@ -119,49 +134,67 @@ const ClosedListingOverview = () => {
 
             <div className="mt-8">
               <h4 className="text-base font-bold text-black pb-2">
-                All Payments
+                All Orders
               </h4>
-              {closedOverview.payments.map((payment, index) => {
-                return (
-                  <div key={index} className="flex justify-between mt-2 py-3 border-b border-solid">
-                    {/* Order date and time */}
-                    <div>
-                      <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                        {payment.created}
-                      </p>
+              {!isEmpty(closedOverview) ? (
+                <>
+                  {closedOverview.payments.map((payment, index) => {
+                  //  console.log(payment.adListing.bankDetailId)
+                    return (
+                      <div
+                        key={index}
+                        className="flex justify-between mt-2 py-3 border-b border-solid"
+                      >
+                        {/* Order date and time */}
+                        <div>
+                          <p className="font-normal text-xs text-[#8D85A0] pb-1">
+                            {/* {payment.created} */}
+                            {modifyDateTime(payment.created)}
+                          </p>
 
-                      {/* Received Order */}
-                      <div className="flex gap-1">
-                        <h4 className="text-base font-bold text-black">
-                          #100,000.00
-                        </h4>
-
-                        {/* checkbox  */}
-                        <Checkbox className={"mt-2 "} />
-
-                        <h4 className=" font-semibold text-xs text-[#3A0CA3] mt-1">
-                          RECEIVED
-                        </h4>
-                      </div>
-
-                      {/*  */}
-                      <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                        {payment.adListing.merchantName}
-                      </h4>
-                    </div>
-
-                    {/* view more button */}
-                    <span
+                          {/* Received Order */}
+                          <h4 className="text-base font-bold text-black">
+                            {`${payment.fiatAmount} ${getAssetLabel(
+                              +payment.asset
+                            )}`}
+                          </h4>
+                          <div className="flex gap-1">
+                            {/*  */}
+                            <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
+                              {payment.adListing.merchantName}
+                            </h4>
+                            <h4 className=" font-bold text-xs text-[#10B981] mt-1">
+                              RECEIVED
+                            </h4>
+                          </div>
+                          {/* <h4
                       onClick={() =>
-                        navigate("/listing/closed-listing-order/id:14")
+                        navigate(
+                          `/listing/overview/more-info/${payment.adListing.bankDetailId}`
+                        )
                       }
-                      className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
+                      className=" text-[#48A9A6] border-b border-solid border-[#48A9A6] cursor-pointer"
                     >
-                      View More
-                    </span>
-                  </div>
-                );
-              })}
+                      Click to view
+                    </h4> */}
+                        </div>
+
+                        {/* view more button */}
+                        <span
+                          onClick={() =>
+                            navigate("/listing/closed-listing-order/id:14")
+                          }
+                          className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
+                        >
+                          View More
+                        </span>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <EmptyDataComp />
+              )}
             </div>
           </div>
         </>

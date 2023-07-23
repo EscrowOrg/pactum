@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 const OverviewPayment = () => {
+  const navigate = useNavigate()
   return (
     <div>
       {/* PAYMENT LISTS */}
@@ -18,7 +20,7 @@ const OverviewPayment = () => {
         </div>
 
         {/* view more button */}
-        <span className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
+        <span onClick={()=>navigate("/listing/closed-listing-order/id:14")} className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal">
           View More
         </span>
       </div>

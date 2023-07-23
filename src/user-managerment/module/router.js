@@ -66,6 +66,7 @@ import SendAsset from "./pages/Dashboard/Profile/SendAsset";
 import SendChat from "./pages/Dashboard/Profile/SendChat";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
+import ListingMoreInfo from "./pages/Dashboard/Listing/ListingMoreInfo";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -119,7 +120,6 @@ const MainRouter = () => {
 
         <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset />} />
 
-       
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}
         <Route
@@ -283,11 +283,9 @@ const MainRouter = () => {
             element={<PendingOrderStatement />}
           />
 
-          <Route
-            exact
-            path="/listing/overview/:id"
-            element={<Overviews />}
-          />
+          <Route exact path="/listing/overview/:id" element={<Overviews />} />
+
+          <Route exact path="/listing/overview/more-info/:id" element={<ListingMoreInfo/>} />
 
           <Route
             exact
@@ -301,7 +299,7 @@ const MainRouter = () => {
             element={<ClosedOrderStatement />}
           />
 
-          {/* SETTINGS */}
+          {/* ACCOUNTS */}
           <Route exact path="/profile" element={<VendorSettings />} />
 
           <Route
@@ -316,11 +314,7 @@ const MainRouter = () => {
 
           <Route exact path="/profile/add-bank" element={<AddBanks />} />
 
-          <Route
-            exact
-            path="/profile/list-bank"
-            element={<ListOfBanks />}
-          />
+          <Route exact path="/profile/list-bank" element={<ListOfBanks />} />
 
           <Route
             exact
@@ -330,7 +324,7 @@ const MainRouter = () => {
 
           <Route exact path="/profile/change-pin" element={<ChangePin />} />
 
-          <Route exact path="/profile/send-chat" element={<SendChat/>}/>
+          <Route exact path="/profile/send-chat" element={<SendChat />} />
 
           <Route
             exact
