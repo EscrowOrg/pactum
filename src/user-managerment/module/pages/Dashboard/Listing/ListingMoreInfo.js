@@ -13,13 +13,12 @@ const ListingMoreInfo = () => {
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
   const { bankId } = useParams();
-  // console.log(id)
+
   // USE EFFECT
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${bankId}`);
   }, []);
 
-  console.log(bankDetails);
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {

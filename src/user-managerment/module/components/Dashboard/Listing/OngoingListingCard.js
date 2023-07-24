@@ -8,7 +8,6 @@ import EmptyDataComp from "../../Global/EmptyDataComp";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
-// import { getAccessToken } from "../../../../../serivce/cookie.service";
 
 const OngoingListingCard = () => {
   // STATES
@@ -21,8 +20,6 @@ const OngoingListingCard = () => {
     let output = currentPage * 10 - 1;
     return output < 0 ? 0 : output;
   }, [currentPage]);
-  // const [searchParams] = useSearchParams();
-  // const assetId = searchParams?.get("asset");
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
@@ -42,8 +39,6 @@ const OngoingListingCard = () => {
     }
   }, [data, isSuccessful]);
 
-  
-
   return (
     <>
       {getLoading ? (
@@ -51,7 +46,6 @@ const OngoingListingCard = () => {
       ) : !isEmpty(ongoingOrdersData) ? (
         <>
           {ongoingOrdersData?.map((ordersData, index) => {
-            // console.log(ordersData.id)
             return (
               <div
                 className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4"
@@ -74,11 +68,11 @@ const OngoingListingCard = () => {
                             ordersData.listingType === 1 ? "14px" : "14px",
                           fontWeight: ordersData.listingType === 1 ? 700 : 700,
                         }}
-                        // className="font-bold text-[#3A0CA3] text-xs"
                       >
                         {/* BUY ORDER */}
                         {ordersData.listingType === 1
-                          ? "BUY ORDER" : "SELL ORDER"}
+                          ? "BUY ORDER"
+                          : "SELL ORDER"}
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
