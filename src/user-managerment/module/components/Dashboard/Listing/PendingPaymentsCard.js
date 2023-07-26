@@ -4,16 +4,18 @@ import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRout
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
+import { roundToN } from "../../../helpers/roundToN";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import LoadingSpinner from "../../Global/LoadingSpinner";
-import { modifyDateTime } from "../../../helpers/modifyDateTime";
 
 const PendingPaymentsCard = () => {
 
   // DATA INITIALIZATION
 const navigate = useNavigate();
 const {data, makeAuthGetReq, getLoading, isSuccessful} = useMakeReq();
+const BUY = 1
 
 // STATES
 const [pendingOrder, setPendingOrder] = useState([]);
@@ -44,15 +46,26 @@ return (
                   key={index} 
                 className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4">
                   <div
-                  className="flex justify-between py-3 border-b border-solid">
+                  className="flex justify-between py-3">
                       <div>
-                        <p className="font-bold text-xs text-[#3A0CA3] pb-1"> {order.listingType === 1
-                              ? "Buy Order"
-                              : "Sell Order"}</p>
+                        {
+                          order.listingType === BUY?
+                          <p className="font-bold text-xs text-green-500 pb-1"> {"Buy Order"}</p>:
+                              <p className="font-bold text-xs text-red-500 pb-1">{"Sell Order"}</p>
+                        }
+                        
                       
                         <div className="flex gap-1">
                           <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
-                          <h4 className="text-sm font-bold text-black">{`${order.fiatAmount} ${getAssetLabel(order.asset)}`}</h4>
+                          {
+                            order.listingType===BUY?
+                          <h4 className="text-sm font-bold text-black">
+                            {`${order.fiatAmount.toLocaleString('en-US')} ${getAssetLabel(order.asset)}`}
+                          </h4>:
+                          <h4 className="text-sm font-bold text-black">
+                            {`${order.fiatAmount>1?roundToN(+order.fiatAmount, 2):order.fiatAmount} ${getAssetLabel(order.asset)}`}
+                          </h4>
+                          }
                         </div>
                         <h4 className="font-normal text-xs text-[#8D85A0] pt-1">
                           {order.accountName}
