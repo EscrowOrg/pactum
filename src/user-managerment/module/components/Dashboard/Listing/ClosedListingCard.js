@@ -7,6 +7,7 @@ import EmptyDataComp from "../../Global/EmptyDataComp";
 import LoadingSpinner from "../../Global/LoadingSpinner";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
 
 const ClosedListingCard = () => {
   // STATES
@@ -71,8 +72,7 @@ const ClosedListingCard = () => {
                         // className="font-bold text-[#3A0CA3] text-xs"
                       >
                         {closedOrders.listingType === 1
-                          ? "Buy Order"
-                          : "Sell Order"}
+                          ? "BUY ORDER" : "SELL ORDER"}
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
@@ -80,7 +80,7 @@ const ClosedListingCard = () => {
                       </h3>
 
                       <h4 className="text-[#8D85A0] text-xs font-normal">
-                        Listed On:{closedOrders.created}
+                        Listed On: {modifyDateTime(closedOrders.created)}
                       </h4>
                     </div>
                   </div>

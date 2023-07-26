@@ -7,6 +7,7 @@ import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import LoadingSpinner from "../../Global/LoadingSpinner";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
 
 const PendingPaymentsCard = () => {
 
@@ -60,7 +61,7 @@ return (
                       <div>
                         {/* time */}
                         <p className="font-normal text-xs text-[#8D85A0] pl-16">
-                          {order.created}
+                          {modifyDateTime(order.created)}
                         </p>
 
                         {/* see listing button */}
