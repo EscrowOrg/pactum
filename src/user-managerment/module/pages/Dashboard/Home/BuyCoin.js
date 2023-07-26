@@ -95,7 +95,7 @@ const BuyCoin = () => {
         if(!isEmpty(buyAssetData)) {
             if(isBuySuccess===true) {
                 toast.success(buyAssetData?.message || "Purchase was successful!")
-                navigate(`/home/buy-coin/${coinId}/order-statement`, {
+                navigate(`/home/buy-coin/${buyAssetData.data.id}/order-statement`, {
                     replace: true
                 })
             } else if(isBuySuccess===false) {
