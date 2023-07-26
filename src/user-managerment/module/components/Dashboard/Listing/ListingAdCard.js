@@ -1,7 +1,8 @@
-import { ErrorButton, PrimaryButton } from '../../Button'
-import { useNavigate } from 'react-router-dom'
 import { AiOutlineUser } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
+import { getAssetLabel } from '../../../helpers/getAssetLabel'
 import { isEmpty } from '../../../helpers/isEmpty'
+import { ErrorButton, PrimaryButton } from '../../Button'
 
 const ListingAdCard = ({
     merchantName,
@@ -16,11 +17,14 @@ const ListingAdCard = ({
     imageUrl,
     adID,
     asset,
+    assetId,
     defaultAssetLabel
 }) => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
+    const BUY = 2
+    const SELL = 1
     
     return (
         <div
@@ -75,7 +79,7 @@ const ListingAdCard = ({
                 </h3>
 
                 <h4 className="text-sm font-semibold text-black">
-                {`${availableBalance} ${asset?.label || defaultAssetLabel}`}
+                {`${availableBalance} ${getAssetLabel(assetId)}`}
                 </h4>
             </div>
 
@@ -83,11 +87,16 @@ const ListingAdCard = ({
                 <h3 className="font-normal text-xs text-[#8D85A0]">
                 Min - Max Order
                 </h3>
-
+                
+                {
+                    listingType===BUY?
                 <h4 className="text-sm font-semibold text-black">
-                ₦{lowerLimit.toLocaleString("en-US")} -{" "}
-                ₦{upperLimit.toLocaleString("en-US")}
+                {`₦${lowerLimit.toLocaleString("en-US")} - ₦${upperLimit.toLocaleString("en-US")}`}
+                </h4>:
+                <h4 className="text-sm font-semibold text-black">
+                {`${lowerLimit.toLocaleString("en-US")}${getAssetLabel(assetId)} - ${upperLimit.toLocaleString("en-US")}${getAssetLabel(assetId)}`}
                 </h4>
+                }
             </div>
             </div>
 
@@ -104,7 +113,7 @@ const ListingAdCard = ({
                 </h4>
             </div>
 
-            {listingType === 2 ? (
+            {listingType === BUY ? (
                 <PrimaryButton
                 onClick={() =>
                     navigate(`/home/buy-coin/${adID}?asset=${asset?.value}`)
