@@ -19,7 +19,6 @@ const OrderStatement = () => {
     // DATA INITIALIZATION
     const navigate = useNavigate()
     const {orderId} = useParams()
-    console.log("order statement:", orderId)
     const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
     // STATES

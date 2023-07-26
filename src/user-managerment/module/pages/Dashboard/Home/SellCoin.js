@@ -106,7 +106,7 @@ useEffect(()=>{
   if(!isEmpty(sellAssetData)) {
       if(isSellSuccess===true) {
           toast.success(sellAssetData?.message || "Sale was successful!")
-          navigate(`/home/sell-coin/${adID}/sell-order-statement`, {
+          navigate(`/home/sell-coin/${sellAssetData?.data?.id}/sell-order-statement`, {
               replace: true
           })
       } else if(isSellSuccess===false) {
@@ -221,7 +221,7 @@ useEffect(()=>{
 
                       <h3 className="text-black text-sm font-semibold">
                         {/* 0.989 - 4.583 BTC */}
-                        {`${singleListing.lowerLimit}${getAssetLabel(assetId)}`} - {`${singleListing.upperLimit}${getAssetLabel(assetId)}`}
+                        {`${singleListing.lowerLimit}${getAssetLabel(+assetId)}`} - {`${singleListing.upperLimit}${getAssetLabel(+assetId)}`}
                       </h3>
                     </div>
 
