@@ -51,7 +51,6 @@ const PendingPaymentsCard = () => {
                     }}
                     className="font-bold text-xs text-[#3A0CA3] pb-1"
                   >
-                    {" "}
                     {order.listingType === 1 ? "BUY ORDER" : "SELL ORDER"}
                   </p>
 
