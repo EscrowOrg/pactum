@@ -172,6 +172,7 @@ const BuySellCoin = () => {
                 tradeMade={listingAd.tradeMade}
                 percentageUsed={listingAd.percentageUsed}
                 listingType={listingAd.listingType}
+                assetId={listingAd.assets}
                 asset={coinSelect} />
               )):
               <EmptyDataComp
