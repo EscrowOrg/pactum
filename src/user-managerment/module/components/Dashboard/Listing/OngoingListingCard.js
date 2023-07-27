@@ -7,21 +7,18 @@ import { AUTH_GET_LISTING_ORDERS } from "../../../../../serivce/apiRoutes.servic
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
-// import { getAccessToken } from "../../../../../serivce/cookie.service";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
 
 const OngoingListingCard = () => {
   // STATES
   const [ongoingOrdersData, setOngoingOrdersData] = useState([]);
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
   const [currentPage, setCurrentPage] = useState(0);
-
   // HOOKS
   const skip = useMemo(() => {
     let output = currentPage * 10 - 1;
     return output < 0 ? 0 : output;
   }, [currentPage]);
-  // const [searchParams] = useSearchParams();
-  // const assetId = searchParams?.get("asset");
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
@@ -35,13 +32,11 @@ const OngoingListingCard = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        console.log(data?.data?.items);
+        // console.log(data?.data?.items);
         setOngoingOrdersData(data?.data?.items);
       }
     }
   }, [data, isSuccessful]);
-
-  
 
   return (
     <>
@@ -50,7 +45,6 @@ const OngoingListingCard = () => {
       ) : !isEmpty(ongoingOrdersData) ? (
         <>
           {ongoingOrdersData?.map((ordersData, index) => {
-            // console.log(ordersData.id)
             return (
               <div
                 className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 flex flex-col gap-4"
@@ -65,20 +59,13 @@ const OngoingListingCard = () => {
                     <div className="flex flex-col gap-1">
                       <h3
                         style={{
-                          color:
-                            ordersData.listingType === 1
-                              ? "#3A0CA3"
-                              : "#D1292D",
-                          fontSize:
-                            ordersData.listingType === 1 ? "14px" : "14px",
+                          color: ordersData.listingType === 1 ? "#3A0CA3" : "#D1292D",
+                          fontSize: ordersData.listingType === 1 ? "14px" : "14px",
                           fontWeight: ordersData.listingType === 1 ? 700 : 700,
                         }}
-                        // className="font-bold text-[#3A0CA3] text-xs"
                       >
                         {/* BUY ORDER */}
-                        {ordersData.listingType === 1
-                          ? "Buy Order"
-                          : "Sell Order"}
+                        {ordersData.listingType === 1 ? "BUY ORDER" : "SELL ORDER"}
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
@@ -86,7 +73,7 @@ const OngoingListingCard = () => {
                       </h3>
 
                       <h4 className="text-[#8D85A0] text-xs font-normal">
-                        Listed On: {ordersData.created}
+                        Listed On: {modifyDateTime(ordersData.created)}
                       </h4>
                     </div>
                   </div>
@@ -156,9 +143,7 @@ const OngoingListingCard = () => {
       )}
 
       <ListingAdPagination
-        disabledNextBtn={
-          isEmpty(ongoingOrdersData) || isEmpty(ongoingOrdersData.items)
-        }
+        disabledNextBtn={isEmpty(ongoingOrdersData) || isEmpty(ongoingOrdersData.items)}
         totalCount={ongoingOrdersData?.totalCount}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}

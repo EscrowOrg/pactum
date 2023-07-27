@@ -27,7 +27,6 @@ const SellOrderStatements = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const {orderId} = useParams()
-  console.log("order statement:", orderId)
   const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
    //Drawer HANDLERS
@@ -62,7 +61,7 @@ const SellOrderStatements = () => {
 
             <h3 className="text-xs font-normal text-[#141217]">
               Closes in{" "}
-              <span className="text-[#D1292D] font-normal">05:58</span>
+              <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
             </h3>
           </div>
 
@@ -99,7 +98,7 @@ const SellOrderStatements = () => {
                   </h5>
 
                   <h3 className="text-[#3F9491] text-[32px] font-bold">
-                    ₦100,000.00
+                  {`₦${singleOrder?.fiatAmount?.toLocaleString('en-US')}`}
                   </h3>
 
                   <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
@@ -119,7 +118,7 @@ const SellOrderStatements = () => {
                     <div className="flex items-center justify-between">
                       <h3 className="font-normal text-xs text-[#8D85A0]">Price</h3>
 
-                      <h3 className="text-black text-sm font-semibold">$240</h3>
+                      <h3 className="text-black text-sm font-semibold">{`₦${singleOrder?.adListing?.tradePrice}`}</h3>
                     </div>
 
                     {/* order id */}
@@ -127,9 +126,9 @@ const SellOrderStatements = () => {
                       <h3 className="font-normal text-xs text-[#8D85A0]">Order ID</h3>
 
                       <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                        {singleOrder?.sessId?.slice(0,15).concat("...")}
+                      {singleOrder?.sessId?.slice(0,8)}
                         <Copy
-                          onClick={() => copyToClipBoard(singleOrder?.sessId || "")}
+                          onClick={() => copyToClipBoard(singleOrder?.sessId?.slice(0,8))}
                           variant="Bulk"
                           size={16}
                           color="#3F9491"
@@ -199,7 +198,7 @@ const SellOrderStatements = () => {
                   <div className="flex flex-col items-stretch w-[60%]">
                     <PrimaryButton
                       onClick={() =>
-                        navigate("/home/sell-coin/success/id:17")
+                        navigate(`/home/sell-coin/success/id:${orderId}`)
                       }
                       height="h-14"
                       text={"Mark as Received"}

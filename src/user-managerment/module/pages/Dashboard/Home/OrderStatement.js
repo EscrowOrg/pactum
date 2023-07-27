@@ -10,6 +10,7 @@ import {
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import PageWrapper from "../../../layouts/PageWrapper";
@@ -19,7 +20,6 @@ const OrderStatement = () => {
     // DATA INITIALIZATION
     const navigate = useNavigate()
     const {orderId} = useParams()
-    console.log("order statement:", orderId)
     const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
     // STATES
@@ -32,7 +32,6 @@ const OrderStatement = () => {
     useEffect(()=>{
     if(!isEmpty(data)) {
       if(isSuccessful) {
-        console.log(data?.data)
         setSingleOrder(data?.data)
       }
     }
@@ -53,7 +52,7 @@ const OrderStatement = () => {
 
             <h3 className="text-xs font-normal text-[#141217]">
               Closes in{" "}
-              <span className="text-[#D1292D] font-normal">05:58</span>
+              <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
             </h3>
           </div>
 
@@ -90,11 +89,11 @@ const OrderStatement = () => {
                   </h5>
 
                   <h3 className="text-[#3F9491] text-[32px] font-bold">
-                    ₦100,000.00
+                    {`₦${singleOrder?.fiatAmount?.toLocaleString('en-US')}`}
                   </h3>
 
                   <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-                    You will receive 0.844BTC
+                    {`You will receive ${singleOrder?.cryptoAmount}${getAssetLabel(+singleOrder?.asset)}`}
                   </h3>
                 </div>
 
@@ -106,20 +105,12 @@ const OrderStatement = () => {
 
                   {/* info */}
                   <div className="flex flex-col w-full gap-5 pb-7 [border-bottom:1px_dashed_#DAD7E0]">
-                    {/* receiving wallet */}
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-normal text-xs text-[#8D85A0]">
-                        Receiving Wallet
-                      </h3>
-
-                      <h3 className="text-black text-sm font-semibold">$240</h3>
-                    </div>
 
                     {/* price */}
                     <div className="flex items-center justify-between">
                       <h3 className="font-normal text-xs text-[#8D85A0]">Price</h3>
 
-                      <h3 className="text-black text-sm font-semibold">$240</h3>
+                      <h3 className="text-black text-sm font-semibold">{`₦${singleOrder?.adListing?.tradePrice}`}</h3>
                     </div>
 
                     {/* order id */}
@@ -127,9 +118,9 @@ const OrderStatement = () => {
                       <h3 className="font-normal text-xs text-[#8D85A0]">Order ID</h3>
 
                       <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                        hfsbg4u9ui093u290u02
+                        {singleOrder?.sessId?.slice(0,8)}
                         <Copy
-                          onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
+                          onClick={() => copyToClipBoard(singleOrder?.sessId?.slice(0,8))}
                           variant="Bulk"
                           size={16}
                           color="#3F9491"
@@ -147,7 +138,7 @@ const OrderStatement = () => {
                       </h3>
 
                       <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                        First Bank
+                        {singleOrder?.bankName}
                         <Copy
                           onClick={() => copyToClipBoard("First Bank")}
                           variant="Bulk"
@@ -164,7 +155,7 @@ const OrderStatement = () => {
                       </h3>
 
                       <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                        4890149295
+                        {singleOrder?.accountNumber}
                         <Copy
                           onClick={() => copyToClipBoard("4890149295")}
                           variant="Bulk"
@@ -181,7 +172,7 @@ const OrderStatement = () => {
                       </h3>
 
                       <h3 className="text-black text-sm font-semibold">
-                        Asemota Joel
+                        {singleOrder?.accountName}
                       </h3>
                     </div>
 
@@ -192,7 +183,7 @@ const OrderStatement = () => {
                       </h3>
 
                       <h3 className="text-black text-sm font-semibold">
-                        jhoellasemota
+                        {singleOrder?.initatorName}
                       </h3>
                     </div>
                   </div>
@@ -223,7 +214,7 @@ const OrderStatement = () => {
                   <div className="flex flex-col items-stretch w-[60%]">
                     <PrimaryButton
                       onClick={() =>
-                        navigate("/home/buy-coin/success/id:20")
+                        navigate(`/home/buy-coin/success/id:${orderId}`)
                       }
                       height="h-14"
                       text={"Transfer Done"}

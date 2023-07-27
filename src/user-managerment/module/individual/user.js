@@ -11,7 +11,6 @@ import { PrimaryButton } from "../components/Button";
 import FormError from "../components/Global/FormError";
 import { PasswordInput, TextInput } from "../components/Input";
 import PageWrapper from "../layouts/PageWrapper";
-import { AUTH_POST_VALIDATE_DEVICE_TOKEN } from "../../../serivce/apiRoutes.service";
 
 
 
