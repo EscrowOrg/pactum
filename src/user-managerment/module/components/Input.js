@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react"
 import {
     AiOutlineEye,
     AiOutlineEyeInvisible
@@ -20,7 +20,7 @@ export const TextLabelInput = ({
 }) => {
 
     return(
-        <div className="flex relative w-full">
+        <div className="flex relative justify-between w-full h-14 [outline:1.4px_solid_#DAD7E0] rounded-xl focus:[outline:1.4px_solid_#3A0CA3] [appearance:textfield] hover:appearance-none">
             <input
             type={type}
             name={name}
@@ -29,11 +29,11 @@ export const TextLabelInput = ({
             value={value}
             disabled={disabled}
             onChange={onChange}
-            className={`w-full ${paddingRight} text-sm font-normal h-14 px-4 placeholder:font-normal border-none [outline:1.4px_solid_#DAD7E0] rounded-xl focus:[outline:1.4px_solid_#3A0CA3] placeholder:text-xs placeholder:text-[#ACA6BA] hover:appearance-none`}
+            className={`w-full text-sm font-normal h-14 px-4 placeholder:font-normal border-none [outline:none] placeholder:text-xs placeholder:text-[#ACA6BA]`}
             placeholder={placeholderText} />
 
             {/* label */}
-            <span className="text-sm font-normal text-[#ACA6BA] absolute right-[5%] bottom-[50%] translate-y-[50%] cursor-pointer">
+            <span className="text-sm min-w-fit my-auto pr-3 font-normal text-[#ACA6BA] cursor-pointer">
                 {label}
             </span>
         </div>

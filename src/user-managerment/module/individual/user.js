@@ -11,13 +11,10 @@ import { PrimaryButton } from "../components/Button";
 import FormError from "../components/Global/FormError";
 import { PasswordInput, TextInput } from "../components/Input";
 import PageWrapper from "../layouts/PageWrapper";
-import { getUserData } from "../../../serivce/cookie.service";
 // import { messaging } from "../firebase/firebaseConfig";
-import useMakeReq from "../hooks/Global/useMakeReq";
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/messaging';
-import { AUTH_POST_VALIDATE_DEVICE_TOKEN } from "../../../serivce/apiRoutes.service";
-// import { messaging } from "../firebase/firebaseConfig";
+import useMakeReq from "../hooks/Global/useMakeReq";
+// import { messaging } from "../firebase/firebaseConfig"; 
 
 const LoginUser  = () =>{
 
