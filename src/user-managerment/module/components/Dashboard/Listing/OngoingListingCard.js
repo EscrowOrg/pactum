@@ -14,7 +14,6 @@ const OngoingListingCard = () => {
   const [ongoingOrdersData, setOngoingOrdersData] = useState([]);
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
   const [currentPage, setCurrentPage] = useState(0);
-
   // HOOKS
   const skip = useMemo(() => {
     let output = currentPage * 10 - 1;
@@ -60,19 +59,13 @@ const OngoingListingCard = () => {
                     <div className="flex flex-col gap-1">
                       <h3
                         style={{
-                          color:
-                            ordersData.listingType === 1
-                              ? "#3A0CA3"
-                              : "#D1292D",
-                          fontSize:
-                            ordersData.listingType === 1 ? "14px" : "14px",
+                          color: ordersData.listingType === 1 ? "#3A0CA3" : "#D1292D",
+                          fontSize: ordersData.listingType === 1 ? "14px" : "14px",
                           fontWeight: ordersData.listingType === 1 ? 700 : 700,
                         }}
                       >
                         {/* BUY ORDER */}
-                        {ordersData.listingType === 1
-                          ? "BUY ORDER"
-                          : "SELL ORDER"}
+                        {ordersData.listingType === 1 ? "BUY ORDER" : "SELL ORDER"}
                       </h3>
 
                       <h3 className="font-bold text-black text-xs">
@@ -150,9 +143,7 @@ const OngoingListingCard = () => {
       )}
 
       <ListingAdPagination
-        disabledNextBtn={
-          isEmpty(ongoingOrdersData) || isEmpty(ongoingOrdersData.items)
-        }
+        disabledNextBtn={isEmpty(ongoingOrdersData) || isEmpty(ongoingOrdersData.items)}
         totalCount={ongoingOrdersData?.totalCount}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}

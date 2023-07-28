@@ -11,10 +11,9 @@ import { PrimaryButton } from "../components/Button";
 import FormError from "../components/Global/FormError";
 import { PasswordInput, TextInput } from "../components/Input";
 import PageWrapper from "../layouts/PageWrapper";
-// import { messaging } from "../firebase/firebaseConfig";
-import 'firebase/compat/messaging';
-import useMakeReq from "../hooks/Global/useMakeReq";
-// import { messaging } from "../firebase/firebaseConfig"; 
+
+
+
 
 const LoginUser  = () =>{
 
@@ -22,8 +21,6 @@ const LoginUser  = () =>{
    const navigate = useNavigate()
    const location = useLocation();
    const from = location.state?.from || "/home";
-   // const {userId} = getUserData();
-   // const cookieExpirtyTime = inFiveMinutes()
    const {
       user, 
       isfetching, 
@@ -31,39 +28,14 @@ const LoginUser  = () =>{
       error: loginError
    } = useContext(AuthContext);
 
-   const {makePostRequest} = useMakeReq
-   // HANDLERS
-   // const handleSubmit = (e)=>{
-   //    e.preventDefault();
-   //    LoginCall(users,dispatch);
-   //    return user;
-   // }
+  
 
-      // useEffect(()=>{
-      //    const messaging = firebase.messaging() ;
-      //     messaging.requestPermission().then((permission)=>{
-      //           if(permission === 'granted'){
-      //            messaging.getToken().then((token)=>{
-      //                 if(token){
-      //                   makePostRequest(`${AUTH_POST_VALIDATE_DEVICE_TOKEN}`, {
-      //                      token: token
-      //                     })
-      //                 }else{
-      //                   console.log('No registration token available.');
-      //                 }
-      //            })
-      //           }else {
-      //             console.log('Notification permission denied.');
-      //           }
-      //     })
-      // })
    // SIDE EFFECTS
    useEffect(()=>{
       if(user?.success===true) {
          navigate(from, { replace: true });
       }
       
-   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [user])
 
    useEffect(()=>{
