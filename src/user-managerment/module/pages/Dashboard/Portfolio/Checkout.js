@@ -1,8 +1,8 @@
-import { More, TransactionMinus } from 'iconsax-react'
+import { More } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AUTH_GET_SINGLE_ACCOUNT } from '../../../../../serivce/apiRoutes.service'
-import { BackButton, PrimaryButton, WarningButton1 } from '../../../components/Button'
+import { BackButton, PrimaryButton, TransactionsListButton, WarningButton1 } from '../../../components/Button'
 import CheckoutChartInfo from '../../../components/Dashboard/Portfolio/CheckoutChartInfo'
 import EmptyDataComp from '../../../components/Global/EmptyDataComp'
 import LoadingSpinner from '../../../components/Global/LoadingSpinner'
@@ -70,13 +70,7 @@ const Checkout = () => {
                     </h3>
 
                     {/* transaction list button */}
-                    <button
-                    onClick={()=>navigate("/portfolio/transactions")}
-                    className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                        <TransactionMinus
-                        size="14"
-                        color="#16053D" />
-                    </button>
+                    <TransactionsListButton />
                 </div>
 
                 {

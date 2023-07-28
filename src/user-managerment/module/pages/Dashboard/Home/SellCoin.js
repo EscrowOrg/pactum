@@ -1,12 +1,12 @@
 import { Form, Formik } from "formik";
-import { ArrowRight2, TransactionMinus } from "iconsax-react";
+import { ArrowRight2 } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { AUTH_CREATE_SELL_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
-import { BackButton, ErrorButton } from "../../../components/Button";
+import { BackButton, ErrorButton, TransactionsListButton } from "../../../components/Button";
 import BanksView from "../../../components/Dashboard/Listing/BanksView";
 import FormError from "../../../components/Global/FormError";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
@@ -149,9 +149,7 @@ useEffect(()=>{
               <h3 className="font-bold text-lg text-black">Sell {getAssetLabel(+assetId)}</h3>
 
               {/* transaction list button */}
-              <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                <TransactionMinus size="14" color="#16053D" />
-              </button>
+              <TransactionsListButton />
             </div>
 
             {/* body */}

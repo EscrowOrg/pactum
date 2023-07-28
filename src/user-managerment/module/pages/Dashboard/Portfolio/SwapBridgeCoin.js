@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import PageWrapper from '../../../layouts/PageWrapper'
-import { BackButton, PrimaryButton } from '../../../components/Button'
-import { ArrowSwapVertical, TransactionMinus } from 'iconsax-react'
-import "./swapbridgecoin.scss"
-import SwapSelecetBtn from '../../../components/Dashboard/Portfolio/SwapSelecetBtn'
-import SwapCoinView from '../../../components/Dashboard/Portfolio/SwapCoinView'
+import { BackButton, TransactionsListButton } from '../../../components/Button'
 import BridgeCoinView from '../../../components/Dashboard/Portfolio/BridgeCoinView'
+import SwapCoinView from '../../../components/Dashboard/Portfolio/SwapCoinView'
+import PageWrapper from '../../../layouts/PageWrapper'
+import "./swapbridgecoin.scss"
 
 const SwapBridgeCoin = () => {
 
@@ -44,12 +42,7 @@ const SwapBridgeCoin = () => {
                     </div>
 
                     {/* transaction list button */}
-                    <button
-                    className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                        <TransactionMinus
-                        size="14"
-                        color="#16053D" />
-                    </button>
+                    <TransactionsListButton />
                 </div>
                 
                 {/* body */}

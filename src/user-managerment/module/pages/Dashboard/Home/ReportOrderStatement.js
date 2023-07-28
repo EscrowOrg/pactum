@@ -1,11 +1,11 @@
+import { Copy, InfoCircle } from "iconsax-react";
 import React, { useState } from "react";
-import PageWrapper from "../../../layouts/PageWrapper";
-import { BackButton, ErrorButton, PrimaryButton} from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
-import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import { BackButton, ErrorButton, PrimaryButton, TransactionsListButton } from "../../../components/Button";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
+import PageWrapper from "../../../layouts/PageWrapper";
 import ReportStatement from "./ReportStatement";
 
 const ReportOrderStatement = () => {
@@ -40,9 +40,7 @@ const ReportOrderStatement = () => {
           </div>
 
           {/* transaction list button */}
-          <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-            <TransactionMinus size="14" color="#16053D" />
-          </button>
+          <TransactionsListButton />
         </div>
 
         {/* important message */}

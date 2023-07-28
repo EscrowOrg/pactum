@@ -13,15 +13,12 @@ import { getUserId } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
-import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import "../../../layouts/Drawer/index.css";
 import AccountBalanceCard from "./AccountBalanceCard";
 import ActionBtn from "./ActionBtn";
 import AssetAccountList from "./AssetAccountList";
-import AssetsFilterView from "./AssetsFilterView";
 import ReceiveAssetList from "./RecieveAssetList";
-import SelectWalletView from "./SelectWalletView";
 
 // ant icon
 const antIcon = (
@@ -46,28 +43,11 @@ const UsersWalletCard = ({ assetAccount }) => {
 
   // STATES
   const [isVendor, setIsVendor] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState("");
-  const [isSelectWalletOpen, setIsSelectWalletOpen] = useState(false);
   const [isSelectAssetOpen, setIsSelectAssetOpen] = useState(false);
-  const [filterValue, setFilterValue] = useState("A-Z");
   const [assetList, setAssetList] = useState([])
-  const [asset, setAsset] = useState({
-      name: "",
-      symbol: "",
-      assetId: null,
-      networkName: "",
-      networkId: null,
-      image: ""
-  })
 
   // HANDLERS
-  const toggleDrawer = (value) => {
-    setIsOpen((isOpen) => !isOpen);
-  };
-  const toggleSelectWalletDrawer = (value) => {
-    setIsSelectWalletOpen((isSelectWalletOpen) => !isSelectWalletOpen);
-  };
   const toggleSelectAssetDrawer = (value) => {
     setIsSelectAssetOpen((isSelectAssetOpen) => !isSelectAssetOpen);
   };
@@ -138,49 +118,8 @@ useEffect(()=>{
 
       {/* My Assets */}
       <AssetAccountList
-        toggleDrawer={toggleDrawer}
-        filterValue={filterValue}
         assetAccounts={assetAccount}
       />
-
-      {/* filter Drawer */}
-      <Drawer
-        height="!h-auto"
-        insertCurve={false}
-        type="slider"
-        isOpen={isOpen}
-        onClose={toggleDrawer}
-        position="bottom"
-      >
-        {/* drawer content container */}
-        <SlideWrapper title={"Filter by:"}>
-          <AssetsFilterView
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-            closeDrawer={toggleDrawer}
-          />
-        </SlideWrapper>
-      </Drawer>
-
-      {/* Wallets Drawer */}
-      <Drawer
-        isOpen={isSelectWalletOpen}
-        onClose={toggleSelectWalletDrawer}
-        position="bottom"
-      >
-        {/* drawer content container */}
-        <StrictWrapper
-          title={"Select a wallet"}
-          closeDrawer={toggleSelectWalletDrawer}
-        >
-          {/* Body content */}
-          <SelectWalletView
-            mode={mode}
-            walletList={assetAccount}
-            closeDrawer={toggleSelectWalletDrawer}
-          />
-        </StrictWrapper>
-      </Drawer>
 
       {/* assets Drawer */}
       <Drawer
@@ -190,7 +129,7 @@ useEffect(()=>{
       >
         {/* drawer content container */}
         <StrictWrapper
-          title={"Select an Asset"}
+          title={`Asset to ${mode}`}
           closeDrawer={toggleSelectAssetDrawer}
         >
           {/* Body content */}
@@ -198,7 +137,7 @@ useEffect(()=>{
           mode={mode}
           loading={getAssetLoading}
           assetList={assetList}
-          closeDrawer={toggleDrawer}/>
+          closeDrawer={toggleSelectAssetDrawer}/>
         </StrictWrapper>
       </Drawer>
     </div>

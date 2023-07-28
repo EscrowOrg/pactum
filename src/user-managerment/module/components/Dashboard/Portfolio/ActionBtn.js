@@ -6,7 +6,7 @@ const ActionBtn = ({
     onClick
 }) => {
     return (
-        <div className='flex flex-col gap-[6px] items-center'>
+        <div className='flex flex-col gap-[6px] items-center cursor-pointer'>
 
             <span
             onClick={onClick} 
