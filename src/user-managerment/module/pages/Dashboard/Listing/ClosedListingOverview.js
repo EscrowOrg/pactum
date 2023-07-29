@@ -29,7 +29,6 @@ const ClosedListingOverview = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data);
         setClosedOverview(data?.data);
       }
     }
@@ -80,7 +79,6 @@ const ClosedListingOverview = () => {
                     <div>
                       <CircularProgress percent={100} />
                     </div>
-                    {/* {closedOverview.percentageUsed} */}
                   </div>
 
                   <div className="flex justify-between my-4">
@@ -146,7 +144,6 @@ const ClosedListingOverview = () => {
                             {/* Order date and time */}
                             <div>
                               <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                                {/* {payment.created} */}
                                 {modifyDateTime(payment.created)}
                               </p>
 
@@ -157,7 +154,6 @@ const ClosedListingOverview = () => {
                                 )}`}
                               </h4>
                               <div className="flex gap-1">
-                                {/*  */}
                                 <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
                                   {payment.adListing.merchantName}
                                 </h4>

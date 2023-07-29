@@ -32,7 +32,6 @@ const ClosedListingCard = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data?.items);
         setClosedListingData(data?.data?.items);
       }
     }
@@ -54,7 +53,6 @@ const ClosedListingCard = () => {
                 <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
                   {/* image and name */}
                   <div className="flex items-center gap-2">
-                    {/* <CircularProgress percent={100} /> */}
                     {`${closedOrders.percentageUsed}%`}
 
                     <div className="flex flex-col gap-1">
@@ -69,7 +67,6 @@ const ClosedListingCard = () => {
                           fontWeight:
                             closedOrders.listingType === 1 ? 700 : 700,
                         }}
-                        // className="font-bold text-[#3A0CA3] text-xs"
                       >
                         {closedOrders.listingType === 1
                           ? "BUY ORDER" : "SELL ORDER"}

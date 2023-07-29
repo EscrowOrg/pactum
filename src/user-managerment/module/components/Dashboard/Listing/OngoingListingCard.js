@@ -28,11 +28,9 @@ const OngoingListingCard = () => {
     makeAuthGetReq(`${AUTH_GET_LISTING_ORDERS}/0/10`);
   }, []);
 
-  // &skip=${skip}&take=${10}
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data?.items);
         setOngoingOrdersData(data?.data?.items);
       }
     }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BackButton } from "../../../components/Button";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
-// import OverviewPayment from "../../../components/Dashboard/Listing/OverviewPayment";
 import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
@@ -30,7 +29,6 @@ const Overviews = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data);
         setViewMore(data?.data);
       }
     }
@@ -164,7 +162,6 @@ const Overviews = () => {
                                   {`${payment.fiatAmount} ${getAssetLabel(
                                     +payment.asset
                                   )}`}
-                                  {/* ${getAssetLabel(payment?.adListing?.assets)} */}
                                 </h4>
                                 <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
                               </div>
