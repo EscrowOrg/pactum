@@ -107,22 +107,23 @@ instance.interceptors.response.use(
 
       const config = error?.config;
   
-        if (error?.response?.status === 401 && !config?.sent) {
-        config.sent = true;
+      if (error?.response?.status === 401 && !config?.sent) {
+      config.sent = true;
 
-            const result = await memoizedRefreshToken();
+          const result = await memoizedRefreshToken();
 
-            if (!isEmpty(result?.data)) {
-                config.headers = {
-                ...config.headers,
-                authorization: `Bearer ${result?.data?.token}`,
-                };
-            }
+          if (!isEmpty(result?.data)) {
+              config.headers = {
+              ...config.headers,
+              authorization: `Bearer ${result?.data?.token}`,
+              };
+          }
 
-            return axios(config);
-        }
+          return axios(config);
+      } else if(error?.response?.status === 401 && config?.sent) {
         removeUserToken()
-        return Promise.reject(error);
+      }
+      return Promise.reject(error);
     }
 );
 
