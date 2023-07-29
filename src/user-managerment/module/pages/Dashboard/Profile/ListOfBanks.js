@@ -1,7 +1,6 @@
 import { Add, Trash } from "iconsax-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { AUTH_DELETE_BANK, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
 import { getUserData } from "../../../../../serivce/cookie.service";
 import { BackButton } from "../../../components/Button";
@@ -30,8 +29,8 @@ const ListOfBanks = (closeModal) => {
   // getBanks
   const {
     data, 
-    makeAuthGetReq, 
-    getLoading,
+    makeAuthGetReq,
+    getLoading
   } = useMakeReq();
   // deleteBanks
   const {
@@ -54,19 +53,21 @@ const ListOfBanks = (closeModal) => {
 
   // SIDE EFFECTS
   useEffect(()=>{
+    console.log("Before")
     makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
+    console.log("After")
   }, [])
   useEffect(()=>{
     if(!isEmpty(data)) {
         setBankDetails(data?.data)
     }
 }, [data])
-  useEffect(()=>{
-    if(isDeleteBankSuccess) {
-      toast.success("Bank deleted successfully!")
-      makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
-    }
-}, [isDeleteBankSuccess])
+//   useEffect(()=>{
+//     if(isDeleteBankSuccess) {
+//       toast.success("Bank deleted successfully!")
+//       makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
+//     }
+// }, [isDeleteBankSuccess])
 
   return (
     <PageWrapper>

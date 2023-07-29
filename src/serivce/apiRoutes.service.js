@@ -47,3 +47,4 @@ export const AUTH_GET_OVERVIEW_ORDERS = "/api/ListingManagement/GetEscrowSession
 export const AUTH_POST_VALIDATE_DEVICE_TOKEN= "/api/User/ValidateDeviceToken"
 export const AUTH_DELETE_BANK = "/api/User/DeleteBank"
 export const AUTH_SEND_CHAT = "/api/User/SendChat"
+export const AUTH_GET_ESTIMATE_GAS_FEE = "/api/ChainOperation/EstimateFeeFromVirtualAccount"
