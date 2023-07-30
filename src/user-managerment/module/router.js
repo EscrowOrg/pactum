@@ -56,9 +56,9 @@ import VendorVerificationPage from "./vendon/pages/VerificationPage";
 import AuthRoutes from "./components/AuthRoutes";
 import ChatBox from "./pages/Dashboard/Home/ChatBox";
 import CreateListingInfo from "./pages/Dashboard/Listing/CreateListingInfo";
+import ListingMoreInfo from "./pages/Dashboard/Listing/ListingMoreInfo";
 import AddBanks from "./pages/Dashboard/Profile/AddBanks";
 import AddUser from "./pages/Dashboard/Profile/AddUsers";
-import Banks from "./pages/Dashboard/Profile/Banks";
 import ChangePin from "./pages/Dashboard/Profile/ChangePin";
 import ListOfBanks from "./pages/Dashboard/Profile/ListOfBanks";
 import MyUsers from "./pages/Dashboard/Profile/MyUsers";
@@ -66,7 +66,6 @@ import SendAsset from "./pages/Dashboard/Profile/SendAsset";
 import SendChat from "./pages/Dashboard/Profile/SendChat";
 import UserWallet from "./pages/Dashboard/Profile/UserWallet";
 import UserWalletAsset from "./pages/Dashboard/Profile/UserWalletAsset";
-import ListingMoreInfo from "./pages/Dashboard/Listing/ListingMoreInfo";
 
 const MainRouter = () => {
   // DATA INITIALIZATION
@@ -309,8 +308,6 @@ const MainRouter = () => {
           />
 
           <Route exact path="/profile/list-of-users" element={<MyUsers />} />
-
-          <Route exact path="/profile/banks" element={<Banks />} />
 
           <Route exact path="/profile/add-bank" element={<AddBanks />} />
 
