@@ -10,10 +10,7 @@ import { isEmpty } from "../../../helpers/isEmpty";
 const UserListingCard = () => {
   // STATE
   const [activeTab, setActiveTab] = useState(3);
-
   const { data, makeAuthGetReq, isSuccessful } = useMakeReq();
-
-  // STATES
   const [pendingOrder, setPendingOrder] = useState([]);
   const userId = getUserId() || "";
 
@@ -59,7 +56,6 @@ const UserListingCard = () => {
             3000
           </p>
         </div>
-        {/* w-[28px] h-[28px] */}
         <div
           onClick={() => setActiveTab(3)}
           className={`flex gap-1 pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${

@@ -112,9 +112,9 @@ const ClosedListingOverview = () => {
                     {/* cancel button */}
                     <span
                       onClick={() => navigate(-1)}
-                      className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal"
+                      className="  text-[#645B75] text-sm font-normal"
                     >
-                      Cancel
+                      Completed
                     </span>
                   </div>
 
@@ -182,7 +182,7 @@ const ClosedListingOverview = () => {
                 </div>
               </div>
             ) : (
-              <Overviews />
+              ""
             )}
           </>
         ) : (

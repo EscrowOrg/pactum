@@ -10,7 +10,6 @@ import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.servi
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import ClosedListingOverview from "./ClosedListingOverview";
 
 const Overviews = () => {
   // States
@@ -21,6 +20,7 @@ const Overviews = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const sessionNum = 2;
 
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${id}`);
@@ -163,7 +163,12 @@ const Overviews = () => {
                                     +payment.asset
                                   )}`}
                                 </h4>
-                                <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+                                {/* session event */}
+                                {payment.sessionEvent === sessionNum ? (
+                                  <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                               <h4 className="font-normal text-xs text-[#8D85A0] pt-1">
                                 {payment.accountName}
@@ -189,11 +194,11 @@ const Overviews = () => {
                 </div>
               </div>
             ) : (
-              <ClosedListingOverview />
+              ""
             )}
           </>
         ) : (
-          <EmptyDataComp />
+          <EmptyDataComp viewPortHeight="h-[80vh]" />
         )}
       </>
     </NoTransitionWrapper>
