@@ -134,7 +134,6 @@ const OngoingListingCard = () => {
                         onClick={() =>
                           navigate(`/listing/overview/${ordersData.id}`)
                         }
-                        // asset={coinSelect}
                         className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#3A0CA3] text-xs font-normal"
                       >
                         View More
