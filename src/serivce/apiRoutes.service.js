@@ -25,6 +25,7 @@ export const AUTH_GET_TRANSACTIONS_USERID = "/api/Wallet/GetTransactionByFilter?
 export const AUTH_GET_TRANSACTIONS_FILTER = "/api/Wallet/GetTransactionByFilter"
 export const AUTH_GET_ASSETS_MAPPING = "/api/ChainOperation/GetAssetMapping"
 export const AUTH_TRANSFER_INTERNAL_USERS = "/api/ChainOperation/TransferToInternalUser"
+export const AUTH_TRANSFER_EXTERNAL_USERS = "/api/ChainOperation/TransferToExternalUser"
 export const AUTH_GET_SINGLE_ACCOUNT = "/api/Wallet/GetAcountById"
 export const AUTH_VALIDATE_DEVICE_TOKEN = "/api/User/ValidateDeviceToken"
 export const AUTH_GET_BANKS = "/api/User/GetBankByUserId"

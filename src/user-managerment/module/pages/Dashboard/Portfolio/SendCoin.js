@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import {
   AUTH_GET_ASSETS_ACCOUNTS,
   AUTH_GET_ASSETS_MAPPING,
+  AUTH_TRANSFER_EXTERNAL_USERS,
   AUTH_TRANSFER_INTERNAL_USERS
 } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
@@ -165,7 +166,8 @@ const SendCoin = () => {
           userId: uId,
         }
       : null;
-      makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
+      const apiUrl = mode.value === INTERNAL_USER?AUTH_TRANSFER_INTERNAL_USERS:AUTH_TRANSFER_EXTERNAL_USERS
+      makeAuthPostReq(apiUrl, payload);
     }}
     validationSchema={
       Yup.object({

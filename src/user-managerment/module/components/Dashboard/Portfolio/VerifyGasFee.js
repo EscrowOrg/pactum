@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AUTH_GET_ESTIMATE_GAS_FEE } from '../../../../../serivce/apiRoutes.service';
+import { getAssetLabel } from '../../../helpers/getAssetLabel';
 import { isEmpty } from '../../../helpers/isEmpty';
 import useMakeReq from '../../../hooks/Global/useMakeReq';
 import { PrimaryButton, WarningButton1 } from '../../Button';
@@ -36,7 +37,7 @@ const VerifyGasFee = ({
         const params = new URLSearchParams()
         params.append("network", networkId)
         params.append("to", recipientAddress)
-        params.append("virtualAccountId", virtualAccountId)
+        params.append("accountId", virtualAccountId)
         params.append("amount", amount)
         params.append("asset", assetId)
 
@@ -60,12 +61,12 @@ const VerifyGasFee = ({
                 : !isEmpty(gasFeeData) ? 
                 <>
                     {/* texts */}
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-4'>
                         <h2 className='text-sm text-gray-800 font-normal'>
-                            Here's the gas fee for 0.56 ETH
+                            {`Gas fee to transfer ${amount} ${getAssetLabel(assetId)}`}
                         </h2>
                         <h3 className='text-2xl text-green-500 font-semibold'>
-                            0.57 ETH
+                            {`${gasFeeData.gasPrice} ${getAssetLabel(assetId)}`}
                         </h3>
                     </div>
 
@@ -76,7 +77,10 @@ const VerifyGasFee = ({
                         text={"Cancel"}
                         onClick={closeModal} />
                         <PrimaryButton
-                        onClick={()=>handleTransfer()}
+                        onClick={()=>{
+                            handleTransfer()
+                            closeModal()
+                        }}
                         loading={transferLoading}
                         height='h-12'
                         text={"Proceed"} />
