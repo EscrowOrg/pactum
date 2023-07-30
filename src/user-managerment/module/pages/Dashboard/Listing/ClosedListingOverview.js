@@ -10,7 +10,6 @@ import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import Overviews from "./Overview";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
