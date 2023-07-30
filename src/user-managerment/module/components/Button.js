@@ -1,7 +1,8 @@
-import React from 'react'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import {SlArrowLeft} from "react-icons/sl"
+import { TransactionMinus } from 'iconsax-react';
+import React from 'react';
+import { SlArrowLeft } from "react-icons/sl";
 import { useNavigate } from 'react-router';
 
 // ant icon
@@ -239,6 +240,22 @@ export const SkipButtonIndividual = () => {
         onClick={()=>navigate('/individual-profile')}
         className='text-[#3A0CA3] font-semibold text-sm hover:no-underline focus:no-underline hover:text-[text-[#3A0CA3] flex justify-end bg-transparent h-fit'>
             Skip
+        </button>
+    )
+}
+
+export const TransactionsListButton = () => {
+
+    // DATA INITIALZIATION
+    const navigate = useNavigate()
+
+    return (
+        <button
+        onClick={()=>navigate("/portfolio/transactions")}
+        className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
+            <TransactionMinus
+            size="14"
+            color="#16053D" />
         </button>
     )
 }

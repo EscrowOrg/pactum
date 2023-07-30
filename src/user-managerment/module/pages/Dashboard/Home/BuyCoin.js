@@ -1,12 +1,11 @@
 import { Form, Formik } from 'formik';
-import { TransactionMinus } from 'iconsax-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from "yup";
 import { AUTH_CREATE_BUY_SESSION, AUTH_GET_ADLISTING_DETAILS, AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service';
 import { getUserId } from '../../../../../serivce/cookie.service';
-import { BackButton, PrimaryButton } from '../../../components/Button';
+import { BackButton, PrimaryButton, TransactionsListButton } from '../../../components/Button';
 import FormError from '../../../components/Global/FormError';
 import LoadingSpinner from '../../../components/Global/LoadingSpinner';
 import { TextLabelInput } from '../../../components/Input';
@@ -143,12 +142,7 @@ const BuyCoin = () => {
                                 </h3>
 
                                 {/* transaction list button */}
-                                <button
-                                className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                                    <TransactionMinus
-                                    size="14"
-                                    color="#16053D" />
-                                </button>
+                                <TransactionsListButton />
                             </div>
                             
                             {/* body */}

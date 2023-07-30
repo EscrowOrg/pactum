@@ -1,4 +1,4 @@
-import { Copy, InfoCircle, TransactionMinus } from "iconsax-react";
+import { Copy, InfoCircle } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AUTH_GET_ESCROW_SESSION_BYID } from "../../../../../serivce/apiRoutes.service";
@@ -6,6 +6,7 @@ import {
   BackButton,
   ErrorButton,
   PrimaryButton,
+  TransactionsListButton,
 } from "../../../components/Button";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
@@ -66,9 +67,7 @@ const SellOrderStatements = () => {
           </div>
 
           {/* transaction list button */}
-          <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-            <TransactionMinus size="14" color="#16053D" />
-          </button>
+          <TransactionsListButton />
         </div>
 
         {/* important message */}

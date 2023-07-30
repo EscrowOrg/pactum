@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
-import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
-import { BackButton, PrimaryButton, WarningButton1 } from '../../../components/Button'
-import { More, TransactionMinus } from 'iconsax-react'
-import SelectInput from '../../../components/SelectInput';
-import PercentageChange from '../../../components/Dashboard/Home/PercentageChange';
-import ChartBox from '../../../components/Dashboard/Home/ChartBox';
-import MyModal from '../../../layouts/MyModal';
+import { More } from 'iconsax-react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import useMakeReq from '../../../hooks/Global/useMakeReq';
 import { GET_SINGLE_COIN } from '../../../../../serivce/apiRoutes.service';
-import { isEmpty } from '../../../helpers/isEmpty';
+import { BackButton, PrimaryButton, TransactionsListButton, WarningButton1 } from '../../../components/Button';
+import ChartBox from '../../../components/Dashboard/Home/ChartBox';
+import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper';
+import PercentageChange from '../../../components/Dashboard/Home/PercentageChange';
 import EmptyDataComp from '../../../components/Global/EmptyDataComp';
 import LoadingSpinner from '../../../components/Global/LoadingSpinner';
+import SelectInput from '../../../components/SelectInput';
+import { isEmpty } from '../../../helpers/isEmpty';
 import { roundToN } from '../../../helpers/roundToN';
+import useMakeReq from '../../../hooks/Global/useMakeReq';
+import MyModal from '../../../layouts/MyModal';
 
 const Overview = () => {
 
@@ -68,12 +68,7 @@ const Overview = () => {
                     </h3>
 
                     {/* transaction list button */}
-                    <button
-                    className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                        <TransactionMinus
-                        size="14"
-                        color="#16053D" />
-                    </button>
+                    <TransactionsListButton />
                 </div>
 
                 {

@@ -1,7 +1,7 @@
-import React from 'react'
-import LoadingSpinner from '../../Global/LoadingSpinner'
-import { isEmpty } from '../../../helpers/isEmpty'
 import { ArrowSwapHorizontal, MoneyRecive, MoneySend, WalletAdd } from 'iconsax-react'
+import React from 'react'
+import { isEmpty } from '../../../helpers/isEmpty'
+import LoadingSpinner from '../../Global/LoadingSpinner'
 
 const TransactionList = ({transactionData, loading}) => {
 
@@ -95,18 +95,6 @@ const TransactionList = ({transactionData, loading}) => {
                                         </span>:<></>
                                     }
                                 </div>
-                            </div>
-
-                            {/* wallet amount and id */}
-                            <div className='inline-flex flex-col items-end gap-[2px]'>
-
-                                <h3 className='text-sm font-semibold text-black'>
-                                    {"$0.00"}
-                                </h3>
-
-                                <span className='text-[#645B75] font-semibold text-xs'>
-                                    {`Wallet ${transactData.virtualAccountId}`}
-                                </span>
                             </div>
                         </div>
                     )):

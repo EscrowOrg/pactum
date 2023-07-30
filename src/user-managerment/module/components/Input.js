@@ -15,8 +15,7 @@ export const TextLabelInput = ({
     name,
     placeholderText,
     type="text",
-    label,
-    paddingRight
+    label
 }) => {
 
     return(

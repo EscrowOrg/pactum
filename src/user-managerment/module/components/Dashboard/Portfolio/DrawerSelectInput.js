@@ -4,7 +4,7 @@ import React from 'react'
 const DrawerSelectInput = ({disabled, onClick, value="Select"}) => {
     return (
         <div
-        onClick={onClick} 
+        onClick={disabled?undefined:onClick} 
         className={`flex items-center gap-1 border border-[#DAD7E0] ${disabled?"bg-gray-200":"bg-white"} rounded-xl h-14 px-4`}>
             <h3 className='text-xs font-normal text-black w-full'>
                 {value}
