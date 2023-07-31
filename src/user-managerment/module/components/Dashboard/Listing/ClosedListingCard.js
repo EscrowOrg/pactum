@@ -28,7 +28,9 @@ const ClosedListingCard = () => {
 
   // SIDE EFFECT
   useEffect(() => {
-    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&${userId}`);
+    makeAuthGetReq(
+      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&${userId}`
+    );
   }, []);
 
   useEffect(() => {
@@ -44,12 +46,12 @@ const ClosedListingCard = () => {
       {getLoading ? (
         <LoadingSpinner viewPortHeight="h-[80vh]" />
       ) : !isEmpty(closedListingData) ? (
-        <>
+        <div className="my-0">
           {closedListingData?.items?.map((closedOrders, index) => {
             return (
               <div key={index}>
                 {closedOrders.adListStatus === 2 ? (
-                  <div className="w-full border border-[#F5F3F6] bg-white  rounded-lg py-3 px-4 flex flex-col gap-4">
+                  <div className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 my-3 flex flex-col gap-4">
                     {/* profile info */}
                     <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
                       {/* image and name */}
@@ -136,7 +138,7 @@ const ClosedListingCard = () => {
               </div>
             );
           })}
-        </>
+        </div>
       ) : (
         <EmptyDataComp viewPortHeight="h-[80vh]" />
       )}

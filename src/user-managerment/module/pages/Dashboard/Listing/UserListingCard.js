@@ -10,6 +10,7 @@ import { isEmpty } from "../../../helpers/isEmpty";
 const UserListingCard = () => {
   // STATE
   const [activeTab, setActiveTab] = useState(3);
+
   const { data, makeAuthGetReq, isSuccessful } = useMakeReq();
   const [pendingOrder, setPendingOrder] = useState([]);
   const userId = getUserId() || "";
@@ -32,7 +33,7 @@ const UserListingCard = () => {
   return (
     <div className="w-full h-full flex flex-col bg-white">
       {/* heading tab */}
-      <div className="flex items-center justify-between w-[90%] mx-auto">
+      <div className="flex items-center justify-between gap-2 mx-auto">
         <div
           onClick={() => setActiveTab(1)}
           className={`flex gap-1 pb-4 text-xs text-[#929292] :p-bg[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
@@ -53,7 +54,7 @@ const UserListingCard = () => {
         >
           <h3>Ongoing Listings</h3>
           <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            3000
+            30
           </p>
         </div>
         <div
@@ -64,7 +65,7 @@ const UserListingCard = () => {
         >
           <h3>Closed Listings</h3>
           <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            400
+            40
           </p>
         </div>
       </div>
