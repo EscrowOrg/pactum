@@ -48,25 +48,19 @@ const UserListingCard = () => {
 
         <div
           onClick={() => setActiveTab(2)}
-          className={`flex gap-1 pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
+          className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
             activeTab === 2 ? "active-listing-tab act-tb2" : ""
           }`}
         >
           <h3>Ongoing Listings</h3>
-          <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            30
-          </p>
         </div>
         <div
           onClick={() => setActiveTab(3)}
-          className={`flex gap-1 pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
+          className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
             activeTab === 3 ? "active-listing-tab act-tb3" : ""
           }`}
         >
           <h3>Closed Listings</h3>
-          <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            40
-          </p>
         </div>
       </div>
 
