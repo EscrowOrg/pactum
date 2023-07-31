@@ -10,7 +10,6 @@ import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import Overviews from "./Overview";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -33,6 +32,7 @@ const ClosedListingOverview = () => {
       }
     }
   }, [data, isSuccessful]);
+
 
   return (
     <PageWrapper>
@@ -166,7 +166,7 @@ const ClosedListingOverview = () => {
                             {/* view more button */}
                             <span
                               onClick={() =>
-                                navigate("/listing/closed-listing-order/id:14")
+                                navigate(`/listing/closed-listing-order/${payment.id}`)
                               }
                               className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
                             >

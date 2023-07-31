@@ -294,7 +294,7 @@ const MainRouter = () => {
 
           <Route
             exact
-            path="/listing/closed-listing-order/:closedOrderId"
+            path="/listing/closed-listing-order/:id"
             element={<ClosedOrderStatement />}
           />
 

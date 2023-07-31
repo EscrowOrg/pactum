@@ -1,10 +1,38 @@
 import { ArrowRight2, Copy } from "iconsax-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BackButton, TransactionsListButton } from "../../../components/Button";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import PageWrapper from "../../../layouts/PageWrapper";
+import { useParams } from "react-router-dom";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { AUTH_GET_ESCROW_SESSION_BYID } from "../../../../../serivce/apiRoutes.service";
+import { isEmpty } from "../../../helpers/isEmpty";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { modifyDateTime } from "../../../helpers/modifyDateTime";
+import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 
 const ClosedOrderStatement = () => {
+  const [singleOrder, setSingleOrder] = useState()
+  const {id }= useParams()
+
+  // const navigate = useNavigate();
+  // const {orderId} = useParams()
+  const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
+
+    // SIDE EFFECTS
+    useEffect(()=>{
+      makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${id}`)
+    }, [])
+    useEffect(()=>{
+    if(!isEmpty(data)) {
+      if(isSuccessful) {
+        setSingleOrder(data?.data)
+      }
+    }
+  }, [data, isSuccessful])
+
+
   return (
     <PageWrapper>
       <div className="w-full h-full py-5 flex flex-col gap-8 overflow-x-hidden">
@@ -20,7 +48,7 @@ const ClosedOrderStatement = () => {
             </h3>
 
             <h3 className="font-normal text-xs text-[#8D85A0] text-center">
-              09/06/38 - 10:56AM
+              {modifyDateTime(singleOrder?.adListing?.created)}
             </h3>
           </div>
 
@@ -28,16 +56,21 @@ const ClosedOrderStatement = () => {
           <TransactionsListButton />
         </div>
 
-        {/* Body */}
-        <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
+{ getLoading?
+          <LoadingSpinner
+          viewPortHeight='h-[80vh]' />:
+          !isEmpty(singleOrder)?
+          <>
+ {/* Body */}
+ <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
           {/* Amount to be Received */}
           <div className="flex flex-col gap-3 items-center w-full">
             <h4 className="font-normal text-sm text-[#645B75]">
               Amount to be received.
             </h4>
-            <p className="text-[#3F9491] text-[32px] font-bold">₦100 000.00</p>
+            <p className="text-[#3F9491] text-[32px] font-bold">{`₦ ${singleOrder?.fiatAmount}`}</p>
             <h4 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
-              0.844BTC deducted
+            {`${singleOrder?.cryptoAmount}${getAssetLabel(singleOrder?.asset)} deducted`}
             </h4>
           </div>
 
@@ -53,7 +86,7 @@ const ClosedOrderStatement = () => {
 
                 <div className="flex items-center justify-center bg-[rgba(255,255,255,.2)] cursor-pointer">
                   <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                    #00001
+                  {singleOrder?.sessId?.slice(0,8)}
                   </h3>
 
                   <ArrowRight2 variant="TwoTone" size={10} color="#F4EFFE" />
@@ -65,16 +98,16 @@ const ClosedOrderStatement = () => {
                   Rate-Fiat Value
                 </h4>
                 <p className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  ₦400
+                  {singleOrder?.tradePrice}
                 </p>
               </div>
 
               <div className="flex items-center justify-between py-3">
                 <h4 className="font-normal text-xs text-[#8D85A0]">Order ID</h4>
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  hfsbg4u9ui093u290u02{" "}
+                {singleOrder?.sessId?.slice(0,8)}
                   <Copy
-                    onClick={() => copyToClipBoard("hfsbg4u9ui093u290u02")}
+                    onClick={() => copyToClipBoard(singleOrder?.sessId?.slice(0,8))}
                     variant="Bulk"
                     size={16}
                     color="#3F9491"
@@ -93,7 +126,7 @@ const ClosedOrderStatement = () => {
                 </h4>
 
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  First Bank
+                  {singleOrder?.bankName}
                 </h3>
               </div>
 
@@ -102,7 +135,7 @@ const ClosedOrderStatement = () => {
                   Account Number
                 </h4>
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  4890149295
+                 {singleOrder?.accountNumber}
                 </h3>
               </div>
 
@@ -111,12 +144,17 @@ const ClosedOrderStatement = () => {
                   Account Name
                 </h4>
                 <h3 className="text-black text-sm font-semibold inline-flex items-center gap-2">
-                  Asemota Joel
+                 {singleOrder?.accountName}
                 </h3>
               </div>
             </div>
           </div>
         </div>
+          </>:
+          <EmptyDataComp
+          viewPortHeight='h-[80vh]' />
+        }
+       
       </div>
     </PageWrapper>
   );

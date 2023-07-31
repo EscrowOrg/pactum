@@ -10,6 +10,7 @@ import { isEmpty } from "../../../helpers/isEmpty";
 const UserListingCard = () => {
   // STATE
   const [activeTab, setActiveTab] = useState(3);
+
   const { data, makeAuthGetReq, isSuccessful } = useMakeReq();
   const [pendingOrder, setPendingOrder] = useState([]);
   const userId = getUserId() || "";
@@ -32,7 +33,7 @@ const UserListingCard = () => {
   return (
     <div className="w-full h-full flex flex-col bg-white">
       {/* heading tab */}
-      <div className="flex items-center justify-between w-[90%] mx-auto">
+      <div className="flex items-center justify-between gap-2 mx-auto">
         <div
           onClick={() => setActiveTab(1)}
           className={`flex gap-1 pb-4 text-xs text-[#929292] :p-bg[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
@@ -47,25 +48,19 @@ const UserListingCard = () => {
 
         <div
           onClick={() => setActiveTab(2)}
-          className={`flex gap-1 pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
+          className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
             activeTab === 2 ? "active-listing-tab act-tb2" : ""
           }`}
         >
           <h3>Ongoing Listings</h3>
-          <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            3000
-          </p>
         </div>
         <div
           onClick={() => setActiveTab(3)}
-          className={`flex gap-1 pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
+          className={`pb-4 text-xs text-[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${
             activeTab === 3 ? "active-listing-tab act-tb3" : ""
           }`}
         >
           <h3>Closed Listings</h3>
-          <p className="bg-[#48A9A6] text-[#FFFFFF] text-xs border p-0.5 rounded-full flex items-center justify-center">
-            400
-          </p>
         </div>
       </div>
 
