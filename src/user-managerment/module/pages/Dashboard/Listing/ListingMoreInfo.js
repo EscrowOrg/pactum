@@ -22,7 +22,6 @@ const ListingMoreInfo = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data);
         setBankDetails(data?.data);
       }
     }

@@ -1,10 +1,11 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
-import { ProfileAdd, TransactionMinus } from 'iconsax-react'
+import { ProfileAdd } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
 import { getUserId } from '../../../../../serivce/cookie.service'
+import { TransactionsListButton } from '../../../components/Button'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
 import EmptyWalletCard from '../../../components/Dashboard/Portfolio/EmptyWalletCard'
@@ -67,13 +68,7 @@ const Portfolio = () => {
                     </h4>
 
                     {/* transaction list button */}
-                    <button
-                    onClick={()=>navigate("/portfolio/transactions")}
-                    className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-                        <TransactionMinus
-                        size="14"
-                        color="#16053D" />
-                    </button>
+                    <TransactionsListButton />
 
                     {/* user button */}
                     <div className='flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer'>

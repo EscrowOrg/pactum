@@ -1,9 +1,7 @@
-import { TransactionMinus } from "iconsax-react";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AUTH_GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
-import { getUserId } from "../../../../../serivce/cookie.service";
-import { BackButton } from "../../../components/Button";
+import { BackButton, TransactionsListButton } from "../../../components/Button";
 import ListingAdCard from "../../../components/Dashboard/Listing/ListingAdCard";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
@@ -54,8 +52,7 @@ const BuySellCoin = () => {
   ];
   const coinId = searchParams?.get("asset")
   const id = searchParams?.get("id");
-  // get user data
-  const userId = isEmpty(getUserId())?"":getUserId()
+  const navigate = useNavigate()
   
   
   // SIDE EFFECTS
@@ -118,9 +115,7 @@ const BuySellCoin = () => {
             </div>
 
             {/* transaction list button */}
-            <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-              <TransactionMinus size="14" color="#16053D" />
-            </button>
+            <TransactionsListButton />
           </nav>
 
           {/* wrapper */}

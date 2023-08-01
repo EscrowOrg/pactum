@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
-import {BackButton, ErrorButton, PrimaryButton} from "../../../components/Button";
-import { ArrowRight2, Copy, InfoCircle, TransactionMinus } from "iconsax-react";
-import PageWrapper from "../../../layouts/PageWrapper";
+import { ArrowRight2, Copy, InfoCircle } from "iconsax-react";
+import React from "react";
+import { BackButton, ErrorButton, PrimaryButton, TransactionsListButton } from "../../../components/Button";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import PageWrapper from "../../../layouts/PageWrapper";
 
 
 
@@ -28,9 +28,7 @@ const PendingOrderStatement = (order) => {
           </div>
 
           {/* transaction list button */}
-          <button className="px-3 py-3 w-fit border border-[#DAD7E0] bg-[#FAFAFB] inline-flex items-center justify-center rounded-xl cursor-pointer hover:bg-gray-200">
-            <TransactionMinus size="14" color="#16053D" />
-          </button>
+          <TransactionsListButton />
         </div>
 
         {/* info message */}

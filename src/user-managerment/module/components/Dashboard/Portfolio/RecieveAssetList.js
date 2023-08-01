@@ -40,7 +40,7 @@ const ReceiveAssetList = ({assetList, closeDrawer, mode, loading}) => {
                             navigate(`/portfolio/checkout/${asset.currency}/${mode || "receive"}`)
                             closeDrawer()
                         }} 
-                        className='flex items-center gap-3 py-4 border-b border-[#F5F3F6] first:pt-0'>
+                        className='flex items-center gap-3 py-4 border-b border-[#F5F3F6] first:pt-0 cursor-pointer'>
 
                             <img
                             alt=""

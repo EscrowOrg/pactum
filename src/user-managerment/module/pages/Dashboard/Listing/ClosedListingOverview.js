@@ -10,7 +10,6 @@ import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import Overviews from "./Overview";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -29,11 +28,11 @@ const ClosedListingOverview = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data);
         setClosedOverview(data?.data);
       }
     }
   }, [data, isSuccessful]);
+
 
   return (
     <PageWrapper>
@@ -80,7 +79,6 @@ const ClosedListingOverview = () => {
                     <div>
                       <CircularProgress percent={100} />
                     </div>
-                    {/* {closedOverview.percentageUsed} */}
                   </div>
 
                   <div className="flex justify-between my-4">
@@ -114,9 +112,9 @@ const ClosedListingOverview = () => {
                     {/* cancel button */}
                     <span
                       onClick={() => navigate(-1)}
-                      className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal"
+                      className="  text-[#645B75] text-sm font-normal"
                     >
-                      Cancel
+                      Completed
                     </span>
                   </div>
 
@@ -146,7 +144,6 @@ const ClosedListingOverview = () => {
                             {/* Order date and time */}
                             <div>
                               <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                                {/* {payment.created} */}
                                 {modifyDateTime(payment.created)}
                               </p>
 
@@ -157,7 +154,6 @@ const ClosedListingOverview = () => {
                                 )}`}
                               </h4>
                               <div className="flex gap-1">
-                                {/*  */}
                                 <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
                                   {payment.adListing.merchantName}
                                 </h4>
@@ -170,7 +166,7 @@ const ClosedListingOverview = () => {
                             {/* view more button */}
                             <span
                               onClick={() =>
-                                navigate("/listing/closed-listing-order/id:14")
+                                navigate(`/listing/closed-listing-order/${payment.id}`)
                               }
                               className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
                             >
@@ -186,7 +182,7 @@ const ClosedListingOverview = () => {
                 </div>
               </div>
             ) : (
-              <Overviews />
+              ""
             )}
           </>
         ) : (

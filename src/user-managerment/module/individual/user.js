@@ -164,7 +164,7 @@ const LoginUser  = () =>{
                                  onClick={handleSubmit}
                                  loading={isfetching}
                                  text={"Log in"}  
-                                 disabled={isfetching || isSubmitting || !isValid}/>
+                                 disabled={isfetching || !isValid}/>
                               </div>
 
                               {/* google and apple sign in */}

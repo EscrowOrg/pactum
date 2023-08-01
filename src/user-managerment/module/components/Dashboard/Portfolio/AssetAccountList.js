@@ -1,12 +1,9 @@
-import { ArrowDown2 } from 'iconsax-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
-import { roundToN } from '../../../helpers/roundToN'
 import { useNavigate } from 'react-router-dom'
+import { roundToN } from '../../../helpers/roundToN'
 
 const AssetAccountList = ({
-    toggleDrawer,
-    filterValue,
     assetAccounts,
 }) => {
 
@@ -30,36 +27,20 @@ const AssetAccountList = ({
             {/* title */}
             <div className='flex items-center justify-between'>
                 <h3 className='text-black text-base font-semibold'>
-                    My Assets
+                    My Wallets
                 </h3>
 
-                {/* tools container */}
-                <div className='flex items-center gap-3'>
+                {/* search input */}
+                <div className='bg-[#F5F3F6] rounded-md border border-[#F5F3F6] flex items-center justify-between gap-1 py-[5px] px-2 w-[98px]'>
+                    <HiOutlineSearch
+                    className='text-[#ACA6BA]' />
 
-                    {/* search input */}
-                    <div className='bg-[#F5F3F6] rounded-md border border-[#F5F3F6] flex items-center justify-between gap-1 py-[5px] px-2 w-[98px]'>
-                        <HiOutlineSearch
-                        className='text-[#ACA6BA]' />
-
-                        <input 
-                        className='placeholder:font-normal placeholder:text-xs placeholder:text-[#ACA6BA] text-xs font-normal text-[#202223] rounded-lg bg-transparent outline-none w-full h-full'
-                        type={"search"}
-                        value={searchInput}
-                        onChange={(e)=>setSearchInput(e.target.value)}
-                        placeholder={"Search"} />
-                    </div>
-
-                    {/* filter toggle */}
-                    <div
-                    onClick={toggleDrawer} 
-                    className='text-[10px] text-black font-semibold inline-flex items-center gap-1 py-[5px] px-2 rounded-md bg-[#F5F3F6]'>
-                        {filterValue}
-
-                        <ArrowDown2
-                        variant="TwoTone"
-                        color="#292D32"
-                        size={18} />
-                    </div>
+                    <input 
+                    className='placeholder:font-normal placeholder:text-xs placeholder:text-[#ACA6BA] text-xs font-normal text-[#202223] rounded-lg bg-transparent outline-none w-full h-full'
+                    type={"search"}
+                    value={searchInput}
+                    onChange={(e)=>setSearchInput(e.target.value)}
+                    placeholder={"Search"} />
                 </div>
             </div>
 

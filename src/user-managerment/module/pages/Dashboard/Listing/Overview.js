@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BackButton } from "../../../components/Button";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
-// import OverviewPayment from "../../../components/Dashboard/Listing/OverviewPayment";
 import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
@@ -11,7 +10,6 @@ import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.servi
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
-import ClosedListingOverview from "./ClosedListingOverview";
 
 const Overviews = () => {
   // States
@@ -22,6 +20,7 @@ const Overviews = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const sessionNum = 2;
 
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${id}`);
@@ -30,7 +29,6 @@ const Overviews = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
-        // console.log(data?.data);
         setViewMore(data?.data);
       }
     }
@@ -164,9 +162,13 @@ const Overviews = () => {
                                   {`${payment.fiatAmount} ${getAssetLabel(
                                     +payment.asset
                                   )}`}
-                                  {/* ${getAssetLabel(payment?.adListing?.assets)} */}
                                 </h4>
-                                <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+                                {/* session event */}
+                                {payment.sessionEvent === sessionNum ? (
+                                  <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                               <h4 className="font-normal text-xs text-[#8D85A0] pt-1">
                                 {payment.accountName}
@@ -176,7 +178,7 @@ const Overviews = () => {
                             {/* view more button  */}
                             <span
                               onClick={() =>
-                                navigate("/listing/closed-listing-order/id:14")
+                                navigate(`/listing/closed-listing-order/${payment.id}`)
                               }
                               className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
                             >
@@ -192,11 +194,11 @@ const Overviews = () => {
                 </div>
               </div>
             ) : (
-              <ClosedListingOverview />
+              ""
             )}
           </>
         ) : (
-          <EmptyDataComp />
+          <EmptyDataComp viewPortHeight="h-[80vh]" />
         )}
       </>
     </NoTransitionWrapper>

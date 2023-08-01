@@ -45,18 +45,6 @@ const TransactionCard = ({
                     }
                 </div>
             </div>
-
-            {/* wallet amount and id */}
-            <div className='inline-flex flex-col items-end gap-[2px]'>
-
-                <h3 className='text-sm font-semibold text-black'>
-                    {"$0.00"}
-                </h3>
-
-                <span className='text-[#645B75] font-semibold text-xs'>
-                    {`Wallet ${walletId}`}
-                </span>
-            </div>
         </div>
     )
 }

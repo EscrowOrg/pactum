@@ -34,7 +34,7 @@ const SelectWalletView = ({walletList, mode}) => {
                         <div
                         key={index}
                         onClick={()=>navigate(`/portfolio/checkout/${wallet.id}/${mode || "send"}`)} 
-                        className='flex items-center justify-between gap-3 py-4 border-b border-[#F5F3F6] first:pt-0 w-full'>
+                        className='flex items-center justify-between gap-3 py-4 border-b border-[#F5F3F6] first:pt-0 w-full cursor-pointer'>
 
                             {/* image section */}
                             <div className='flex items-center gap-3'>

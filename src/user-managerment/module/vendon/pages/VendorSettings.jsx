@@ -126,7 +126,7 @@ const VendorSettings = () => {
               <SettingOptionCards
                 Icon={Bank}
                 title={"Banks"}
-                pathTo="/profile/banks"
+                pathTo="/profile/list-bank"
               />
 
               <SettingOptionCards

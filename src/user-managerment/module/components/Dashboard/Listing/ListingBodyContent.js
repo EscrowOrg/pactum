@@ -3,22 +3,23 @@ import ClosedListingCard from "./ClosedListingCard";
 import OngoingListingCard from "./OngoingListingCard";
 import PendingPaymentsCard from "./PendingPaymentsCard";
 
-const ListingBodyContent = ({ activeTab, listData }) => {
+const ListingBodyContent = ({ activeTab }) => {
   return (
     <div
-      className={`h-full w-full px-4 bg-gray-100 border-t-[4px]  border-gray-100" flex flex-col pt-3 pb-20 overflow-auto gap-5`}>
+      className={`h-full w-full px-4 bg-gray-100 border-t-[4px]  border-gray-100" flex flex-col pt-3 pb-20 overflow-auto gap-5`}
+    >
       {
         // tab1 represents the pending payments tab
         activeTab === 1 ? (
-          <PendingPaymentsCard/>
+          <PendingPaymentsCard />
         ) : // tab2 represents the ongoing listings tab
         activeTab === 2 ? (
-          <OngoingListingCard/>
+          <OngoingListingCard />
         ) : // tab3 represents the closed listings tab
         activeTab === 3 ? (
-          <ClosedListingCard/>
+          <ClosedListingCard />
         ) : null
-}
+      }
     </div>
   );
 };
