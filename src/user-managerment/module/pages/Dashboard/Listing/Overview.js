@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { BackButton } from "../../../components/Button";
-import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
 import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
-import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.service";
+import {
+  AUTH_GET_OVERVIEW_ORDERS,
+  AUTH_UPDATE_AD_LISTING_STATUS,
+} from "../../../../../serivce/apiRoutes.service";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import ClosedListingCard from "../../../components/Dashboard/Listing/ClosedListingCard";
+import { toast } from "react-toastify";
 
 const Overviews = () => {
   // States
   const [viewMore, setViewMore] = useState();
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
+  const { id } = useParams();
+
+  const {
+    data: updateCancelData,
+    isSuccessful: isCancelSuccess,
+    error: isCancelError,
+    // loading: createListingLoading,
+    makeAuthPostReq,
+  } = useMakeReq();
+  const [cancelOrder, setCancelOrder] = useState({
+    id: { id },
+    adListStatus: 3,
+  });
+
   // DATA INITIALIZATION
   const navigate = useNavigate();
 
-  const { id } = useParams();
   const sessionNum = 2;
 
   useEffect(() => {
@@ -34,6 +51,40 @@ const Overviews = () => {
     }
   }, [data, isSuccessful]);
 
+  // cancel useEffect
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      if (isSuccessful) {
+        setCancelOrder(data);
+      }
+    }
+  }, [data, isSuccessful]);
+
+  // useEffect(()=>{
+  //   if(!isEmpty(updateCancelData)) {
+  //       if(isCancelSuccess===true) {
+  //           toast.success(updateCancelData.message || "Cancelled!")
+  //       } else if(isCancelSuccess===false) {
+  //           toast.error(updateCancelData.message || "Cancelled failed!")
+  //       }
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [updateCancelData, isCancelSuccess])
+
+  // console.log(cancelOrder.adListStatus)
+
+  const handleCancel = () => {
+    makeAuthPostReq(AUTH_UPDATE_AD_LISTING_STATUS, {
+      id: id,
+      adListStatus: cancelOrder.adListStatus,
+    });
+    if (cancelOrder.adListStatus === 3) {
+      navigate.push(<ClosedListingCard />)
+    } else {
+      toast.error("Cancelled failed")
+    }
+  };
+console.log(id, cancelOrder.adListStatus)
   return (
     <NoTransitionWrapper>
       <>
@@ -52,7 +103,7 @@ const Overviews = () => {
 
                 <div>
                   <h3 className="font-normal text-sm text-[#8D85A0] my-3">
-                    Listed On: 9/04/2023 - 10:43AM
+                    {`Listed On: ${modifyDateTime(viewMore.created)}`}
                   </h3>
 
                   <div className="flex justify-between">
@@ -76,9 +127,7 @@ const Overviews = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <CircularProgress percent={10} size={16} />
-                    </div>
+                    <div>{`${viewMore?.percentageUsed}%`}</div>
                   </div>
 
                   <div className="flex justify-between mt-3">
@@ -110,12 +159,14 @@ const Overviews = () => {
                     </div>
 
                     {/* cancel button  */}
+                    {/* {viewMore.adListStatus  ?    */}
                     <span
-                      onClick={() => navigate(-1)}
+                      onClick={handleCancel}
                       className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal"
                     >
                       Cancel
                     </span>
+                    {/* : ""} */}
                   </div>
 
                   <div className="flex justify-between">
@@ -178,7 +229,9 @@ const Overviews = () => {
                             {/* view more button  */}
                             <span
                               onClick={() =>
-                                navigate(`/listing/closed-listing-order/${payment.id}`)
+                                navigate(
+                                  `/listing/closed-listing-order/${payment.id}`
+                                )
                               }
                               className="bg-[#F4EFFE] rounded-[32px] h-[35px] mt-2 px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
                             >

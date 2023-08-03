@@ -3,12 +3,17 @@ import { useNavigate } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../Global/LoadingSpinner";
-import { AUTH_GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
+import {
+  AUTH_GET_AD_LISTING_BY_VALUE,
+  AUTH_UPDATE_AD_LISTING_STATUS,
+} from "../../../../../serivce/apiRoutes.service";
 import EmptyDataComp from "../../Global/EmptyDataComp";
 import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagination";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import { getUserId } from "../../../../../serivce/cookie.service";
+import ClosedListingCard from "./ClosedListingCard";
+import { toast } from "react-toastify";
 
 const OngoingListingCard = () => {
   // STATES
@@ -21,14 +26,26 @@ const OngoingListingCard = () => {
     return output < 0 ? 0 : output;
   }, [currentPage]);
 
+  const {
+    data: updateCancel,
+    isSuccessful: isCancelSuccess,
+    makeAuthPostReq,
+  } = useMakeReq();
+  const [cancelOrder, setCancelOrder] = useState({});
+
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const userId = getUserId();
 
+  const id = ongoingOrdersData?.items?.map((item) => item.id);
+  const adListStatus = ongoingOrdersData?.items?.map(
+    (item) => item.adListStatus
+  );
+
   // SIDE EFFECT
   useEffect(() => {
     makeAuthGetReq(
-      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&${userId}`
+      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&userId=${userId}`
     );
   }, []);
 
@@ -39,6 +56,27 @@ const OngoingListingCard = () => {
       }
     }
   }, [data, isSuccessful]);
+
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      if (isCancelSuccess) {
+        setCancelOrder(data);
+      }
+    }
+  }, [data, isCancelSuccess]);
+
+  // handle cancel function
+  const handleCancel = () => {
+    makeAuthPostReq(AUTH_UPDATE_AD_LISTING_STATUS, {
+      id: id,
+      adListStatus: 3,
+    });
+    if (adListStatus === 3) {
+      navigate.push(<ClosedListingCard />);
+    } else {
+      toast.error("Cancelled failed");
+    }
+  };
 
   return (
     <>
@@ -125,7 +163,7 @@ const OngoingListingCard = () => {
                     <div className="w-full flex items-center justify-between gap-5 pb-4">
                       {/* cancel button */}
                       <span
-                        onClick={() => navigate(-1)}
+                        onClick={handleCancel}
                         className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer w-full text-[#645B75] text-xs font-normal"
                       >
                         Cancel
@@ -143,7 +181,7 @@ const OngoingListingCard = () => {
                     </div>
                   </div>
                 ) : (
-                  ""
+        <EmptyDataComp viewPortHeight="h-[80vh]" />
                 )}
               </div>
             );

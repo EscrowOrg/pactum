@@ -25,11 +25,11 @@ const ClosedListingCard = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const userId = getUserId();
-
+  
   // SIDE EFFECT
   useEffect(() => {
     makeAuthGetReq(
-      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&${userId}`
+      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&userId=${userId}`
     );
   }, []);
 
@@ -133,7 +133,7 @@ const ClosedListingCard = () => {
                     </span>
                   </div>
                 ) : (
-                  ""
+                  <EmptyDataComp viewPortHeight="h-[80vh]" />
                 )}
               </div>
             );
