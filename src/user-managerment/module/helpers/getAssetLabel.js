@@ -5,7 +5,7 @@ export const getAssetLabel = (assetId) => {
         return undefined
     } else if(assetId>3) {
         console.log("assetId shouldn't be greater than '3'")
-        return null
+        return undefined
     }
 
     return coinLabel[assetId]
