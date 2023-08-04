@@ -23,7 +23,7 @@ export const ListingType = {
     SELL: 2,
 }
 
-export const SessionEvents = {
+export const SessionEvent = {
     SESSIONCREATED: 1,
     MADEPAYMENT: 2,
     UPDATEAMOUNT: 3,
