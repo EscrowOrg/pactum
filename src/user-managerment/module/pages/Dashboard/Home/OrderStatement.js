@@ -1,19 +1,26 @@
+import { Drawer } from "antd";
 import { Copy, InfoCircle, Message } from "iconsax-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AUTH_GET_ESCROW_SESSION_BYID } from "../../../../../serivce/apiRoutes.service";
+import { toast } from "react-toastify";
+import { AUTH_GET_ESCROW_SESSION_BYID, AUTH_TRANSFER_DONE, AUTH_VERIFY_PAYMENT } from "../../../../../serivce/apiRoutes.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
 import {
   BackButton,
+  ErrorButton,
   PrimaryButton,
   PrimaryButtonLight,
 } from "../../../components/Button";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import { SessionEvent } from "../../../helpers/enums";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
+import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import PageWrapper from "../../../layouts/PageWrapper";
+import ReportStatement from "./ReportStatement";
 
 const OrderStatement = () => {
 
@@ -21,9 +28,40 @@ const OrderStatement = () => {
     const navigate = useNavigate()
     const {orderId} = useParams()
     const { data,  getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
+    const { 
+      data: verifyPaymentData,  
+      loading: verifyPaymentLoading, 
+      makeAuthPostReq: verifyPayment, 
+      isSuccessful: isVerifyPaymentSuccessful 
+    } = useMakeReq();
+    const { 
+      data: transferDoneData,  
+      loading: transferDoneLoading, 
+      makeAuthPostReq: transferDone, 
+      isSuccessful: transferDoneSuccessful 
+     } = useMakeReq();
+    const currentUserId = getUserId()
 
     // STATES
+    const [isOpen, setIsOpen] = useState(false);
     const [singleOrder, setSingleOrder] = useState(null)
+
+    // HANDLERS
+    const toggleDrawer = () => {
+      setIsOpen(isOpen => !isOpen)
+     }
+    const handleTransferDone = (id, sessionId) => {
+      transferDone(AUTH_TRANSFER_DONE, {
+        payerUserId: id,
+        sessionId: sessionId
+      })
+     }
+     const handleVerifyPayment = (id, sessionId) => {
+      verifyPayment(AUTH_VERIFY_PAYMENT, {
+        makerId: id,
+        escrowSessionId: sessionId
+      })
+     }
 
     // SIDE EFFECTS
     useEffect(()=>{
@@ -36,6 +74,29 @@ const OrderStatement = () => {
       }
     }
   }, [data, isSuccessful])
+
+  
+  // transfer done check
+  useEffect(()=>{
+    if(!isEmpty(transferDoneData?.data)) {
+      if(transferDoneSuccessful) {
+        toast.success(transferDoneData?.data?.message || "Transferred successfully!")
+        navigate(`/home/buy-coin/success/${orderId}`)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transferDoneData, transferDoneSuccessful])
+
+  // verify payment check
+    useEffect(()=>{
+    if(!isEmpty(verifyPaymentData?.data)) {
+      if(isVerifyPaymentSuccessful) {
+        toast.success(verifyPaymentData?.data?.message || "Payment received!")
+        navigate(`/home/sell-coin/success/${orderId}`)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [verifyPaymentData, isVerifyPaymentSuccessful])
 
   return (
     <PageWrapper>
@@ -198,34 +259,86 @@ const OrderStatement = () => {
                 </div>
 
                 {/* buttons */}
-                <div className="mt-auto flex items-center gap-6 w-full">
-                  <div className="flex flex-col items-stretch w-[40%]">
-                    <PrimaryButtonLight
-                      onClick={() =>
-                        navigate(
-                          "/home/buy-coin/:order-statement/report-order-statement"
-                        )
-                      }
-                      height="h-14"
-                      text={"Cancel"}
-                    />
-                  </div>
+                {
+                  singleOrder.verifierUserId === currentUserId?
+                  <div className="mt-auto flex items-center gap-6 w-full">
+                    <div className="flex flex-col items-stretch w-[40%]">
+                      <ErrorButton
+                      disabled={singleOrder.sessionEvent === SessionEvent.REPORTED}
+                        onClick={toggleDrawer}
+                        height="h-14"
+                        text={singleOrder.sessionEvent === SessionEvent.REPORTED?"Reported":"Report"}
+                      />
+                    </div>
 
-                  <div className="flex flex-col items-stretch w-[60%]">
-                    <PrimaryButton
-                      onClick={() =>
-                        navigate(`/home/buy-coin/success/id:${orderId}`)
-                      }
-                      height="h-14"
-                      text={"Transfer Done"}
-                    />
-                  </div>
-                </div>
+                    <div className="flex flex-col items-stretch w-[60%]">
+                      <PrimaryButton
+                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || verifyPaymentLoading}
+                        onClick={()=>handleVerifyPayment(currentUserId, singleOrder.sessId)}
+                        loading={verifyPaymentLoading}
+                        height="h-14"
+                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Payment received":"Mark as Received"}
+                      />
+                    </div>
+                  </div>:
+                  singleOrder.userId === currentUserId?
+                  <div className="mt-auto flex items-center gap-6 w-full">
+                    <div className="flex flex-col items-stretch w-[40%]">
+                      <PrimaryButtonLight
+                      disabled={singleOrder.sessionEvent === SessionEvent.CANCELLED}
+                        onClick={() =>
+                          navigate(
+                            `/home/buy-coin/${orderId}/report-order-statement`
+                          )
+                        }
+                        height="h-14"
+                        text={singleOrder.sessionEvent === SessionEvent.CANCELLED?"Cancelled":"Cancel"}
+                      />
+                    </div>
+
+                    <div className="flex flex-col items-stretch w-[60%]">
+                      <PrimaryButton
+                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || transferDoneLoading}
+                        onClick={()=>handleTransferDone(currentUserId, singleOrder.sessId)}
+                        loading={transferDoneLoading}
+                        height="h-14"
+                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Transferred successfully":"Transfer Done"}
+                      />
+                    </div>
+                  </div>:
+                  <>
+                    <div className="flex flex-col items-stretch w-[60%]">
+                      <PrimaryButtonLight
+                        onClick={() =>
+                          navigate(-1)
+                        }
+                        height="h-14"
+                        text={"Go back"}
+                      />
+                    </div>
+                  </>
+                }
               </div>
             </>:
           <EmptyDataComp
           viewPortHeight='h-[80vh]' />
         }
+
+        {/* Drawer */}
+        <Drawer
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        position="bottom">
+
+          {/* drawer content container */}
+          <StrictWrapper
+          title={"Report"}
+          closeDrawer={() => setIsOpen(false)}>
+
+            {/* Body content  */}
+            <ReportStatement />                    
+          </StrictWrapper>
+        </Drawer> 
       </div>
     </PageWrapper>
   );
