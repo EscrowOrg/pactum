@@ -131,7 +131,6 @@ useEffect(()=>{
        touched,
        isValid,
        errors,
-       isSubmitting,
        handleChange,
        handleBlur,
        handleSubmit,
@@ -291,7 +290,7 @@ useEffect(()=>{
                     <ErrorButton
                     onClick={handleSubmit}
                     loading={isSellLoading}
-                    disabled={isEmpty(bankDetails) || !isValid || isSubmitting}
+                    disabled={isEmpty(bankDetails) || !isValid || isSellLoading}
                     text={`Sell ${getAssetLabel(+assetId)}`}
                     />
                   </div>
