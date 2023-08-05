@@ -121,7 +121,6 @@ const BuyCoin = () => {
             touched,
             isValid,
             errors,
-            isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -271,7 +270,7 @@ const BuyCoin = () => {
                                         {/* continue button */}
                                         <div className='w-full flex flex-col items-stretch'>
                                             <PrimaryButton
-                                            disabled={!isValid || isSubmitting}
+                                            disabled={!isValid || isBuyLoading}
                                             loading={isBuyLoading}
                                             onClick={handleSubmit}
                                             text={`Buy ${getAssetLabel(+assetId)}`} />

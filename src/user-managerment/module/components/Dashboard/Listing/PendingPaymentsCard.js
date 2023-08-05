@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
+import { ListingType, SessionEvent } from "../../../helpers/enums";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
@@ -14,8 +15,6 @@ const PendingPaymentsCard = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const { data, makeAuthGetReq, getLoading, isSuccessful } = useMakeReq();
-  const BUY = 1;
-  const sessionNum = 2;
 
   // STATES
   const [pendingOrder, setPendingOrder] = useState([]);
@@ -47,7 +46,7 @@ const PendingPaymentsCard = () => {
             >
               <div className="flex justify-between py-3">
                 <div>
-                  {order.listingType === BUY ? (
+                  {order.listingType === ListingType.BUY ? (
                     <p className="font-bold text-xs text-[#3A0CA3] pb-1">
                       {"BUY ORDER"}
                     </p>
@@ -58,13 +57,13 @@ const PendingPaymentsCard = () => {
                   )}
 
                   <div className="flex gap-1">
-                    {order.sessionEvent === sessionNum ? (
+                    {order.sessionEvent === SessionEvent.MADEPAYMENT ? (
                       <span className="w-2 h-2 bg-[#EB9B00] rounded mt-2"></span>
                     ) : (
                       ""
                     )}
 
-                    {order.listingType === BUY ? (
+                    {order.listingType === ListingType.BUY ? (
                       <h4 className="text-sm font-bold text-black">
                         {`${order.fiatAmount.toLocaleString(
                           "en-US"
@@ -84,28 +83,28 @@ const PendingPaymentsCard = () => {
                     {order.accountName}
                   </h4>
                 </div>
-                <div>
+                <div className="inline-flex flex-col gap-1">
                   {/* time */}
-                  <p className="font-normal text-xs text-[#8D85A0] pl-16">
+                  <p className="font-normal text-xs text-[#8D85A0]">
                     {modifyDateTime(order.created)}
                   </p>
 
                   {/* see listing button */}
-                  <span
+                  {/* <span
                     onClick={() =>
                       navigate(`/listing/pending-payments/${order.id}`)
                     }
                     className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal mr-2"
                   >
                     See Listing
-                  </span>
+                  </span> */}
 
                   {/* view more button */}
                   <span
-                    onClick={() =>
-                      navigate(
-                        `/home/sell-coin/${order.id}/sell-order-statement`
-                      )
+                    onClick={() =>{
+                        const url =  order.listingType===ListingType.BUY?`/home/buy-coin/${order.id}/order-statement`:`/home/sell-coin/${order.id}/sell-order-statement`
+                        navigate(url)
+                      }
                     }
                     className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
                   >
