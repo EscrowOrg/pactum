@@ -20,6 +20,7 @@ const PendingPaymentsCard = () => {
   const [pendingOrder, setPendingOrder] = useState([]);
   const userId = getUserId() || "";
 
+
   //  SIDE EFFECTS
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_AWAITING_ESCROW_SESSION}/${userId}`);

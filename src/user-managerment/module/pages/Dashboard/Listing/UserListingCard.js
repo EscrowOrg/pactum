@@ -33,7 +33,7 @@ const UserListingCard = () => {
   return (
     <div className="w-full h-full flex flex-col bg-white">
       {/* heading tab */}
-      <div className="flex items-center justify-between gap-2 mx-auto">
+      <div className="flex items-center justify-between w-[90%] mx-auto">
         <div
           onClick={() => setActiveTab(1)}
           className={`flex gap-1 pb-4 text-xs text-[#929292] :p-bg[#929292] font-normal cursor-pointer [transition:all_.4s_linear] ${

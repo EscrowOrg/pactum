@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
-import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { AUTH_GET_OVERVIEW_ORDERS } from "../../../../../serivce/apiRoutes.service";
@@ -52,7 +51,7 @@ const ClosedListingOverview = () => {
 
                 <div>
                   <h3 className="font-normal text-sm text-[#8D85A0] my-3">
-                    Listed On: 9/04/2023 - 10:43AM
+                   {`${modifyDateTime(closedOverview.created)}`}
                   </h3>
 
                   <div className="flex justify-between my-4">
@@ -77,7 +76,7 @@ const ClosedListingOverview = () => {
                     </div>
 
                     <div>
-                      <CircularProgress percent={100} />
+                     {`${closedOverview.percentageUsed}%`}
                     </div>
                   </div>
 
