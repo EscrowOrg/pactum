@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { AUTH_GET_AD_LISTING_BY_VALUE } from "../../../../../serivce/apiRoutes.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
 import { BackButton, TransactionsListButton } from "../../../components/Button";
-import ListingAdCard from "../../../components/Dashboard/Listing/ListingAdCard";
-import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import ListingAdList from "../../../components/Dashboard/Listing/ListingAdList";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { TextLabelInput } from "../../../components/Input";
 import SelectInput from "../../../components/SelectInput";
@@ -52,7 +52,7 @@ const BuySellCoin = () => {
   ];
   const coinId = searchParams?.get("asset")
   const id = searchParams?.get("id");
-  const navigate = useNavigate()
+  const currentUserId = getUserId()
   
   
   // SIDE EFFECTS
@@ -152,27 +152,10 @@ const BuySellCoin = () => {
               <LoadingSpinner
               bgColor="bg-transparent"
               viewPortHeight="h-[60vh]" />:
-              !isEmpty(listingAds?.items)?
-              listingAds?.items?.filter(listingAd=>listingAd.listingType===action && listingAd.active===true)?.map((listingAd, index) => (
-                <ListingAdCard
-                defaultAssetLabel={coinId}
-                key={index}
-                adID={listingAd.adId}
-                merchantName={listingAd.merchantName}
-                username={listingAd.username}
-                tradePrice={listingAd.tradePrice}
-                availableBalance={listingAd.availableBalance}
-                lowerLimit={listingAd.lowerLimit}
-                upperLimit={listingAd.upperLimit}
-                tradeMade={listingAd.tradeMade}
-                percentageUsed={listingAd.percentageUsed}
-                listingType={listingAd.listingType}
-                assetId={listingAd.assets}
-                asset={coinSelect} />
-              )):
-              <EmptyDataComp
-              bgColor="bg-transparent"
-              viewPortHeight="h-[60vh]" />
+              <ListingAdList
+              coinSelect={coinSelect}
+              coinId={coinId}
+              listingAds={listingAds?.items?.filter(listingAd=>listingAd.listingType===action && listingAd.active===true)?.filter(listing=>listing.userId!==currentUserId)} />
             }
           </div>
         </div>
