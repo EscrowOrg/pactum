@@ -52,3 +52,4 @@ export const AUTH_GET_ESTIMATE_GAS_FEE = "/api/ChainOperation/EstimateFeeFromVir
 export const AUTH_VERIFY_PAYMENT = "/api/ListingManagement/VerifyPayment"
 export const AUTH_TRANSFER_DONE = "/api/ListingManagement/TransferDoneEvent"
 export const AUTH_UPDATE_AD_LISTING_STATUS ="api/ListingManagement/UpdateAdListingStatus"
+export const AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS = "/api/Vendor/GetTransactionSentToSubUsers"

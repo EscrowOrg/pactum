@@ -52,6 +52,8 @@ const getUsers = async ()=>{
       setDateFutter(error)
     }
 }
+
+console.log(dateFutter?.data?.id)
     //   DATA INITIALIZATION
   const navigate = useNavigate();
 

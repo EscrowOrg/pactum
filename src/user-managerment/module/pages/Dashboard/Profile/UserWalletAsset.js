@@ -1,34 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
 import { Filter, MoneySend } from "iconsax-react";
 import { useNavigate } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import BASE_URL from "../../../../../serivce/url.serice";
-import { getUserData } from "../../../../../serivce/cookie.service";
+import { getUserData, getUserId } from "../../../../../serivce/cookie.service";
+import { AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS } from "../../../../../serivce/apiRoutes.service";
+import { isEmpty } from "../../../helpers/isEmpty";
+import { TransactionGroup } from "../../../helpers/enums";
 
 const UserWalletAsset = () => {
   // STATES
-  const [getAsset, setGetAsset] = useState();
-  const { data, makeGetRequest } = useMakeReq();
+  const [userAssets, setUserAssets] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+  // HOOKS
+  const skip = useMemo(() => {
+    let output = currentPage * 10 - 1;
+    return output < 0 ? 0 : output;
+  }, [currentPage]);
+  // const { data, makeGetRequest } = useMakeReq();
+  const {
+    data,
+    getLoading,
+    makeAuthGetReq,
+  } = useMakeReq()
+  
 
-  const {userId} = getUserData()
+  const {vendorId} = getUserData()
+  const uId = getUserId();
+  const userId = getUserData()
+  console.log(uId)
+  console.log( userId)
+
+
+
 
   // DATA INITIALIAZATION
   const navigate = useNavigate();
 
   // USE EFFECT
   useEffect(() => {
-    getUserAsset()
+   makeAuthGetReq(`${AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS}/${uId}/900f860c-4c33-42cb-b5d5-96543b69b04e/${0}/${10}`)
   }, []);
 
-  const getUserAsset = async () => {
-    try {
-      await makeGetRequest(`${BASE_URL}/api/Vendor/GetTransactionSentToSubUsers/${userId}/`);
-    } catch (error) {
-      setGetAsset(error);
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      setUserAssets(data?.data);
     }
-  };
+  }, [data]);
+
+  // const getUserAsset = async () => {
+  //   try {
+  //     await makeGetRequest(`${BASE_URL}/api/Vendor/GetTransactionSentToSubUsers/${userId}/`);
+  //   } catch (error) {
+  //     setGetAsset(error);
+  //   }
+  // };
 
   const UserAssets = [
     {
@@ -77,7 +105,7 @@ const UserWalletAsset = () => {
 
           {/* list of assets */}
           <>
-            {UserAssets.map((asset, index) => (
+            {userAssets?.items.map((asset, index) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet")}
                 key={index}
@@ -91,7 +119,7 @@ const UserWalletAsset = () => {
 
                   {/* user name and email */}
                   <div>
-                    <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
+                    <h3 className="text-sm font-bold pb-0.5">{asset.transactionGroup === TransactionGroup.RECEIVE} {asset.transactionMode}</h3>
                     <p
                       className="text-xs font-bold"
                       style={{ color: colors[index] }}
