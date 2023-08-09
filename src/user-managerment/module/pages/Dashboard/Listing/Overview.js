@@ -25,12 +25,10 @@ const Overviews = () => {
   const {
     data: updateCancelData,
     isSuccessful: isCancelSuccess,
-    error: isCancelError,
-    // loading: createListingLoading,
     makeAuthPostReq,
   } = useMakeReq();
   const [cancelOrder, setCancelOrder] = useState({
-    id: { id },
+    id: id,
     adListStatus: 3,
   });
 
@@ -60,31 +58,27 @@ const Overviews = () => {
     }
   }, [data, isSuccessful]);
 
-  // useEffect(()=>{
-  //   if(!isEmpty(updateCancelData)) {
-  //       if(isCancelSuccess===true) {
-  //           toast.success(updateCancelData.message || "Cancelled!")
-  //       } else if(isCancelSuccess===false) {
-  //           toast.error(updateCancelData.message || "Cancelled failed!")
-  //       }
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [updateCancelData, isCancelSuccess])
-
-  // console.log(cancelOrder.adListStatus)
+  useEffect(() => {
+    if (!isEmpty(updateCancelData)) {
+      if (isCancelSuccess === true) {
+        toast.success(updateCancelData?.message || "Cancelled!");
+      } else if (isCancelSuccess === false) {
+        toast.error(updateCancelData?.message || "Cancelled failed!");
+      }
+    }
+  }, [updateCancelData, isCancelSuccess]);
 
   const handleCancel = () => {
     makeAuthPostReq(AUTH_UPDATE_AD_LISTING_STATUS, {
       id: id,
-      adListStatus: cancelOrder.adListStatus,
+      adListStatus: 3,
     });
     if (cancelOrder.adListStatus === 3) {
-      navigate.push(<ClosedListingCard />)
+      navigate?.push(<ClosedListingCard />);
     } else {
-      toast.error("Cancelled failed")
+      toast.success(updateCancelData?.message || "Cancelled!");
     }
   };
-console.log(id, cancelOrder.adListStatus)
   return (
     <NoTransitionWrapper>
       <>
@@ -159,7 +153,6 @@ console.log(id, cancelOrder.adListStatus)
                     </div>
 
                     {/* cancel button  */}
-                    {/* {viewMore.adListStatus  ?    */}
                     <span
                       onClick={handleCancel}
                       className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer  text-[#645B75] text-xs font-normal"

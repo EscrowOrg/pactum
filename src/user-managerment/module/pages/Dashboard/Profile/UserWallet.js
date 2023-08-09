@@ -13,6 +13,7 @@ import {
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { isEmpty } from "../../../helpers/isEmpty";
+import { useMemo } from "react";
 
 
 const UserWallet = () => {
@@ -23,6 +24,8 @@ const UserWallet = () => {
   const [Wallet, setWallet] = useState(null);
   const { data,  makeAuthGetReq, isSuccessful } = useMakeReq();
   const { makeAuthPostReq } = useMakeReq();
+
+  
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
@@ -46,9 +49,7 @@ const UserWallet = () => {
   const getWallet = async () => {
     try {
       const uId = getUserId();
-      // console.log(uId);
       await makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${uId}&USD`);
-      // console.log(data);
       setWallet(data && data.data);
     } catch (error) {
       setWallet(error);
@@ -68,8 +69,6 @@ const UserWallet = () => {
       network: Wallet.accountingCurrency,
     }
     try {
-      // console.log(uId)
-      // console.log(payload);
 
       await makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
       console.log(data);
@@ -163,9 +162,6 @@ const UserWallet = () => {
                     <h3 className="text-sm font-bold pb-0.5">
                       {Wallet.currency}
                     </h3>
-                    {/* <p className="text-xs font-normal text-[#8D85A0]">
-                      {Wallet.numOfwallets}
-                    </p> */}
                   </div>
                 </div>
 
@@ -176,9 +172,6 @@ const UserWallet = () => {
                     <h4 className="text-sm font-bold pb-0.5 text-right">
                       {Wallet.balance.availableBalance}
                     </h4>
-                    {/* <p className="text-xs font-normal text-[#8D85A0] text-right">
-                      {Wallet.fiatValue}
-                    </p> */}
                   </div>
                 </div>
               </div>
@@ -194,7 +187,6 @@ const UserWallet = () => {
             <div className="flex flex-col items-stretch w-[60%]">
               <PrimaryButton
                 onClick={() => navigate("/vendor-user-wallet/id:6")}
-                // onClick={handleSubmit}
                 height="h-14"
                 text={"Send Asset"}
               />
