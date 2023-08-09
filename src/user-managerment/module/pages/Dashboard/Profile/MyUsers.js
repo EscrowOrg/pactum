@@ -53,7 +53,7 @@ const getUsers = async ()=>{
     }
 }
 
-console.log(dateFutter?.data?.id)
+console.log(dateFutter)
     //   DATA INITIALIZATION
   const navigate = useNavigate();
 

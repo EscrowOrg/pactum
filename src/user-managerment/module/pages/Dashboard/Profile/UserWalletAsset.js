@@ -9,10 +9,11 @@ import { getUserData, getUserId } from "../../../../../serivce/cookie.service";
 import { AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS } from "../../../../../serivce/apiRoutes.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { TransactionGroup } from "../../../helpers/enums";
+import { getAssetLabel } from "../../../helpers/getAssetLabel";
 
 const UserWalletAsset = () => {
   // STATES
-  const [userAssets, setUserAssets] = useState();
+  const [userAss, setUserAssets] = useState();
   const [currentPage, setCurrentPage] = useState(0);
   // HOOKS
   const skip = useMemo(() => {
@@ -105,7 +106,7 @@ const UserWalletAsset = () => {
 
           {/* list of assets */}
           <>
-            {userAssets?.items.map((asset, index) => (
+            {UserAssets?.items.map((asset, index) => (
               <div
                 onClick={() => navigate("/vendor-user-wallet")}
                 key={index}
@@ -119,7 +120,8 @@ const UserWalletAsset = () => {
 
                   {/* user name and email */}
                   <div>
-                    <h3 className="text-sm font-bold pb-0.5">{asset.transactionGroup === TransactionGroup.RECEIVE} {asset.transactionMode}</h3>
+                    <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
+                    <p>{getAssetLabel(+asset.asset)}</p>
                     <p
                       className="text-xs font-bold"
                       style={{ color: colors[index] }}
