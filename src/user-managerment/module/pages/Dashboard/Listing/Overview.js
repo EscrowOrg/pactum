@@ -77,6 +77,7 @@ const Overviews = () => {
       navigate?.push(<ClosedListingCard />);
     } else {
       toast.success(updateCancelData?.message || "Cancelled!");
+      // window.location.reload()
     }
   };
   return (
