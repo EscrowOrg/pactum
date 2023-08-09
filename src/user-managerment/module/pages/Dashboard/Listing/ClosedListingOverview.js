@@ -9,6 +9,7 @@ import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import { AdlistStatus } from "../../../helpers/enums";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -40,7 +41,7 @@ const ClosedListingOverview = () => {
           <LoadingSpinner viewPortHeight="h-[80vh]" />
         ) : !isEmpty(closedOverview) ? (
           <>
-            {closedOverview.adListStatus === 2 ? (
+            {closedOverview.adListStatus === (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
               <div className="w-full h-full border border-[#F5F3F6] bg-white rounded-lg py-4 px-5 flex flex-col gap-4">
                 <div className="flex gap-10">
                   <BackButton />
@@ -180,9 +181,7 @@ const ClosedListingOverview = () => {
                   )}
                 </div>
               </div>
-            ) : (
-              ""
-            )}
+            ) }
           </>
         ) : (
           <EmptyDataComp />
