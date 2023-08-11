@@ -2,7 +2,7 @@ import { Copy, InfoCircle } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AUTH_GET_ESCROW_SESSION_BYID, AUTH_TRANSFER_DONE, AUTH_VERIFY_PAYMENT } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_ESCROW_SESSION_BYID, AUTH_REPORT_LISTING, AUTH_TRANSFER_DONE, AUTH_VERIFY_PAYMENT } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import {
   BackButton,
@@ -18,15 +18,11 @@ import { SessionEvent } from "../../../helpers/enums";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import Drawer from "../../../layouts/Drawer";
-import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import PageWrapper from "../../../layouts/PageWrapper";
-import ReportStatement from "./ReportStatement";
 
 const SellOrderStatements = () => {
 
   // STATES
-  const [isOpen, setIsOpen] = useState(false);
   const [singleOrder, setSingleOrder] = useState(null)
 
   // DATA INITIALIZATION
@@ -46,11 +42,20 @@ const SellOrderStatements = () => {
     isSuccessful: transferDoneSuccessful 
    } = useMakeReq();
   const currentUserId = getUserId()
+  const { 
+    data: reportListingData,  
+    loading: reportListingLoading, 
+    makeAuthPostReq: reportListing, 
+    isSuccessful: reportListingSuccessful 
+  } = useMakeReq();
 
-   // HANDLERS
-   const toggleDrawer = () => {
-    setIsOpen(isOpen => !isOpen)
-   }
+  // HANDLERS
+  const handleReportOrder = (sessionId) => {
+    reportListing(AUTH_REPORT_LISTING, {
+      userId: currentUserId,
+      escrowSessionId: sessionId
+    })
+  }
    const handleTransferDone = (id, sessionId) => {
     transferDone(AUTH_TRANSFER_DONE, {
       payerUserId: id,
@@ -97,6 +102,17 @@ const SellOrderStatements = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
+
+  // report listing
+  useEffect(()=>{
+    if(!isEmpty(reportListingData?.data)) {
+      if(reportListingSuccessful) {
+        toast.success(reportListingData?.message || "Listing reported!")
+        navigate(`/listing`)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reportListingData, reportListingSuccessful])
 
   return (
     <PageWrapper>
@@ -240,10 +256,13 @@ const SellOrderStatements = () => {
                   <div className="mt-auto flex items-center gap-6 w-full">
                     <div className="flex flex-col items-stretch w-[40%]">
                       <ErrorButton
+                      loading={reportListingLoading}
                       disabled={singleOrder.sessionEvent === SessionEvent.REPORTED}
-                        onClick={toggleDrawer}
-                        height="h-14"
-                        text={singleOrder.sessionEvent === SessionEvent.REPORTED?"Reported":"Report"}
+                      onClick={()=>{
+                        handleReportOrder(singleOrder.sessId)
+                      }}
+                      height="h-14"
+                      text={singleOrder.sessionEvent === SessionEvent.REPORTED?"Reported":"Report"}
                       />
                     </div>
 
@@ -299,22 +318,6 @@ const SellOrderStatements = () => {
           <EmptyDataComp
           viewPortHeight='h-[80vh]' />
         }
-        
-        {/* Drawer */}
-        <Drawer
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        position="bottom">
-
-          {/* drawer content container */}
-          <StrictWrapper
-          title={"Report"}
-          closeDrawer={() => setIsOpen(false)}>
-
-            {/* Body content  */}
-            <ReportStatement />                    
-          </StrictWrapper>
-        </Drawer> 
       </div>
     </PageWrapper>
   );
