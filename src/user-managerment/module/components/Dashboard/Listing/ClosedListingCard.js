@@ -9,6 +9,7 @@ import ListingAdPagination from "../../../pages/Dashboard/Listing/ListingAdPagin
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import { getUserId } from "../../../../../serivce/cookie.service";
+import { AdlistStatus, ListingType } from "../../../helpers/enums";
 
 const ClosedListingCard = () => {
   // STATES
@@ -50,7 +51,7 @@ const ClosedListingCard = () => {
           {closedListingData?.items?.map((closedOrders, index) => {
             return (
               <div key={index}>
-                {closedOrders.adListStatus === 2 ? (
+                {closedOrders.adListStatus === (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
                   <div className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 my-3 flex flex-col gap-4">
                     {/* profile info */}
                     <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
@@ -62,18 +63,18 @@ const ClosedListingCard = () => {
                           <h3
                             style={{
                               color:
-                                closedOrders.listingType === 1
+                                closedOrders.listingType === ListingType.BUY
                                   ? "#3A0CA3"
                                   : "#D1292D",
                               fontSize:
-                                closedOrders.listingType === 1
+                                closedOrders.listingType === ListingType.BUY
                                   ? "14px"
                                   : "14px",
                               fontWeight:
-                                closedOrders.listingType === 1 ? 700 : 700,
+                                closedOrders.listingType === ListingType.BUY ? 700 : 700,
                             }}
                           >
-                            {closedOrders.listingType === 1
+                            {closedOrders.listingType === ListingType.BUY
                               ? "BUY ORDER"
                               : "SELL ORDER"}
                           </h3>
@@ -132,9 +133,7 @@ const ClosedListingCard = () => {
                       View More
                     </span>
                   </div>
-                ) : (
-                  <EmptyDataComp viewPortHeight="h-[80vh]" />
-                )}
+                ) }
               </div>
             );
           })}
