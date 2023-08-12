@@ -113,11 +113,11 @@ const MainRouter = () => {
         {/* VENDOR'S USERS */}
         <Route path="/vendor-add-user" element={<AddUser />} />
 
-        <Route path="/vendor-user-wallet" element={<UserWallet />} />
+        <Route path="/vendor-user-wallet/:id" element={<UserWallet />} />
 
-        <Route path="/vendor-user-wallet/id:6" element={<SendAsset />} />
+        <Route path="/vendor-user-send-asset/:id" element={<SendAsset />} />
 
-        <Route path="/vendor-user-wallet/id:7" element={<UserWalletAsset />} />
+        <Route path="/vendor-user-wallet-asset/:id" element={<UserWalletAsset />} />
 
         {/* ============= INDIVIDUALS ================= */}
         {/* INDIVIDUAL REGISTER */}

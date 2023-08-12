@@ -15,52 +15,46 @@ import Drawer from "../../../layouts/Drawer";
 import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
 import PageWrapper from "../../../layouts/PageWrapper";
 
-const MyUsers= () => {
+const MyUsers = () => {
   // STATES
   const [searchUsers, setSearchUsers] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
-  
-    // STATES
-    // const [isOpen, setIsOpen] = useState(false);
-    const [isDrawer1Open, setIsDrawer1Open] = useState(false);
-   
-    const [filterStatus, setFilterStatus] = useState({
-        name: "",
-        id: null
-    })
-    const [dateFutter, setDateFutter] = useState([])
+  const [isDrawer1Open, setIsDrawer1Open] = useState(false);
+  const [dateFutter, setDateFutter] = useState([]);
 
-   const {data, getLoading, makeAuthGetReq} = useMakeReq();
+  // HANDLERS
+  const toggleDrawer1 = () => {
+    setIsDrawer1Open((isDrawer1Open) => !isDrawer1Open);
+  };
 
-   const{vendorId, userId} = getUserData();
+  const [filterStatus, setFilterStatus] = useState({
+    name: "",
+    id: null,
+  });
 
-useEffect(()=>{
-   getUsers();
-},[])
+  const { data, getLoading, makeAuthGetReq } = useMakeReq();
 
+  const { vendorId, userId } = getUserData();
 
-useEffect(()=>{
-  if(!isEmpty(data)) {
-      setDateFutter(data?.data)
-  }
-}, [data])
-const getUsers = async ()=>{
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      setDateFutter(data?.data);
+    }
+  }, [data]);
+  const getUsers = async () => {
     try {
-     await makeAuthGetReq(`${AUTH_GET_VENDOR_SUBUSERS}/${vendorId}/${userId}`)
-      setDateFutter(data?.data)
+      await makeAuthGetReq(`${AUTH_GET_VENDOR_SUBUSERS}/${vendorId}/${userId}`);
+      setDateFutter(data?.data);
     } catch (error) {
-      setDateFutter(error)
+      setDateFutter(error);
     }
-}
-
-console.log(dateFutter)
-    //   DATA INITIALIZATION
+  };
+  //   DATA INITIALIZATION
   const navigate = useNavigate();
-
-    // HANDLERS
-    const toggleDrawer1 = () => {
-        setIsDrawer1Open(isDrawer1Open => !isDrawer1Open)
-    }
 
   return (
     <PageWrapper>
@@ -96,10 +90,9 @@ console.log(dateFutter)
         <div className="w-full h-full px-5 py-3 bg-[#FAFAFB]">
           <div className="flex justify-between">
             {/*number of users  */}
-            {
-              !isEmpty(dateFutter)&&
+            {!isEmpty(dateFutter) && (
               <h3 className="font-bold">{dateFutter.length} users</h3>
-            }
+            )}
 
             {/* filter toggle */}
             <div
@@ -114,17 +107,17 @@ console.log(dateFutter)
 
           {/* list of users */}
           <div>
-            {
-              getLoading?
+            {getLoading ? (
               <LoadingSpinner
-              bgColor="bg-transparent"
-              viewPortHeight="h-[60vh]" />:
-              !isEmpty(dateFutter)? 
-              dateFutter.map((user)=>(
+                bgColor="bg-transparent"
+                viewPortHeight="h-[60vh]"
+              />
+            ) : !isEmpty(dateFutter) ? (
+              dateFutter.map((user, index) => (
                 <div
-                  onClick={() => navigate("/vendor-user-wallet")}
-                  key={user.id}
-                  className="flex justify-between bg-white w-full px-2 py-2.5 rounded-md  my-3"
+                  onClick={() => navigate(`/vendor-user-wallet/${user.id}`)}
+                  key={index}
+                  className="flex justify-between bg-white w-full px-2 py-2.5 rounded-md my-3"
                 >
                   <div className="flex items-center gap-1.5">
                     {/* user image */}
@@ -172,38 +165,38 @@ console.log(dateFutter)
                     />
                   </div>
                 </div>
-                )):
-                <EmptyDataComp
+              ))
+            ) : (
+              <EmptyDataComp
                 bgColor="bg-transparent"
-                viewPortHeight="h-[60vh]" />
-            }
-           
+                viewPortHeight="h-[60vh]"
+              />
+            )}
           </div>
         </div>
       </div>
 
-       {/* select filter drawer */}
-       <Drawer
-            relationshipStatus="alone"
-            height='!h-auto'
-            insertCurve={false}
-            type="slider"
-            isOpen={isDrawer1Open}
-            onClose={toggleDrawer1}
-            position="bottom">
-
-                {/* drawer content container */}
-                <SlideWrapper
-                title={"Filter by:"}>
-                    <UserFilterStatus
-                    filterValue={filterValue}
-                    setFilterValue={setFilterValue}
-                    filterStatus={filterStatus}
-                    setFilterStatus={setFilterStatus}
-                    closeDrawer={toggleDrawer1} />
-                </SlideWrapper>
-            </Drawer>
-            
+      {/* select filter drawer */}
+      <Drawer
+        relationshipStatus="alone"
+        height="!h-auto"
+        insertCurve={false}
+        type="slider"
+        isOpen={isDrawer1Open}
+        onClose={toggleDrawer1}
+        position="bottom"
+      >
+        {/* drawer content container */}
+        <SlideWrapper title={"Filter by:"}>
+          <UserFilterStatus
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            closeDrawer={toggleDrawer1}
+          />
+        </SlideWrapper>
+      </Drawer>
     </PageWrapper>
   );
 };

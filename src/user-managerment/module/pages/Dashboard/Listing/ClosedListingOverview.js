@@ -177,7 +177,7 @@ const ClosedListingOverview = () => {
                       })}
                     </>
                   ) : (
-                    <EmptyDataComp />
+                    <EmptyDataComp viewPortHeight="h-[80vh]" />
                   )}
                 </div>
               </div>
