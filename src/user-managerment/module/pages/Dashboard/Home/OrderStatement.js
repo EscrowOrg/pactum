@@ -1,9 +1,8 @@
-import { Drawer } from "antd";
 import { Copy, InfoCircle, Message } from "iconsax-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AUTH_GET_ESCROW_SESSION_BYID, AUTH_TRANSFER_DONE, AUTH_VERIFY_PAYMENT } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_ESCROW_SESSION_BYID, AUTH_REPORT_LISTING, AUTH_TRANSFER_DONE, AUTH_VERIFY_PAYMENT } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import {
   BackButton,
@@ -18,9 +17,7 @@ import { SessionEvent } from "../../../helpers/enums";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
 import PageWrapper from "../../../layouts/PageWrapper";
-import ReportStatement from "./ReportStatement";
 
 const OrderStatement = () => {
 
@@ -41,15 +38,23 @@ const OrderStatement = () => {
       isSuccessful: transferDoneSuccessful 
      } = useMakeReq();
     const currentUserId = getUserId()
+    const { 
+      data: reportListingData,  
+      loading: reportListingLoading, 
+      makeAuthPostReq: reportListing, 
+      isSuccessful: reportListingSuccessful 
+     } = useMakeReq();
 
     // STATES
-    const [isOpen, setIsOpen] = useState(false);
     const [singleOrder, setSingleOrder] = useState(null)
 
     // HANDLERS
-    const toggleDrawer = () => {
-      setIsOpen(isOpen => !isOpen)
-     }
+    const handleReportOrder = (sessionId) => {
+      reportListing(AUTH_REPORT_LISTING, {
+        userId: currentUserId,
+        escrowSessionId: sessionId
+      })
+    }
     const handleTransferDone = (id, sessionId) => {
       transferDone(AUTH_TRANSFER_DONE, {
         payerUserId: id,
@@ -74,7 +79,6 @@ const OrderStatement = () => {
       }
     }
   }, [data, isSuccessful])
-
   
   // transfer done check
   useEffect(()=>{
@@ -97,6 +101,17 @@ const OrderStatement = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
+
+  // report listing
+    useEffect(()=>{
+    if(!isEmpty(reportListingData?.data)) {
+      if(reportListingSuccessful) {
+        toast.success(reportListingData?.message || "Listing reported!")
+        navigate(`/listing`)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reportListingData, reportListingSuccessful])
 
   return (
     <PageWrapper>
@@ -264,20 +279,23 @@ const OrderStatement = () => {
                   <div className="mt-auto flex items-center gap-6 w-full">
                     <div className="flex flex-col items-stretch w-[40%]">
                       <ErrorButton
+                      loading={reportListingLoading}
                       disabled={singleOrder.sessionEvent === SessionEvent.REPORTED}
-                        onClick={toggleDrawer}
-                        height="h-14"
-                        text={singleOrder.sessionEvent === SessionEvent.REPORTED?"Reported":"Report"}
+                      onClick={()=>{
+                        handleReportOrder(singleOrder.sessId)
+                      }}
+                      height="h-14"
+                      text={singleOrder.sessionEvent === SessionEvent.REPORTED?"Reported":"Report"}
                       />
                     </div>
 
                     <div className="flex flex-col items-stretch w-[60%]">
                       <PrimaryButton
                       disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || verifyPaymentLoading}
-                        onClick={()=>handleVerifyPayment(currentUserId, singleOrder.sessId)}
-                        loading={verifyPaymentLoading}
-                        height="h-14"
-                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Payment received":"Mark as Received"}
+                      onClick={()=>handleVerifyPayment(currentUserId, singleOrder.sessId)}
+                      loading={verifyPaymentLoading}
+                      height="h-14"
+                      text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Payment received":"Mark as Received"}
                       />
                     </div>
                   </div>:
@@ -323,22 +341,6 @@ const OrderStatement = () => {
           <EmptyDataComp
           viewPortHeight='h-[80vh]' />
         }
-
-        {/* Drawer */}
-        <Drawer
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        position="bottom">
-
-          {/* drawer content container */}
-          <StrictWrapper
-          title={"Report"}
-          closeDrawer={() => setIsOpen(false)}>
-
-            {/* Body content  */}
-            <ReportStatement />                    
-          </StrictWrapper>
-        </Drawer> 
       </div>
     </PageWrapper>
   );
