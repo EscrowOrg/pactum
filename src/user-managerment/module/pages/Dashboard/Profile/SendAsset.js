@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   AUTH_GET_ASSETS_MAPPING,
   AUTH_GET_SINGLE_ACCOUNT,
-  AUTH_TRANSFER_INTERNAL_USERS
+  AUTH_TRANSFER_INTERNAL_USERS,
 } from "../../../../../serivce/apiRoutes.service";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { BackButton, PrimaryButton } from "../../../components/Button";
@@ -23,6 +23,7 @@ import PageWrapper from "../../../layouts/PageWrapper";
 const SendAsset = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
+  const { id } = useParams();
   const {
     data: sendInternalUserData,
     isSuccessful: isSendInternalUserSuccess,
@@ -43,10 +44,6 @@ const SendAsset = () => {
   const [amount, setAmount] = useState("");
   const [recipientId, setRecipientID] = useState("");
   const [walletInfo, setWalletInfo] = useState({});
-//   const [mode, setMode] = useState({
-//     value: 1,
-//     label: "Internal User",
-//   });
   const [assetList, setAssetList] = useState([]);
   const [asset, setAsset] = useState({
     name: "",
@@ -68,23 +65,6 @@ const SendAsset = () => {
   const toggleDrawer = (value) => {
     setIsOpen((isOpen) => !isOpen);
   };
-  const handleSendToInternalUser = () => {
-    // getting user ID
-    const uId = getUserId();
-    // const {userId} = getUserData();
-
-    // Internal Users Transfer
-    const payload = {
-      userIdentifier: recipientId,
-      senderUserId: uId,
-      amount: amount,
-      currency: asset.assetId,
-      network: asset.networkId,
-    };
-
-    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
-  };
-
 
   // SIDE EFFECTS
   useEffect(() => {
@@ -106,6 +86,22 @@ const SendAsset = () => {
     }
   }, [walletInfoData]);
 
+  const handleSendToInternalUser = () => {
+    // getting user ID
+    const uId = getUserId();
+
+    // Internal Users Transfer
+    const payload = {
+      userIdentifier: recipientId,
+      senderUserId: uId,
+      amount: amount,
+      currency: asset.assetId,
+      network: asset.networkId,
+    };
+
+    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
+  };
+
   // create wallet feedback
   useEffect(() => {
     if (!isEmpty(sendInternalUserData)) {
@@ -113,7 +109,7 @@ const SendAsset = () => {
         toast.success(sendInternalUserData.message, {
           toastId: "success1",
         });
-        navigate("/profile/list-of-users");
+        navigate(`/vendor-user-wallet-asset/${id}`);
       } else if (isSendInternalUserSuccess === false) {
         toast.error(sendInternalUserData.message, {
           toastId: "error1",
@@ -122,6 +118,7 @@ const SendAsset = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sendInternalUserData, isSendInternalUserSuccess]);
+
   return (
     <PageWrapper>
       {/* container */}
@@ -178,7 +175,7 @@ const SendAsset = () => {
                 <TextLabelInput
                   paddingRight="pr-[15%]"
                   value={recipientId}
-                  placeholderText={"Recipient's Username"}
+                  placeholderText={"Recipient's Email"}
                   onChange={(e) => setRecipientID(e.target.value)}
                   label={
                     <ProfileCircle variant="Bulk" size={22} color="#ACA6BA" />

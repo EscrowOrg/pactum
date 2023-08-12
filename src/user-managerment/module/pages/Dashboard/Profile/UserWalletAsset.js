@@ -2,47 +2,38 @@ import React, { useEffect, useMemo, useState } from "react";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { BackButton } from "../../../components/Button";
 import { Filter, MoneySend } from "iconsax-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
-import BASE_URL from "../../../../../serivce/url.serice";
-import { getUserData, getUserId } from "../../../../../serivce/cookie.service";
+import { getUserId } from "../../../../../serivce/cookie.service";
 import { AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS } from "../../../../../serivce/apiRoutes.service";
 import { isEmpty } from "../../../helpers/isEmpty";
-import { TransactionGroup } from "../../../helpers/enums";
-import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { TransactionGroup, TransactionMode } from "../../../helpers/enums";
+import LoadingSpinner from "../../../components/Global/LoadingSpinner";
+import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 
 const UserWalletAsset = () => {
   // STATES
-  const [userAss, setUserAssets] = useState();
+  const [userAssets, setUserAssets] = useState();
   const [currentPage, setCurrentPage] = useState(0);
   // HOOKS
   const skip = useMemo(() => {
     let output = currentPage * 10 - 1;
     return output < 0 ? 0 : output;
   }, [currentPage]);
-  // const { data, makeGetRequest } = useMakeReq();
-  const {
-    data,
-    getLoading,
-    makeAuthGetReq,
-  } = useMakeReq()
-  
+  const { data, getLoading, makeAuthGetReq } = useMakeReq();
 
-  const {vendorId} = getUserData()
   const uId = getUserId();
-  const userId = getUserData()
-  console.log(uId)
-  console.log( userId)
-
-
-
+  const {id} = useParams()
+  // const userId = getUserData();
 
   // DATA INITIALIAZATION
   const navigate = useNavigate();
 
   // USE EFFECT
   useEffect(() => {
-   makeAuthGetReq(`${AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS}/${uId}/900f860c-4c33-42cb-b5d5-96543b69b04e/${0}/${10}`)
+    makeAuthGetReq(
+      `${AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS}/${uId}/${id}/${skip}/${10}`
+    );
   }, []);
 
   useEffect(() => {
@@ -51,38 +42,6 @@ const UserWalletAsset = () => {
     }
   }, [data]);
 
-  // const getUserAsset = async () => {
-  //   try {
-  //     await makeGetRequest(`${BASE_URL}/api/Vendor/GetTransactionSentToSubUsers/${userId}/`);
-  //   } catch (error) {
-  //     setGetAsset(error);
-  //   }
-  // };
-
-  const UserAssets = [
-    {
-      name: "Sent: 400 DOGE",
-      assetStatus: "SUCCESS",
-      amountInFiat: "$102.38",
-    },
-    {
-      name: "Sent: 400 DOGE",
-      assetStatus: "PENDING",
-      amountInFiat: "$102.38",
-    },
-    {
-      name: "Sent: 400 DOGE",
-      assetStatus: "FAILED",
-      amountInFiat: "$102.38",
-    },
-    {
-      name: "Received: 400 DOGE",
-      assetStatus: "FAILED",
-      amountInFiat: "$102.38",
-    },
-  ];
-
-  const colors = ["#10B981", "#EB9B00", "#D1292D", "#D1292D"];
   return (
     <PageWrapper>
       <div className="w-full h-full">
@@ -105,47 +64,76 @@ const UserWalletAsset = () => {
           {/* body */}
 
           {/* list of assets */}
+          {getLoading ? (
+          <LoadingSpinner viewPortHeight="h-[80vh]" />
+        ) : !isEmpty(userAssets) ? (
           <>
-            {UserAssets?.items.map((asset, index) => (
-              <div
-                onClick={() => navigate("/vendor-user-wallet")}
-                key={index}
-                className="flex justify-between border-b w-full p-4  my-3"
-              >
-                <div className="flex items-center gap-1.5">
-                  {/* user image */}
-                  <div className="h-[32px] w-[32px] rounded-[50%] bg-[#FAFAFB] flex justify-center items-center">
-                    <MoneySend size={16} variant="Bulk" color="#A39CB2" />
-                  </div>
-
-                  {/* user name and email */}
-                  <div>
-                    <h3 className="text-sm font-bold pb-0.5">{asset.name}</h3>
-                    <p>{getAssetLabel(+asset.asset)}</p>
-                    <p
-                      className="text-xs font-bold"
-                      style={{ color: colors[index] }}
-                    >
-                      {asset.assetStatus}
-                    </p>
-                  </div>
+          {userAssets?.items.map((asset, index) => (
+            <div
+              onClick={() => navigate("/vendor-user-wallet")}
+              key={index}
+              className="flex justify-between border-b w-full p-4  my-3"
+            >
+              <div className="flex items-center gap-1.5">
+                {/* user image */}
+                <div className="h-[32px] w-[32px] rounded-[50%] bg-[#FAFAFB] flex justify-center items-center">
+                  <MoneySend size={16} variant="Bulk" color="#A39CB2" />
                 </div>
 
-                {/* amount status */}
-                <div className="flex items-center gap-2">
-                  {/* amount */}
-                  <>
-                    {/* {asset.isSuccessful ? {color: "green"} : {color: "red"}} */}
-                    <div className="inline-flex flex-col">
-                      <h4 className="text-sm font-bold pb-0.5">
-                        {asset.amountInFiat}
-                      </h4>
-                    </div>
-                  </>
+                {/* user name and email */}
+                <div>
+                  <h3 className="text-sm font-bold pb-0.5">
+                    {asset.transactionGroup === TransactionGroup.SEND ? (
+                      <span className="font-semibold text-xs">SENT</span>
+                    ) : asset.transactionGroup ===
+                      TransactionGroup.RECEIVE ? (
+                      <span className="font-semibold text-xs">RECEIVED</span>
+                    ) : asset.transactionGroup === TransactionGroup.SWAP ? (
+                      <span className="font-semibold text-xs">SWAPED</span>
+                    ) : asset.transactionGroup === TransactionGroup.BUY ? (
+                      <span className="font-semibold text-xs">BOUGHT</span>
+                    ) : asset.transactionGroup === TransactionGroup.SELL ? (
+                      <span className="font-semibold text-xs">SOLD</span>
+                    ) : (
+                      <></>
+                    )}
+                    {`: ${asset.amount} ${asset.asset}`}
+                  </h3>
+
+                  {asset.transactionMode === TransactionMode.SUCCESS ? (
+                    <span className="text-[#10B981] font-semibold text-xs">
+                      SUCCESS
+                    </span>
+                  ) : asset.transactionMode === TransactionMode.FAILED ? (
+                    <span className="text-[#D1292D] font-semibold text-xs">
+                      FAILED
+                    </span>
+                  ) : asset.transactionMode === TransactionMode.PENDING ? (
+                    <span className="text-[#EB9B00] font-semibold text-xs">
+                      PENDING
+                    </span>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
-            ))}
-          </>
+
+              {/* amount status */}
+              <div className="flex items-center gap-2">
+                {/* amount */}
+                <div className="inline-flex flex-col">
+                  <h4 className="text-sm font-bold pb-0.5">
+                    {`$${asset.amount}`}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+        ) : (
+          <EmptyDataComp viewPortHeight="h-[80vh]" />
+        )}
+       
         </div>
       </div>
     </PageWrapper>
