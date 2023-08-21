@@ -5,8 +5,25 @@ import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransition
 import ProfileCompletionPopup from '../../../components/Dashboard/Home/ProfileCompletionPopup'
 import HotList from '../../../components/Dashboard/Home/HotList'
 import RecentTransactions from '../../../components/Dashboard/Home/RecentTransactions'
+import { useEffect } from 'react'
+import useMakeReq from '../../../hooks/Global/useMakeReq'
+import { AUTH_POST_VALIDATE_DEVICE_TOKEN } from '../../../../../serivce/apiRoutes.service'
+import { getUserData } from '../../../../../serivce/cookie.service'
 
 const Home = () => {
+  const {  makeAuthPostReq } = useMakeReq();
+  const {userId} = getUserData()
+
+const token = localStorage.getItem("currentToken");
+
+useEffect (() => {
+    makeAuthPostReq(`${AUTH_POST_VALIDATE_DEVICE_TOKEN}`, {
+        token: token,
+        userId: userId
+      });
+
+})
+
     return (
         <NoTransitionWrapper>
             <div className="w-full h-full flex flex-col">
