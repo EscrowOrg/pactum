@@ -59,7 +59,7 @@ const OngoingListingCard = () => {
                       {/* image and name */}
                       <div className="flex items-center gap-2">
                         {ordersData.active === false ? (
-                          <Pause size="32" color="#FF8A65" />
+                          <Pause size="32" color="#EB9B00" />
                         ) : (
                           <CircularProgress
                             percent={`${ordersData.percentageUsed}`}

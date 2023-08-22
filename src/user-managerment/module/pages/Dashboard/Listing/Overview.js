@@ -5,20 +5,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
-import {
-  AUTH_DEACTIVATE_ADLIST,
-  AUTH_GET_OVERVIEW_ORDERS,
-  AUTH_UPDATE_AD_LISTING_STATUS,
-} from "../../../../../serivce/apiRoutes.service";
+import {AUTH_DEACTIVATE_ADLIST, AUTH_GET_OVERVIEW_ORDERS,AUTH_UPDATE_AD_LISTING_STATUS} from "../../../../../serivce/apiRoutes.service";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import ClosedListingCard from "../../../components/Dashboard/Listing/ClosedListingCard";
 import { toast } from "react-toastify";
 import { getUserData } from "../../../../../serivce/cookie.service";
-import OngoingListingCard from "../../../components/Dashboard/Listing/OngoingListingCard";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
-import { Pause, PauseCircle } from "iconsax-react";
+import { Pause } from "iconsax-react";
 
 const Overviews = () => {
   // DATA INITIALIZATION
@@ -26,22 +21,12 @@ const Overviews = () => {
   const { id } = useParams();
   const { userId } = getUserData();
 
-  // States
+  // STATES
   const [viewMore, setViewMore] = useState();
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
-  const {
-    data: updateCancelData,
-    isSuccessful: isCancelSuccess,
-    makeAuthPostReq,
-  } = useMakeReq();
-  const [cancelOrder, setCancelOrder] = useState({
-    id: id,
-    adListStatus: 3,
-  });
-  const [pauseOrder, setPauseOrder] = useState({
-    userId: userId,
-    adId: "ee0fd05f-b236-4f2f-bb94-b23eefc47c74",
-  });
+  const {data: updateCancelData, isSuccessful: isCancelSuccess, makeAuthPostReq} = useMakeReq();
+  const [cancelOrder, setCancelOrder] = useState({id: id, adListStatus: 3});
+  const [pauseOrder, setPauseOrder] = useState({});
   const { data: pauseData, isSuccessful: isPauseSuccess } = useMakeReq();
 
   const sessionNum = 2;
@@ -49,7 +34,6 @@ const Overviews = () => {
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${id}`);
   }, []);
-
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
@@ -77,15 +61,6 @@ const Overviews = () => {
     }
   }, [updateCancelData, isCancelSuccess]);
 
-  // cancel useEffect
-  useEffect(() => {
-    if (!isEmpty(data)) {
-      if (isSuccessful) {
-        setPauseOrder(data);
-      }
-    }
-  }, [data, isSuccessful]);
-
   const handleCancel = () => {
     makeAuthPostReq(AUTH_UPDATE_AD_LISTING_STATUS, {
       id: id,
@@ -98,26 +73,30 @@ const Overviews = () => {
     }
   };
 
-  // const adId =
-  // console.log(viewMore.adId)
-  // Pause feature
+  // pause useEffect
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      if (isPauseSuccess) {
+        setPauseOrder(data);
+      }
+    }
+  }, [data, isPauseSuccess]);
+
+  // Pause handle feature
   const handlePause = () => {
     const adId = viewMore.adId;
     makeAuthPostReq(AUTH_DEACTIVATE_ADLIST, {
       userId: userId,
       adId: adId,
     });
-
-    // {cancelOrder.active === false ? "" : ""}
-    if (pauseOrder.active === true) {
-      // navigate?.push(<OngoingListingCard />);
-      console.log("working");
-    } else if (pauseOrder.active === false) {
-      // toast.success(updateCancelData?.message || "Paused!");
-      console.log("paused");
+    if (pauseOrder.active === false) {
+      navigate(-1)
     } else {
-      console.log("not working");
+      toast.success(pauseData?.message);
     }
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
   return (
     <NoTransitionWrapper>
@@ -163,14 +142,12 @@ const Overviews = () => {
 
                     <div>
                       {viewMore.active === false ? (
-                        <Pause size="32" color="#FF8A65" />
+                        <Pause size="32" color="#EB9B00" />
                       ) : (
                         <CircularProgress
                           percent={`${viewMore.percentageUsed}`}
                         />
                       )}
-
-                      {/* {`${viewMore?.percentageUsed}%`} */}
                     </div>
                   </div>
 
@@ -209,7 +186,6 @@ const Overviews = () => {
                     >
                       Cancel
                     </span>
-                    {/* : ""} */}
                   </div>
 
                   <div className="flex justify-between">
