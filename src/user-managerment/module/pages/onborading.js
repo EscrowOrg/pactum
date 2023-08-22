@@ -1,7 +1,7 @@
 import React from "react";
-import PageWrapper from "../layouts/PageWrapper";
-import RegisterAsCard from "../components/RegisterAsCard";
 import { useNavigate } from "react-router";
+import RegisterAsCard from "../components/RegisterAsCard";
+import PageWrapper from "../layouts/PageWrapper";
 
 const Onborading = ()=>{
 
@@ -42,7 +42,8 @@ const Onborading = ()=>{
                         {/* individual signup */}
                         <RegisterAsCard
                         iconPath={"/images/onboarding/individual.png"}
-                        url={"/individual-register"}
+                        // url={"/individual-register"}
+                        url={""}
                         title={"I am an individual user"}
                         subTitle={"An individual user account is most preferred for personal use."} />
                     </div>

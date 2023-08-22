@@ -126,10 +126,16 @@ const OrderStatement = () => {
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg text-black">Order Statement</h3>
 
-            <h3 className="text-xs font-normal text-[#141217]">
-              Closes in{" "}
-              <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
-            </h3>
+            {
+              singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+              <h3 className="text-xs font-normal text-[#141217]">
+                Closed
+              </h3>:
+              <h3 className="text-xs font-normal text-[#141217]">
+                Closes in{" "}
+                <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
+              </h3>
+            }
           </div>
 
           {/* transaction list button */}
@@ -160,17 +166,29 @@ const OrderStatement = () => {
               <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
                 {/* main info */}
                 <div className="flex flex-col gap-3 items-center w-full">
-                  <h5 className="font-normal text-sm text-[#645B75]">
-                    Amount to be paid.
-                  </h5>
+                  {
+                    singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                    <h5 className="font-normal text-sm text-[#645B75]">
+                      Amount paid.
+                    </h5>:
+                    <h5 className="font-normal text-sm text-[#645B75]">
+                      Amount to be paid.
+                    </h5>
+                  }
 
                   <h3 className="text-[#3F9491] text-[32px] font-bold">
                     {`₦${singleOrder?.fiatAmount?.toLocaleString('en-US')}`}
                   </h3>
 
+                  {
+                    singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                  <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
+                    {`You received ${singleOrder?.cryptoAmount}${getAssetLabel(+singleOrder?.asset)}`}
+                  </h3>:
                   <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
                     {`You will receive ${singleOrder?.cryptoAmount}${getAssetLabel(+singleOrder?.asset)}`}
                   </h3>
+                  }
                 </div>
 
                 {/* summary details */}
@@ -266,12 +284,16 @@ const OrderStatement = () => {
                 </div>
 
                 {/* important notice */}
-                <div>
-                  <h3 className="text-[#EB9B00] font-bold">IMPORTANT NOTICE:</h3>
-                  <p className="text-xs font-medium">
-                    Please chat with the seller before making payment.
-                  </p>
-                </div>
+                {
+                  singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                  <></>:
+                  <div>
+                    <h3 className="text-[#EB9B00] font-bold">IMPORTANT NOTICE:</h3>
+                    <p className="text-xs font-medium">
+                      Please chat with the seller before making payment.
+                    </p>
+                  </div>
+                }
 
                 {/* buttons */}
                 {
