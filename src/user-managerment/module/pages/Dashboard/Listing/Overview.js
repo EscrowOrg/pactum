@@ -5,42 +5,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
-import {
-  AUTH_GET_OVERVIEW_ORDERS,
-  AUTH_UPDATE_AD_LISTING_STATUS,
-} from "../../../../../serivce/apiRoutes.service";
+import {AUTH_DEACTIVATE_ADLIST, AUTH_GET_OVERVIEW_ORDERS,AUTH_UPDATE_AD_LISTING_STATUS} from "../../../../../serivce/apiRoutes.service";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import ClosedListingCard from "../../../components/Dashboard/Listing/ClosedListingCard";
 import { toast } from "react-toastify";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
+import { Pause } from "iconsax-react";
 
 const Overviews = () => {
-  // States
-  const [viewMore, setViewMore] = useState();
-  const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
-
-  const { id } = useParams();
-
-  const {
-    data: updateCancelData,
-    isSuccessful: isCancelSuccess,
-    makeAuthPostReq,
-  } = useMakeReq();
-  const [cancelOrder, setCancelOrder] = useState({
-    id: id,
-    adListStatus: 3,
-  });
-
   // DATA INITIALIZATION
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { userId } = getUserData();
+
+  // STATES
+  const [viewMore, setViewMore] = useState();
+  const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
+  const {data: updateCancelData, isSuccessful: isCancelSuccess, makeAuthPostReq} = useMakeReq();
+  const [cancelOrder, setCancelOrder] = useState({id: id, adListStatus: 3});
+  const [pauseOrder, setPauseOrder] = useState({});
+  const { data: pauseData, isSuccessful: isPauseSuccess } = useMakeReq();
 
   const sessionNum = 2;
 
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_OVERVIEW_ORDERS}/${id}`);
   }, []);
-
   useEffect(() => {
     if (!isEmpty(data)) {
       if (isSuccessful) {
@@ -77,8 +70,33 @@ const Overviews = () => {
       navigate?.push(<ClosedListingCard />);
     } else {
       toast.success(updateCancelData?.message || "Cancelled!");
-      // window.location.reload()
     }
+  };
+
+  // pause useEffect
+  useEffect(() => {
+    if (!isEmpty(data)) {
+      if (isPauseSuccess) {
+        setPauseOrder(data);
+      }
+    }
+  }, [data, isPauseSuccess]);
+
+  // Pause handle feature
+  const handlePause = () => {
+    const adId = viewMore.adId;
+    makeAuthPostReq(AUTH_DEACTIVATE_ADLIST, {
+      userId: userId,
+      adId: adId,
+    });
+    if (pauseOrder.active === false) {
+      navigate(-1)
+    } else {
+      toast.success(pauseData?.message);
+    }
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
   return (
     <NoTransitionWrapper>
@@ -122,7 +140,15 @@ const Overviews = () => {
                       </div>
                     </div>
 
-                    <div>{`${viewMore?.percentageUsed}%`}</div>
+                    <div>
+                      {viewMore.active === false ? (
+                        <Pause size="32" color="#EB9B00" />
+                      ) : (
+                        <CircularProgress
+                          percent={`${viewMore.percentageUsed}`}
+                        />
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex justify-between mt-3">
@@ -160,7 +186,6 @@ const Overviews = () => {
                     >
                       Cancel
                     </span>
-                    {/* : ""} */}
                   </div>
 
                   <div className="flex justify-between">
@@ -176,10 +201,17 @@ const Overviews = () => {
 
                     {/* pause button  */}
                     <span
-                      onClick={() => navigate(-1)}
-                      className="bg-[#FFF1D6] rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
+                      onClick={handlePause}
+                      className=" rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
+                      style={{
+                        color:
+                          viewMore.active === false ? "#10B981" : " #EB9B00",
+
+                        backgroundColor:
+                          viewMore.active === false ? "#ECFDF5" : " #FFF1D6",
+                      }}
                     >
-                      Pause
+                      {viewMore.active === false ? "Resume" : "Pause"}
                     </span>
                   </div>
                 </div>

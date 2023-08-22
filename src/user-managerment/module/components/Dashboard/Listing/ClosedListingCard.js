@@ -10,6 +10,7 @@ import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { AdlistStatus, ListingType } from "../../../helpers/enums";
+import CircularProgress from "./CircularProgress";
 
 const ClosedListingCard = () => {
   // STATES
@@ -26,7 +27,7 @@ const ClosedListingCard = () => {
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const userId = getUserId();
-  
+
   // SIDE EFFECT
   useEffect(() => {
     makeAuthGetReq(
@@ -51,14 +52,16 @@ const ClosedListingCard = () => {
           {closedListingData?.items?.map((closedOrders, index) => {
             return (
               <div key={index}>
-                {closedOrders.adListStatus === (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
+                {closedOrders.adListStatus ===
+                  (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
                   <div className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 my-3 flex flex-col gap-4">
                     {/* profile info */}
                     <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
                       {/* image and name */}
                       <div className="flex items-center gap-2">
-                        {`${closedOrders.percentageUsed}%`}
-
+                        <CircularProgress
+                          percent={`${closedOrders.percentageUsed}`}
+                        />
                         <div className="flex flex-col gap-1">
                           <h3
                             style={{
@@ -71,7 +74,9 @@ const ClosedListingCard = () => {
                                   ? "14px"
                                   : "14px",
                               fontWeight:
-                                closedOrders.listingType === ListingType.BUY ? 700 : 700,
+                                closedOrders.listingType === ListingType.BUY
+                                  ? 700
+                                  : 700,
                             }}
                           >
                             {closedOrders.listingType === ListingType.BUY
@@ -133,7 +138,7 @@ const ClosedListingCard = () => {
                       View More
                     </span>
                   </div>
-                ) }
+                )}
               </div>
             );
           })}
