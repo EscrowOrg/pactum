@@ -15,9 +15,6 @@ import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 const ClosedOrderStatement = () => {
   const [singleOrder, setSingleOrder] = useState();
   const { id } = useParams();
-
-  // const navigate = useNavigate();
-  // const {orderId} = useParams()
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
 
   // SIDE EFFECTS
