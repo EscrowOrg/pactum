@@ -17,7 +17,6 @@ function App() {
           })
           .then((currentToken) => {
             if (currentToken) {
-              console.log("FCM Token:", currentToken);
               localStorage.setItem("currentToken", currentToken);
             } else {
               console.log("No registration token available.");
