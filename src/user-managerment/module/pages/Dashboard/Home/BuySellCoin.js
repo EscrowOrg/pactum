@@ -7,6 +7,7 @@ import ListingAdList from "../../../components/Dashboard/Listing/ListingAdList";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { TextLabelInput } from "../../../components/Input";
 import SelectInput from "../../../components/SelectInput";
+import { Asset, ListingType } from "../../../helpers/enums";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
@@ -68,7 +69,7 @@ const BuySellCoin = () => {
   useEffect(()=>{
 
     // making GET request
-    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === (coinId || 2)).value || 1)}`)
+    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === (coinId))?.value || Asset.ETH)}`)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, coinSelect])
@@ -96,18 +97,18 @@ const BuySellCoin = () => {
             {/* text */}
             <div className="flex items-center gap-6">
               <h3
-                onClick={() => setAction(2)}
+                onClick={() => setAction(ListingType.BUY)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === 2 ? "active-action1" : "text-[#C3BFCD]"
+                  action === ListingType.BUY ? "active-action1" : "text-[#C3BFCD]"
                 }`}
               >
                 Buy
               </h3>
 
               <h3
-                onClick={() => setAction(1)}
+                onClick={() => setAction(ListingType.SELL)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === 1 ? "active-action2" : "text-[#C3BFCD]"
+                  action === ListingType.SELL ? "active-action2" : "text-[#C3BFCD]"
                 }`}
               >
                 Sell

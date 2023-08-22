@@ -12,6 +12,7 @@ import FormError from "../components/Global/FormError";
 import { PasswordInput, TextInput } from "../components/Input";
 import PageWrapper from "../layouts/PageWrapper";
 const LoginUser = () => {
+  
   // DATA INITIALIZATION
   const navigate = useNavigate();
   const location = useLocation();

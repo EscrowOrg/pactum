@@ -126,10 +126,16 @@ const SellOrderStatements = () => {
           <div className="flex flex-col items-center">
             <h3 className="font-bold text-lg text-black">Order Statement</h3>
 
-            <h3 className="text-xs font-normal text-[#141217]">
-              Closes in{" "}
-              <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
-            </h3>
+              {
+                singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                <h3 className="text-xs font-normal text-[#141217]">
+                  Closed{" "}
+                </h3>:
+                <h3 className="text-xs font-normal text-[#141217]">
+                  Closes in{" "}
+                  <span className="text-[#D1292D] font-normal">{`${isEmpty(singleOrder)?"":singleOrder?.adListing?.timeFrame + " Minute(s)"}`}</span>
+                </h3>
+              }
           </div>
 
           {/* transaction list button */}
@@ -137,16 +143,20 @@ const SellOrderStatements = () => {
         </div>
 
         {/* important message */}
-        <div className="flex items-start bg-[#F6FBFB] gap-2 py-2 px-6 w-full">
-          {/* icon */}
-          <InfoCircle variant="Bulk" size={16} color="#48A9A6" />
+        {
+          singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+          <></>:
+          <div className="flex items-start bg-[#F6FBFB] gap-2 py-2 px-6 w-full">
+            {/* icon */}
+            <InfoCircle variant="Bulk" size={16} color="#48A9A6" />
 
-          {/* text */}
-          <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
-            Asset has been withdrawn to Pactum escrow, ensure to make payment of
-            the exact amount in record time.
-          </h4>
-        </div>
+            {/* text */}
+            <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
+              Asset has been withdrawn to Pactum escrow, ensure to make payment of
+              the exact amount in record time.
+            </h4>
+          </div>
+        }
 
         {
           getLoading?
@@ -158,17 +168,29 @@ const SellOrderStatements = () => {
               <div className="w-[92%] h-full flex flex-col mx-auto gap-8 pb-5">
                 {/* main info */}
                 <div className="flex flex-col gap-3 items-center w-full">
-                  <h5 className="font-normal text-sm text-[#645B75]">
-                    Amount to be received.
-                  </h5>
+                  {
+                    singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                    <h5 className="font-normal text-sm text-[#645B75]">
+                      Amount received.
+                    </h5>:
+                    <h5 className="font-normal text-sm text-[#645B75]">
+                      Amount to be received.
+                    </h5>
+                  }
 
                   <h3 className="text-[#3F9491] text-[32px] font-bold">
                   {`₦${singleOrder?.fiatAmount?.toLocaleString('en-US')}`}
                   </h3>
 
-                  <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
+                  {
+                    singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+                    <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
+                      {`You were deducted ${singleOrder?.cryptoAmount}${getAssetLabel(singleOrder?.asset)}`}
+                    </h3>:
+                    <h3 className="bg-[#091515] py-2 px-3 font-semibold text-sm text-[#F6FBFB] rounded">
                     {`You will be deducted ${singleOrder?.cryptoAmount}${getAssetLabel(singleOrder?.asset)}`}
                   </h3>
+                  }
                 </div>
 
                 {/* summary details */}
