@@ -42,8 +42,7 @@ const Onborading = ()=>{
                         {/* individual signup */}
                         <RegisterAsCard
                         iconPath={"/images/onboarding/individual.png"}
-                        // url={"/individual-register"}
-                        url={""}
+                        url={"/individual-register"}
                         title={"I am an individual user"}
                         subTitle={"An individual user account is most preferred for personal use."} />
                     </div>
