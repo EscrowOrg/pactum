@@ -86,14 +86,12 @@ const RegistrationVendon = ()=>{
         }>
             {({
                 values,
-                dirty,
+                isValid,
                 touched,
                 errors,
-                isSubmitting,
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                field,
             }) => {
                 return (
                     <PageWrapper>
@@ -206,11 +204,7 @@ const RegistrationVendon = ()=>{
                                         <div className='w-full flex flex-col items-stretch'>
                                             <PrimaryButton
                                             onClick={handleSubmit}
-                                            disabled={
-                                                (touched.companyEmail && 
-                                                errors.companyEmail) || (touched.password && 
-                                                errors.password)
-                                            }
+                                            disabled={!isValid || loading}
                                             loading={loading}
                                             type="submit"
                                             text={"Sign up"} />
