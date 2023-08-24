@@ -51,7 +51,9 @@ const VendorPinSuccess = () => {
                      />
 
                     <SecondaryButton
-                    text={"Skip for Later"} />
+                    text={"Skip for Later"} 
+                    onClick={()=>navigate("/home")}
+                    />
                 </div>
             </div>
         </PageWrapper>

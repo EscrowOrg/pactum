@@ -36,7 +36,7 @@ const IndividualPinSuccess = () => {
 
                     {/* message */}
                     <p className='text-sm font-normal text-[#645B75] text-center'>
-                        Verify your account to be avoid transaction limits.
+                        Verify your account to avoid transaction limits.
                     </p>
                 </div>
 
@@ -48,7 +48,8 @@ const IndividualPinSuccess = () => {
                     onSubmit={getMessages}
                     />
                     <SecondaryButton
-                    text={"Skip for Later"} />
+                    text={"Skip for Later"} 
+                    onClick={()=>navigate("/home")}/>
                 </div>
             </div>
         </PageWrapper>

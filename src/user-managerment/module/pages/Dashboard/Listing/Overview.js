@@ -27,7 +27,7 @@ const Overviews = () => {
   const {data: updateCancelData, isSuccessful: isCancelSuccess, makeAuthPostReq} = useMakeReq();
   const [cancelOrder, setCancelOrder] = useState({id: id, adListStatus: 3});
   const [pauseOrder, setPauseOrder] = useState({});
-  const { data: pauseData, isSuccessful: isPauseSuccess } = useMakeReq();
+  const { data: pauseData, isSuccessful: isPauseSuccess, getLoading: getPauseLoading } = useMakeReq();
 
   const sessionNum = 2;
 
@@ -94,9 +94,6 @@ const Overviews = () => {
     } else {
       toast.success(pauseData?.message);
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
   return (
     <NoTransitionWrapper>
@@ -142,6 +139,8 @@ const Overviews = () => {
 
                     <div>
                       {viewMore.active === false ? (
+                        // <CircularProgress icon={<Pause size="32" color="#EB9B00" />}/>
+
                         <Pause size="32" color="#EB9B00" />
                       ) : (
                         <CircularProgress
@@ -205,13 +204,13 @@ const Overviews = () => {
                       className=" rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
                       style={{
                         color:
-                          viewMore.active === false ? "#10B981" : " #EB9B00",
+                          viewMore.active === true ? "#EB9B00" : "   #10B981",
 
                         backgroundColor:
-                          viewMore.active === false ? "#ECFDF5" : " #FFF1D6",
+                          viewMore.active === true ? "#FFF1D6" : "   #ECFDF5",
                       }}
                     >
-                      {viewMore.active === false ? "Resume" : "Pause"}
+                      {viewMore.active === true ? "Pause" : "Resume"}
                     </span>
                   </div>
                 </div>

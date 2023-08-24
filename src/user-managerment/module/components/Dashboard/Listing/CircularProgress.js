@@ -1,4 +1,5 @@
 import { Progress } from 'antd'
+import { Icon } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 
 const CircularProgress = ({percent = 1}) => {
@@ -21,6 +22,7 @@ const CircularProgress = ({percent = 1}) => {
         trailColor='#F4EFFE'
         strokeWidth={14}
         percent={percentage}
+        icon={Icon}
         format={(percent, successPercent)=>percent?`${percent}%`:successPercent && "100%"}
         success={{
             percent: percentage===100?percentage:null,
