@@ -129,7 +129,7 @@ const MainRouter = () => {
           path="/reset-password/success"
           element={<PasswordChangeSuccess />}
         />
-        {roles === "Customer" && (
+        {roles === "customer" && (
           <Route element={<AuthRoutes />}>
             {/* HOME */}
             <Route exact path="/home" element={<Home />} />
