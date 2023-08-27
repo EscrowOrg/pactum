@@ -109,12 +109,6 @@ const MainRouter = () => {
           path="/individual-verification-success"
           element={<IndividualVerified />}
         />
-
-        {/* PROFILE */}
-        <Route path="/individual-profile" element={<Profile />} />
-
-        {/* MORE INFO */}
-        <Route path="/individual-more-info" element={<MoreInfo />} />
         {/* INDIVIDUAL CREATE PIN */}
         <Route path="/individual-create-p" element={<IndividualCreatePin />} />
         <Route
@@ -139,6 +133,8 @@ const MainRouter = () => {
           <Route element={<AuthRoutes />}>
             {/* HOME */}
             <Route exact path="/home" element={<Home />} />
+            <Route path="/individual-more-info" element={<MoreInfo />} />
+            <Route path="/individual-profile" element={<Profile />} />
             <Route
               path="/vendor-create-success"
               element={<VendorPinSuccess />}
@@ -330,7 +326,8 @@ const MainRouter = () => {
               path="/vendor-create-success"
               element={<VendorPinSuccess />}
             />
-
+            <Route path="/individual-more-info" element={<MoreInfo />} />
+            <Route path="/individual-profile" element={<Profile />} />
             {/* VENDOR'S USERS */}
             <Route path="/vendor-user-wallet/:id" element={<UserWallet />} />
 
@@ -512,7 +509,8 @@ const MainRouter = () => {
               path="/vendor-create-success"
               element={<VendorPinSuccess />}
             />
-
+            <Route path="/individual-more-info" element={<MoreInfo />} />
+            <Route path="/individual-profile" element={<Profile />} />
             {/* VENDOR'S USERS */}
             <Route path="/vendor-user-wallet/:id" element={<UserWallet />} />
 
