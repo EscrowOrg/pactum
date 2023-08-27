@@ -287,8 +287,6 @@ const MainRouter = () => {
               element={<SettingsEditProfile />}
             />
 
-            <Route exact path="/profile/list-of-users" element={<MyUsers />} />
-
             <Route exact path="/profile/add-bank" element={<AddBanks />} />
 
             <Route exact path="/profile/list-bank" element={<ListOfBanks />} />
@@ -472,9 +470,6 @@ const MainRouter = () => {
               path="/profile/edit-profile"
               element={<SettingsEditProfile />}
             />
-
-            <Route exact path="/profile/list-of-users" element={<MyUsers />} />
-
             <Route exact path="/profile/list-bank" element={<ListOfBanks />} />
 
             <Route
