@@ -60,27 +60,27 @@ const userId = getUserId()
 
 
   // SIDE EFFECTS
-  useEffect(()=>{
-    makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
-  }, [])
-  useEffect(()=>{
-    if(!isEmpty(bankData?.data)) {
-        setBanks(bankData.data)
-    }
-  }, [bankData])
+useEffect(()=>{
+  makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
+}, [])
+useEffect(()=>{
+  if(!isEmpty(bankData?.data)) {
+      setBanks(bankData.data)
+  }
+}, [bankData])
 
-  // create wallet feedback
-  useEffect(()=>{
-    if(!isEmpty(createListingData)) {
-        if(isCreateSuccess===true) {
-            toast.success(createListingData.message || "Listing created successful!")
-            navigate("/listing");
-        } else if(isCreateSuccess===false) {
-            toast.error(createListingData.message || "Failed to create listing!")
-        }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createListingData, isCreateSuccess])
+// create wallet feedback
+useEffect(()=>{
+  if(!isEmpty(createListingData)) {
+      if(isCreateSuccess===true) {
+          toast.success(createListingData.message || "Listing created successful!")
+          navigate("/listing");
+      } else if(isCreateSuccess===false) {
+          toast.error(createListingData.message || "Failed to create listing!")
+      }
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [createListingData, isCreateSuccess])
 
   // create wallet error
   useEffect(()=>{

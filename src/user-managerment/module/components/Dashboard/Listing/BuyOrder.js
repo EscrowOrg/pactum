@@ -25,7 +25,7 @@ const BuyOrder = ({
   const {
     data: bankData,
     getLoading: getBankLoading,
-    makeGetRequest,
+    makeAuthGetReq,
   } = useMakeReq()
   const {
     data: createListingData,
@@ -63,7 +63,7 @@ const userId = getUserId()
 
   // SIDE EFFECTS
   useEffect(()=>{
-    makeGetRequest(`${AUTH_GET_BANKS}/${userId}/${role}`)
+    makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
   }, [])
   useEffect(()=>{
     if(!isEmpty(bankData?.data)) {
@@ -334,7 +334,7 @@ const userId = getUserId()
               closeDrawer={toggleBankDrawer}>
 
                 {/* Body content  */}
-                <BanksView
+                <BanksView  
                 listItem={banks}
                 closeDrawer={toggleBankDrawer}
                 setBank={setBankDetails}/>

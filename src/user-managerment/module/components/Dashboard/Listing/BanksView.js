@@ -13,7 +13,6 @@ const BanksView = ({
     
     return (
         <div className='w-full h-full flex flex-col gap-5 bg-white'>
-            
             {/* search bar container */}
             <div className='flex gap-5 w-full'>
                         
