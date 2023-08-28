@@ -4,6 +4,8 @@ import MainRouter from "./user-managerment/module/router";
 import firebase from "firebase/compat/app";
 import "firebase/messaging";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+
 
 function App() {
   useEffect(() => {
@@ -19,14 +21,14 @@ function App() {
             if (currentToken) {
               localStorage.setItem("currentToken", currentToken);
             } else {
-              console.log("No registration token available.");
+              toast.error("No registration token available.");
             }
           })
           .catch((err) => {
-            console.log("Error occurred while requesting permission:", err);
+            toast.error("Error occurred while requesting permission:", err)
           });
       } else {
-        console.log("Notification permission denied.");
+        toast.error("Notification permission denied.")
       }
     });
   }, []);

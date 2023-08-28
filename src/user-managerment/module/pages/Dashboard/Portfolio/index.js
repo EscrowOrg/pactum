@@ -4,7 +4,7 @@ import { ProfileAdd } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AUTH_GET_ASSETS_ACCOUNTS } from '../../../../../serivce/apiRoutes.service'
-import { getUserId } from '../../../../../serivce/cookie.service'
+import { getUserId, getUserRole } from '../../../../../serivce/cookie.service'
 import { TransactionsListButton } from '../../../components/Button'
 import BottomNav from '../../../components/Dashboard/Home/BottomNav'
 import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
@@ -38,7 +38,7 @@ const Portfolio = () => {
         loading,
         makeAuthGetReq
     } = useMakeReq()
-
+    const roles = getUserRole()
     
     // USE EFFECTS
     useEffect(()=>{
@@ -71,17 +71,20 @@ const Portfolio = () => {
                     <TransactionsListButton />
 
                     {/* user button */}
-                    <div className='flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer'>
+                    {roles === "VendorAdmin" && (
+                       <div className='flex items-center bg-[#3A0CA3] gap-1 px-3 rounded-[32px] h-10 cursor-pointer'>
 
-                        <ProfileAdd
-                        color='#ffffff'
-                        size={18}
-                        variant='Bulk' />
+                       <ProfileAdd
+                       color='#ffffff'
+                       size={18}
+                       variant='Bulk' />
 
-                        <h4 className='text-sm font-bold text-[#F4EFFE]'>
-                            New User
-                        </h4>
-                    </div>
+                       <h4 className='text-sm font-bold text-[#F4EFFE]'>
+                           New User
+                       </h4>
+                   </div>
+                    )}
+                    
                 </div>
                 
                 {/* body */}
