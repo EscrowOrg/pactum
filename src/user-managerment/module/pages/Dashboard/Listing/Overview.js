@@ -94,9 +94,6 @@ const Overviews = () => {
     } else {
       toast.success(pauseData?.message);
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
   return (
     <NoTransitionWrapper>
@@ -205,13 +202,13 @@ const Overviews = () => {
                       className=" rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
                       style={{
                         color:
-                          viewMore.active === false ? "#10B981" : " #EB9B00",
+                          viewMore.active === true ? "#EB9B00" : "   #10B981",
 
                         backgroundColor:
-                          viewMore.active === false ? "#ECFDF5" : " #FFF1D6",
+                          viewMore.active === true ? "#FFF1D6" : "   #ECFDF5",
                       }}
                     >
-                      {viewMore.active === false ? "Resume" : "Pause"}
+                      {viewMore.active === true ? "Pause" : "Resume"}
                     </span>
                   </div>
                 </div>
