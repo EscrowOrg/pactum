@@ -27,7 +27,7 @@ const Overviews = () => {
   const {data: updateCancelData, isSuccessful: isCancelSuccess, makeAuthPostReq} = useMakeReq();
   const [cancelOrder, setCancelOrder] = useState({id: id, adListStatus: 3});
   const [pauseOrder, setPauseOrder] = useState({});
-  const { data: pauseData, isSuccessful: isPauseSuccess, getLoading: getPauseLoading } = useMakeReq();
+  const { data: pauseData, isSuccessful: isPauseSuccess } = useMakeReq();
 
   const sessionNum = 2;
 
@@ -139,8 +139,6 @@ const Overviews = () => {
 
                     <div>
                       {viewMore.active === false ? (
-                        // <CircularProgress icon={<Pause size="32" color="#EB9B00" />}/>
-
                         <Pause size="32" color="#EB9B00" />
                       ) : (
                         <CircularProgress
