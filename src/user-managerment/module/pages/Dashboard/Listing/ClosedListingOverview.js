@@ -138,7 +138,7 @@ const ClosedListingOverview = () => {
                   <h4 className="text-base font-bold text-black pb-2">
                     All Orders
                   </h4>
-                  {!isEmpty(closedOverview) ? (
+                  {isEmpty(closedOverview) ? (
                     <>
                       {closedOverview?.payments?.map((payment, index) => (
                         <div
@@ -182,7 +182,6 @@ const ClosedListingOverview = () => {
                       ))}
                     </>
                   ) : (
-                 
                     <EmptyDataComp viewPortHeight="h-[80vh]" />
                   )}
                 </div>
