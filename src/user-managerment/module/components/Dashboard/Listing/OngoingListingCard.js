@@ -52,7 +52,7 @@ const OngoingListingCard = () => {
           {ongoingOrdersData?.items?.map((ordersData, index) => {
             return (
               <div key={index}>
-                {ordersData.adListStatus !== AdlistStatus.ONGOING && (
+                {ordersData.adListStatus === AdlistStatus.ONGOING && (
                   <div className="w-full border border-[#F5F3F6] bg-white rounded-lg py-3 px-4 my-3 flex flex-col gap-4">
                     {/* profile info */}
                     <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
