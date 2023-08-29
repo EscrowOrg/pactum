@@ -10,6 +10,7 @@ import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import { AdlistStatus } from "../../../helpers/enums";
+import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 
 const ClosedListingOverview = () => {
   const [closedOverview, setClosedOverview] = useState();
@@ -33,7 +34,6 @@ const ClosedListingOverview = () => {
     }
   }, [data, isSuccessful]);
 
-
   return (
     <PageWrapper>
       <>
@@ -41,7 +41,8 @@ const ClosedListingOverview = () => {
           <LoadingSpinner viewPortHeight="h-[80vh]" />
         ) : !isEmpty(closedOverview) ? (
           <>
-            {closedOverview.adListStatus === (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
+            {closedOverview.adListStatus ===
+              (AdlistStatus.COMPLETED && AdlistStatus.CANCELLED) && (
               <div className="w-full h-full border border-[#F5F3F6] bg-white rounded-lg py-4 px-5 flex flex-col gap-4">
                 <div className="flex gap-10">
                   <BackButton />
@@ -52,7 +53,7 @@ const ClosedListingOverview = () => {
 
                 <div>
                   <h3 className="font-normal text-sm text-[#8D85A0] my-3">
-                   {`${modifyDateTime(closedOverview.created)}`}
+                    {`${modifyDateTime(closedOverview.created)}`}
                   </h3>
 
                   <div className="flex justify-between my-4">
@@ -77,7 +78,9 @@ const ClosedListingOverview = () => {
                     </div>
 
                     <div>
-                     {`${closedOverview.percentageUsed}%`}
+                      <CircularProgress
+                        percent={`${closedOverview.percentageUsed}`}
+                      />
                     </div>
                   </div>
 
@@ -114,7 +117,9 @@ const ClosedListingOverview = () => {
                       onClick={() => navigate(-1)}
                       className="  text-[#645B75] text-sm font-normal"
                     >
-                      Completed
+                      {closedOverview.adListStatus === AdlistStatus.COMPLETED
+                        ? "Completed"
+                        : "Cancelled"}
                     </span>
                   </div>
 
@@ -135,56 +140,57 @@ const ClosedListingOverview = () => {
                   </h4>
                   {!isEmpty(closedOverview) ? (
                     <>
-                      {closedOverview.payments.map((payment, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className="flex justify-between mt-2 py-3 border-b border-solid"
-                          >
-                            {/* Order date and time */}
-                            <div>
-                              <p className="font-normal text-xs text-[#8D85A0] pb-1">
-                                {modifyDateTime(payment.created)}
-                              </p>
+                      {closedOverview?.payments?.map((payment, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between mt-2 py-3 border-b border-solid"
+                        >
+                          {/* Order date and time */}
+                          <div>
+                            <p className="font-normal text-xs text-[#8D85A0] pb-1">
+                              {modifyDateTime(payment.created)}
+                            </p>
 
-                              {/* Received Order */}
-                              <h4 className="text-base font-bold text-black">
-                                {`${payment.fiatAmount} ${getAssetLabel(
-                                  +payment.asset
-                                )}`}
+                            {/* Received Order */}
+                            <h4 className="text-base font-bold text-black">
+                              {`${payment.fiatAmount} ${getAssetLabel(
+                                +payment.asset
+                              )}`}
+                            </h4>
+                            <div className="flex gap-1">
+                              <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
+                                {payment.adListing.merchantName}
                               </h4>
-                              <div className="flex gap-1">
-                                <h4 className="font-normal text-xs text-[#8D85A0] pt-1 ">
-                                  {payment.adListing.merchantName}
-                                </h4>
-                                <h4 className=" font-bold text-xs text-[#10B981] mt-1">
-                                  RECEIVED
-                                </h4>
-                              </div>
+                              <h4 className=" font-bold text-xs text-[#10B981] mt-1">
+                                RECEIVED
+                              </h4>
                             </div>
-
-                            {/* view more button */}
-                            <span
-                              onClick={() =>
-                                navigate(`/listing/closed-listing-order/${payment.id}`)
-                              }
-                              className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
-                            >
-                              View More
-                            </span>
                           </div>
-                        );
-                      })}
+
+                          {/* view more button */}
+                          <span
+                            onClick={() =>
+                              navigate(
+                                `/listing/closed-listing-order/${payment.id}`
+                              )
+                            }
+                            className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal"
+                          >
+                            View More
+                          </span>
+                        </div>
+                      ))}
                     </>
                   ) : (
-                    <EmptyDataComp viewPortHeight="h-[80vh]" />
+                    "hellooooo"
+                    // <EmptyDataComp viewPortHeight="h-[80vh]" />
                   )}
                 </div>
               </div>
-            ) }
+            )}
           </>
         ) : (
-          <EmptyDataComp />
+          <EmptyDataComp viewPortHeight="h-[80vh]" />
         )}
       </>
     </PageWrapper>
