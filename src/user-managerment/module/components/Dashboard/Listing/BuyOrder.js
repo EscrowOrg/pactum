@@ -1,20 +1,20 @@
+import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import DrawerSelectInput from "../Portfolio/DrawerSelectInput";
-import { TextLabelInput } from "../../Input";
-import { PrimaryButton } from "../../Button";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { AUTH_CREATE_AD_LISTING, AUTH_GET_BANKS } from "../../../../../serivce/apiRoutes.service";
+import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
+import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
 import StrictWrapper from "../../../layouts/Drawer/StrictWrapper";
-import AssetsListView from "../Portfolio/AssetsListView";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import {AUTH_CREATE_AD_LISTING,AUTH_GET_BANKS} from "../../../../../serivce/apiRoutes.service";
-import { Formik } from "formik";
-import * as Yup from "yup";
+import { PrimaryButton } from "../../Button";
 import FormError from "../../Global/FormError";
-import { isEmpty } from "../../../helpers/isEmpty";
+import { TextLabelInput } from "../../Input";
+import AssetsListView from "../Portfolio/AssetsListView";
+import DrawerSelectInput from "../Portfolio/DrawerSelectInput";
 import BanksView from "./BanksView";
-import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 
 const BuyOrder = ({ assetList }) => {
   // DATA INITIALIZATION
@@ -23,16 +23,16 @@ const BuyOrder = ({ assetList }) => {
     data: bankData,
     getLoading: getBankLoading,
     makeAuthGetReq,
-  } = useMakeReq();
+  } = useMakeReq()
   const {
     data: createListingData,
     isSuccessful: isCreateSuccess,
     error: isCreateError,
     loading: createListingLoading,
-    makePostRequest,
-  } = useMakeReq();
-  const role = getUserRole();
-  const userId = getUserId();
+    makeAuthPostReq,
+} = useMakeReq()
+const role = getUserRole()
+const userId = getUserId()
 
   // STATES
   const [isOpen, setIsOpen] = useState(false);
@@ -56,9 +56,9 @@ const BuyOrder = ({ assetList }) => {
   };
 
   // SIDE EFFECTS
-  useEffect(() => {
-    makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`);
-  }, []);
+  useEffect(()=>{
+    makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
+  }, [])
   useEffect(() => {
     if (!isEmpty(bankData?.data)) {
       setBanks(bankData.data);
@@ -100,31 +100,27 @@ const BuyOrder = ({ assetList }) => {
         fiatCurrency: 1,
         listingAmount: null,
         bank: null,
-        paymentTimeFrame: null,
-      }}
-      onSubmit={(values) => {
-        const formValues = { ...values };
-        formValues.bank = bankDetails.id;
-        formValues.userId = userId;
-        formValues.assets = asset.assetId;
+        paymentTimeFrame: null
+    }}
+    onSubmit={(values) => {
+      const formValues = {...values}
+      formValues.bank = bankDetails.id
+      formValues.userId = userId
+      formValues.assets = asset.assetId
 
-        // create AdListing
-        makePostRequest(AUTH_CREATE_AD_LISTING, {
-          adListRequest: formValues,
-        });
-      }}
-      validationSchema={Yup.object({
-        lowerLimit: Yup.number().required(),
-        upperLimit: Yup.number()
-          .min(
-            Yup.ref("lowerLimit"),
-            "can't be less than minimum transaction limit"
-          )
-          .required(),
-        rateToFiat: Yup.number().required(),
-        listingAmount: Yup.number().required(),
-      })}
-    >
+      // create AdListing
+      makeAuthPostReq(AUTH_CREATE_AD_LISTING, {
+        adListRequest: formValues
+      })
+    }}
+    validationSchema={
+      Yup.object({
+          lowerLimit: Yup.number().required(),
+          upperLimit: Yup.number().min(Yup.ref('lowerLimit'), "can't be less than minimum transaction limit").required(),
+          rateToFiat: Yup.number().required(),
+          listingAmount: Yup.number().required(),
+      })
+    }>
       {({
         values,
         dirty,
@@ -274,10 +270,9 @@ const BuyOrder = ({ assetList }) => {
 
                 {/* input field */}
                 <DrawerSelectInput
-                  onClick={toggleBankDrawer}
-                  disabled={getBankLoading}
-                  value={bankDetails?.accountNumber || "Select bank"}
-                />
+                onClick={toggleBankDrawer}
+                disabled={getBankLoading || isEmpty(banks)}
+                value={isEmpty(banks)?"Couldn't fetch banks":bankDetails?.accountNumber || "Select bank"} />
               </label>
 
               {/* container */}

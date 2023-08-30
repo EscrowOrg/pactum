@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { SearchInput } from "../../Input";
-import { Bank } from "iconsax-react";
+import { Bank } from 'iconsax-react';
+import { useState } from 'react';
+import { SearchInput } from '../../Input';
 
 const BanksView = ({ listItem, closeDrawer, setBank }) => {
   // STATES
