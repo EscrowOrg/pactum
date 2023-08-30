@@ -1,25 +1,23 @@
-import React from "react";
-import BottomNav from "../../../components/Dashboard/Home/BottomNav";
-import HomeHeader from "../../../components/Dashboard/Home/HomeHeader";
-import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
-import ProfileCompletionPopup from "../../../components/Dashboard/Home/ProfileCompletionPopup";
-import HotList from "../../../components/Dashboard/Home/HotList";
-import RecentTransactions from "../../../components/Dashboard/Home/RecentTransactions";
-import { useEffect } from "react";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
+import React, { useEffect } from "react";
 import { AUTH_POST_VALIDATE_DEVICE_TOKEN } from "../../../../../serivce/apiRoutes.service";
 import { getUserData } from "../../../../../serivce/cookie.service";
+import BottomNav from "../../../components/Dashboard/Home/BottomNav";
+import HomeHeader from "../../../components/Dashboard/Home/HomeHeader";
+import HotList from "../../../components/Dashboard/Home/HotList";
+import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
+import ProfileCompletionPopup from "../../../components/Dashboard/Home/ProfileCompletionPopup";
+import RecentTransactions from "../../../components/Dashboard/Home/RecentTransactions";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 
 const Home = () => {
   const { loading, makeAuthPostReq } = useMakeReq();
-  const { userId } = getUserData();
 
   const token = localStorage.getItem("currentToken");
 
   useEffect(() => {
     makeAuthPostReq(`${AUTH_POST_VALIDATE_DEVICE_TOKEN}`, {
       token: token,
-      userId: userId,
+      userId: getUserData()?.userId,
     });
   }, []);
 
