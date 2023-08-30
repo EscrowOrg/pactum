@@ -2,7 +2,6 @@ import { ArrowDown2 } from "iconsax-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   AUTH_GET_ASSETS_ACCOUNTS,
   AUTH_TRANSFER_INTERNAL_USERS,
@@ -16,22 +15,34 @@ import {
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import PageWrapper from "../../../layouts/PageWrapper";
 import { isEmpty } from "../../../helpers/isEmpty";
-import { useMemo } from "react";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
+import { toast } from "react-toastify";
+import Drawer from "../../../layouts/Drawer";
+import SlideWrapper from "../../../layouts/Drawer/SlideWrapper";
+import UserFilterStatus from "../../../components/Dashboard/Profile/UserFilterStatus";
 
 const UserWallet = () => {
   // STATES
   const [searchInput, setSearchInput] = useState("");
   const [filterValue, setFilterValue] = useState("A-Z");
   const [isDrawer1Open, setIsDrawer1Open] = useState(false);
+  const [filterStatus, setFilterStatus] = useState({
+    name: "",
+    id: null,
+  });
   const [Wallet, setWallet] = useState(null);
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
-  const { makeAuthPostReq } = useMakeReq();
+  const {
+    makeAuthPostReq,
+    data: sendAssetData,
+    isSuccessful: sendAssetSuccess,
+  } = useMakeReq();
 
   // DATE INITIALIAZATION
   const navigate = useNavigate();
   const { id } = useParams();
+  const uId = getUserId();
 
   // HANDLERS
   const toggleDrawer1 = () => {
@@ -40,50 +51,43 @@ const UserWallet = () => {
 
   // USE EFFECT
   useEffect(() => {
-    getWallet();
+    makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${id}&USD`);
   }, []);
 
   useEffect(() => {
-    if (!isEmpty(data)) {
+    if (!isEmpty(data) && isSuccessful === true) {
       setWallet(data?.data);
     }
-  }, [data]);
+  }, [data, isSuccessful]);
 
-  const getWallet = async () => {
-    try {
-      const uId = getUserId();
-      await makeAuthGetReq(`${AUTH_GET_ASSETS_ACCOUNTS}/${uId}&USD`);
-      setWallet(data && data.data);
-    } catch (error) {
-      setWallet(error);
+  useEffect(() => {
+    if (!isEmpty(sendAssetData)) {
+      if (sendAssetSuccess === true) {
+        toast.success(sendAssetData.message);
+      } else if (sendAssetSuccess === false) {
+        toast.error(sendAssetData.message);
+      }
     }
-  };
+  }, [sendAssetData, sendAssetSuccess]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const uId = getUserId();
-
+  const handleSubmit = () => {
     // Internal Users Transfer
     const payload = {
       userIdentifier: Wallet.id,
       senderUserId: uId,
-      amount: Wallet.Balance.accountBalance,
+      amount: Wallet.Balance?.accountBalance,
       currency: Wallet.currency,
       network: Wallet.accountingCurrency,
     };
-    try {
-      await makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
-      console.log(data);
-      setWallet(data && data.data);
-    } catch (error) {
-      setWallet(error);
-    }
+
+    makeAuthPostReq(AUTH_TRANSFER_INTERNAL_USERS, payload);
+    navigate(`/vendor-user-send-asset/${id}`);
   };
 
   return (
     <PageWrapper>
-      <div className="w-full h-full my-4">
-        <div className="flex items-center mb-5">
+      <div className="w-full h-full my-4 ">
+        <div className="flex items-center">
           <BackButton />
           <h3 className="mx-auto font-bold text-base">Talan Vetrovs</h3>
         </div>
@@ -111,7 +115,7 @@ const UserWallet = () => {
 
         <div className="px-5 w-full">
           {/* title */}
-          <div className="flex items-center justify-between pt-3">
+          <div className="flex items-center justify-between pt-3 w-full h-full">
             <h3 className="text-black text-base font-semibold"> Assets</h3>
 
             {/* tools container */}
@@ -149,9 +153,7 @@ const UserWallet = () => {
               <>
                 {Wallet?.map((Wallet, index) => (
                   <div
-                    onClick={() =>
-                      navigate(`/vendor-user-wallet-asset/${id}`)
-                    }
+                    onClick={() => navigate(`/vendor-user-wallet-asset/${id}`)}
                     key={index}
                     className="flex justify-between border-b w-full py-3 "
                   >
@@ -191,15 +193,14 @@ const UserWallet = () => {
           </div>
 
           {/* buttons */}
-          <div className="flex items-center gap-6 w-full mt-72 mb-4">
+          <div className="flex items-center gap-6 w-full mt-72">
             <div className="flex flex-col items-stretch w-[40%]">
               <PrimaryButtonLight height="h-14" text={"Change Limit"} />
             </div>
 
             <div className="flex flex-col items-stretch w-[60%]">
               <PrimaryButton
-                onClick={() => navigate(`/vendor-user-send-asset/${id}`)}
-                // onClick={handleSubmit}
+                onClick={handleSubmit}
                 height="h-14"
                 text={"Send Asset"}
               />
@@ -207,6 +208,28 @@ const UserWallet = () => {
           </div>
         </div>
       </div>
+
+      {/* select filter drawer */}
+      <Drawer
+        relationshipStatus="alone"
+        height="!h-auto"
+        insertCurve={false}
+        type="slider"
+        isOpen={isDrawer1Open}
+        onClose={toggleDrawer1}
+        position="bottom"
+      >
+        {/* drawer content container */}
+        <SlideWrapper title={"Filter by:"}>
+          <UserFilterStatus
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            closeDrawer={toggleDrawer1}
+          />
+        </SlideWrapper>
+      </Drawer>
     </PageWrapper>
   );
 };

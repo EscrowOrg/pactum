@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import { isEmpty } from "../../../helpers/isEmpty";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
-import {AUTH_DEACTIVATE_ADLIST, AUTH_GET_OVERVIEW_ORDERS,AUTH_UPDATE_AD_LISTING_STATUS} from "../../../../../serivce/apiRoutes.service";
+import {
+  AUTH_DEACTIVATE_ADLIST,
+  AUTH_GET_OVERVIEW_ORDERS,
+  AUTH_UPDATE_AD_LISTING_STATUS,
+} from "../../../../../serivce/apiRoutes.service";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
@@ -14,6 +18,7 @@ import { toast } from "react-toastify";
 import { getUserData } from "../../../../../serivce/cookie.service";
 import CircularProgress from "../../../components/Dashboard/Listing/CircularProgress";
 import { Pause } from "iconsax-react";
+import { AdlistStatus } from "../../../helpers/enums";
 
 const Overviews = () => {
   // DATA INITIALIZATION
@@ -24,8 +29,12 @@ const Overviews = () => {
   // STATES
   const [viewMore, setViewMore] = useState();
   const { data, getLoading, makeAuthGetReq, isSuccessful } = useMakeReq();
-  const {data: updateCancelData, isSuccessful: isCancelSuccess, makeAuthPostReq} = useMakeReq();
-  const [cancelOrder, setCancelOrder] = useState({id: id, adListStatus: 3});
+  const {
+    data: updateCancelData,
+    isSuccessful: isCancelSuccess,
+    makeAuthPostReq,
+  } = useMakeReq();
+  const [cancelOrder, setCancelOrder] = useState({ id: id, adListStatus: 3 });
   const [pauseOrder, setPauseOrder] = useState({});
   const { data: pauseData, isSuccessful: isPauseSuccess } = useMakeReq();
 
@@ -82,6 +91,16 @@ const Overviews = () => {
     }
   }, [data, isPauseSuccess]);
 
+  useEffect(() => {
+    if (!isEmpty(pauseData)) {
+      if (isPauseSuccess === true) {
+        toast.success(pauseData?.message || "Paused!");
+      } else if (isPauseSuccess === false) {
+        toast.error(pauseData?.message || "Paused failed!");
+      }
+    }
+  }, [pauseData, isPauseSuccess]);
+
   // Pause handle feature
   const handlePause = () => {
     const adId = viewMore.adId;
@@ -90,13 +109,10 @@ const Overviews = () => {
       adId: adId,
     });
     if (pauseOrder.active === false) {
-      navigate(-1)
+      navigate(-1);
     } else {
       toast.success(pauseData?.message);
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
   return (
     <NoTransitionWrapper>
@@ -105,7 +121,7 @@ const Overviews = () => {
           <LoadingSpinner viewPortHeight="h-[80vh]" />
         ) : !isEmpty(viewMore) ? (
           <>
-            {viewMore.adListStatus === 1 ? (
+            {viewMore.adListStatus === AdlistStatus.ONGOING ? (
               <div className="w-full h-full border border-[#F5F3F6] bg-white rounded-lg py-4 px-5 flex flex-col gap-4">
                 <div className="flex gap-10">
                   <BackButton />
@@ -205,13 +221,13 @@ const Overviews = () => {
                       className=" rounded-[32px] h-[35px] px-4 mt-0 inline-flex items-center justify-center hover:bg-orange-200 cursor-pointer  text-[#EB9B00] text-xs font-normal"
                       style={{
                         color:
-                          viewMore.active === false ? "#10B981" : " #EB9B00",
+                          viewMore.active === true ? "#EB9B00" : "   #10B981",
 
                         backgroundColor:
-                          viewMore.active === false ? "#ECFDF5" : " #FFF1D6",
+                          viewMore.active === true ? "#FFF1D6" : "   #ECFDF5",
                       }}
                     >
-                      {viewMore.active === false ? "Resume" : "Pause"}
+                      {viewMore.active === true ? "Pause" : "Resume"}
                     </span>
                   </div>
                 </div>

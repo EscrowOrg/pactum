@@ -60,7 +60,7 @@ const useMakeReq = () => {
         } catch(error) {
             console.log(error)
             setGetLoading(false)
-            const errorMessage = error.response.data.message
+            const errorMessage = error.response.data?.message && error.response.data?.message
             setError(errorMessage)
             setTimeout(()=>{setError("")}, 5000)
         }

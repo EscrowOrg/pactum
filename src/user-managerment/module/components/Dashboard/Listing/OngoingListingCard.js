@@ -42,7 +42,7 @@ const OngoingListingCard = () => {
       }
     }
   }, [data, isSuccessful]);
-
+      // console.log(ongoingOrdersData);
   return (
     <>
       {getLoading ? (
