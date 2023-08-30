@@ -1,6 +1,6 @@
+import { Bank } from 'iconsax-react'
 import { useState } from 'react'
 import { SearchInput } from '../../Input'
-import { Bank } from 'iconsax-react'
 
 const BanksView = ({
     listItem,
