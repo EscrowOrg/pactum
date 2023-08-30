@@ -172,6 +172,7 @@ const SendCoin = () => {
     validationSchema={
       Yup.object({
         userIdentifier: Yup.string().required("Required"),
+        userName: Yup.string().required("Required"),
         cryptoAmount: Yup.number().typeError("Must be a digit").test("is-greater-than-0", "Amount can't be zero (0)", (cryptoAmount)=>+cryptoAmount>0).test("insufficient-funds","Insufficient funds", (cryptoAmount)=>!(parseFloat(cryptoAmount) >
         parseFloat(walletInfo?.balance?.availableBalance))).required("Required"),
       })
