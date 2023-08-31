@@ -12,6 +12,7 @@ import FormError from "../../../components/Global/FormError";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
 import { TextLabelInput } from "../../../components/Input";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { getFiatSymbol } from "../../../helpers/getFiatSymbol";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
@@ -215,12 +216,12 @@ useEffect(()=>{
                         {/*  Min - Max Order Amount */}
                         <div className="flex items-center justify-between">
                           <h3 className="font-normal text-xs text-[#8D85A0]">
-                            Min - Max Order Amount
+                            Min - Max Order
                           </h3>
 
                           <h3 className="text-black text-sm font-semibold">
                             {/* 0.989 - 4.583 BTC */}
-                            {`${singleListing.lowerLimit}${getAssetLabel(+assetId)}`} - {`${singleListing.upperLimit}${getAssetLabel(+assetId)}`}
+                            {`${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.lowerLimit?.toLocaleString('en-US')} - ${getFiatSymbol(singleListing.fiatCurrency1)}${singleListing.upperLimit?.toLocaleString('en-US')}`}
                           </h3>
                         </div>
 

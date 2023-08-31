@@ -4,6 +4,7 @@ import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRout
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { ListingType, SessionEvent } from "../../../helpers/enums";
 import { getAssetLabel } from "../../../helpers/getAssetLabel";
+import { getFiatSymbol } from "../../../helpers/getFiatSymbol";
 import { isEmpty } from "../../../helpers/isEmpty";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import { roundToN } from "../../../helpers/roundToN";
@@ -63,11 +64,11 @@ const PendingPaymentsCard = () => {
                       ""
                     )}
 
-                    {order.listingType === ListingType.BUY ? (
+                    {order.listingType === ListingType.SELL ? (
                       <h4 className="text-sm font-bold text-black">
-                        {`${order.fiatAmount.toLocaleString(
+                        {`${getFiatSymbol(order.fiatCurrency || 1)}${order.fiatAmount.toLocaleString(
                           "en-US"
-                        )} ${getAssetLabel(order.asset)}`}
+                        )}`}
                       </h4>
                     ) : (
                       <h4 className="text-sm font-bold text-black">
@@ -89,20 +90,10 @@ const PendingPaymentsCard = () => {
                     {modifyDateTime(order.created)}
                   </p>
 
-                  {/* see listing button */}
-                  {/* <span
-                    onClick={() =>
-                      navigate(`/listing/pending-payments/${order.id}`)
-                    }
-                    className="bg-[#F4EFFE] rounded-[32px] h-[35px] px-4 mt-2 inline-flex items-center justify-center hover:bg-gray-200 cursor-pointer text-[#3A0CA3] text-xs font-normal mr-2"
-                  >
-                    See Listing
-                  </span> */}
-
                   {/* view more button */}
                   <span
                     onClick={() =>{
-                        const url =  order.listingType===ListingType.BUY?`/home/buy-coin/${order.id}/order-statement`:`/home/sell-coin/${order.id}/sell-order-statement`
+                        const url =  order.listingType===ListingType.SELL?`/home/buy-coin/${order.id}/order-statement`:`/home/sell-coin/${order.id}/sell-order-statement`
                         navigate(url)
                       }
                     }
