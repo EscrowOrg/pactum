@@ -23,6 +23,7 @@ const ListingAdList = ({listingAds, coinId, coinSelect}) => {
                     percentageUsed={listingAd.percentageUsed}
                     listingType={listingAd.listingType}
                     assetId={listingAd.assets}
+                    fiatCurrency={listingAd.fiatCurrency}
                     asset={coinSelect} />
                 )):
                 <EmptyDataComp
