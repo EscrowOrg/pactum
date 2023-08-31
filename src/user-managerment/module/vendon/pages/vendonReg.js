@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BsApple } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,9 @@ import PageWrapper from "../../layouts/PageWrapper";
 
 const RegistrationVendon = ()=>{
 
+    // STATES
+    const [email, setEmail] = useState("")
+
     // DATA INITIALIZATION
     const navigate = useNavigate()
     const {
@@ -35,6 +38,7 @@ const RegistrationVendon = ()=>{
         } else if(isSuccessful===true && !(isEmpty(data))) {
             toast.success(data.message)
             saveToLocalStorage("vendorUserId", data.data)
+            saveToLocalStorage("vendorEmail", email)
             navigate("/vendor-verification-page")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,6 +62,7 @@ const RegistrationVendon = ()=>{
             password: ""
         }}
         onSubmit={(values) => {
+            setEmail(values.companyEmail)
             makePostRequest(
                 BASIC_VENDOR_REGISTRATION, 
                 {
@@ -81,14 +86,12 @@ const RegistrationVendon = ()=>{
         }>
             {({
                 values,
-                dirty,
+                isValid,
                 touched,
                 errors,
-                isSubmitting,
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                field,
             }) => {
                 return (
                     <PageWrapper>
@@ -201,11 +204,7 @@ const RegistrationVendon = ()=>{
                                         <div className='w-full flex flex-col items-stretch'>
                                             <PrimaryButton
                                             onClick={handleSubmit}
-                                            disabled={
-                                                (touched.companyEmail && 
-                                                errors.companyEmail) || (touched.password && 
-                                                errors.password)
-                                            }
+                                            disabled={!isValid || loading}
                                             loading={loading}
                                             type="submit"
                                             text={"Sign up"} />

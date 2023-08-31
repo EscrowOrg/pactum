@@ -1,15 +1,14 @@
-import { useState } from "react";
-import ListingBodyContent from "../../../components/Dashboard/Listing/ListingBodyContent";
-import "./activelistingtab.scss";
-import useMakeReq from "../../../hooks/Global/useMakeReq";
-import { getUserId } from "../../../../../serivce/cookie.service";
+import { useEffect, useState } from "react";
 import { AUTH_GET_AWAITING_ESCROW_SESSION } from "../../../../../serivce/apiRoutes.service";
-import { useEffect } from "react";
+import { getUserId } from "../../../../../serivce/cookie.service";
+import ListingBodyContent from "../../../components/Dashboard/Listing/ListingBodyContent";
 import { isEmpty } from "../../../helpers/isEmpty";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import "./activelistingtab.scss";
 
 const UserListingCard = () => {
   // STATE
-  const [activeTab, setActiveTab] = useState(3);
+  const [activeTab, setActiveTab] = useState(1);
 
   const { data, makeAuthGetReq, isSuccessful } = useMakeReq();
   const [pendingOrder, setPendingOrder] = useState([]);

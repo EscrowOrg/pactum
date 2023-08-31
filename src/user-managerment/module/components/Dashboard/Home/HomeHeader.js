@@ -93,7 +93,7 @@ const HomeHeader = () => {
                     {/* expand details */}
                     <div className='flex items-center gap-2 cursor-pointer'>
                         <span
-                        onClick={()=>navigate("/home/overview/coin-buy-sell?id=1&asset=binancecoin")} 
+                        onClick={()=>navigate("/home/overview/coin-buy-sell?id=1&asset=ethereum")} 
                         className='text-[#F4EFFE] text-sm font-bold'>
                             P2P Trading
                         </span>

@@ -248,7 +248,7 @@ const SendAsset = () => {
               <div className="flex flex-col mt-8 w-[92%] mx-auto">
                 {/* send button */}
                 <div className="w-full flex flex-col items-stretch">
-                  {parseFloat(amount) >
+                  {parseFloat(amount) <
                   parseFloat(walletInfo?.balance?.availableBalance) ? (
                     <PrimaryButton
                       onClick={handleSendToInternalUser}

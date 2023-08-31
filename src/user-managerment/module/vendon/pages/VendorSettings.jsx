@@ -25,6 +25,7 @@ import SlideWrapper from "../../layouts/Drawer/SlideWrapper";
 import StrictWrapper from "../../layouts/Drawer/StrictWrapper";
 import ReviewPactum from "../../pages/Dashboard/Profile/RecommendPactum";
 import SendChat from "../../pages/Dashboard/Profile/SendChat";
+import { getUserRole } from "../../../../serivce/cookie.service";
 
 const VendorSettings = () => {
   // STATES
@@ -51,6 +52,8 @@ const VendorSettings = () => {
   const handleLogout = () => {
     logUserOut(dispatch);
   };
+   
+  const roles = getUserRole();
 
   return (
     <NoTransitionWrapper>
@@ -116,12 +119,14 @@ const VendorSettings = () => {
               >
                 <UnverifiedLabel />
               </SettingOptionCards>
-
-              <SettingOptionCards
-                Icon={ProfileCircle}
-                title={"My Users"}
-                pathTo="/profile/list-of-users"
-              />
+              {roles === "VendorAdmin" && (
+                    <SettingOptionCards
+                    Icon={ProfileCircle}
+                    title={"My Users"}
+                    pathTo="/profile/list-of-users"
+                  />
+              )}
+              
 
               <SettingOptionCards
                 Icon={Bank}

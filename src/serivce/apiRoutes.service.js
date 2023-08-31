@@ -8,6 +8,8 @@ export const BASIC_REGISTRATION = `${BASE_URL}/api/User/BasicRegistration`
 export const COMPLETE_VENDOR_REGISTRATION = `${BASE_URL}/api/Vendor/CompleteVendorRegistration`
 export const BASIC_VENDOR_REGISTRATION = `${BASE_URL}/api/Vendor/BasicVendorRegistration`
 export const ADD_PIN = `${BASE_URL}/api/User/AddPin`
+export const GENERATE_EMAIL_TOKEN = `${BASE_URL}/api/User/GenerateOTP`
+export const VERIFY_EMAIL_TOKEN = `${BASE_URL}/api/User/ValiadateOTP`
 
 //external url(THIRD PARTY): COINGECKO
 export const GET_SINGLE_COIN = `${COIN_GECKO_BASE}/api/v3/coins/`
@@ -54,3 +56,4 @@ export const AUTH_TRANSFER_DONE = "/api/ListingManagement/TransferDoneEvent"
 export const AUTH_UPDATE_AD_LISTING_STATUS ="/api/ListingManagement/UpdateAdListingStatus"
 export const AUTH_REPORT_LISTING ="/api/ListingManagement/ReportEscrow"
 export const AUTH_GET_TRANSACTION_SENT_TO_SUBUSERS = "/api/Vendor/GetTransactionSentToSubUsers"
+export const AUTH_DEACTIVATE_ADLIST ="/api/ListingManagement/DeactivateAdList"

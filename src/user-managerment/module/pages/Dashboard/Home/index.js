@@ -1,37 +1,49 @@
-import React from 'react'
-import BottomNav from '../../../components/Dashboard/Home/BottomNav'
-import HomeHeader from '../../../components/Dashboard/Home/HomeHeader'
-import NoTransitionWrapper from '../../../components/Dashboard/Home/NoTransitionWrapper'
-import ProfileCompletionPopup from '../../../components/Dashboard/Home/ProfileCompletionPopup'
-import HotList from '../../../components/Dashboard/Home/HotList'
-import RecentTransactions from '../../../components/Dashboard/Home/RecentTransactions'
+import React, { useEffect } from "react";
+import { AUTH_POST_VALIDATE_DEVICE_TOKEN } from "../../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../../serivce/cookie.service";
+import BottomNav from "../../../components/Dashboard/Home/BottomNav";
+import HomeHeader from "../../../components/Dashboard/Home/HomeHeader";
+import HotList from "../../../components/Dashboard/Home/HotList";
+import NoTransitionWrapper from "../../../components/Dashboard/Home/NoTransitionWrapper";
+import ProfileCompletionPopup from "../../../components/Dashboard/Home/ProfileCompletionPopup";
+import RecentTransactions from "../../../components/Dashboard/Home/RecentTransactions";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
 
 const Home = () => {
-    return (
-        <NoTransitionWrapper>
-            <div className="w-full h-full flex flex-col">
+  const { loading, makeAuthPostReq } = useMakeReq();
 
-                {/* Home header */}
-                <HomeHeader />
-                
-                {/* body */}
-                <div className='w-[92%] flex flex-col mx-auto py-4 gap-8 pb-24'>
+  const token = localStorage.getItem("currentToken");
 
-                    {/* notification to complete profile */}
-                    <ProfileCompletionPopup />
+  useEffect(() => {
+    makeAuthPostReq(`${AUTH_POST_VALIDATE_DEVICE_TOKEN}`, {
+      token: token,
+      userId: getUserData()?.userId,
+    });
+  }, []);
 
-                    {/* Hotlist */}
-                    <HotList />
+  return (
+    <NoTransitionWrapper>
+      <div className="w-full h-full flex flex-col">
+        {/* Home header */}
+        <HomeHeader />
 
-                    {/* recent transactions */}
-                    <RecentTransactions />
-                </div>
+        {/* body */}
+        <div className="w-[92%] flex flex-col mx-auto py-4 gap-8 pb-24">
+          {/* notification to complete profile */}
+          <ProfileCompletionPopup />
 
-                {/* bottom nav */}
-                <BottomNav />
-            </div>
-        </NoTransitionWrapper>
-    )
-}
+          {/* Hotlist */}
+          <HotList />
 
-export default Home
+          {/* recent transactions */}
+          <RecentTransactions />
+        </div>
+
+        {/* bottom nav */}
+        <BottomNav />
+      </div>
+    </NoTransitionWrapper>
+  );
+};
+
+export default Home;

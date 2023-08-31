@@ -10,6 +10,8 @@ import { getAssetLabel } from "../../../helpers/getAssetLabel";
 import { modifyDateTime } from "../../../helpers/modifyDateTime";
 import { getUserId } from "../../../../../serivce/cookie.service";
 import { AdlistStatus, ListingType } from "../../../helpers/enums";
+import CircularProgress from "./CircularProgress";
+import { Pause } from "iconsax-react";
 
 const OngoingListingCard = () => {
   // STATES
@@ -40,7 +42,7 @@ const OngoingListingCard = () => {
       }
     }
   }, [data, isSuccessful]);
-
+      // console.log(ongoingOrdersData);
   return (
     <>
       {getLoading ? (
@@ -56,7 +58,13 @@ const OngoingListingCard = () => {
                     <div className="w-full flex items-center justify-between pb-4 border-b border-[#F5F3F6]">
                       {/* image and name */}
                       <div className="flex items-center gap-2">
-                        {`${ordersData.percentageUsed}%`}
+                        {ordersData.active === false ? (
+                          <Pause size="32" color="#EB9B00" />
+                        ) : (
+                          <CircularProgress
+                            percent={`${ordersData.percentageUsed}`}
+                          />
+                        )}
 
                         <div className="flex flex-col gap-1">
                           <h3
