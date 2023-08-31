@@ -1,5 +1,6 @@
 
-const BASE_URL = "https://escrowservice.fly.dev"
+const BASE_URL = "https://coinamix.fly.dev"
+export const TEST_ENV_URL = "https://escrowservice.fly.dev"
 export const COIN_GECKO_BASE = "https://api.coingecko.com"
 
 // const UrlService ={
