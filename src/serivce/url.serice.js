@@ -1,4 +1,4 @@
-import { ApiKey, TestApi } from "../../baseApi";
+import { ApiKey, TestApi } from "./baseApi";
 
 const BASE_URL = `${ApiKey}`
 export const TEST_ENV_URL = `${TestApi}`
