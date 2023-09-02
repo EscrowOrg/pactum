@@ -1,6 +1,6 @@
 import { ApiKey, TestApi } from "./baseApi";
 
-const BASE_URL = `${ApiKey}`
+const BASE_URL = "https://coinamix.fly.dev"
 //export const TEST_ENV_URL = `${TestApi}`
 export const COIN_GECKO_BASE = "https://api.coingecko.com"
 
