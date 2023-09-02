@@ -123,7 +123,9 @@ const MainRouter = () => {
 
         {/* RESET PASSWORD */}
         <Route path="/reset-password" element={<ResetPassword />} />
-
+        <Route path="/individual-profile" element={<Profile />} />
+        <Route path="/vendon-profile" element={<ProfileVendon />} />
+        <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
         {/* PASSWORD CHANGE SUCCESS */}
         <Route
           path="/reset-password/success"
@@ -135,10 +137,6 @@ const MainRouter = () => {
             <Route exact path="/home" element={<Home />} />
             <Route path="/individual-more-info" element={<MoreInfo />} />
             <Route path="/individual-profile" element={<Profile />} />
-            <Route
-              path="/vendor-create-success"
-              element={<VendorPinSuccess />}
-            />
 
             {/* VENDOR'S USERS */}
             <Route path="/vendor-user-wallet/:id" element={<UserWallet />} />
@@ -320,10 +318,6 @@ const MainRouter = () => {
             <Route exact path="/home" element={<Home />} />
 
             <Route exact path="/home/overview/:coinId" element={<Overview />} />
-            <Route
-              path="/vendor-create-success"
-              element={<VendorPinSuccess />}
-            />
             <Route path="/individual-more-info" element={<MoreInfo />} />
             <Route path="/individual-profile" element={<Profile />} />
             {/* VENDOR'S USERS */}
@@ -500,10 +494,6 @@ const MainRouter = () => {
           <Route element={<AuthRoutes />}>
             {/* HOME */}
             <Route exact path="/home" element={<Home />} />
-            <Route
-              path="/vendor-create-success"
-              element={<VendorPinSuccess />}
-            />
             <Route path="/individual-more-info" element={<MoreInfo />} />
             <Route path="/individual-profile" element={<Profile />} />
             {/* VENDOR'S USERS */}

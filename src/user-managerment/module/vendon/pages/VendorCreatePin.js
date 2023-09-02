@@ -1,23 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VerificationInput from "react-verification-input";
 import PageWrapper from "../../layouts/PageWrapper";
 import { BackButton, PrimaryButton } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../../../../serivce/url.serice";
 import axios from "axios";
+import useMakeReq from "../../hooks/Global/useMakeReq";
+import { ADD_PIN } from "../../../../serivce/apiRoutes.service";
+import { getUserData } from "../../../../serivce/cookie.service";
+import { toast } from "react-toastify";
+import { isEmpty } from "../../helpers/isEmpty";
 
 const VendorCreatePin = () => {
 
     // STATES
     const [verificationCode, setVerificationCode] = useState("")
     const [isComplete, setIsComplete] = useState(false)
-
-
+    const {userId} = getUserData()
+    const {
+        loading: verifyPineLoading,
+        data: verifyPin,
+        makePostRequest: verifyPine,
+        isSuccessful: isVerifyTokenSuccessful,
+      } = useMakeReq();
     // DATA INITIALIZATION
     const navigate = useNavigate()
     const handleSubmit = () =>{
-        navigate("/vendor-create-success")
+        verifyPine(ADD_PIN, {
+            pin: verificationCode,
+            userId: userId
+        })
     }
+
+    useEffect(() => {
+        if (isVerifyTokenSuccessful !== true && !isEmpty(verifyPin)) {
+          toast.error(verifyPin.message || "Couldn't verify Pin");
+        } else if (isVerifyTokenSuccessful === true && !isEmpty(verifyPin)) {
+          toast.success(verifyPin.message || "Pin verified!");
+          navigate("/vendor-create-success");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [verifyPin, isVerifyTokenSuccessful]);
 
     return (
         <PageWrapper>
@@ -68,6 +91,7 @@ const VendorCreatePin = () => {
 
                         {/* button */}
                         <PrimaryButton
+                        loading={verifyPineLoading}
                         disabled={!isComplete || verificationCode.length<4}
                         onClick={handleSubmit}
                         text={"Sign up"} />
