@@ -1,6 +1,8 @@
 import { AiOutlineUser } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import { ListingType } from '../../../helpers/enums'
 import { getAssetLabel } from '../../../helpers/getAssetLabel'
+import { getFiatSymbol } from '../../../helpers/getFiatSymbol'
 import { isEmpty } from '../../../helpers/isEmpty'
 import { ErrorButton, PrimaryButton } from '../../Button'
 
@@ -18,13 +20,12 @@ const ListingAdCard = ({
     adID,
     asset,
     assetId,
+    fiatCurrency,
     defaultAssetLabel
 }) => {
 
     // DATA INITIALIZATION
     const navigate = useNavigate()
-    const BUY = 2
-    const SELL = 1
     
     return (
         <div
@@ -87,16 +88,10 @@ const ListingAdCard = ({
                 <h3 className="font-normal text-xs text-[#8D85A0]">
                 Min - Max Order
                 </h3>
-                
-                {
-                    listingType===BUY?
+
                 <h4 className="text-sm font-semibold text-black">
-                {`₦${lowerLimit.toLocaleString("en-US")} - ₦${upperLimit.toLocaleString("en-US")}`}
-                </h4>:
-                <h4 className="text-sm font-semibold text-black">
-                {`${lowerLimit.toLocaleString("en-US")}${getAssetLabel(assetId)} - ${upperLimit.toLocaleString("en-US")}${getAssetLabel(assetId)}`}
+                {`${getFiatSymbol(+fiatCurrency)}${lowerLimit.toLocaleString("en-US")} - ${getFiatSymbol(+fiatCurrency)}${upperLimit.toLocaleString("en-US")}`}
                 </h4>
-                }
             </div>
             </div>
 
@@ -113,7 +108,7 @@ const ListingAdCard = ({
                 </h4>
             </div>
 
-            {listingType === BUY ? (
+            {listingType===ListingType.SELL ? (
                 <PrimaryButton
                 onClick={() =>
                     navigate(`/home/buy-coin/${adID}?asset=${asset?.value}`)

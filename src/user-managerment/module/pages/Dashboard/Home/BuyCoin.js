@@ -11,6 +11,7 @@ import LoadingSpinner from '../../../components/Global/LoadingSpinner';
 import { TextLabelInput } from '../../../components/Input';
 import SelectInput from '../../../components/SelectInput';
 import { getAssetLabel } from '../../../helpers/getAssetLabel';
+import { getFiatSymbol } from '../../../helpers/getFiatSymbol';
 import { isEmpty } from '../../../helpers/isEmpty';
 import { roundToN } from '../../../helpers/roundToN';
 import useMakeReq from '../../../hooks/Global/useMakeReq';
@@ -210,18 +211,6 @@ const BuyCoin = () => {
                                                 <div className='font-normal text-[#ACA6BA]'>
                                                     Trade price: <span className='text-[#141217] font-semibold'>₦{singleListing?.tradePrice}</span>
                                                 </div>
-
-                                                {/* circle */}
-                                                {/* <div className="flex items-center text-[#DAD7E0] gap-1">
-                                                    <RefreshCircle
-                                                    variant='TwoTone'
-                                                    size={24}
-                                                    color="#16053D" />
-                                                </div>
-
-                                                <div className='font-normal text-[#ACA6BA]'>
-                                                    You will receive: <span className='text-[#141217] font-semibold'>0.844BTC</span>
-                                                </div> */}
                                             </div>
 
                                             {/* summary */}
@@ -245,7 +234,7 @@ const BuyCoin = () => {
                                                     </h3>
 
                                                     <h3 className='font-semibold text-sm text-black'>
-                                                        {`₦${singleListing.lowerLimit}`} - {`₦${singleListing.upperLimit}`}
+                                                        {`${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.lowerLimit}`} - {`${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.upperLimit}`}
                                                     </h3>
                                                 </div>
 

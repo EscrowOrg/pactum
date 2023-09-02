@@ -127,7 +127,7 @@ const OrderStatement = () => {
             <h3 className="font-bold text-lg text-black">Order Statement</h3>
 
             {
-              singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?
+              singleOrder?.sessionEvent >= SessionEvent?.MADEPAYMENT?
               <h3 className="text-xs font-normal text-[#141217]">
                 Closed
               </h3>:
