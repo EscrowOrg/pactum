@@ -20,7 +20,7 @@ const IndividualVerificationPage = () => {
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
-  const vendorEmail = getFromLocalStorage("vendorEmail");
+  const individualEmail = getFromLocalStorage("individualEmail");
   const vendorId = getFromLocalStorage("vendorUserId");
   //    const {
   //        loading: generateTokenLoading,
@@ -39,7 +39,7 @@ const IndividualVerificationPage = () => {
   const handleVerifyToken = () => {
     verifyToken(VERIFY_EMAIL_TOKEN, {
       code: verificationCode,
-      email: vendorEmail,
+      email: individualEmail,
     });
   };
 
@@ -70,7 +70,7 @@ const IndividualVerificationPage = () => {
           <p className="text-sm font-normal text-[#645B75]">
             Please enter the 6 digit code we sent to your email{" "}
             <span className="font-semibold text-sm text-[#141217]">
-              {vendorEmail}
+              {individualEmail}
             </span>
           </p>
         </div>

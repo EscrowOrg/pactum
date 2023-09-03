@@ -123,9 +123,9 @@ const MainRouter = () => {
 
         {/* RESET PASSWORD */}
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/individual-profile" element={<Profile />} />
         <Route path="/vendon-profile" element={<ProfileVendon />} />
         <Route path="/vendor-create-success" element={<VendorPinSuccess />} />
+
         {/* PASSWORD CHANGE SUCCESS */}
         <Route
           path="/reset-password/success"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BackButton } from "../../Button";
 import { Copy } from "iconsax-react";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
+import  { auth, firestore} from "../../../../../firebase";
 
 const SendMessage = ({ scroll }) => {
   // STATES
@@ -10,16 +11,34 @@ const SendMessage = ({ scroll }) => {
 
   //   DATA INITIALIZATION
   useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+    const unsubscribe = firestore.collection('messages').orderBy('timestamp').onSnapshot(snapshot => {
+      const messagesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMessages(messagesData);
+      console.log(messagesData)
+    });
 
-  const sendMessage = () => {
-    if (currentMessage.trim() !== "") {
-      setMessages([...messages, currentMessage]);
-      setCurrentMessage("");
-      console.log(setMessages);
-      scroll.current.scrollIntoView({ behavior: "smooth" });
+    return () => {
+      // Clean up the listener
+      unsubscribe();
+    };
+  }, []);
+
+  const sendMessage = async (e) => {
+    // e.preventDefault();
+    if (currentMessage.trim() === '') return;
+
+    const user = auth.currentUser;
+    console.log(user);
+    if (user) {
+      await firestore.collection('messages').add({
+        text: currentMessage,
+        userId: user.uid,
+        timestamp: new Date()
+      });
+      setCurrentMessage('');
     }
+    console.log(user);
+    
   };
 
   return (
@@ -48,13 +67,13 @@ const SendMessage = ({ scroll }) => {
       </div>
 
       {/* send message container */}
-      <form onSubmit={sendMessage} className="send-message">
-        {messages.map((message, index) => (
+      <form  onSubmit={sendMessage} className="send-message">
+        {messages.map((message) => (
           <div
             className="ml-auto mt-3 mx-5 w-[110px] p-4 rounded-r-2xl rounded-br-none rounded-l-2xl bg-black text-white text-center text-xs break-all"
-            key={index}
+            key={message.id}
           >
-            {message}
+            {message.text} - {message.userId}
           </div>
         ))}
 
@@ -71,7 +90,7 @@ const SendMessage = ({ scroll }) => {
           />
 
           {/* send button */}
-          <button type="submit" className="text-[#ACA6BA] text-xs pointer">
+          <button type="submit"  className="text-[#ACA6BA] text-xs pointer">
             Send
           </button>
         </div>

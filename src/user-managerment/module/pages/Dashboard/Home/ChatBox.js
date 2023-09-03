@@ -11,8 +11,8 @@ const ChatBox = () => {
       {/* ChatBox containter */}
       <div className="w-full h-full py-5 gap-8">
         {/* send message  */}
-        <span ref={scroll}></span>
-        <SendMessage scroll={scroll} />
+        <span></span>
+        <SendMessage  />
       </div>
     </PageWrapper>
   );
