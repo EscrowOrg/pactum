@@ -50,7 +50,7 @@ const IndividualVerificationPage = () => {
       toast.error(verifyTokenData.message || "Couldn't verify token");
     } else if (isVerifyTokenSuccessful === true && !isEmpty(verifyTokenData)) {
       toast.success(verifyTokenData.message || "Token verified!");
-      deleteItemFromLocalStorage("vendorEmail");
+      deleteItemFromLocalStorage("individualEmail");
       navigate("/vendor-verification-success");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
