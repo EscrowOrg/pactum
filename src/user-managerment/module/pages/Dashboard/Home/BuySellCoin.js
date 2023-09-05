@@ -18,47 +18,41 @@ import Assets from "./Assets";
 import "./buysellcoin.scss";
 
 const BuySellCoin = () => {
-
   // STATES
   const [action, setAction] = useState(1);
   const [coinSelect, setCoinSelect] = useState(null);
-  const [listingAds, setListingAds] = useState([])
-  const [currentPage, setCurrentPage] = useState(0)
-
+  const [listingAds, setListingAds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // DRAWER STATES
   const [isOpen, setIsOpen] = useState(false);
 
-
   // HOOKS
-  const skip = useMemo(()=>{
-    let output = (currentPage*10)-1;
-    return output<0?0:output
-  }, [currentPage])
-
+  const skip = useMemo(() => {
+    let output = currentPage * 10 - 1;
+    return output < 0 ? 0 : output;
+  }, [currentPage]);
 
   // DATA INTIALIZATION
-  const {
-    getLoading,
-    makeAuthGetReq,
-    isSuccessful,
-    data
-  } = useMakeReq()
+  const { getLoading, makeAuthGetReq, isSuccessful, data } = useMakeReq();
   const [searchParams] = useSearchParams();
   const coinOptions = [
-    {value: 0, label: "tether"},
+    { value: 0, label: "tether" },
     { value: 1, label: "bitcoin" },
     { value: 2, label: "ethereum" },
     { value: 3, label: "binancecoin" },
   ];
-  const coinId = searchParams?.get("asset")
+  const coinId = searchParams?.get("asset");
   const id = searchParams?.get("id");
-  const currentUserId = getUserId()
-  
-  
+  const currentUserId = getUserId();
+
   // SIDE EFFECTS
   useEffect(() => {
-    setCoinSelect(coinId?coinOptions.find(item => item.label === coinId):coinOptions[0]);
+    setCoinSelect(
+      coinId
+        ? coinOptions.find((item) => item.label === coinId)
+        : coinOptions[0]
+    );
     if (id) {
       setAction(+id);
     } else {
@@ -66,31 +60,32 @@ const BuySellCoin = () => {
     }
   }, []);
 
-  useEffect(()=>{
-
+  useEffect(() => {
     // making GET request
-    makeAuthGetReq(`${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${coinSelect?.value || (coinOptions.find(item => item.label === (coinId))?.value || Asset.ETH)}`)
+    makeAuthGetReq(
+      `${AUTH_GET_AD_LISTING_BY_VALUE}?skip=${skip}&take=${10}&asset=${
+        coinSelect?.value ||
+        coinOptions.find((item) => item.label === coinId)?.value ||
+        Asset.ETH
+      }`
+    );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, coinSelect])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, coinSelect]);
 
   // populate data
   useEffect(() => {
-    if(isSuccessful && !isEmpty(data)){
-      setListingAds(data?.data)
+    if (isSuccessful && !isEmpty(data)) {
+      setListingAds(data?.data);
     }
   }, [data, isSuccessful]);
-
   return (
     <PageWrapper>
       <div className="w-full min-h-full flex flex-col gap-3 bg-[#f0f0f0]">
-
         {/* header */}
         <div className="border-b border-[#F5F3F6] bg-white pb-[14px] w-full flex flex-col pt-5 gap-4">
-
           {/* navbar */}
           <nav className="flex items-center w-[92%] mx-auto justify-between">
-
             {/* back button */}
             <BackButton />
 
@@ -99,7 +94,9 @@ const BuySellCoin = () => {
               <h3
                 onClick={() => setAction(ListingType.BUY)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === ListingType.BUY ? "active-action1" : "text-[#C3BFCD]"
+                  action === ListingType.BUY
+                    ? "active-action1"
+                    : "text-[#C3BFCD]"
                 }`}
               >
                 Buy
@@ -108,7 +105,9 @@ const BuySellCoin = () => {
               <h3
                 onClick={() => setAction(ListingType.SELL)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
-                  action === ListingType.SELL ? "active-action2" : "text-[#C3BFCD]"
+                  action === ListingType.SELL
+                    ? "active-action2"
+                    : "text-[#C3BFCD]"
                 }`}
               >
                 Sell
@@ -121,10 +120,8 @@ const BuySellCoin = () => {
 
           {/* wrapper */}
           <div className="w-[92%] mx-auto">
-
             {/* container */}
             <div className="grid grid-cols-[2fr_1fr] w-full gap-x-3">
-              
               {/* textinput */}
               <TextLabelInput
                 label={"NGN"}
@@ -145,30 +142,38 @@ const BuySellCoin = () => {
 
         {/* body */}
         <div className="w-full h-full flex flex-col justify-between mx-auto gap-5 bg-transparent">
-
           {/* container */}
           <div className="w-[92%] flex flex-col mx-auto gap-5 bg-transparent">
-            {
-              getLoading?
+            {getLoading ? (
               <LoadingSpinner
-              bgColor="bg-transparent"
-              viewPortHeight="h-[60vh]" />:
+                bgColor="bg-transparent"
+                viewPortHeight="h-[60vh]"
+              />
+            ) : (
               <ListingAdList
-              coinSelect={coinSelect}
-              coinId={coinId}
-              listingAds={listingAds?.items?.filter(listingAd=>listingAd.listingType===action && listingAd.active===true)?.filter(listing=>listing.userId!==currentUserId)} />
-            }
+                coinSelect={coinSelect}
+                coinId={coinId}
+                listingAds={listingAds?.items
+                  ?.filter(
+                    (listingAd) =>
+                      listingAd.listingType === action &&
+                      listingAd.active === true
+                  )
+                  ?.filter((listing) => listing.userId === currentUserId)}
+              />
+            )}
           </div>
         </div>
 
         {/* pagination */}
         <ListingAdPagination
-        disabledNextBtn={isEmpty(listingAds) || isEmpty(listingAds.items)}
-        totalCount={listingAds?.totalCount}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        skip={skip} />
-          
+          disabledNextBtn={isEmpty(listingAds) || isEmpty(listingAds.items)}
+          totalCount={listingAds?.totalCount}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          skip={skip}
+        />
+
         {/* Drawer */}
         <Drawer
           isOpen={isOpen}
@@ -177,7 +182,6 @@ const BuySellCoin = () => {
         >
           {/* drawer content container */}
           <StrictWrapper title={"Report"} closeDrawer={() => setIsOpen(false)}>
-            
             {/* Body content */}
             <Assets />
           </StrictWrapper>

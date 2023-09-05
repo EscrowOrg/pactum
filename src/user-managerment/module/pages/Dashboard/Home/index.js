@@ -13,12 +13,15 @@ const Home = () => {
   const { loading, makeAuthPostReq } = useMakeReq();
 
   const token = localStorage.getItem("currentToken");
+  const {userId} = getUserData()
+
 
   useEffect(() => {
     makeAuthPostReq(`${AUTH_POST_VALIDATE_DEVICE_TOKEN}`, {
       token: token,
-      userId: getUserData()?.userId,
+      userId: userId,
     });
+
   }, []);
 
   return (

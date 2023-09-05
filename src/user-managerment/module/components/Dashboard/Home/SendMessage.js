@@ -3,6 +3,7 @@ import { BackButton } from "../../Button";
 import { Copy } from "iconsax-react";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
 import  { auth, firestore} from "../../../../../firebase";
+import { collection, addDoc } from "firebase/firestore"; 
 
 const SendMessage = ({ scroll }) => {
   // STATES
@@ -14,7 +15,6 @@ const SendMessage = ({ scroll }) => {
     const unsubscribe = firestore.collection('messages').orderBy('timestamp').onSnapshot(snapshot => {
       const messagesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setMessages(messagesData);
-      console.log(messagesData)
     });
 
     return () => {
@@ -24,23 +24,22 @@ const SendMessage = ({ scroll }) => {
   }, []);
 
   const sendMessage = async (e) => {
-    // e.preventDefault();
-    if (currentMessage.trim() === '') return;
-
-    const user = auth.currentUser;
-    console.log(user);
-    if (user) {
-      await firestore.collection('messages').add({
+     e.preventDefault();
+     console.log(currentMessage);
+    const {user} = auth.currentUser;
+    console.log(user)
+    
+      await firestore.add({
         text: currentMessage,
         userId: user.uid,
         timestamp: new Date()
       });
       setCurrentMessage('');
-    }
-    console.log(user);
+    
+    console.log(currentMessage);
     
   };
-
+  console.log(messages)
   return (
     <>
       {/* header */}
