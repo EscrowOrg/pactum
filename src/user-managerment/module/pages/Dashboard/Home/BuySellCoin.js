@@ -37,10 +37,10 @@ const BuySellCoin = () => {
   const { getLoading, makeAuthGetReq, isSuccessful, data } = useMakeReq();
   const [searchParams] = useSearchParams();
   const coinOptions = [
-    { value: 0, label: "tether" },
-    { value: 1, label: "bitcoin" },
-    { value: 2, label: "ethereum" },
-    { value: 3, label: "binancecoin" },
+    {value: 0, label: "USDT"},
+    { value: 1, label: "BTC" },
+    { value: 2, label: "ETH" },
+    { value: 3, label: "BNB" },
   ];
   const coinId = searchParams?.get("asset");
   const id = searchParams?.get("id");
