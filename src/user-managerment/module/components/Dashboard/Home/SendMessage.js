@@ -1,45 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { BackButton } from "../../Button";
 import { Copy } from "iconsax-react";
 import { copyToClipBoard } from "../../../helpers/copyToClipboard";
-import  { auth, firestore} from "../../../../../firebase";
-import { collection, addDoc } from "firebase/firestore"; 
+import  {  db} from "../../../../../firebase";
+import { query,
+  collection,
+  orderBy,
+  onSnapshot,
+  limit, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { getUserId } from "../../../../../serivce/cookie.service";
+import { AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
+import useMakeReq from "../../../hooks/Global/useMakeReq";
+import { isEmpty } from "../../../helpers/isEmpty";
+import { toast } from "react-toastify";
+
+
 
 const SendMessage = ({ scroll }) => {
+
   // STATES
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [text, setText] = useState('');
 
   //   DATA INITIALIZATION
   useEffect(() => {
-    const unsubscribe = firestore.collection('messages').orderBy('timestamp').onSnapshot(snapshot => {
-      const messagesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMessages(messagesData);
-    });
+    const q = query(
+      collection(db, "messages"),
+      orderBy("createdAt", "desc"),
+      limit(50)
+    );
 
-    return () => {
-      // Clean up the listener
-      unsubscribe();
-    };
+    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+      const fetchedMessages = [];
+      QuerySnapshot.forEach((doc) => {
+        fetchedMessages.push({ ...doc.data(), id: doc.id });
+      });
+      const sortedMessages = fetchedMessages.sort(
+        (a, b) => a.createdAt - b.createdAt
+      );
+      setMessages(sortedMessages);
+    });
+    return () => unsubscribe;
   }, []);
 
-  const sendMessage = async (e) => {
-     e.preventDefault();
-     console.log(currentMessage);
-    const {user} = auth.currentUser;
-    console.log(user)
-    
-      await firestore.add({
-        text: currentMessage,
-        userId: user.uid,
-        timestamp: new Date()
-      });
-      setCurrentMessage('');
-    
-    console.log(currentMessage);
-    
-  };
-  console.log(messages)
+  const {
+    data,
+    makeAuthGetReq,
+} = useMakeReq()
+
+  useEffect(()=>{
+    makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`)
+}, [])
+
+useEffect(()=>{
+  if(!isEmpty(data)) {
+    setText(data?.data)
+  }
+}, [data])
+
+  const sendMessage = async (event) => {
+    event.preventDefault();
+    if (currentMessage.trim() === "") {
+      toast.error("Enter valid message");
+      return;
+    }
+    await addDoc(collection(db, "messages"), {
+      text: currentMessage,
+       name: text.userName,
+      createdAt: serverTimestamp(),
+      userId: text.id
+    });
+    setCurrentMessage('');
+  }
   return (
     <>
       {/* header */}
@@ -49,12 +82,12 @@ const SendMessage = ({ scroll }) => {
           <BackButton />
 
           {/* name of user */}
-          <h3 className="font-semibold text-lg text-black">Asemota Joel</h3>
+          <h3 className="font-semibold text-lg text-black">{text.fullName}</h3>
         </div>
 
         <div className="flex items-center gap-2 ">
           {/* user's phone number */}
-          <h3 className="font-medium text-sm text-black">+234 33239204</h3>
+          <h3 className="font-medium text-sm text-black">{text.phoneNumber}</h3>
 
           <Copy
             onClick={() => copyToClipBoard("+234 33239204")}
@@ -72,7 +105,7 @@ const SendMessage = ({ scroll }) => {
             className="ml-auto mt-3 mx-5 w-[110px] p-4 rounded-r-2xl rounded-br-none rounded-l-2xl bg-black text-white text-center text-xs break-all"
             key={message.id}
           >
-            {message.text} - {message.userId}
+            {message.text}
           </div>
         ))}
 

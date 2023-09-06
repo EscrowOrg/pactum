@@ -120,6 +120,8 @@ const MainRouter = () => {
 
         {/* VERIFICATION */}
         <Route path="/verification" element={<Verification />} />
+        <Route path="/individual-profile" element={<Profile />} />
+        <Route exact path="/home" element={<Home />} />
 
         {/* RESET PASSWORD */}
         <Route path="/reset-password" element={<ResetPassword />} />

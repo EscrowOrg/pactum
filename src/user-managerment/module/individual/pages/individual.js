@@ -39,7 +39,7 @@ const RegistrationIndividual = ()=>{
         } else if(isSuccessful===true && !(isEmpty(data))) {
             toast.success(data.message)
             saveToLocalStorage("userId", data.data)
-            saveToLocalStorage("individualEmail", email)
+            saveToLocalStorage("Email", email)
             navigate("/individual-verification-page")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps

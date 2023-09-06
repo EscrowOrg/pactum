@@ -109,20 +109,20 @@ const ListingAdCard = ({
             </div>
 
             {listingType===ListingType.SELL ? (
-                <PrimaryButton
-                onClick={() =>
-                    navigate(`/home/buy-coin/${adID}?asset=${asset?.value}`)
-                }
-                height="h-10"
-                text="Buy"
-                />
-            ) : (
                 <ErrorButton
                 onClick={() =>
                     navigate(`/home/sell-coin/${adID}?asset=${asset?.value}`)
                 }
                 height="h-10"
                 text="Sell"
+                />
+            ) : (
+                <PrimaryButton
+                onClick={() =>
+                    navigate(`/home/buy-coin/${adID}?asset=${asset?.value}`)
+                }
+                height="h-10"
+                text="Buy"
                 />
             )}
             </div>
