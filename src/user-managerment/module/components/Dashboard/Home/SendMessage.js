@@ -73,6 +73,7 @@ useEffect(()=>{
     });
     setCurrentMessage('');
   }
+  
   return (
     <>
       {/* header */}

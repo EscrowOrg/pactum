@@ -79,6 +79,7 @@ const BuySellCoin = () => {
       setListingAds(data?.data);
     }
   }, [data, isSuccessful]);
+
   return (
     <PageWrapper>
       <div className="w-full min-h-full flex flex-col gap-3 bg-[#f0f0f0]">
