@@ -159,7 +159,7 @@ const BuySellCoin = () => {
                       listingAd.listingType === action &&
                       listingAd.active === true
                   )
-                  ?.filter((listing) => listing.userId === currentUserId)}
+                  }
               />
             )}
           </div>
