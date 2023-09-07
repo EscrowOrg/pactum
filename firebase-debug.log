@@ -1,0 +1,25 @@
+[debug] [2023-09-07T15:30:03.951Z] ----------------------------------------------------------------------
+[debug] [2023-09-07T15:30:03.984Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\EBUKA\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-09-07T15:30:03.985Z] CLI Version:   12.5.2
+[debug] [2023-09-07T15:30:03.985Z] Platform:      win32
+[debug] [2023-09-07T15:30:03.985Z] Node Version:  v16.16.0
+[debug] [2023-09-07T15:30:04.759Z] Time:          Thu Sep 07 2023 16:30:03 GMT+0100 (West Africa Standard Time)
+[debug] [2023-09-07T15:30:04.760Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-09-07T15:30:05.239Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-09-07T15:30:05.241Z] > authorizing via signed-in user (ebukanwachukwu885@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\EBUKA\Downloads\pactum
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
