@@ -79,7 +79,7 @@ const BuySellCoin = () => {
       setListingAds(data?.data);
     }
   }, [data, isSuccessful]);
-
+  console.log(listingAds)
   return (
     <PageWrapper>
       <div className="w-full min-h-full flex flex-col gap-3 bg-[#f0f0f0]">
@@ -154,13 +154,13 @@ const BuySellCoin = () => {
               <ListingAdList
                 coinSelect={coinSelect}
                 coinId={coinId}
-                listingAds={listingAds?.items
+                listingAds={listingAds?.items 
                   ?.filter(
                     (listingAd) =>
                       listingAd.listingType === action &&
                       listingAd.active === true
                   )
-                  ?.((listing) => listing.userId === currentUserId)}
+                  }
               />
             )}
           </div>
