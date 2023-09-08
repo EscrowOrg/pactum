@@ -47,7 +47,7 @@ const AssetsPopup = ({
             name: "Tether",
             symbol: "USDT",
             imageUrl: "https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663",
-            id: 0
+            id: 6
         },
     ]
 

@@ -90,7 +90,8 @@ const OngoingListingCard = () => {
                           </h3>
 
                           <h3 className="font-bold text-black text-xs">
-                            {`${getAssetLabel(+ordersData.assets)} (#000001)`}
+                            {`${getAssetLabel(+ordersData.assets)}`}
+                            {`(${ordersData.adId.slice(0,8)})`}
                           </h3>
 
                           <h4 className="text-[#8D85A0] text-xs font-normal">

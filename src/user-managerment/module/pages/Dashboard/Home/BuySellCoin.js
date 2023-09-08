@@ -37,10 +37,11 @@ const BuySellCoin = () => {
   const { getLoading, makeAuthGetReq, isSuccessful, data } = useMakeReq();
   const [searchParams] = useSearchParams();
   const coinOptions = [
-    {value: 0, label: "USDT"},
-    { value: 1, label: "BTC" },
+    { value: 1, label: "USDC"},
     { value: 2, label: "ETH" },
     { value: 3, label: "BNB" },
+    { value: 4, label: "BTC" },
+    { value: 6, label: "USDT"},
   ];
   const coinId = searchParams?.get("asset");
   const id = searchParams?.get("id");
@@ -93,7 +94,7 @@ const BuySellCoin = () => {
             {/* text */}
             <div className="flex items-center gap-6">
               <h3
-                onClick={() => setAction(ListingType.BUY)}
+                 onClick={() => setAction(ListingType.BUY)}
                 className={`cursor-pointer font-bold pb-2 text-lg ${
                   action === ListingType.BUY
                     ? "active-action1"
