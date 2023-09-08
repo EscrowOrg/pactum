@@ -1,10 +1,10 @@
 export const Asset = {
-    USDT: 0,
     USDC: 1,
     ETH: 2,
     BNB: 3,
     BTC: 4,
     BUSD: 5,
+    USDT: 6
 }
 
 export const Network = {
