@@ -44,7 +44,7 @@ const VendorPinSuccess = () => {
 
           <SecondaryButton
             text={"Skip for Later"}
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/loginIndividual")}
           />
         </div>
       </div>
