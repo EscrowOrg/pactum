@@ -14,7 +14,15 @@ const antIcon = (
     }}
     spin />
 )
-
+export const SessionEvent = {
+    SESSIONCREATED: 1,
+    MADEPAYMENT: 2,
+    UPDATEAMOUNT: 3,
+    ESCROWPUSHCOMPLETE: 4,
+    REPORTED: 5,
+    CANCELLED: 6,
+    VERIFIEDPAYMENT: 7,
+}
 export const WhiteButton = ({
     type="button",
     disabled,
@@ -47,6 +55,37 @@ export const PrimaryButton = ({
     height="h-16"
 }) => {
     return (
+        <button
+        disabled={disabled}
+        onClick={onClick}
+        type={type}
+        className={`bg-[#3A0CA3] rounded-[32px] text-sm text-center flex items-center justify-center ${height} px-[14px] text-white tracking-wider font-medium hover:opacity-70 transition-all duration-500 disabled:opacity-40`}>
+            {loading ? (
+                <Spin indicator={antIcon} />
+            ) : (
+                text
+            )}
+        </button>
+    )
+}
+
+export const OrderRecieveButton = ({
+    type="button",
+    disabled,
+    onClick,
+    loading,
+    text,
+    height="h-16",
+    session,
+}) => {
+    //let buttonText="";
+    if (session===SessionEvent.MADEPAYMENT || session===SessionEvent.SESSIONCREATED) {
+        text="Mark as Received"; 
+       }
+       if (session===SessionEvent.VERIFIEDPAYMENT) {
+         text= "Order Verified";
+       }
+        return (
         <button
         disabled={disabled}
         onClick={onClick}

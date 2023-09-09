@@ -9,6 +9,7 @@ import {
   ErrorButton,
   PrimaryButton,
   PrimaryButtonLight,
+  OrderRecieveButton,
   TransactionsListButton,
 } from "../../../components/Button";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
@@ -68,7 +69,7 @@ const SellOrderStatements = () => {
       escrowSessionId: sessionId
     })
    }
-
+ 
     // SIDE EFFECTS
     useEffect(()=>{
       console.log("Calling endpoint")
@@ -291,12 +292,12 @@ const SellOrderStatements = () => {
                     </div>
 
                     <div className="flex flex-col items-stretch w-[60%]">
-                      <PrimaryButton
-                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || verifyPaymentLoading}
+                      <OrderRecieveButton
+                        disabled={singleOrder.sessionEvent > SessionEvent.MADEPAYMENT || verifyPaymentLoading}
                         onClick={()=>handleVerifyPayment(currentUserId, singleOrder.sessId)}
                         loading={verifyPaymentLoading}
                         height="h-14"
-                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Payment received":"Mark as Received"}
+                       session={singleOrder?.sessionEvent}
                       />
                     </div>
                   </div>:
