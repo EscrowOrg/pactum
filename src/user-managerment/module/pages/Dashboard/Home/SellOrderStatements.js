@@ -23,7 +23,7 @@ import PageWrapper from "../../../layouts/PageWrapper";
 const SellOrderStatements = () => {
 
   // STATES
-  const [singleOrder, setSingleOrder] = useState(null)
+  const [singleOrder, setSingleOrder] = useState({})
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
@@ -71,6 +71,7 @@ const SellOrderStatements = () => {
 
     // SIDE EFFECTS
     useEffect(()=>{
+      console.log("Calling endpoint")
       makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${orderId}`)
     }, [])
     useEffect(()=>{
@@ -78,6 +79,7 @@ const SellOrderStatements = () => {
       if(isSuccessful) {
         setSingleOrder(data?.data)
       }
+      console.log(data?.data);
     }
   }, [data, isSuccessful])
 
