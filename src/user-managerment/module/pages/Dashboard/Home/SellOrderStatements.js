@@ -11,6 +11,7 @@ import {
   PrimaryButtonLight,
   OrderRecieveButton,
   TransactionsListButton,
+  OrderTransferButton
 } from "../../../components/Button";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
@@ -98,10 +99,12 @@ const SellOrderStatements = () => {
   // verify payment check
     useEffect(()=>{
     if(!isEmpty(verifyPaymentData?.data)) {
+
       if(isVerifyPaymentSuccessful) {
         toast.success(verifyPaymentData?.data?.message || "Payment received!")
         navigate(`/home/sell-coin/success/${orderId}`)
       }
+      toast.error(verifyPaymentData?.data?.message|| "Verification was not successful. Contact support");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
@@ -317,12 +320,13 @@ const SellOrderStatements = () => {
                     </div>
 
                     <div className="flex flex-col items-stretch w-[60%]">
-                      <PrimaryButton
-                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || transferDoneLoading}
+                      <OrderTransferButton
+                        disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || transferDoneLoading}
                         onClick={()=>handleTransferDone(currentUserId, singleOrder.sessId)}
                         loading={transferDoneLoading}
                         height="h-14"
-                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Transferred successfully":"Transfer Done"}
+                        session={singleOrder?.sessionEvent}
+                        //text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Transferred successfully":"Transfer Done"}
                       />
                     </div>
                   </div>:
