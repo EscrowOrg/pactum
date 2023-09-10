@@ -28,7 +28,7 @@ const SellTransactionSuccess = () => {
                         </h3>
 
                         <h3 className='text-[22px] font-bold text-center'>
-                            0.844BTC has been deducted to your wallet!
+                           Funds have been deducted to your wallet!
                         </h3>
 
                         <h3 className='text-sm font-bold text-center inline-flex items-center gap-2'>
