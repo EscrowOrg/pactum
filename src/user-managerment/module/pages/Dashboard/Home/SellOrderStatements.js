@@ -104,7 +104,6 @@ const SellOrderStatements = () => {
         toast.success(verifyPaymentData?.data?.message || "Payment received!")
         navigate(`/home/sell-coin/success/${orderId}`)
       }
-      toast.error(verifyPaymentData?.data?.message|| "Verification was not successful. Contact support");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
