@@ -76,7 +76,7 @@ const EditProfile = () => {
 
                                 {/* value */}
                                 <h4 className='font-semibold text-sm text-black'>
-                                    Pactum Ltd
+                                    CoinAmix Ltd
                                 </h4>
                             </div>
 

@@ -92,7 +92,7 @@ const CreateListing = () => {
                   : ""
               }`}
             >
-              Buy Order
+              Buy
             </span>
 
             {/* sell order tab */}
@@ -104,7 +104,7 @@ const CreateListing = () => {
                   : ""
               }`}
             >
-              Sell Order
+              Sell
             </span>
           </div>
 

@@ -18,19 +18,19 @@ const Info = () => {
     const pageSlides = [
         <MultiWalletView
         title={"Multi-wallet"}
-        message={"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur. . "}
+        message={"Create multiple wallets for USDT,BTC,ETH and USDC"}
         buttonText={"Next"}
         onNext={onNextClick} />,
 
-        <MultiWalletView
-        title={"Swap"}
-        message={"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur. . "}
-        buttonText={"Next"}
-        onNext={onNextClick} />,
+        // <MultiWalletView
+        // title={"Swap"}
+        // message={"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur. . "}
+        // buttonText={"Next"}
+        // onNext={onNextClick} />,
 
         <MultiWalletView
         title={"Escrow service"}
-        message={"Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur. . "}
+        message={"All P2P orders on our system are secured by escrow"}
         buttonText={"Proceed to Sign Up"}
         path={"/onboradings"} />,
     ]

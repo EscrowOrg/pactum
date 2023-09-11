@@ -27,7 +27,7 @@ const SplashScreen = () => {
                 
                 {/* title */}
                 <p className='text-2xl text-white font-bold'>
-                    Pactum
+                    CoinAmix
                 </p>
             </div>
         </PageWrapper>

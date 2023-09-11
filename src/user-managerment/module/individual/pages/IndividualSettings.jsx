@@ -76,7 +76,7 @@ const IndividualSettings = () => {
 
                             {/* name */}
                             <h4 className='text-base font-semibold text-black'>
-                                Pactum Ltd
+                                CoinAmix Ltd
                             </h4>
 
                             {/* edit profile button */}
@@ -136,7 +136,7 @@ const IndividualSettings = () => {
 
                             <SettingOptionCards
                             Icon={Like1}
-                            title={"Recommend Pactum"} />
+                            title={"Recommend CoinAmix"} />
 
                             <SettingOptionCards
                             Icon={Star1}

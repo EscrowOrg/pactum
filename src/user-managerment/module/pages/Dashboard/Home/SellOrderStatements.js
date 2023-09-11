@@ -9,7 +9,9 @@ import {
   ErrorButton,
   PrimaryButton,
   PrimaryButtonLight,
+  OrderRecieveButton,
   TransactionsListButton,
+  OrderTransferButton
 } from "../../../components/Button";
 import EmptyDataComp from "../../../components/Global/EmptyDataComp";
 import LoadingSpinner from "../../../components/Global/LoadingSpinner";
@@ -23,7 +25,7 @@ import PageWrapper from "../../../layouts/PageWrapper";
 const SellOrderStatements = () => {
 
   // STATES
-  const [singleOrder, setSingleOrder] = useState(null)
+  const [singleOrder, setSingleOrder] = useState({})
 
   // DATA INITIALIZATION
   const navigate = useNavigate();
@@ -68,9 +70,10 @@ const SellOrderStatements = () => {
       escrowSessionId: sessionId
     })
    }
-
+ 
     // SIDE EFFECTS
     useEffect(()=>{
+      console.log("Calling endpoint")
       makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${orderId}`)
     }, [])
     useEffect(()=>{
@@ -78,6 +81,7 @@ const SellOrderStatements = () => {
       if(isSuccessful) {
         setSingleOrder(data?.data)
       }
+      console.log(data?.data);
     }
   }, [data, isSuccessful])
   
@@ -96,6 +100,7 @@ const SellOrderStatements = () => {
   // verify payment check
     useEffect(()=>{
     if(!isEmpty(verifyPaymentData?.data)) {
+
       if(isVerifyPaymentSuccessful) {
         toast.success(verifyPaymentData?.data?.message || "Payment received!")
         navigate(`/home/sell-coin/success/${orderId}`)
@@ -153,7 +158,7 @@ const SellOrderStatements = () => {
 
             {/* text */}
             <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
-              Asset has been withdrawn to Pactum escrow, ensure to make payment of
+              Asset has been withdrawn to escrow, ensure to make payment of
               the exact amount in record time.
             </h4>
           </div>
@@ -290,12 +295,12 @@ const SellOrderStatements = () => {
                     </div>
 
                     <div className="flex flex-col items-stretch w-[60%]">
-                      <PrimaryButton
-                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || verifyPaymentLoading}
+                      <OrderRecieveButton
+                        disabled={singleOrder.sessionEvent > SessionEvent.MADEPAYMENT || verifyPaymentLoading}
                         onClick={()=>handleVerifyPayment(currentUserId, singleOrder.sessId)}
                         loading={verifyPaymentLoading}
                         height="h-14"
-                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Payment received":"Mark as Received"}
+                       session={singleOrder?.sessionEvent}
                       />
                     </div>
                   </div>:
@@ -315,12 +320,13 @@ const SellOrderStatements = () => {
                     </div>
 
                     <div className="flex flex-col items-stretch w-[60%]">
-                      <PrimaryButton
-                      disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || transferDoneLoading}
+                      <OrderTransferButton
+                        disabled={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT || transferDoneLoading}
                         onClick={()=>handleTransferDone(currentUserId, singleOrder.sessId)}
                         loading={transferDoneLoading}
                         height="h-14"
-                        text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Transferred successfully":"Transfer Done"}
+                        session={singleOrder?.sessionEvent}
+                        //text={singleOrder.sessionEvent >= SessionEvent.MADEPAYMENT?"Transferred successfully":"Transfer Done"}
                       />
                     </div>
                   </div>:
