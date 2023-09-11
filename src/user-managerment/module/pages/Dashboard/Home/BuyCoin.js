@@ -66,7 +66,6 @@ const BuyCoin = () => {
         }
     }
     }, [data, isSuccessful])
-
     // get ad details
     useEffect(()=>{
         getListingAds(`${AUTH_GET_ADLISTING_DETAILS}/${coinId}`)

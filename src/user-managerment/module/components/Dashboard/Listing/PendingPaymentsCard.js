@@ -33,7 +33,6 @@ const PendingPaymentsCard = () => {
       }
     }
   }, [data, isSuccessful]);
-
   return (
     <div className="w-full flex flex-col gap-4">
       {getLoading ? (
@@ -73,9 +72,9 @@ const PendingPaymentsCard = () => {
                     ) : (
                       <h4 className="text-sm font-bold text-black">
                         {`${
-                          order.fiatAmount > 1
-                            ? roundToN(+order.fiatAmount, 2)
-                            : order.fiatAmount
+                          order.cryptoAmount > 1
+                            ? roundToN(+order.cryptoAmount, 1)
+                            : order.cryptoAmount
                         } ${getAssetLabel(order.asset)}`}
                       </h4>
                     )}

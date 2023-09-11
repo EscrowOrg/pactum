@@ -21,7 +21,6 @@ const ChangePassword = () => {
 
   // get userId
   const { userId, token } = getUserData();
-  // console.log(userId, token)
 
   // STATES
   const [changePasswordRequests, setChangePasswordRequest] = useState({

@@ -53,9 +53,7 @@ const ListOfBanks = (closeModal) => {
 
   // SIDE EFFECTS
   useEffect(()=>{
-    console.log("Before")
     makeAuthGetReq(`${AUTH_GET_BANKS}/${userId}/${role}`)
-    console.log("After")
   }, [])
   useEffect(()=>{
     if(!isEmpty(data)) {

@@ -128,7 +128,7 @@ const SendCoin = () => {
           toastId: "error1",
         });
       } else if(sendCoinError) {
-        console.log("Failed to send coin", sendCoinError)
+        toast.error("Failed to send coin", sendCoinError)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

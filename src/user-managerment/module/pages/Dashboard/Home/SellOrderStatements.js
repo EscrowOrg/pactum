@@ -65,15 +65,19 @@ const SellOrderStatements = () => {
     })
    }
    const handleVerifyPayment = (id, sessionId) => {
-    verifyPayment(AUTH_VERIFY_PAYMENT, {
-      makerId: id,
-      escrowSessionId: sessionId
-    })
+    if(isVerifyPaymentSuccessful  === false){
+     toast.error("Please wait for confirmation of the order")
+    }else{
+      verifyPayment(AUTH_VERIFY_PAYMENT, {
+        makerId: id,
+        escrowSessionId: sessionId
+      })
+    }
+    
    }
  
     // SIDE EFFECTS
     useEffect(()=>{
-      console.log("Calling endpoint")
       makeAuthGetReq(`${AUTH_GET_ESCROW_SESSION_BYID}/${orderId}`)
     }, [])
     useEffect(()=>{
@@ -81,17 +85,15 @@ const SellOrderStatements = () => {
       if(isSuccessful) {
         setSingleOrder(data?.data)
       }
-      console.log(data?.data);
     }
   }, [data, isSuccessful])
   
-  console.log(singleOrder);
   // transfer done check
     useEffect(()=>{
     if(!isEmpty(transferDoneData?.data)) {
       if(transferDoneSuccessful) {
         toast.success(transferDoneData?.data?.message || "Transferred successfully!")
-        navigate(`/home/buy-coin/success/${orderId}`)
+        navigate(`/listing`)
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +110,6 @@ const SellOrderStatements = () => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
-
   // report listing
   useEffect(()=>{
     if(!isEmpty(reportListingData?.data)) {

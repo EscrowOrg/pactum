@@ -16,6 +16,7 @@ import PageWrapper from "../../../layouts/PageWrapper";
 import ListingAdPagination from "../Listing/ListingAdPagination";
 import Assets from "./Assets";
 import "./buysellcoin.scss";
+import { toast } from "react-toastify";
 
 const BuySellCoin = () => {
   // STATES
@@ -57,7 +58,7 @@ const BuySellCoin = () => {
     if (id) {
       setAction(+id);
     } else {
-      console.log("ID isn't present");
+      toast.error("ID isn't present");
     }
   }, []);
 
@@ -80,7 +81,6 @@ const BuySellCoin = () => {
       setListingAds(data?.data);
     }
   }, [data, isSuccessful]);
-  console.log(listingAds)
   return (
     <PageWrapper>
       <div className="w-full min-h-full flex flex-col gap-3 bg-[#f0f0f0]">

@@ -85,7 +85,7 @@ const OrderStatement = () => {
     if(!isEmpty(transferDoneData?.data)) {
       if(transferDoneSuccessful) {
         toast.success(transferDoneData?.data?.message || "Transferred successfully!")
-        navigate(`/home/buy-coin/success/${orderId}`)
+        navigate(`/listing`)
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

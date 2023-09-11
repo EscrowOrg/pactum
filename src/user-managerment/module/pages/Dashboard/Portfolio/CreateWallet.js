@@ -92,7 +92,7 @@ const CreateWallet = () => {
     // create wallet error
     useEffect(()=>{
         if(isCreateError) {
-            console.log(isCreateError)
+            toast.error(isCreateError)
         }
     }, [isCreateError])
 

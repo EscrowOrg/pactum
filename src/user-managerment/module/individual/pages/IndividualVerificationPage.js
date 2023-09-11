@@ -22,7 +22,6 @@ const IndividualVerificationPage = () => {
   const navigate = useNavigate();
   const individualEmail = getFromLocalStorage("Email");
   const vendorId = getFromLocalStorage("vendorUserId");
-  console.log(individualEmail)
   
   const {
     loading: verifyTokenLoading,
