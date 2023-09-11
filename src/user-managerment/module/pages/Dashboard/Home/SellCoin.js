@@ -221,7 +221,7 @@ useEffect(()=>{
 
                           <h3 className="text-black text-sm font-semibold">
                             {/* 0.989 - 4.583 BTC */}
-                            {`${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.lowerLimit?.toLocaleString('en-US')} - ${getFiatSymbol(singleListing.fiatCurrency1)}${singleListing.upperLimit?.toLocaleString('en-US')}`}
+                            {`${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.lowerLimit?.toLocaleString('en-US')} - ${getFiatSymbol(singleListing.fiatCurrency)}${singleListing.upperLimit?.toLocaleString('en-US')}`}
                           </h3>
                         </div>
 

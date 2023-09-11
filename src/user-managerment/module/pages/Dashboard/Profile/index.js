@@ -67,7 +67,7 @@ const Profile = () => {
             {/* texts */}
             <div className="flex flex-col gap-1 items-center">
               {/* name */}
-              <h4 className="text-base font-semibold text-black">Pactum Ltd</h4>
+              <h4 className="text-base font-semibold text-black">CoinAmix Ltd</h4>
 
               {/* edit profile button */}
               <Link

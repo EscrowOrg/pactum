@@ -239,7 +239,7 @@ const SendAsset = () => {
 
                 {/* text */}
                 <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
-                  Asset has been withdrawn to Pactum escrow, ensure to make
+                  Asset has been withdrawn to CoinAmix escrow, ensure to make
                   payment of the exact amount in record time.
                 </h4>
               </div>
