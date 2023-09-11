@@ -80,7 +80,8 @@ const SellOrderStatements = () => {
       }
     }
   }, [data, isSuccessful])
-
+  
+  console.log(singleOrder);
   // transfer done check
     useEffect(()=>{
     if(!isEmpty(transferDoneData?.data)) {
