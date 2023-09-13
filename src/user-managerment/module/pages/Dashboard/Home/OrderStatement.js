@@ -93,11 +93,14 @@ const OrderStatement = () => {
 
   // verify payment check
     useEffect(()=>{
-    if(!isEmpty(verifyPaymentData?.data)) {
+    if(verifyPaymentData?.data) {
       if(isVerifyPaymentSuccessful) {
         toast.success(verifyPaymentData?.data?.message || "Payment received!")
         navigate(`/home/sell-coin/success/${orderId}`)
       }
+    }
+    if(verifyPaymentData?.data === false){
+      toast.error(verifyPaymentData?.message||"Order could not be verified at the moment. Please try again later")
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])

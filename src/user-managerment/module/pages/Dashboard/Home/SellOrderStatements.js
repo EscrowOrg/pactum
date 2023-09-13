@@ -65,16 +65,18 @@ const SellOrderStatements = () => {
     })
    }
    const handleVerifyPayment = (id, sessionId) => {
-    if(isVerifyPaymentSuccessful  === false){
-     toast.error("Please wait for confirmation of the order")
-    }else{
+    // if(isVerifyPaymentSuccessful  === false){
+    //  toast.error("Please wait for confirmation of the order")
+    // }
+    // else
+    // {
       verifyPayment(AUTH_VERIFY_PAYMENT, {
         makerId: id,
         escrowSessionId: sessionId
       })
     }
     
-   }
+   //}
  
     // SIDE EFFECTS
     useEffect(()=>{
@@ -95,18 +97,22 @@ const SellOrderStatements = () => {
         toast.success(transferDoneData?.data?.message || "Transferred successfully!")
         navigate(`/listing`)
       }
+      
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transferDoneData, transferDoneSuccessful])
 
   // verify payment check
     useEffect(()=>{
-    if(!isEmpty(verifyPaymentData?.data)) {
-
+    if(verifyPaymentData?.data) 
+    {
       if(isVerifyPaymentSuccessful) {
-        toast.success(verifyPaymentData?.data?.message || "Payment received!")
+        toast.success(verifyPaymentData?.message || "Payment received!")
         navigate(`/home/sell-coin/success/${orderId}`)
       }
+    }
+    if(verifyPaymentData?.data === false){
+      toast.error(verifyPaymentData?.message||"Order could not be verified at the moment. Please try again later")
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verifyPaymentData, isVerifyPaymentSuccessful])
