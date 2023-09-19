@@ -4,13 +4,15 @@ export const Asset = {
     BNB: 3,
     BTC: 4,
     BUSD: 5,
-    USDT: 6
+    USDT: 6,
+    USDT_TRON:  7,
 }
 
 export const Network = {
     ETH: 0,
     BSC: 1,
     BTC: 2,
+    TRON: 3
 }
 
 export const FlowType = {

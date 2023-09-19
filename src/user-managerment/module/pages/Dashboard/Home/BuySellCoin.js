@@ -43,6 +43,7 @@ const BuySellCoin = () => {
     { value: 3, label: "BNB" },
     { value: 4, label: "BTC" },
     { value: 6, label: "USDT"},
+    { value: 7, label: "USDT_TRON"},
   ];
   const coinId = searchParams?.get("asset");
   const id = searchParams?.get("id");
