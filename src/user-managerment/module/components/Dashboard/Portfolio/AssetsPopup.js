@@ -37,12 +37,12 @@ const AssetsPopup = ({
             imageUrl: "https://assets.coingecko.com/coins/images/9576/large/BUSD.png?1568947766",
             id: 5
         },
-        {
-            name: "USD Coin",
-            symbol: "USDC",
-            imageUrl: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
-            id: 1
-        },
+        // {
+        //     name: "USD Coin",
+        //     symbol: "USDC",
+        //     imageUrl: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
+        //     id: 1
+        // },
         {
             name: "Tether",
             symbol: "USDT",

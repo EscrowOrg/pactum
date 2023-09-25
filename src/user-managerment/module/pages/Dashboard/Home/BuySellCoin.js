@@ -38,9 +38,9 @@ const BuySellCoin = () => {
   const { getLoading, makeAuthGetReq, isSuccessful, data } = useMakeReq();
   const [searchParams] = useSearchParams();
   const coinOptions = [
-    { value: 1, label: "USDC"},
+    //{ value: 1, label: "USDC"},
     { value: 2, label: "ETH" },
-    { value: 3, label: "BNB" },
+   // { value: 3, label: "BNB" },
     { value: 4, label: "BTC" },
     { value: 6, label: "USDT"},
     { value: 7, label: "USDT_TRON"},

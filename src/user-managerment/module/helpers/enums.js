@@ -1,5 +1,5 @@
 export const Asset = {
-    USDC: 1,
+   // USDC: 1,
     ETH: 2,
     BNB: 3,
     BTC: 4,

@@ -128,7 +128,7 @@ const SendCoin = () => {
           toastId: "error1",
         });
       } else if(sendCoinError) {
-        toast.error("Failed to send coin", sendCoinError)
+        console.log("Failed to send coin", sendCoinError)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,6 +137,7 @@ const SendCoin = () => {
   return(
     <Formik
     enableReinitialize
+    validateOnMount={true}
     initialValues={{
         userName: "",
         userIdentifier: "",
@@ -171,8 +172,8 @@ const SendCoin = () => {
     }}
     validationSchema={
       Yup.object({
-        userIdentifier: Yup.string().required("Required"),
-        userName: Yup.string().required("Required"),
+        // userIdentifier: Yup.string().required("Required"),
+        // userName: Yup.string().required("Required"),
         cryptoAmount: Yup.number().typeError("Must be a digit").test("is-greater-than-0", "Amount can't be zero (0)", (cryptoAmount)=>+cryptoAmount>0).test("insufficient-funds","Insufficient funds", (cryptoAmount)=>!(parseFloat(cryptoAmount) >
         parseFloat(walletInfo?.balance?.availableBalance))).required("Required"),
       })
@@ -317,7 +318,7 @@ const SendCoin = () => {
 
                           {/* text */}
                           <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
-                            Asset has been withdrawn to escrow, ensure to make
+                            Asset has been withdrawn to Pactum escrow, ensure to make
                             payment of the exact amount in record time.
                           </h4>
                         </div>
@@ -328,7 +329,7 @@ const SendCoin = () => {
                           <div className="w-full flex flex-col items-stretch">
                             <PrimaryButton
                               loading={sendCoinLoading}
-                              disabled={sendCoinLoading || !isValid || !asset.assetId}
+                              disabled={sendCoinLoading || !asset.assetId}
                               text={`Send ${values.amount?values.amount + " " + asset.symbol:""}`}
                               type="submit"
                               onClick={handleSubmit}
@@ -423,7 +424,7 @@ const SendCoin = () => {
 
                           {/* text */}
                           <h4 className="w-[90%] font-normal text-sm text-[#1B3F3E]">
-                            Asset has been withdrawn to escrow, ensure to make
+                            Asset has been withdrawn to Pactum escrow, ensure to make
                             payment of the exact amount in record time.
                           </h4>
                         </div>
@@ -434,7 +435,7 @@ const SendCoin = () => {
                           <div className="w-full flex flex-col items-stretch">
                             <PrimaryButton
                               loading={sendCoinLoading}
-                              disabled={sendCoinLoading || !isValid || !asset.assetId}
+                              disabled={sendCoinLoading || !asset.assetId}
                               text={`Send ${values.amount?values.amount + " " + asset.symbol:""}`}
                               onClick={toggleVerifyGasFeeModal}
                             />

@@ -1,10 +1,10 @@
 export const getAssetLabel = (assetId) => {
   const coinLabel = ["USDT", "BTC", "ETH", "BNB"];
   const labelCoin = [
-    {
-      value:1 , 
-      name: "USDC",
-    },
+    // {
+    //   value:1 , 
+    //   name: "USDC",
+    // },
     {
       value:2,
       name:"ETH"
@@ -24,6 +24,10 @@ export const getAssetLabel = (assetId) => {
     {
       value: 6,
       name:"USDT"
+    },
+    {
+      value: 7,
+      name:"USDT_TRON"
     },
   ];
   if (typeof assetId !== "number") {
