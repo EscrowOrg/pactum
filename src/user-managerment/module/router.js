@@ -72,6 +72,8 @@ const MainRouter = () => {
   // DATA INITIALIZATION
   const location = useLocation();
   const roles = getUserRole();
+  
+
   return (
     <AnimatePresence mode="wait">
       {/* Parent Routes */}

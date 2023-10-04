@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AUTH_GET_ASSETS_MAPPING, AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
-import { getUserId } from "../../../../../serivce/cookie.service";
+import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
 import Drawer from "../../../layouts/Drawer";
@@ -51,7 +51,7 @@ const UsersWalletCard = ({ assetAccount }) => {
   const toggleSelectAssetDrawer = (value) => {
     setIsSelectAssetOpen((isSelectAssetOpen) => !isSelectAssetOpen);
   };
-
+ const roles = getUserRole();
   // SIDE EFFECTS
   useEffect(() => {
     makeAuthGetReq(`${AUTH_GET_USER_DETS}/${getUserId()}`);
@@ -72,7 +72,6 @@ useEffect(()=>{
       setIsVendor(data?.isVendor);
     }
   }, [data]);
-
   return (
     <div className="w-full h-full flex flex-col gap-8">
       {/* card */}
@@ -81,7 +80,9 @@ useEffect(()=>{
           <Spin indicator={antIcon} />
         </div>
       ) : (
-        <AccountBalanceCard isVendor={isVendor} />
+        roles === "VendorAdmin" && (
+          <AccountBalanceCard isVendor={roles} />
+        )
       )}
 
       {/* actions */}

@@ -9,6 +9,7 @@ import { isEmpty } from "../../helpers/isEmpty";
 import { getFromLocalStorage } from "../../helpers/localStorageMethods";
 import useMakeReq from "../../hooks/Global/useMakeReq";
 import PageWrapper from "../../layouts/PageWrapper";
+import { getUserData } from "../../../../serivce/cookie.service";
 
 const Profile = ()=>{
 
@@ -20,7 +21,6 @@ const Profile = ()=>{
       phoneNumber: "",
       address: "",
     })
-  
   
     // DATA INITIALIZATION
     const navigate = useNavigate()
