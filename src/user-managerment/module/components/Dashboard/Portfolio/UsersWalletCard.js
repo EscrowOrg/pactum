@@ -80,9 +80,12 @@ useEffect(()=>{
           <Spin indicator={antIcon} />
         </div>
       ) : (
-        roles === "VendorAdmin" && (
+        roles === "VendorAdmin" ? (
           <AccountBalanceCard isVendor={roles} />
+        ):(
+          <AccountBalanceCard isVendor={isVendor} />
         )
+
       )}
 
       {/* actions */}
