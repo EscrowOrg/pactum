@@ -14,9 +14,9 @@ export const VERIFY_EMAIL_TOKEN = `${BASE_URL}/api/User/ValiadateOTP`
 export const GET_SINGLE_COIN = `${COIN_GECKO_BASE}/api/v3/coins/`
 export const GET_COIN_MARKETS = `${COIN_GECKO_BASE}/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d&locale=en`
 
-
 // AUTH ENDPOINTS: PRIVATE ENDPOINTS
 export const AUTH_GET_PORTFOLIO_BALANCE = "/api/Wallet/GetPortfolioBalance/USD"
+export const  AUTH_GET_PORTFOLIO_Admin= '/api/Wallet/GetAdminPortfolioBalance'
 export const AUTH_GET_USER_DETS = "/api/User/GetUserByUserId"
 export const AUTH_REFRESH_USER_TOKEN = "/api/User/RefreshToken"
 export const AUTH_GET_CURRENCIES = "/api/ChainOperation/GetCurrencies"

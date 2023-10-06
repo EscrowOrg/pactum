@@ -8,7 +8,7 @@ import {
 } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AUTH_GET_ASSETS_MAPPING, AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
+import { AUTH_GET_ASSETS_MAPPING, AUTH_GET_PORTFOLIO_Admin, AUTH_GET_USER_DETS } from "../../../../../serivce/apiRoutes.service";
 import { getUserId, getUserRole } from "../../../../../serivce/cookie.service";
 import { isEmpty } from "../../../helpers/isEmpty";
 import useMakeReq from "../../../hooks/Global/useMakeReq";
@@ -39,6 +39,7 @@ const UsersWalletCard = ({ assetAccount }) => {
     data: walletAssetData,
     getLoading: getAssetLoading,
     makeAuthGetReq: getAssets,
+    data: adminAsset
 } = useMakeReq()
 
   // STATES
@@ -46,6 +47,7 @@ const UsersWalletCard = ({ assetAccount }) => {
   const [mode, setMode] = useState("");
   const [isSelectAssetOpen, setIsSelectAssetOpen] = useState(false);
   const [assetList, setAssetList] = useState([])
+  const [adminBalance, setAdminBalance] = useState([])
 
   // HANDLERS
   const toggleSelectAssetDrawer = (value) => {
@@ -60,6 +62,10 @@ const UsersWalletCard = ({ assetAccount }) => {
     getAssets(AUTH_GET_ASSETS_MAPPING)
 }, [])
 
+useEffect(()=>{
+  makeAuthGetReq(`${AUTH_GET_PORTFOLIO_Admin}/USD/${getUserId()}`)
+}, [])
+
 // get assets data
 useEffect(()=>{
     if(!isEmpty(walletAssetData)) {
@@ -72,6 +78,13 @@ useEffect(()=>{
       setIsVendor(data?.isVendor);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!isEmpty(adminAsset)) {
+      setAdminBalance(adminAsset);
+    }
+  }, [adminAsset]);
+
   return (
     <div className="w-full h-full flex flex-col gap-8">
       {/* card */}
@@ -81,7 +94,7 @@ useEffect(()=>{
         </div>
       ) : (
         roles === "VendorAdmin" ? (
-          <AccountBalanceCard isVendor={roles} />
+          <AccountBalanceCard isVendor={adminBalance} />
         ):(
           <AccountBalanceCard isVendor={isVendor} />
         )
