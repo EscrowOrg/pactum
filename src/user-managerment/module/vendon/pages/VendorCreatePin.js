@@ -7,7 +7,7 @@ import BASE_URL from "../../../../serivce/url.serice";
 import axios from "axios";
 import useMakeReq from "../../hooks/Global/useMakeReq";
 import { ADD_PIN } from "../../../../serivce/apiRoutes.service";
-import { getUserData } from "../../../../serivce/cookie.service";
+import { getUserData, getUserId } from "../../../../serivce/cookie.service";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
 
@@ -16,7 +16,8 @@ const VendorCreatePin = () => {
     // STATES
     const [verificationCode, setVerificationCode] = useState("")
     const [isComplete, setIsComplete] = useState(false)
-    const {userId} = getUserData()
+    const userId = getUserData();
+    
     const {
         loading: verifyPineLoading,
         data: verifyPin,
@@ -41,6 +42,7 @@ const VendorCreatePin = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [verifyPin, isVerifyTokenSuccessful]);
+
 
     return (
         <PageWrapper>
