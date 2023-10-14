@@ -10,7 +10,7 @@ import { ADD_PIN } from "../../../../serivce/apiRoutes.service";
 import { getUserData, getUserId } from "../../../../serivce/cookie.service";
 import { toast } from "react-toastify";
 import { isEmpty } from "../../helpers/isEmpty";
-
+import { deleteItemFromLocalStorage, getFromLocalStorage } from "../../helpers/localStorageMethods";
 const VendorCreatePin = () => {
 
     // STATES
@@ -27,9 +27,11 @@ const VendorCreatePin = () => {
     // DATA INITIALIZATION
     const navigate = useNavigate()
     const handleSubmit = () =>{
+        console.log(userId)
+        const uId = getFromLocalStorage("vendorAdminId")
         verifyPine(ADD_PIN, {
             pin: verificationCode,
-            userId: userId
+            userId: uId
         })
     }
 

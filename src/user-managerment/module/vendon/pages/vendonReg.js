@@ -38,6 +38,7 @@ const RegistrationVendon = ()=>{
         } else if(isSuccessful===true && !(isEmpty(data))) {
             toast.success(data.message)
             saveToLocalStorage("vendorUserId", data.data)
+            saveToLocalStorage("vendorAdminId", data.data)
             saveToLocalStorage("vendorEmail", email)
             navigate("/vendor-verification-page")
         }
